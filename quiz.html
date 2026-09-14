@@ -1,421 +1,778 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>কুইজ | জ্ঞানতরঙ্গ</title>
+  <title>কুইজ শুরু করুন | জ্ঞানতরঙ্গ</title>
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-:root{
-  --bg:#060817;
-  --card:#10142b;
-  --card2:#151a35;
-  --purple:#8b3dff;
-  --pink:#ec3fa7;
-  --green:#2fd68a;
-  --gold:#ffb21c;
-  --text:#f5f5fb;
-  --muted:#a9adc4;
-  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
-}
+    body{
+      font-family:"Noto Sans Bengali","Hind Siliguri",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right,rgba(124,58,237,.18),transparent 35%),
+        #060817;
+      color:#fff;
+      min-height:100vh;
+    }
 
-body{
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
-  background:
-    radial-gradient(circle at top,rgba(124,58,237,.18),transparent 38%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
-}
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
 
-.app{
-  max-width:1200px;
-  margin:auto;
-  padding:0 18px 40px;
-}
+    .container{
+      width:min(1000px,92%);
+      margin:auto;
+    }
 
-header{
-  min-height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
+    header{
+      background:rgba(6,8,23,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+    .header-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
 
-.logo-box{
-  width:45px;
-  height:45px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:800;
+      font-size:19px;
+    }
 
-.logo-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
+    .logo-box{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      overflow:hidden;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+    }
 
-.brand h1{
-  font-size:20px;
-}
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
 
-.brand p{
-  color:var(--muted);
-  font-size:10px;
-}
+    .back-btn{
+      padding:10px 15px;
+      border-radius:12px;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+      color:#d9dcf2;
+      font-size:14px;
+    }
 
-.back{
-  text-decoration:none;
-  color:white;
-  padding:9px 14px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;
-  background:var(--card);
-}
+    .hero{
+      text-align:center;
+      padding:48px 0 30px;
+    }
 
-.hero{
-  text-align:center;
-  padding:40px 10px 25px;
-}
+    .badge{
+      display:inline-block;
+      padding:8px 15px;
+      border-radius:30px;
+      background:rgba(124,58,237,.12);
+      border:1px solid rgba(139,61,255,.25);
+      color:#c9b8ff;
+      font-size:13px;
+      margin-bottom:15px;
+    }
 
-.hero h2{
-  font-size:34px;
-  margin-bottom:10px;
-}
+    .hero h1{
+      font-size:clamp(30px,5vw,45px);
+      margin-bottom:12px;
+      background:linear-gradient(90deg,#fff,#c7b5ff,#ff8fd0);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
 
-.hero h2 span{
-  color:#ff63bc;
-}
+    .hero p{
+      color:#969dbd;
+      font-size:14px;
+      line-height:1.8;
+    }
 
-.hero p{
-  color:var(--muted);
-  line-height:1.7;
-}
+    /* ROLL BOX */
 
-.quiz-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:25px;
-}
+    .login-card{
+      max-width:650px;
+      margin:0 auto 35px;
+      padding:27px;
+      border-radius:24px;
+      background:linear-gradient(180deg,#11152d,#0c1025);
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow:0 20px 55px rgba(0,0,0,.25);
+    }
 
-.quiz-card{
-  background:linear-gradient(145deg,#11152f,#0c1025);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:22px;
-  transition:.25s;
-}
+    .login-title{
+      text-align:center;
+      margin-bottom:20px;
+    }
 
-.quiz-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(139,61,255,.5);
-}
+    .login-title .icon{
+      font-size:36px;
+      margin-bottom:8px;
+    }
 
-.icon{
-  width:55px;
-  height:55px;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  background:linear-gradient(135deg,#8b3dff,#ec3fa7);
-  margin-bottom:16px;
-}
+    .login-title h2{
+      font-size:21px;
+      margin-bottom:7px;
+    }
 
-.quiz-card h3{
-  font-size:19px;
-  margin-bottom:9px;
-}
+    .login-title p{
+      color:#858ca9;
+      font-size:12px;
+    }
 
-.quiz-card p{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:16px;
-}
+    .field label{
+      display:block;
+      color:#dce0f5;
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:8px;
+    }
 
-.info{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-}
+    .field input{
+      width:100%;
+      padding:15px;
+      border-radius:13px;
+      outline:none;
+      border:1px solid rgba(255,255,255,.08);
+      background:#080c20;
+      color:#fff;
+      font-size:15px;
+      text-align:center;
+      letter-spacing:1px;
+      font-family:inherit;
+    }
 
-.info span{
-  background:rgba(255,255,255,.06);
-  color:#c7c9d8;
-  padding:6px 9px;
-  border-radius:8px;
-  font-size:11px;
-}
+    .field input:focus{
+      border-color:#8b3dff;
+      box-shadow:0 0 0 3px rgba(139,61,255,.10);
+    }
 
-.start{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  font-weight:bold;
-  background:var(--gradient);
-  padding:12px;
-  border-radius:11px;
-}
+    .field input::placeholder{
+      color:#5f6684;
+      letter-spacing:0;
+    }
 
-.notice{
-  margin-top:25px;
-  padding:20px;
-  border-radius:18px;
-  text-align:center;
-  background:rgba(124,58,237,.10);
-  border:1px solid rgba(139,61,255,.20);
-}
+    .verify-btn{
+      width:100%;
+      border:0;
+      margin-top:15px;
+      padding:14px;
+      border-radius:13px;
+      background:linear-gradient(135deg,#7c3aed,#ec4899);
+      color:#fff;
+      font-family:inherit;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+    }
 
-.notice strong{
-  color:#ff63bc;
-}
+    .verify-message{
+      display:none;
+      margin-top:14px;
+      padding:12px;
+      border-radius:12px;
+      background:rgba(245,158,11,.07);
+      border:1px solid rgba(245,158,11,.16);
+      color:#ffd477;
+      font-size:12px;
+      text-align:center;
+      line-height:1.7;
+    }
 
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:35px 0 15px;
-}
+    /* QUIZ LIST */
 
-@media(max-width:800px){
-  .quiz-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
+    .section-heading{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin:35px 0 17px;
+    }
 
-@media(max-width:600px){
-  .app{
-    padding:0 14px 30px;
-  }
+    .section-heading h2{
+      font-size:20px;
+    }
 
-  header{
-    min-height:65px;
-  }
+    .section-heading span{
+      color:#777f9f;
+      font-size:12px;
+    }
 
-  .brand h1{
-    font-size:18px;
-  }
+    .quiz-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+      padding-bottom:70px;
+    }
 
-  .hero{
-    padding-top:30px;
-  }
+    .quiz-card{
+      background:linear-gradient(180deg,#11152d,#0d1128);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:22px;
+      padding:20px;
+      transition:.25s;
+    }
 
-  .hero h2{
-    font-size:28px;
-  }
+    .quiz-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(139,61,255,.35);
+    }
 
-  .quiz-grid{
-    grid-template-columns:1fr;
-  }
+    .quiz-top{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:17px;
+    }
 
-  .quiz-card{
-    padding:20px;
-  }
-}
-</style>
+    .quiz-icon{
+      width:58px;
+      height:58px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:29px;
+      background:linear-gradient(135deg,#29135d,#151a3b);
+      flex-shrink:0;
+    }
+
+    .quiz-top small{
+      display:block;
+      color:#a88cff;
+      font-size:11px;
+      margin-bottom:4px;
+    }
+
+    .quiz-top h3{
+      font-size:17px;
+      line-height:1.45;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin-bottom:16px;
+    }
+
+    .info{
+      padding:10px;
+      border-radius:11px;
+      background:#080c20;
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .info span{
+      display:block;
+      color:#686f8e;
+      font-size:10px;
+      margin-bottom:3px;
+    }
+
+    .info strong{
+      font-size:12px;
+      color:#e7e9f5;
+    }
+
+    .locked{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      background:#171b38;
+      color:#9da3c4;
+      border:1px solid rgba(255,255,255,.06);
+      text-align:center;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .start-btn{
+      display:none;
+      width:100%;
+      padding:13px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#fff;
+      text-align:center;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    /* NOTICE */
+
+    .notice{
+      margin-bottom:80px;
+      padding:20px;
+      border-radius:18px;
+      background:#0d1128;
+      border:1px solid rgba(255,255,255,.06);
+      text-align:center;
+      color:#858ca9;
+      font-size:12px;
+      line-height:1.8;
+    }
+
+    /* MOBILE */
+
+    .mobile-nav{
+      display:none;
+    }
+
+    @media(max-width:600px){
+
+      .header-inner{
+        min-height:64px;
+      }
+
+      .brand{
+        font-size:16px;
+      }
+
+      .logo-box{
+        width:43px;
+        height:43px;
+        border-radius:12px;
+      }
+
+      .back-btn{
+        padding:8px 11px;
+        font-size:12px;
+      }
+
+      .hero{
+        padding:35px 0 25px;
+      }
+
+      .hero h1{
+        font-size:30px;
+      }
+
+      .hero p{
+        font-size:13px;
+      }
+
+      .login-card{
+        padding:19px;
+        border-radius:20px;
+      }
+
+      .quiz-grid{
+        grid-template-columns:1fr;
+      }
+
+      .mobile-nav{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:100;
+        height:67px;
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+        background:rgba(8,11,28,.96);
+        backdrop-filter:blur(16px);
+        border-top:1px solid rgba(255,255,255,.08);
+      }
+
+      .mobile-nav a{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:4px;
+        color:#777f9f;
+        font-size:10px;
+      }
+
+      .mobile-nav a span{
+        font-size:20px;
+      }
+
+      .mobile-nav a.active{
+        color:#b999ff;
+      }
+
+      .notice{
+        margin-bottom:100px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="app">
+  <!-- HEADER -->
 
-<header>
-  <div class="brand">
-    <div class="logo-box">
-      <img src="file_0000000031b8821193be8a110779a350.png"
-           alt="জ্ঞানতরঙ্গ">
+  <header>
+    <div class="container header-inner">
+
+      <a href="index.html" class="brand">
+
+        <div class="logo-box">
+          <img
+            src="file_0000000031b8821193be8a110779a350.png"
+            alt="জ্ঞানতরঙ্গ লোগো">
+        </div>
+
+        <span>জ্ঞানতরঙ্গ</span>
+
+      </a>
+
+      <a href="index.html" class="back-btn">
+        ← হোম
+      </a>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="container">
+
+      <div class="badge">
+        🚀 পরীক্ষা দেওয়ার জন্য
+      </div>
+
+      <h1>কুইজ শুরু করুন</h1>
+
+      <p>
+        আপনার Registration Roll Number দিয়ে প্রবেশ করুন।
+        শুধুমাত্র অনুমোদিত শিক্ষার্থীরাই পরীক্ষা দিতে পারবেন।
+      </p>
+
     </div>
 
-    <div>
-      <h1>জ্ঞানতরঙ্গ</h1>
-      <p>শিখি · জানি · এগিয়ে যাই</p>
+  </section>
+
+
+  <!-- ROLL VERIFICATION -->
+
+  <main class="container">
+
+    <div class="login-card">
+
+      <div class="login-title">
+
+        <div class="icon">
+          🎫
+        </div>
+
+        <h2>
+          আপনার Roll Number দিন
+        </h2>
+
+        <p>
+          রেজিস্ট্রেশনের সময় পাওয়া Roll Number ব্যবহার করুন
+        </p>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Registration Roll Number
+        </label>
+
+        <input
+          type="text"
+          id="rollInput"
+          placeholder="যেমন: GT-26012345"
+          autocomplete="off">
+
+      </div>
+
+
+      <button
+        class="verify-btn"
+        onclick="verifyRoll()">
+
+        🔐 Roll যাচাই করুন
+
+      </button>
+
+
+      <div
+        class="verify-message"
+        id="verifyMessage">
+
+        ⚠️ বর্তমানে Roll যাচাই করার জন্য
+        Database সংযোগ প্রয়োজন।
+        Supabase যুক্ত হলে এখানে আপনার
+        Registration ও Approval স্বয়ংক্রিয়ভাবে যাচাই হবে।
+
+      </div>
+
     </div>
-  </div>
-
-  <a href="index.html" class="back">← হোম</a>
-</header>
 
 
-<section class="hero">
+    <!-- QUIZ LIST -->
 
-  <h2>📝 <span>কুইজ</span> নির্বাচন করুন</h2>
+    <div class="section-heading">
 
-  <p>
-    আপনার পছন্দের কুইজ বেছে নিন এবং নিজের জ্ঞান যাচাই করুন।
-  </p>
+      <h2>
+        📝 আপনার কুইজ
+      </h2>
 
-</section>
+      <span>
+        Approved Quiz
+      </span>
 
-
-<section class="quiz-grid">
-
-
-  <div class="quiz-card">
-
-    <div class="icon">🌍</div>
-
-    <h3>বাংলাদেশ বিষয়াবলি</h3>
-
-    <p>
-      বাংলাদেশের ইতিহাস, মুক্তিযুদ্ধ, ভূগোল ও গুরুত্বপূর্ণ তথ্য।
-    </p>
-
-    <div class="info">
-      <span>❓ ২০ প্রশ্ন</span>
-      <span>⏱️ ২০ মিনিট</span>
     </div>
 
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
+
+    <div class="quiz-grid">
+
+
+      <!-- QUIZ 1 -->
+
+      <article class="quiz-card">
+
+        <div class="quiz-top">
+
+          <div class="quiz-icon">
+            🧠
+          </div>
+
+          <div>
+
+            <small>
+              সাধারণ জ্ঞান
+            </small>
+
+            <h3>
+              বাংলাদেশ ও বিশ্ব সাধারণ জ্ঞান কুইজ
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info">
+            <span>📅 পরীক্ষা</span>
+            <strong>২৫ অক্টোবর ২০২৬</strong>
+          </div>
+
+          <div class="info">
+            <span>⏱️ সময়</span>
+            <strong>২০ মিনিট</strong>
+          </div>
+
+          <div class="info">
+            <span>❓ প্রশ্ন</span>
+            <strong>৫০টি</strong>
+          </div>
+
+          <div class="info">
+            <span>💰 ফি</span>
+            <strong>৳১০০</strong>
+          </div>
+
+        </div>
+
+
+        <div class="locked" id="lock1">
+          🔒 Roll যাচাই করার পর পরীক্ষা শুরু হবে
+        </div>
+
+        <a
+          href="exam.html"
+          class="start-btn"
+          id="start1">
+
+          🚀 পরীক্ষা শুরু করুন
+
+        </a>
+
+      </article>
+
+
+      <!-- QUIZ 2 -->
+
+      <article class="quiz-card">
+
+        <div class="quiz-top">
+
+          <div class="quiz-icon">
+            📖
+          </div>
+
+          <div>
+
+            <small>
+              বাংলা
+            </small>
+
+            <h3>
+              বাংলা ভাষা ও সাহিত্য কুইজ
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info">
+            <span>📅 পরীক্ষা</span>
+            <strong>৩০ অক্টোবর ২০২৬</strong>
+          </div>
+
+          <div class="info">
+            <span>⏱️ সময়</span>
+            <strong>২০ মিনিট</strong>
+          </div>
+
+          <div class="info">
+            <span>❓ প্রশ্ন</span>
+            <strong>৪০টি</strong>
+          </div>
+
+          <div class="info">
+            <span>💰 ফি</span>
+            <strong>ফ্রি</strong>
+          </div>
+
+        </div>
+
+
+        <div class="locked" id="lock2">
+          🔒 Roll যাচাই করার পর পরীক্ষা শুরু হবে
+        </div>
+
+        <a
+          href="exam.html"
+          class="start-btn"
+          id="start2">
+
+          🚀 পরীক্ষা শুরু করুন
+
+        </a>
+
+      </article>
+
+
+    </div>
+
+
+    <!-- NOTICE -->
+
+    <div class="notice">
+
+      <strong>
+        🔐 নিরাপত্তা ব্যবস্থা
+      </strong>
+
+      <br>
+
+      Registration Approved না হলে পরীক্ষায় প্রবেশ করা যাবে না।
+      একজন শিক্ষার্থী একটি কুইজে একবারই পরীক্ষা দিতে পারবে।
+      ফলাফল Admin প্রকাশ করার পর Roll Number দিয়ে দেখা যাবে।
+
+    </div>
+
+  </main>
+
+
+  <!-- MOBILE NAV -->
+
+  <nav class="mobile-nav">
+
+    <a href="index.html">
+      <span>🏠</span>
+      হোম
     </a>
 
-  </div>
-
-
-  <div class="quiz-card">
-
-    <div class="icon">🧠</div>
-
-    <h3>সাধারণ জ্ঞান</h3>
-
-    <p>
-      দেশ ও বিশ্বের গুরুত্বপূর্ণ সাধারণ জ্ঞান যাচাই করুন।
-    </p>
-
-    <div class="info">
-      <span>❓ ২০ প্রশ্ন</span>
-      <span>⏱️ ২০ মিনিট</span>
-    </div>
-
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
+    <a href="quiz.html" class="active">
+      <span>🚀</span>
+      কুইজ শুরু
     </a>
 
-  </div>
-
-
-  <div class="quiz-card">
-
-    <div class="icon">📖</div>
-
-    <h3>ইসলাম ও নৈতিক শিক্ষা</h3>
-
-    <p>
-      ইসলামিক জ্ঞান ও নৈতিক বিষয়ের উপর আপনার জ্ঞান পরীক্ষা করুন।
-    </p>
-
-    <div class="info">
-      <span>❓ ২০ প্রশ্ন</span>
-      <span>⏱️ ২০ মিনিট</span>
-    </div>
-
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
+    <a href="category.html">
+      <span>📚</span>
+      ক্যাটাগরি
     </a>
 
-  </div>
-
-
-  <div class="quiz-card">
-
-    <div class="icon">🔢</div>
-
-    <h3>গণিত</h3>
-
-    <p>
-      সহজ থেকে মাঝারি বিভিন্ন গণিত প্রশ্ন সমাধান করুন।
-    </p>
-
-    <div class="info">
-      <span>❓ ১৫ প্রশ্ন</span>
-      <span>⏱️ ১৫ মিনিট</span>
-    </div>
-
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
+    <a href="result.html">
+      <span>🏆</span>
+      ফলাফল
     </a>
 
-  </div>
-
-
-  <div class="quiz-card">
-
-    <div class="icon">🧪</div>
-
-    <h3>বিজ্ঞান</h3>
-
-    <p>
-      বিজ্ঞান বিষয়ের গুরুত্বপূর্ণ প্রশ্ন দিয়ে নিজেকে যাচাই করুন।
-    </p>
-
-    <div class="info">
-      <span>❓ ১৮ প্রশ্ন</span>
-      <span>⏱️ ১৮ মিনিট</span>
-    </div>
-
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
+    <a href="#">
+      <span>👤</span>
+      প্রোফাইল
     </a>
 
-  </div>
+  </nav>
 
 
-  <div class="quiz-card">
+  <script>
 
-    <div class="icon">💻</div>
+    function verifyRoll(){
 
-    <h3>কম্পিউটার</h3>
+      const roll =
+        document.getElementById("rollInput").value.trim();
 
-    <p>
-      কম্পিউটার ও প্রযুক্তি বিষয়ক বিভিন্ন প্রশ্নের উত্তর দিন।
-    </p>
+      const message =
+        document.getElementById("verifyMessage");
 
-    <div class="info">
-      <span>❓ ১৫ প্রশ্ন</span>
-      <span>⏱️ ১৫ মিনিট</span>
-    </div>
+      if(roll === ""){
 
-    <a href="exam.html" class="start">
-      🚀 কুইজ শুরু করুন
-    </a>
+        message.style.display = "block";
 
-  </div>
+        message.textContent =
+          "⚠️ অনুগ্রহ করে আপনার Registration Roll Number লিখুন।";
 
-</section>
+        return;
+      }
 
+      /*
+        এটি এখন Demo Verification।
 
-<div class="notice">
-  💡 <strong>পরামর্শ:</strong>
-  প্রতিটি প্রশ্ন মনোযোগ দিয়ে পড়ুন এবং নিজের জ্ঞান দিয়ে উত্তর দিন।
-</div>
+        Supabase সংযোগ করার পর এখানে:
+        1. Roll খুঁজবে
+        2. Registration আছে কি না দেখবে
+        3. Paid হলে Payment Approved কি না দেখবে
+        4. Quiz Approved কি না দেখবে
+        5. আগে পরীক্ষা দিয়েছে কি না দেখবে
+        6. সব ঠিক থাকলে Exam খুলবে
+      */
 
+      message.style.display = "block";
 
-<footer>
-  <strong>জ্ঞানতরঙ্গ</strong><br>
-  শিখি · জানি · এগিয়ে যাই<br><br>
-  © ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।
-</footer>
+      message.textContent =
+        "ℹ️ Roll যাচাইয়ের Database ব্যবস্থা এখনো সংযুক্ত করা হয়নি। Supabase সংযোগের পর আপনার Roll অনুযায়ী শুধু অনুমোদিত কুইজই এখানে খুলবে।";
 
-</div>
+    }
+
+  </script>
 
 </body>
-  </html>
+</html>
