@@ -235,7 +235,46 @@ header{
   color:white;
   border:1px solid rgba(255,255,255,.15);
 }
+.hero-buttons{
+  display:flex !important;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:24px;
+}
 
+.hero-btn{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  padding:15px 24px;
+  border-radius:16px;
+  text-decoration:none !important;
+  font-size:18px;
+  font-weight:700;
+  color:#fff !important;
+  box-sizing:border-box;
+}
+
+.hero-btn.primary{
+  background:linear-gradient(135deg,#7c3aed,#ec4899) !important;
+}
+
+.hero-btn.secondary{
+  background:#151a36 !important;
+}
+
+@media(max-width:700px){
+  .hero-buttons{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .hero-btn{
+    width:100%;
+    min-height:58px;
+  }
+  }
 </style>
 </head>
 
