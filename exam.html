@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>পরীক্ষা | জ্ঞানতরঙ্গ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#151a35;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f5fb;
+  --muted:#a9adc4;
+  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+body{
+  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top,rgba(124,58,237,.18),transparent 38%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  max-width:900px;
+  margin:auto;
+  padding:0 16px 40px;
+}
+
+header{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.logo-box{
+  width:45px;
+  height:45px;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand h1{
+  font-size:19px;
+}
+
+.brand p{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.timer{
+  background:rgba(236,63,167,.10);
+  border:1px solid rgba(236,63,167,.25);
+  color:#ff72c4;
+  padding:9px 13px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.progress-box{
+  margin-top:25px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  padding:15px;
+}
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.progress{
+  height:7px;
+  background:#252943;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  width:20%;
+  background:var(--gradient);
+  border-radius:20px;
+  transition:.3s;
+}
+
+.message{
+  margin-top:18px;
+  color:var(--muted);
+  text-align:center;
+  font-size:13px;
+}
+
+.question-card{
+  margin-top:18px;
+  background:linear-gradient(145deg,#11152f,#0c1025);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:25px;
+}
+
+.question-number{
+  color:#ff63bc;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:13px;
+}
+
+.question{
+  font-size:23px;
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.options{
+  display:grid;
+  gap:12px;
+}
+
+.option{
+  width:100%;
+  text-align:left;
+  padding:15px 17px;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.035);
+  color:white;
+  font-family:inherit;
+  font-size:15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.option:hover{
+  border-color:rgba(139,61,255,.7);
+  background:rgba(139,61,255,.10);
+}
+
+.option.selected{
+  background:rgba(139,61,255,.20);
+  border-color:#9a55ff;
+}
+
+.next-btn{
+  width:100%;
+  margin-top:22px;
+  border:none;
+  padding:15px;
+  border-radius:13px;
+  background:var(--gradient);
+  color:white;
+  font-family:inherit;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.next-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:30px 0;
+}
+
+@media(max-width:600px){
+  .app{
+    padding:0 13px 30px;
+  }
+
+  header{
+    min-height:65px;
+  }
+
+  .brand h1{
+    font-size:17px;
+  }
+
+  .timer{
+    font-size:12px;
+    padding:8px 10px;
+  }
+
+  .question-card{
+    padding:20px 16px;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+  .option{
+    font-size:14px;
+    padding:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+  <div class="brand">
+
+    <div class="logo-box">
+      <img
+        src="file_0000000031b8821193be8a110779a350.png"
+        alt="জ্ঞানতরঙ্গ">
+    </div>
+
+    <div>
+      <h1>জ্ঞানতরঙ্গ</h1>
+      <p>শিখি · জানি · এগিয়ে যাই</p>
+    </div>
+
+  </div>
+
+  <div class="timer">
+    ⏱️ <span id="timer">20:00</span>
+  </div>
+
+</header>
+
+
+<div class="progress-box">
+
+  <div class="progress-top">
+    <span id="progressText">প্রশ্ন ১ / ৫</span>
+    <span id="answered">০ উত্তর দেওয়া হয়েছে</span>
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+</div>
+
+
+<div class="message">
+  💡 মনোযোগ ধরে রাখুন। প্রতিটি প্রশ্ন আপনাকে সাফল্যের আরও কাছে নিয়ে যাচ্ছে।
+</div>
+
+
+<div class="question-card">
+
+  <div class="question-number" id="questionNumber">
+    প্রশ্ন ১
+  </div>
+
+  <div class="question" id="question">
+    বাংলাদেশের রাজধানী কোনটি?
+  </div>
+
+  <div class="options" id="options">
+
+    <button class="option" onclick="selectOption(this)">
+      ক) চট্টগ্রাম
+    </button>
+
+    <button class="option" onclick="selectOption(this)">
+      খ) ঢাকা
+    </button>
+
+    <button class="option" onclick="selectOption(this)">
+      গ) রাজশাহী
+    </button>
+
+    <button class="option" onclick="selectOption(this)">
+      ঘ) খুলনা
+    </button>
+
+  </div>
+
+  <button
+    class="next-btn"
+    id="nextBtn"
+    onclick="nextQuestion()"
+    disabled>
+    পরবর্তী প্রশ্ন →
+  </button>
+
+</div>
+
+
+<footer>
+  <strong>জ্ঞানতরঙ্গ</strong><br>
+  শিখি · জানি · এগিয়ে যাই
+</footer>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+  {
+    question:"বাংলাদেশের রাজধানী কোনটি?",
+    options:[
+      "ক) চট্টগ্রাম",
+      "খ) ঢাকা",
+      "গ) রাজশাহী",
+      "ঘ) খুলনা"
+    ],
+    answer:1
+  },
+
+  {
+    question:"বাংলাদেশের জাতীয় ফুল কোনটি?",
+    options:[
+      "ক) গোলাপ",
+      "খ) জবা",
+      "গ) শাপলা",
+      "ঘ) বেলি"
+    ],
+    answer:2
+  },
+
+  {
+    question:"বাংলাদেশের স্বাধীনতা দিবস কবে?",
+    options:[
+      "ক) ২১ ফেব্রুয়ারি",
+      "খ) ২৬ মার্চ",
+      "গ) ১৬ ডিসেম্বর",
+      "ঘ) ১৪ এপ্রিল"
+    ],
+    answer:1
+  },
+
+  {
+    question:"বাংলাদেশের বিজয় দিবস কবে?",
+    options:[
+      "ক) ২৬ মার্চ",
+      "খ) ২১ ফেব্রুয়ারি",
+      "গ) ১৬ ডিসেম্বর",
+      "ঘ) ১৫ আগস্ট"
+    ],
+    answer:2
+  },
+
+  {
+    question:"বাংলাদেশের জাতীয় কবি কে?",
+    options:[
+      "ক) রবীন্দ্রনাথ ঠাকুর",
+      "খ) কাজী নজরুল ইসলাম",
+      "গ) জীবনানন্দ দাশ",
+      "ঘ) জসীমউদ্দীন"
+    ],
+    answer:1
+  }
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let selected = false;
+let time = 1200;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nextBtn = document.getElementById("nextBtn");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+const answeredEl = document.getElementById("answered");
+const questionNumber = document.getElementById("questionNumber");
+const timerEl = document.getElementById("timer");
+
+
+function loadQuestion(){
+
+  selected = false;
+  nextBtn.disabled = true;
+
+  const q = questions[currentQuestion];
+
+  questionNumber.textContent =
+    "প্রশ্ন " + (currentQuestion + 1);
+
+  questionEl.textContent = q.question;
+
+  progressText.textContent =
+    "প্রশ্ন " +
+    (currentQuestion + 1) +
+    " / " +
+    questions.length;
+
+  progressBar.style.width =
+    ((currentQuestion + 1) / questions.length * 100) + "%";
+
+  answeredEl.textContent =
+    currentQuestion + " উত্তর দেওয়া হয়েছে";
+
+  optionsEl.innerHTML = "";
+
+  q.options.forEach(function(option,index){
+
+    const button = document.createElement("button");
+
+    button.className = "option";
+    button.textContent = option;
+
+    button.onclick = function(){
+      selectOption(button,index);
+    };
+
+    optionsEl.appendChild(button);
+
+  });
+
+}
+
+
+function selectOption(button,index){
+
+  if(selected) return;
+
+  selected = true;
+
+  const buttons =
+    document.querySelectorAll(".option");
+
+  buttons.forEach(function(btn){
+    btn.classList.remove("selected");
+  });
+
+  button.classList.add("selected");
+
+  if(index === questions[currentQuestion].answer){
+    score++;
+  }
+
+  nextBtn.disabled = false;
+}
+
+
+function nextQuestion(){
+
+  if(!selected) return;
+
+  currentQuestion++;
+
+  if(currentQuestion >= questions.length){
+
+    localStorage.setItem("quizScore",score);
+    localStorage.setItem("quizTotal",questions.length);
+
+    window.location.href = "result.html";
+
+    return;
+  }
+
+  loadQuestion();
+}
+
+
+function updateTimer(){
+
+  time--;
+
+  if(time <= 0){
+
+    localStorage.setItem("quizScore",score);
+    localStorage.setItem("quizTotal",questions.length);
+
+    window.location.href = "result.html";
+
+    return;
+  }
+
+  const minutes =
+    Math.floor(time / 60);
+
+  const seconds =
+    time % 60;
+
+  timerEl.textContent =
+    String(minutes).padStart(2,"0") +
+    ":" +
+    String(seconds).padStart(2,"0");
+
+}
+
+
+loadQuestion();
+
+setInterval(updateTimer,1000);
+
+</script>
+
+</body>
+  </html>
