@@ -1,347 +1,937 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>জ্ঞানতরঙ্গ | শিখি · জানি · এগিয়ে যাই</title>
 
-  <title>জ্ঞান তরঙ্গ | অনলাইন কুইজ প্ল্যাটফর্ম</title>
+<style>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body {
-      font-family: Arial, "Noto Sans Bengali", sans-serif;
-      background: #f4f7fb;
-      color: #172b25;
-      overflow-x: hidden;
-    }
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#151a35;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f5fb;
+  --muted:#a9adc4;
+  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+}
 
-    .container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-    }
+body{
+  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(124,58,237,.20),
+      transparent 38%
+    ),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    /* Header */
+.app{
+  max-width:1400px;
+  margin:auto;
+  padding:0 22px 100px;
+}
 
-    .header {
-      text-align: center;
-      padding: 20px 10px 25px;
-    }
+/* HEADER */
 
-    /* Logo */
+header{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
 
-    .logo {
-      width: 85%;
-      max-width: 280px;
-      margin: 0 auto 18px;
-    }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-    .logo img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+.logo-box{
+  width:50px;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
-    .tagline {
-      font-size: 16px;
-      color: #60706a;
-      margin-top: 8px;
-      line-height: 1.6;
-    }
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
 
-    /* Hero */
+.brand-text h1{
+  font-size:23px;
+  font-weight:800;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #0b6b4f, #159570);
-      color: white;
-      padding: 28px 22px;
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(11, 107, 79, 0.18);
-    }
+.brand-text p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
+}
 
-    .hero h1 {
-      font-size: 27px;
-      margin-bottom: 12px;
-    }
+.desktop-nav{
+  display:flex;
+  gap:7px;
+}
 
-    .hero p {
-      font-size: 16px;
-      line-height: 1.7;
-      opacity: 0.95;
-    }
+.nav-link{
+  color:var(--muted);
+  text-decoration:none;
+  padding:10px 13px;
+  border-radius:11px;
+  transition:.25s;
+}
 
-    .hero-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 22px;
-    }
+.nav-link:hover,
+.nav-link.active{
+  color:white;
+  background:rgba(236,63,167,.12);
+  border:1px solid rgba(236,63,167,.30);
+}
 
-    .btn {
-      border: none;
-      text-decoration: none;
-      padding: 14px 10px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      cursor: pointer;
-    }
+.profile{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:13px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.08);
+}
 
-    .btn-primary {
-      background: #ffd23f;
-      color: #1d2b25;
-    }
+.avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--gradient);
+}
 
-    .btn-secondary {
-      background: white;
-      color: #0b6b4f;
-    }
+/* HERO */
 
-    /* Section */
+.hero{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:24px;
+  padding:35px 0 25px;
+}
 
-    .section-title {
-      margin: 32px 0 16px;
-      text-align: center;
-      font-size: 22px;
-      color: #173f32;
-    }
+.hero-left{
+  position:relative;
+  padding:36px;
+  border-radius:26px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(23,20,55,.97),
+      rgba(10,12,30,.97)
+    );
+  border:1px solid rgba(139,61,255,.25);
+  overflow:hidden;
+}
 
-    /* Features */
+.hero-left:before{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  background:rgba(150,50,255,.16);
+  filter:blur(80px);
+  top:-150px;
+  right:-80px;
+}
 
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+.welcome-badge{
+  position:relative;
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:30px;
+  color:#ff8dcc;
+  background:rgba(236,63,167,.08);
+  border:1px solid rgba(236,63,167,.25);
+  margin-bottom:20px;
+}
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 20px 14px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    }
+.hero h2{
+  position:relative;
+  font-size:44px;
+  line-height:1.35;
+}
 
-    .card-icon {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
+.hero h2 span{
+  color:#ff63bc;
+}
 
-    .card h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-      color: #173f32;
-    }
+.hero-description{
+  position:relative;
+  max-width:650px;
+  margin-top:18px;
+  line-height:1.8;
+  color:var(--muted);
+  font-size:16px;
+}
 
-    .card p {
-      font-size: 13px;
-      color: #65736d;
-      line-height: 1.5;
-    }
+.hero-message{
+  position:relative;
+  margin-top:20px;
+  padding-left:14px;
+  border-left:3px solid var(--gold);
+  color:#e5e1ef;
+  line-height:1.7;
+}
 
-    /* Action */
+.hero-buttons{
+  position:relative;
+  display:flex;
+  gap:12px;
+  margin-top:26px;
+}
 
-    .action-box {
-      background: white;
-      margin-top: 28px;
-      padding: 22px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      text-align: center;
-    }
+.btn{
+  border:none;
+  padding:14px 21px;
+  border-radius:13px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
 
-    .action-box h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #173f32;
-    }
+.btn-primary{
+  background:var(--gradient);
+  color:white;
+  box-shadow:0 10px 30px rgba(236,63,167,.20);
+}
 
-    .action-box p {
-      color: #65736d;
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
+.btn-secondary{
+  background:transparent;
+  color:white;
+  border:1px solid rgba(255,255,255,.15);
+}
 
-    .full-btn {
-      display: block;
-      width: 100%;
-      background: #0b6b4f;
-      color: white;
-      text-decoration: none;
-      padding: 15px;
-      border-radius: 12px;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    /* Footer */
-
-    footer {
-      text-align: center;
-      margin-top: 35px;
-      color: #7a8782;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    @media (max-width: 380px) {
-      .hero h1 {
-        font-size: 23px;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .logo {
-        max-width: 240px;
-      }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="app">
 
-    <!-- Header -->
-    <header class="header">
+<header>
 
-      <div class="logo">
-        <img
-          src="file_0000000031b8821193be8a110779a350.png"
-          alt="জ্ঞান তরঙ্গ লোগো"
-        >
-      </div>
+<div class="brand">
 
-      <p class="tagline">
-        শিখুন • জানুন • এগিয়ে যান
-      </p>
+<div class="logo-box">
+<img
+src="file_0000000031b8821193be8a110779a350.png"
+alt="জ্ঞানতরঙ্গ লোগো">
+</div>
 
-    </header>
+<div class="brand-text">
+<h1>জ্ঞানতরঙ্গ</h1>
+<p>শিখি · জানি · এগিয়ে যাই</p>
+</div>
+
+</div>
+
+<nav class="desktop-nav">
+
+<a href="#" class="nav-link active">🏠 হোম</a>
+<a href="#" class="nav-link">📝 কুইজ</a>
+<a href="#" class="nav-link">📚 ক্যাটাগরি</a>
+<a href="#" class="nav-link">🏆 ফলাফল</a>
+
+</nav>
+
+<div class="profile">
+<div class="avatar">👤</div>
+<span>প্রোফাইল</span>
+</div>
+
+  </header><style>
+
+.today-card{
+  padding:26px;
+  border-radius:24px;
+  background:linear-gradient(180deg,#12152e,#0c1024);
+  border:1px solid rgba(139,61,255,.25);
+}
+
+.section-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.section-top h3{
+  font-size:22px;
+}
+
+.view-all{
+  color:#ff63bc;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.quiz-mini{
+  padding:20px;
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.quiz-icon{
+  width:54px;
+  height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:17px;
+  background:var(--gradient);
+  font-size:24px;
+  margin-bottom:14px;
+}
+
+.quiz-mini h4{
+  font-size:20px;
+}
+
+.quiz-info{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:14px 0;
+}
+
+.quiz-info span{
+  padding:7px 10px;
+  border-radius:9px;
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  font-size:13px;
+}
+
+.join-btn{
+  width:100%;
+  margin-top:15px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:15px;
+  font-weight:700;
+  background:var(--gradient);
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:38px;
+}
+
+.stat-card{
+  padding:22px;
+  border-radius:19px;
+  background:linear-gradient(145deg,var(--card2),var(--card));
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.stat-icon{
+  font-size:27px;
+  margin-bottom:10px;
+}
+
+.stat-number{
+  font-size:28px;
+  font-weight:800;
+}
+
+.stat-title{
+  color:var(--muted);
+  margin-top:4px;
+  font-size:14px;
+}
+
+/* CATEGORY */
+
+.categories{
+  margin-top:20px;
+}
+
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+}
+
+.category-card{
+  padding:23px 14px;
+  text-align:center;
+  border-radius:19px;
+  background:linear-gradient(145deg,#151831,#0d1024);
+  border:1px solid rgba(168,85,247,.20);
+  cursor:pointer;
+}
+
+.category-icon{
+  font-size:36px;
+  margin-bottom:13px;
+}
+
+.category-card h4{
+  font-size:16px;
+  line-height:1.5;
+}
+
+.category-card p{
+  color:var(--muted);
+  margin-top:7px;
+  font-size:13px;
+}
+
+</style>
 
 
-    <!-- Hero -->
-    <section class="hero">
+<!-- TODAY QUIZ -->
 
-      <h1>জ্ঞান দিয়ে এগিয়ে চলুন</h1>
+<section class="hero">
 
-      <p>
-        অনলাইন কুইজ, পরীক্ষা ও শিক্ষামূলক কার্যক্রমের
-        একটি সহজ এবং আধুনিক প্ল্যাটফর্ম।
-      </p>
+<div class="hero-left">
 
-      <div class="hero-buttons">
+<div class="welcome-badge">
+✨ জ্ঞানের যাত্রায় স্বাগতম!
+</div>
 
-        <a href="#" class="btn btn-primary">
-          📝 কুইজ শুরু করুন
-        </a>
+<h2>
+শিখুন প্রতিদিন,
+<br>
+<span>নিজেকে গড়ুন নতুনভাবে</span>
+</h2>
 
-        <a href="#" class="btn btn-secondary">
-          🏆 ফলাফল দেখুন
-        </a>
+<p class="hero-description">
+জ্ঞানতরঙ্গ একটি আধুনিক শিক্ষামূলক কুইজ প্ল্যাটফর্ম।
+এখানে আপনি শিখতে পারবেন, নিজের জ্ঞান যাচাই করতে পারবেন
+এবং প্রতিদিন নিজেকে আরও এক ধাপ এগিয়ে নিতে পারবেন।
+</p>
 
-      </div>
+<p class="hero-message">
+💡 আজকের একটি প্রশ্ন হতে পারে আগামীকালের
+একটি সাফল্যের শুরু।
+</p>
 
-    </section>
+<div class="hero-buttons">
 
+<a href="#" class="btn btn-primary">
+🚀 কুইজ শুরু করুন
+</a>
 
-    <!-- Features -->
-    <h2 class="section-title">
-      আমাদের সেবাসমূহ
-    </h2>
+<a href="#" class="btn btn-secondary">
+📚 ক্যাটাগরি দেখুন
+</a>
 
-    <section class="features">
+</div>
 
-      <div class="card">
-        <div class="card-icon">📝</div>
-
-        <h3>অনলাইন কুইজ</h3>
-
-        <p>
-          বিভিন্ন বিষয়ে কুইজে অংশগ্রহণ করুন।
-        </p>
-      </div>
-
-
-      <div class="card">
-        <div class="card-icon">📚</div>
-
-        <h3>অনলাইন পরীক্ষা</h3>
-
-        <p>
-          নির্ধারিত সময়ে অনলাইন পরীক্ষা দিন।
-        </p>
-      </div>
+</div>
 
 
-      <div class="card">
-        <div class="card-icon">🏆</div>
+<div class="today-card">
 
-        <h3>ফলাফল</h3>
+<div class="section-top">
 
-        <p>
-          দ্রুত আপনার ফলাফল ও স্কোর দেখুন।
-        </p>
-      </div>
+<h3>আজকের কুইজ</h3>
+
+<a href="#" class="view-all">
+সব দেখুন →
+</a>
+
+</div>
+
+<div class="quiz-mini">
+
+<div class="quiz-icon">
+📖
+</div>
+
+<h4>
+বাংলাদেশ বিষয়াবলি
+</h4>
+
+<div class="quiz-info">
+
+<span>❓ ২০ প্রশ্ন</span>
+
+<span>⏱ ২০ মিনিট</span>
+
+</div>
+
+<p style="color:var(--muted);line-height:1.7;">
+নিজের জ্ঞান যাচাই করুন এবং নতুন কিছু শেখার সুযোগ নিন।
+</p>
+
+<button class="join-btn">
+এখনই অংশগ্রহণ করুন
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 
-      <div class="card">
-        <div class="card-icon">📊</div>
+<!-- STATS -->
 
-        <h3>র‍্যাংকিং</h3>
+<section class="stats">
 
-        <p>
-          সেরা শিক্ষার্থীদের অবস্থান দেখুন।
-        </p>
-      </div>
+<div class="stat-card">
 
-    </section>
+<div class="stat-icon">🎓</div>
 
+<div class="stat-number">
+১০০০+
+</div>
 
-    <!-- Action -->
+<div class="stat-title">
+শিক্ষার্থী
+</div>
 
-    <section class="action-box">
-
-      <h2>আজই শুরু করুন</h2>
-
-      <p>
-        জ্ঞানতরঙ্গে নিবন্ধন করুন এবং
-        আপনার শেখার যাত্রা শুরু করুন।
-      </p>
-
-      <a href="#" class="full-btn">
-        👨‍🎓 শিক্ষার্থী নিবন্ধন
-      </a>
-
-      <a href="#" class="full-btn">
-        🔐 লগইন করুন
-      </a>
-
-    </section>
+</div>
 
 
-    <!-- Footer -->
+<div class="stat-card">
 
-    <footer>
-      © 2026 জ্ঞান তরঙ্গ<br>
-      জ্ঞান • শিক্ষা • অগ্রগতি
-    </footer>
+<div class="stat-icon">📚</div>
 
-  </div>
+<div class="stat-number">
+৫০+
+</div>
+
+<div class="stat-title">
+কুইজ
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">📋</div>
+
+<div class="stat-number">
+৫০০০+
+</div>
+
+<div class="stat-title">
+প্রশ্ন
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">🏆</div>
+
+<div class="stat-number">
+৯৫%
+</div>
+
+<div class="stat-title">
+সন্তুষ্টির হার
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORY -->
+
+<section class="categories">
+
+<div class="section-top">
+
+<h3>
+কুইজ ক্যাটাগরি
+</h3>
+
+<a href="#" class="view-all">
+সব দেখুন →
+</a>
+
+</div>
+
+
+<div class="category-grid">
+
+
+<div class="category-card">
+
+<div class="category-icon">🌍</div>
+
+<h4>
+বাংলাদেশ বিষয়াবলি
+</h4>
+
+<p>
+২৫টি কুইজ
+</p>
+
+</div>
+
+
+<div class="category-card">
+
+<div class="category-icon">🧠</div>
+
+<h4>
+সাধারণ জ্ঞান
+</h4>
+
+<p>
+৩০টি কুইজ
+</p>
+
+</div>
+
+
+<div class="category-card">
+
+<div class="category-icon">📖</div>
+
+<h4>
+ইসলাম ও নৈতিক শিক্ষা
+</h4>
+
+<p>
+২০টি কুইজ
+</p>
+
+</div>
+
+
+<div class="category-card">
+
+<div class="category-icon">🔢</div>
+
+<h4>
+গণিত
+</h4>
+
+<p>
+১৫টি কুইজ
+</p>
+
+</div>
+
+
+<div class="category-card">
+
+<div class="category-icon">🧪</div>
+
+<h4>
+বিজ্ঞান
+</h4>
+
+<p>
+১৮টি কুইজ
+</p>
+
+</div>
+
+
+</div>
+
+  
+<style>
+
+/* MOTIVATION */
+
+.motivation{
+  margin-top:34px;
+  padding:30px 22px;
+  text-align:center;
+  border-radius:23px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.22),
+      rgba(236,63,167,.12)
+    );
+  border:1px solid rgba(236,63,167,.20);
+}
+
+.motivation h3{
+  font-size:25px;
+  margin-bottom:10px;
+}
+
+.motivation p{
+  color:#d1d3e0;
+  font-size:15px;
+  line-height:1.8;
+}
+
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  margin-top:45px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+
+/* MOBILE NAV */
+
+.mobile-nav{
+  display:none;
+}
+
+
+/* TABLET */
+
+@media(max-width:1000px){
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .category-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .app{
+    padding:0 14px 95px;
+  }
+
+  header{
+    min-height:68px;
+  }
+
+  .logo-box{
+    width:45px;
+    height:45px;
+  }
+
+  .brand-text h1{
+    font-size:19px;
+  }
+
+  .brand-text p{
+    font-size:10px;
+  }
+
+  .desktop-nav{
+    display:none;
+  }
+
+  .profile span{
+    display:none;
+  }
+
+  .hero{
+    padding-top:22px;
+  }
+
+  .hero-left{
+    padding:27px 19px;
+  }
+
+  .hero h2{
+    font-size:33px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+  }
+
+  .stat-card{
+    padding:18px;
+  }
+
+  .stat-number{
+    font-size:24px;
+  }
+
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+  }
+
+  .category-card{
+    padding:19px 10px;
+  }
+
+  .category-card h4{
+    font-size:14px;
+  }
+
+  .mobile-nav{
+    position:fixed;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:72px;
+
+    background:rgba(8,10,25,.97);
+
+    border-top:
+      1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    z-index:999;
+  }
+
+  .mobile-nav a{
+    color:var(--muted);
+    text-decoration:none;
+    text-align:center;
+    font-size:11px;
+  }
+
+  .mobile-nav a span{
+    display:block;
+    font-size:19px;
+    margin-top:3px;
+  }
+
+  .mobile-nav a.active{
+    color:#ff63bc;
+  }
+
+}
+
+</style>
+
+
+<!-- MOTIVATION -->
+
+<section class="motivation">
+
+  <h3>
+    🌟 আজকের অনুপ্রেরণা
+  </h3>
+
+  <p>
+    জ্ঞানই আপনার সবচেয়ে বড় শক্তি।
+    আজকের একটি প্রশ্ন হতে পারে
+    আগামীকালের একটি সাফল্যের শুরু।
+    তাই শিখুন, চেষ্টা করুন এবং এগিয়ে যান।
+  </p>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <strong>জ্ঞানতরঙ্গ</strong>
+
+  <br>
+
+  শিখি · জানি · এগিয়ে যাই
+
+  <br>
+
+  © ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।
+
+</footer>
+
+
+</div>
+
+
+<!-- MOBILE NAVIGATION -->
+
+<nav class="mobile-nav">
+
+  <a href="#" class="active">
+    🏠
+    <span>হোম</span>
+  </a>
+
+  <a href="#">
+    📝
+    <span>কুইজ</span>
+  </a>
+
+  <a href="#">
+    📚
+    <span>ক্যাটাগরি</span>
+  </a>
+
+  <a href="#">
+    🏆
+    <span>ফলাফল</span>
+  </a>
+
+  <a href="#">
+    👤
+    <span>প্রোফাইল</span>
+  </a>
+
+</nav>
+
 
 </body>
-</html>
+  </html>
