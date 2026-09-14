@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>কুইজের তথ্য | জ্ঞানতরঙ্গ</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(124,58,237,.18), transparent 35%),
+        #060817;
+      color:#fff;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .container{
+      width:min(1120px, 92%);
+      margin:auto;
+    }
+
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(6,8,23,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .header-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:800;
+      font-size:19px;
+    }
+
+    .logo-box{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .back-btn{
+      padding:10px 15px;
+      border-radius:12px;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+      color:#d9dcf2;
+      font-size:14px;
+    }
+
+    /* HERO */
+    .hero{
+      padding:55px 0 35px;
+      text-align:center;
+    }
+
+    .hero-badge{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:30px;
+      background:rgba(124,58,237,.12);
+      border:1px solid rgba(139,61,255,.25);
+      color:#c8b5ff;
+      font-size:13px;
+      margin-bottom:17px;
+    }
+
+    .hero h1{
+      font-size:clamp(30px,5vw,48px);
+      line-height:1.2;
+      margin-bottom:14px;
+      background:linear-gradient(90deg,#fff,#c7b5ff,#ff8fd0);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero p{
+      max-width:680px;
+      margin:auto;
+      color:#9da3c4;
+      font-size:15px;
+      line-height:1.8;
+    }
+
+    /* QUIZ GRID */
+    .quiz-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+      padding:15px 0 70px;
+    }
+
+    .quiz-card{
+      background:
+        linear-gradient(180deg,rgba(20,24,51,.96),rgba(13,17,39,.96));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 15px 45px rgba(0,0,0,.22);
+      transition:.3s ease;
+    }
+
+    .quiz-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(139,61,255,.35);
+      box-shadow:0 18px 55px rgba(124,58,237,.13);
+    }
+
+    .quiz-image{
+      height:190px;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(135deg,#171c42,#31146b);
+    }
+
+    .quiz-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .image-placeholder{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:58px;
+      background:
+        radial-gradient(circle at 30% 30%,rgba(139,61,255,.35),transparent 45%),
+        linear-gradient(135deg,#11152d,#24114c);
+    }
+
+    .status{
+      position:absolute;
+      top:14px;
+      left:14px;
+      padding:7px 11px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:700;
+      background:rgba(34,197,94,.14);
+      color:#6ee7a0;
+      border:1px solid rgba(34,197,94,.25);
+    }
+
+    .card-body{
+      padding:20px;
+    }
+
+    .category-name{
+      color:#a88cff;
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .card-body h2{
+      font-size:20px;
+      margin-bottom:10px;
+      line-height:1.4;
+    }
+
+    .description{
+      color:#969dbd;
+      font-size:13px;
+      line-height:1.7;
+      margin-bottom:18px;
+      min-height:45px;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .info{
+      background:#0b0f25;
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:12px;
+      padding:10px;
+    }
+
+    .info span{
+      display:block;
+      color:#777f9f;
+      font-size:11px;
+      margin-bottom:4px;
+    }
+
+    .info strong{
+      font-size:13px;
+      color:#e9ebf8;
+    }
+
+    .prize{
+      padding:13px 14px;
+      border-radius:13px;
+      margin-bottom:17px;
+      background:rgba(245,158,11,.08);
+      border:1px solid rgba(245,158,11,.16);
+      color:#ffd477;
+      font-size:13px;
+    }
+
+    .register-btn{
+      width:100%;
+      display:block;
+      text-align:center;
+      padding:13px 15px;
+      border-radius:13px;
+      background:linear-gradient(135deg,#7c3aed,#ec4899);
+      color:#fff;
+      font-weight:800;
+      font-size:14px;
+      transition:.25s;
+    }
+
+    .register-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 28px rgba(139,61,255,.25);
+    }
+
+    /* NOTE */
+    .notice{
+      margin-bottom:80px;
+      padding:22px;
+      border-radius:20px;
+      background:#0d1128;
+      border:1px solid rgba(255,255,255,.07);
+      text-align:center;
+    }
+
+    .notice h3{
+      margin-bottom:8px;
+      font-size:18px;
+    }
+
+    .notice p{
+      color:#8e95b5;
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    /* MOBILE NAV */
+    .mobile-nav{
+      display:none;
+    }
+
+    @media(max-width:850px){
+      .quiz-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:600px){
+
+      .header-inner{
+        min-height:64px;
+      }
+
+      .brand{
+        font-size:16px;
+      }
+
+      .logo-box{
+        width:43px;
+        height:43px;
+        border-radius:12px;
+      }
+
+      .back-btn{
+        padding:8px 11px;
+        font-size:12px;
+      }
+
+      .hero{
+        padding:38px 0 25px;
+      }
+
+      .hero h1{
+        font-size:30px;
+      }
+
+      .hero p{
+        font-size:13px;
+      }
+
+      .quiz-grid{
+        grid-template-columns:1fr;
+        gap:18px;
+        padding-bottom:45px;
+      }
+
+      .quiz-image{
+        height:185px;
+      }
+
+      .mobile-nav{
+        position:fixed;
+        left:0;
+        right:0;
+        bottom:0;
+        z-index:200;
+        height:67px;
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+        background:rgba(8,11,28,.96);
+        backdrop-filter:blur(16px);
+        border-top:1px solid rgba(255,255,255,.08);
+      }
+
+      .mobile-nav a{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:4px;
+        color:#777f9f;
+        font-size:10px;
+      }
+
+      .mobile-nav a span{
+        font-size:20px;
+      }
+
+      .mobile-nav a.active{
+        color:#b999ff;
+      }
+
+      .notice{
+        margin-bottom:100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+
+      <a href="index.html" class="brand">
+        <div class="logo-box">
+          <img
+            src="file_0000000031b8821193be8a110779a350.png"
+            alt="জ্ঞানতরঙ্গ লোগো">
+        </div>
+
+        <span>জ্ঞানতরঙ্গ</span>
+      </a>
+
+      <a href="index.html" class="back-btn">
+        ← হোমে ফিরে যান
+      </a>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+
+      <div class="hero-badge">
+        📚 কুইজের বিস্তারিত তথ্য
+      </div>
+
+      <h1>কোন কুইজে অংশ নেবেন?</h1>
+
+      <p>
+        আপনার পছন্দের কুইজ সম্পর্কে বিস্তারিত তথ্য দেখুন।
+        কুইজের সময়, রেজিস্ট্রেশন শেষ হওয়ার তারিখ,
+        ফি, পুরস্কারসহ সব তথ্য এখানে পাওয়া যাবে।
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- QUIZ LIST -->
+  <main class="container">
+
+    <div class="quiz-grid">
+
+
+      <!-- QUIZ 1 -->
+      <article class="quiz-card">
+
+        <div class="quiz-image">
+
+          <div class="image-placeholder">
+            🧠
+          </div>
+
+          <div class="status">
+            🟢 রেজিস্ট্রেশন চলছে
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <div class="category-name">
+            সাধারণ জ্ঞান
+          </div>
+
+          <h2>
+            বাংলাদেশ ও বিশ্ব সাধারণ জ্ঞান কুইজ
+          </h2>
+
+          <p class="description">
+            বাংলাদেশ ও বিশ্বের গুরুত্বপূর্ণ বিষয়ের উপর
+            মজার ও জ্ঞানমূলক কুইজ।
+          </p>
+
+          <div class="info-grid">
+
+            <div class="info">
+              <span>📅 পরীক্ষা</span>
+              <strong>২৫ অক্টোবর ২০২৬</strong>
+            </div>
+
+            <div class="info">
+              <span>⏳ রেজিস্ট্রেশন</span>
+              <strong>২০ অক্টোবর পর্যন্ত</strong>
+            </div>
+
+            <div class="info">
+              <span>❓ প্রশ্ন</span>
+              <strong>৫০টি</strong>
+            </div>
+
+            <div class="info">
+              <span>💰 ফি</span>
+              <strong>৳১০০</strong>
+            </div>
+
+          </div>
+
+          <div class="prize">
+            🏆 পুরস্কার: ১ম — ৳৫,০০০ | ২য় — ৳৩,০০০ | ৩য় — ৳২,০০০
+          </div>
+
+          <a href="registration.html" class="register-btn">
+            📝 কুইজে রেজিস্ট্রেশন করুন
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- QUIZ 2 -->
+      <article class="quiz-card">
+
+        <div class="quiz-image">
+
+          <div class="image-placeholder">
+            📖
+          </div>
+
+          <div class="status">
+            🟢 রেজিস্ট্রেশন চলছে
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <div class="category-name">
+            বাংলা
+          </div>
+
+          <h2>
+            বাংলা ভাষা ও সাহিত্য কুইজ
+          </h2>
+
+          <p class="description">
+            বাংলা ভাষা, সাহিত্য, কবিতা ও বিখ্যাত লেখকদের
+            নিয়ে বিশেষ আয়োজন।
+          </p>
+
+          <div class="info-grid">
+
+            <div class="info">
+              <span>📅 পরীক্ষা</span>
+              <strong>৩০ অক্টোবর ২০২৬</strong>
+            </div>
+
+            <div class="info">
+              <span>⏳ রেজিস্ট্রেশন</span>
+              <strong>২৭ অক্টোবর পর্যন্ত</strong>
+            </div>
+
+            <div class="info">
+              <span>❓ প্রশ্ন</span>
+              <strong>৪০টি</strong>
+            </div>
+
+            <div class="info">
+              <span>💰 ফি</span>
+              <strong>ফ্রি</strong>
+            </div>
+
+          </div>
+
+          <div class="prize">
+            🏆 পুরস্কার: সেরা ১০ জনের জন্য বিশেষ সম্মাননা
+          </div>
+
+          <a href="registration.html" class="register-btn">
+            📝 কুইজে রেজিস্ট্রেশন করুন
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- QUIZ 3 -->
+      <article class="quiz-card">
+
+        <div class="quiz-image">
+
+          <div class="image-placeholder">
+            🔬
+          </div>
+
+          <div class="status">
+            🟡 শীঘ্রই শুরু
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <div class="category-name">
+            বিজ্ঞান
+          </div>
+
+          <h2>
+            বিজ্ঞান ও প্রযুক্তি কুইজ
+          </h2>
+
+          <p class="description">
+            বিজ্ঞান ও আধুনিক প্রযুক্তির গুরুত্বপূর্ণ
+            বিষয় নিয়ে প্রতিযোগিতামূলক কুইজ।
+          </p>
+
+          <div class="info-grid">
+
+            <div class="info">
+              <span>📅 পরীক্ষা</span>
+              <strong>৫ নভেম্বর ২০২৬</strong>
+            </div>
+
+            <div class="info">
+              <span>⏳ রেজিস্ট্রেশন</span>
+              <strong>১ নভেম্বর পর্যন্ত</strong>
+            </div>
+
+            <div class="info">
+              <span>❓ প্রশ্ন</span>
+              <strong>৫০টি</strong>
+            </div>
+
+            <div class="info">
+              <span>💰 ফি</span>
+              <strong>৳৫০</strong>
+            </div>
+
+          </div>
+
+          <div class="prize">
+            🏆 পুরস্কার: বিজয়ীদের জন্য আকর্ষণীয় পুরস্কার
+          </div>
+
+          <a href="registration.html" class="register-btn">
+            📝 কুইজে রেজিস্ট্রেশন করুন
+          </a>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+
+    <!-- NOTICE -->
+    <div class="notice">
+
+      <h3>💡 অংশগ্রহণের আগে তথ্য দেখে নিন</h3>
+
+      <p>
+        প্রতিটি কুইজের রেজিস্ট্রেশন সময়, ফি এবং পরীক্ষার
+        তারিখ ভালোভাবে দেখে রেজিস্ট্রেশন করুন।
+        রেজিস্ট্রেশন সম্পন্ন হলে আপনাকে একটি ইউনিক
+        Roll Number দেওয়া হবে। সেই Roll Number ব্যবহার
+        করেই পরবর্তীতে পরীক্ষায় অংশগ্রহণ ও ফলাফল দেখা যাবে।
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav">
+
+    <a href="index.html">
+      <span>🏠</span>
+      হোম
+    </a>
+
+    <a href="quiz.html">
+      <span>🚀</span>
+      কুইজ শুরু
+    </a>
+
+    <a href="category.html" class="active">
+      <span>📚</span>
+      ক্যাটাগরি
+    </a>
+
+    <a href="result.html">
+      <span>🏆</span>
+      ফলাফল
+    </a>
+
+    <a href="#">
+      <span>👤</span>
+      প্রোফাইল
+    </a>
+
+  </nav>
+
+</body>
+  </html>
