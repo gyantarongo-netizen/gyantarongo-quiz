@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>জ্ঞানতরঙ্গ | অনলাইন কুইজ ও পরীক্ষা</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, "Noto Sans Bengali", sans-serif;
+      background: #f5f7f6;
+      color: #172b25;
+    }
+
+    .hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, #0fa77d55, transparent 35%),
+        linear-gradient(135deg, #062c24, #0b5544);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .logo-area {
+      text-align: center;
+      margin-bottom: 35px;
+      color: white;
+    }
+
+    .logo {
+      width: 82px;
+      height: 82px;
+      margin: auto;
+      margin-bottom: 15px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffd23f, #ff9f1c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+    }
+
+    .logo-area h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .logo-area p {
+      color: #c9ded8;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .main-card {
+      background: rgba(255,255,255,.96);
+      border-radius: 30px;
+      padding: 28px 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.25);
+    }
+
+    .main-card h2 {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .main-card .subtitle {
+      text-align: center;
+      color: #687771;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .info-card {
+      background: #f1faf7;
+      border: 1px solid #d7eee6;
+      padding: 17px;
+      border-radius: 18px;
+      margin-bottom: 14px;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .info-card span {
+      color: #65746e;
+      font-size: 15px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      border: none;
+      text-decoration: none;
+      text-align: center;
+      padding: 18px;
+      border-radius: 18px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: .2s;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #0b9a72, #05765a);
+      color: white;
+      box-shadow: 0 10px 25px rgba(5,118,90,.25);
+    }
+
+    .secondary-btn {
+      background: #fff;
+      border: 2px solid #0b9a72;
+      color: #087354;
+    }
+
+    .result-btn {
+      background: #fff8e7;
+      color: #9b6200;
+      border: 1px solid #f5d487;
+    }
+
+    .features {
+      padding: 55px 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .feature {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .feature-icon {
+      width: 55px;
+      height: 55px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      background: #e6f8f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .feature p {
+      color: #74807b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #062c24;
+      color: #d6e7e1;
+      text-align: center;
+      padding: 30px 20px;
+      line-height: 1.8;
+    }
+
+    footer strong {
+      display: block;
+      color: #ffd23f;
+      font-size: 19px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+
+    <div class="container">
+
+      <div class="logo-area">
+        <div class="logo">📚</div>
+
+        <h1>জ্ঞানতরঙ্গ</h1>
+
+        <p>
+          অনলাইন কুইজ, পরীক্ষা ও শিক্ষার
+          আধুনিক প্ল্যাটফর্ম
+        </p>
+      </div>
+
+
+      <div class="main-card">
+
+        <h2>জ্ঞানকে করুন চ্যালেঞ্জ</h2>
+
+        <p class="subtitle">
+          বিভিন্ন বিষয়ের কুইজ ও পরীক্ষায় অংশগ্রহণ করুন
+          এবং নিজের দক্ষতা যাচাই করুন।
+        </p>
+
+
+        <div class="info-card">
+          <strong>📝 অনলাইন কুইজ</strong>
+          <span>বিভিন্ন বিষয়ের আকর্ষণীয় কুইজে অংশগ্রহণ করুন</span>
+        </div>
+
+
+        <div class="info-card">
+          <strong>🏆 পরীক্ষা ও ফলাফল</strong>
+          <span>পরীক্ষা দিন এবং সহজেই নিজের ফলাফল দেখুন</span>
+        </div>
+
+
+        <div class="info-card">
+          <strong>🎓 শিক্ষার্থীদের জন্য</strong>
+          <span>জ্ঞান বৃদ্ধি ও দক্ষতা যাচাইয়ের একটি সুন্দর প্ল্যাটফর্ম</span>
+        </div>
+
+
+        <a href="#" class="btn primary-btn">
+          রেজিস্ট্রেশন করুন →
+        </a>
+
+        <a href="#" class="btn secondary-btn">
+          লগইন করুন
+        </a>
+
+        <a href="#" class="btn result-btn">
+          🏆 ফলাফল দেখুন
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="features">
+
+    <h2>কেন জ্ঞানতরঙ্গ?</h2>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">⚡</div>
+
+      <div>
+        <h3>সহজে কুইজ দিন</h3>
+        <p>মোবাইল থেকেই দ্রুত ও সহজে কুইজে অংশগ্রহণ করুন।</p>
+      </div>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">📊</div>
+
+      <div>
+        <h3>তাৎক্ষণিক ফলাফল</h3>
+        <p>পরীক্ষা শেষ হওয়ার পর নিজের ফলাফল ও স্কোর দেখুন।</p>
+      </div>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">🏅</div>
+
+      <div>
+        <h3>র‌্যাংকিং ও অর্জন</h3>
+        <p>নিজের পারফরম্যান্স যাচাই করুন এবং আরও ভালো করার চেষ্টা করুন।</p>
+      </div>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="feature-icon">🔒</div>
+
+      <div>
+        <h3>নিরাপদ প্ল্যাটফর্ম</h3>
+        <p>শিক্ষার্থী ও পরীক্ষার তথ্য নিরাপদভাবে পরিচালনার ব্যবস্থা।</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+
+    <strong>জ্ঞানতরঙ্গ</strong>
+
+    <p>
+      অনলাইন কুইজ ও পরীক্ষা প্ল্যাটফর্ম
+    </p>
+
+    <p>
+      © ২০২৬ জ্ঞানতরঙ্গ — সর্বস্বত্ব সংরক্ষিত
+    </p>
+
+  </footer>
+
+</body>
+</html>
