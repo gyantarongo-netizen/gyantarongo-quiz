@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ফলাফল | জ্ঞানতরঙ্গ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f5fb;
+  --muted:#a9adc4;
+  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+body{
+  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top,rgba(124,58,237,.20),transparent 40%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  max-width:700px;
+  margin:auto;
+  padding:0 16px 40px;
+}
+
+header{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.logo-box{
+  width:45px;
+  height:45px;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand h1{
+  font-size:20px;
+}
+
+.brand p{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.result-card{
+  margin-top:40px;
+  padding:35px 25px;
+  text-align:center;
+  background:linear-gradient(145deg,#151536,#0d1027);
+  border:1px solid rgba(139,61,255,.25);
+  border-radius:26px;
+  box-shadow:0 20px 60px rgba(0,0,0,.30);
+}
+
+.trophy{
+  font-size:65px;
+  margin-bottom:15px;
+}
+
+.result-card h2{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+.score-circle{
+  width:170px;
+  height:170px;
+  margin:30px auto;
+  border-radius:50%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle,#11152d 58%,transparent 59%),
+    var(--gradient);
+}
+
+.score-number{
+  font-size:42px;
+  font-weight:800;
+}
+
+.score-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  padding:16px 8px;
+  border-radius:14px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.stat strong{
+  display:block;
+  font-size:20px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.message{
+  margin-top:25px;
+  padding:17px;
+  border-radius:14px;
+  background:rgba(47,214,138,.08);
+  border:1px solid rgba(47,214,138,.18);
+  color:#b8f4d8;
+  line-height:1.7;
+  font-size:13px;
+}
+
+.buttons{
+  display:grid;
+  gap:11px;
+  margin-top:25px;
+}
+
+.btn{
+  display:block;
+  text-decoration:none;
+  padding:14px;
+  border-radius:12px;
+  font-weight:bold;
+  color:white;
+}
+
+.primary{
+  background:var(--gradient);
+}
+
+.secondary{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:30px 0;
+}
+
+@media(max-width:500px){
+
+  .result-card{
+    margin-top:25px;
+    padding:28px 17px;
+  }
+
+  .result-card h2{
+    font-size:26px;
+  }
+
+  .score-circle{
+    width:150px;
+    height:150px;
+  }
+
+  .score-number{
+    font-size:36px;
+  }
+
+  .stats{
+    gap:7px;
+  }
+
+  .stat{
+    padding:14px 5px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+  <div class="brand">
+
+    <div class="logo-box">
+      <img
+        src="file_0000000031b8821193be8a110779a350.png"
+        alt="জ্ঞানতরঙ্গ">
+    </div>
+
+    <div>
+      <h1>জ্ঞানতরঙ্গ</h1>
+      <p>শিখি · জানি · এগিয়ে যাই</p>
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="result-card">
+
+  <div class="trophy" id="trophy">🏆</div>
+
+  <h2 id="title">অভিনন্দন!</h2>
+
+  <p class="subtitle" id="subtitle">
+    আপনার কুইজের ফলাফল প্রস্তুত।
+  </p>
+
+
+  <div class="score-circle">
+
+    <div class="score-number" id="score">
+      ০
+    </div>
+
+    <div class="score-label">
+      মোট নম্বর
+    </div>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      <strong id="correct">০</strong>
+      <span>সঠিক উত্তর</span>
+    </div>
+
+    <div class="stat">
+      <strong id="wrong">০</strong>
+      <span>ভুল উত্তর</span>
+    </div>
+
+    <div class="stat">
+      <strong id="percent">০%</strong>
+      <span>শতকরা</span>
+    </div>
+
+  </div>
+
+
+  <div class="message" id="message">
+    🌟 এভাবেই এগিয়ে যান!
+  </div>
+
+
+  <div class="buttons">
+
+    <a href="quiz.html" class="btn primary">
+      🔄 আবার কুইজ দিন
+    </a>
+
+    <a href="index.html" class="btn secondary">
+      🏠 হোমে ফিরে যান
+    </a>
+
+  </div>
+
+</section>
+
+
+<footer>
+  <strong>জ্ঞানতরঙ্গ</strong><br>
+  শিখি · জানি · এগিয়ে যাই<br><br>
+  © ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।
+</footer>
+
+</div>
+
+
+<script>
+
+const score =
+  Number(localStorage.getItem("quizScore")) || 0;
+
+const total =
+  Number(localStorage.getItem("quizTotal")) || 5;
+
+const wrong =
+  total - score;
+
+const percent =
+  Math.round((score / total) * 100);
+
+
+document.getElementById("score").textContent =
+  score + " / " + total;
+
+document.getElementById("correct").textContent =
+  score;
+
+document.getElementById("wrong").textContent =
+  wrong;
+
+document.getElementById("percent").textContent =
+  percent + "%";
+
+
+if(percent >= 80){
+
+  document.getElementById("trophy").textContent = "🏆";
+
+  document.getElementById("title").textContent =
+    "অভিনন্দন! 🎉";
+
+  document.getElementById("subtitle").textContent =
+    "আপনার পরিশ্রম সত্যিই দারুণ ফল দিয়েছে।";
+
+  document.getElementById("message").textContent =
+    "🌟 অসাধারণ! আপনার জ্ঞান ও প্রস্তুতি প্রশংসনীয়। এভাবেই এগিয়ে যান!";
+
+}
+else if(percent >= 50){
+
+  document.getElementById("trophy").textContent = "🥈";
+
+  document.getElementById("title").textContent =
+    "খুব ভালো! 👍";
+
+  document.getElementById("subtitle").textContent =
+    "আপনি ভালো করেছেন। আরও একটু চেষ্টা করলে আরও ভালো হবে।";
+
+  document.getElementById("message").textContent =
+    "💪 নিয়মিত অনুশীলন করুন। আপনার সাফল্য আরও কাছে!";
+
+}
+else{
+
+  document.getElementById("trophy").textContent = "🌱";
+
+  document.getElementById("title").textContent =
+    "আবার চেষ্টা করুন!";
+
+  document.getElementById("subtitle").textContent =
+    "হতাশ হবেন না—প্রতিটি ভুল নতুন কিছু শেখার সুযোগ।";
+
+  document.getElementById("message").textContent =
+    "📚 ভুলগুলো থেকে শিখুন এবং আবার চেষ্টা করুন। আপনি পারবেন!";
+
+}
+
+</script>
+
+</body>
+</html>
