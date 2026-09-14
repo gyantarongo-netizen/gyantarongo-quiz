@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>কুইজে রেজিস্ট্রেশন | জ্ঞানতরঙ্গ</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali","Hind Siliguri",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right,rgba(124,58,237,.18),transparent 35%),
+        #060817;
+      color:#fff;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .container{
+      width:min(900px,92%);
+      margin:auto;
+    }
+
+    header{
+      background:rgba(6,8,23,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .header-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:800;
+      font-size:19px;
+    }
+
+    .logo-box{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      overflow:hidden;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .back-btn{
+      padding:10px 15px;
+      border-radius:12px;
+      background:#10142b;
+      border:1px solid rgba(255,255,255,.08);
+      color:#d9dcf2;
+      font-size:14px;
+    }
+
+    .hero{
+      text-align:center;
+      padding:45px 0 25px;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:8px 15px;
+      border-radius:30px;
+      background:rgba(124,58,237,.12);
+      border:1px solid rgba(139,61,255,.25);
+      color:#c9b8ff;
+      font-size:13px;
+      margin-bottom:15px;
+    }
+
+    .hero h1{
+      font-size:clamp(30px,5vw,44px);
+      margin-bottom:12px;
+      background:linear-gradient(90deg,#fff,#c7b5ff,#ff8fd0);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero p{
+      color:#969dbd;
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .form-card{
+      background:linear-gradient(180deg,#11152d,#0c1025);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:25px;
+      padding:28px;
+      margin-bottom:70px;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .quiz-summary{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      padding:17px;
+      border-radius:18px;
+      background:#0a0e22;
+      border:1px solid rgba(255,255,255,.06);
+      margin-bottom:25px;
+    }
+
+    .quiz-icon{
+      width:62px;
+      height:62px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:32px;
+      background:linear-gradient(135deg,#29135d,#151a3b);
+      flex-shrink:0;
+    }
+
+    .quiz-summary small{
+      display:block;
+      color:#9d8cff;
+      font-size:12px;
+      margin-bottom:5px;
+    }
+
+    .quiz-summary h2{
+      font-size:18px;
+      line-height:1.4;
+    }
+
+    .section-title{
+      font-size:17px;
+      margin:25px 0 15px;
+      padding-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .field{
+      margin-bottom:17px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      color:#dce0f5;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    label span{
+      color:#ff7ebd;
+    }
+
+    input,
+    select{
+      width:100%;
+      padding:14px 15px;
+      border-radius:13px;
+      outline:none;
+      border:1px solid rgba(255,255,255,.08);
+      background:#080c20;
+      color:#fff;
+      font-size:14px;
+      font-family:inherit;
+    }
+
+    input:focus,
+    select:focus{
+      border-color:#8b3dff;
+      box-shadow:0 0 0 3px rgba(139,61,255,.10);
+    }
+
+    input::placeholder{
+      color:#5f6684;
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .payment-box{
+      padding:20px;
+      border-radius:18px;
+      background:rgba(245,158,11,.06);
+      border:1px solid rgba(245,158,11,.15);
+      margin-top:8px;
+    }
+
+    .payment-title{
+      color:#ffd477;
+      font-weight:800;
+      margin-bottom:12px;
+      font-size:15px;
+    }
+
+    .payment-info{
+      display:grid;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    .payment-info div{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      color:#9da3c4;
+      font-size:13px;
+    }
+
+    .payment-info strong{
+      color:#fff;
+    }
+
+    .free-box{
+      display:none;
+      padding:17px;
+      border-radius:16px;
+      background:rgba(34,197,94,.07);
+      border:1px solid rgba(34,197,94,.16);
+      color:#8ff0b5;
+      font-size:13px;
+      line-height:1.7;
+      margin-top:10px;
+    }
+
+    .terms{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin:22px 0;
+      color:#8f96b5;
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .terms input{
+      width:18px;
+      height:18px;
+      margin-top:2px;
+      flex-shrink:0;
+      accent-color:#8b3dff;
+    }
+
+    .submit-btn{
+      width:100%;
+      border:0;
+      padding:15px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#7c3aed,#ec4899);
+      color:#fff;
+      font-family:inherit;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 12px 30px rgba(124,58,237,.18);
+    }
+
+    .submit-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .success{
+      display:none;
+      text-align:center;
+      padding:35px 20px;
+    }
+
+    .success-icon{
+      width:75px;
+      height:75px;
+      margin:0 auto 18px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:38px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+    }
+
+    .success h2{
+      font-size:25px;
+      margin-bottom:10px;
+    }
+
+    .success p{
+      color:#969dbd;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .roll-box{
+      margin:20px auto;
+      max-width:300px;
+      padding:17px;
+      border-radius:16px;
+      background:#080c20;
+      border:1px solid rgba(139,61,255,.25);
+    }
+
+    .roll-box small{
+      display:block;
+      color:#858ca9;
+      margin-bottom:5px;
+    }
+
+    .roll-box strong{
+      font-size:25px;
+      color:#c5a8ff;
+      letter-spacing:1px;
+    }
+
+    .home-btn{
+      display:inline-block;
+      margin-top:10px;
+      padding:12px 20px;
+      border-radius:12px;
+      background:#171b38;
+      border:1px solid rgba(255,255,255,.08);
+      font-size:13px;
+    }
+
+    .notice{
+      margin-top:18px;
+      color:#777f9f;
+      font-size:11px;
+      text-align:center;
+      line-height:1.7;
+    }
+
+    @media(max-width:600px){
+
+      .header-inner{
+        min-height:64px;
+      }
+
+      .brand{
+        font-size:16px;
+      }
+
+      .logo-box{
+        width:43px;
+        height:43px;
+        border-radius:12px;
+      }
+
+      .back-btn{
+        padding:8px 11px;
+        font-size:12px;
+      }
+
+      .hero{
+        padding:35px 0 22px;
+      }
+
+      .hero h1{
+        font-size:29px;
+      }
+
+      .hero p{
+        font-size:13px;
+      }
+
+      .form-card{
+        padding:18px;
+        border-radius:20px;
+        margin-bottom:35px;
+      }
+
+      .two-col{
+        grid-template-columns:1fr;
+        gap:0;
+      }
+
+      .quiz-summary{
+        padding:13px;
+      }
+
+      .quiz-icon{
+        width:52px;
+        height:52px;
+        font-size:26px;
+      }
+
+      .quiz-summary h2{
+        font-size:15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-inner">
+
+      <a href="index.html" class="brand">
+        <div class="logo-box">
+          <img
+            src="file_0000000031b8821193be8a110779a350.png"
+            alt="জ্ঞানতরঙ্গ লোগো">
+        </div>
+
+        <span>জ্ঞানতরঙ্গ</span>
+      </a>
+
+      <a href="category.html" class="back-btn">
+        ← কুইজের তথ্য
+      </a>
+
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+
+      <div class="badge">
+        📝 কুইজ রেজিস্ট্রেশন
+      </div>
+
+      <h1>কুইজে রেজিস্ট্রেশন করুন</h1>
+
+      <p>
+        সঠিক তথ্য দিয়ে ফর্মটি পূরণ করুন।
+        রেজিস্ট্রেশন সম্পন্ন হলে আপনার জন্য একটি
+        ইউনিক Roll Number তৈরি করা হবে।
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- FORM -->
+  <main class="container">
+
+    <div class="form-card" id="registrationCard">
+
+      <!-- QUIZ SUMMARY -->
+      <div class="quiz-summary">
+
+        <div class="quiz-icon">
+          🧠
+        </div>
+
+        <div>
+          <small>নির্বাচিত কুইজ</small>
+
+          <h2>
+            বাংলাদেশ ও বিশ্ব সাধারণ জ্ঞান কুইজ
+          </h2>
+        </div>
+
+      </div>
+
+
+      <form id="registrationForm">
+
+        <!-- STUDENT INFO -->
+        <h3 class="section-title">
+          👤 শিক্ষার্থীর তথ্য
+        </h3>
+
+        <div class="two-col">
+
+          <div class="field">
+            <label>
+              পূর্ণ নাম <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              id="studentName"
+              placeholder="আপনার পূর্ণ নাম লিখুন"
+              required>
+          </div>
+
+
+          <div class="field">
+            <label>
+              মোবাইল নম্বর <span>*</span>
+            </label>
+
+            <input
+              type="tel"
+              id="mobile"
+              placeholder="01XXXXXXXXX"
+              required>
+          </div>
+
+        </div>
+
+
+        <div class="two-col">
+
+          <div class="field">
+            <label>
+              ই-মেইল
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              placeholder="example@gmail.com">
+          </div>
+
+
+          <div class="field">
+            <label>
+              শিক্ষা প্রতিষ্ঠান
+            </label>
+
+            <input
+              type="text"
+              id="institution"
+              placeholder="প্রতিষ্ঠানের নাম">
+          </div>
+
+        </div>
+
+
+        <!-- PAYMENT -->
+        <h3 class="section-title">
+          💳 পেমেন্ট তথ্য
+        </h3>
+
+        <div class="payment-box">
+
+          <div class="payment-title">
+            💰 এই কুইজের রেজিস্ট্রেশন ফি: ৳১০০
+          </div>
+
+          <div class="payment-info">
+
+            <div>
+              <span>Payment Method</span>
+              <strong>bKash</strong>
+            </div>
+
+            <div>
+              <span>যে নম্বরে টাকা পাঠাবেন</span>
+              <strong>01XXXXXXXXX</strong>
+            </div>
+
+            <div>
+              <span>Amount</span>
+              <strong>৳১০০</strong>
+            </div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              যে নম্বর থেকে টাকা পাঠিয়েছেন <span>*</span>
+            </label>
+
+            <input
+              type="tel"
+              id="paymentNumber"
+              placeholder="01XXXXXXXXX"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              TRX ID <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              id="trxId"
+              placeholder="যেমন: 8A7B6C5D4E"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              Payment Screenshot
+            </label>
+
+            <input
+              type="file"
+              id="paymentScreenshot"
+              accept="image/*">
+
+          </div>
+
+        </div>
+
+
+        <!-- TERMS -->
+        <label class="terms">
+
+          <input
+            type="checkbox"
+            id="agree"
+            required>
+
+          <span>
+            আমি নিশ্চিত করছি যে, আমি সঠিক তথ্য প্রদান করেছি
+            এবং কুইজের সকল নিয়ম ও শর্ত মেনে অংশগ্রহণ করব।
+          </span>
+
+        </label>
+
+
+        <button
+          type="submit"
+          class="submit-btn">
+          📝 রেজিস্ট্রেশন সম্পন্ন করুন
+        </button>
+
+
+        <div class="notice">
+          আপনার পেমেন্ট তথ্য Admin যাচাই করার পর
+          Registration Approved হবে। Approved হওয়ার
+          পর আপনার Roll Number দিয়ে পরীক্ষায় অংশ নিতে পারবেন।
+        </div>
+
+      </form>
+
+
+      <!-- SUCCESS -->
+      <div class="success" id="successBox">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          রেজিস্ট্রেশন সফল!
+        </h2>
+
+        <p>
+          আপনার রেজিস্ট্রেশন গ্রহণ করা হয়েছে।
+          পেমেন্ট যাচাই হওয়ার পর আপনার Registration
+          Approved হবে।
+        </p>
+
+        <div class="roll-box">
+
+          <small>
+            আপনার Registration Roll
+          </small>
+
+          <strong id="rollNumber">
+            GT-26001
+          </strong>
+
+        </div>
+
+        <p>
+          এই Roll Number নিরাপদে সংরক্ষণ করুন।
+          ভবিষ্যতে পরীক্ষা ও ফলাফল দেখার জন্য
+          এটি প্রয়োজন হবে।
+        </p>
+
+        <a href="index.html" class="home-btn">
+          🏠 হোমে ফিরে যান
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    const form = document.getElementById("registrationForm");
+
+    form.addEventListener("submit", function(event){
+
+      event.preventDefault();
+
+      const randomNumber =
+        Math.floor(10000 + Math.random() * 90000);
+
+      const roll =
+        "GT-26" + randomNumber;
+
+      document.getElementById("rollNumber").textContent = roll;
+
+      form.style.display = "none";
+
+      document.getElementById("successBox").style.display = "block";
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
