@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>কুইজ | জ্ঞানতরঙ্গ</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#151a35;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f5fb;
+  --muted:#a9adc4;
+  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+body{
+  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top,rgba(124,58,237,.18),transparent 38%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  max-width:1200px;
+  margin:auto;
+  padding:0 18px 40px;
+}
+
+header{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-box{
+  width:45px;
+  height:45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand h1{
+  font-size:20px;
+}
+
+.brand p{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.back{
+  text-decoration:none;
+  color:white;
+  padding:9px 14px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  background:var(--card);
+}
+
+.hero{
+  text-align:center;
+  padding:40px 10px 25px;
+}
+
+.hero h2{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero h2 span{
+  color:#ff63bc;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.quiz-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:25px;
+}
+
+.quiz-card{
+  background:linear-gradient(145deg,#11152f,#0c1025);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:22px;
+  transition:.25s;
+}
+
+.quiz-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(139,61,255,.5);
+}
+
+.icon{
+  width:55px;
+  height:55px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  background:linear-gradient(135deg,#8b3dff,#ec3fa7);
+  margin-bottom:16px;
+}
+
+.quiz-card h3{
+  font-size:19px;
+  margin-bottom:9px;
+}
+
+.quiz-card p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:16px;
+}
+
+.info{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.info span{
+  background:rgba(255,255,255,.06);
+  color:#c7c9d8;
+  padding:6px 9px;
+  border-radius:8px;
+  font-size:11px;
+}
+
+.start{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+  font-weight:bold;
+  background:var(--gradient);
+  padding:12px;
+  border-radius:11px;
+}
+
+.notice{
+  margin-top:25px;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+  background:rgba(124,58,237,.10);
+  border:1px solid rgba(139,61,255,.20);
+}
+
+.notice strong{
+  color:#ff63bc;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:35px 0 15px;
+}
+
+@media(max-width:800px){
+  .quiz-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:600px){
+  .app{
+    padding:0 14px 30px;
+  }
+
+  header{
+    min-height:65px;
+  }
+
+  .brand h1{
+    font-size:18px;
+  }
+
+  .hero{
+    padding-top:30px;
+  }
+
+  .hero h2{
+    font-size:28px;
+  }
+
+  .quiz-grid{
+    grid-template-columns:1fr;
+  }
+
+  .quiz-card{
+    padding:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="brand">
+    <div class="logo-box">
+      <img src="file_0000000031b8821193be8a110779a350.png"
+           alt="জ্ঞানতরঙ্গ">
+    </div>
+
+    <div>
+      <h1>জ্ঞানতরঙ্গ</h1>
+      <p>শিখি · জানি · এগিয়ে যাই</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="back">← হোম</a>
+</header>
+
+
+<section class="hero">
+
+  <h2>📝 <span>কুইজ</span> নির্বাচন করুন</h2>
+
+  <p>
+    আপনার পছন্দের কুইজ বেছে নিন এবং নিজের জ্ঞান যাচাই করুন।
+  </p>
+
+</section>
+
+
+<section class="quiz-grid">
+
+
+  <div class="quiz-card">
+
+    <div class="icon">🌍</div>
+
+    <h3>বাংলাদেশ বিষয়াবলি</h3>
+
+    <p>
+      বাংলাদেশের ইতিহাস, মুক্তিযুদ্ধ, ভূগোল ও গুরুত্বপূর্ণ তথ্য।
+    </p>
+
+    <div class="info">
+      <span>❓ ২০ প্রশ্ন</span>
+      <span>⏱️ ২০ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="icon">🧠</div>
+
+    <h3>সাধারণ জ্ঞান</h3>
+
+    <p>
+      দেশ ও বিশ্বের গুরুত্বপূর্ণ সাধারণ জ্ঞান যাচাই করুন।
+    </p>
+
+    <div class="info">
+      <span>❓ ২০ প্রশ্ন</span>
+      <span>⏱️ ২০ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="icon">📖</div>
+
+    <h3>ইসলাম ও নৈতিক শিক্ষা</h3>
+
+    <p>
+      ইসলামিক জ্ঞান ও নৈতিক বিষয়ের উপর আপনার জ্ঞান পরীক্ষা করুন।
+    </p>
+
+    <div class="info">
+      <span>❓ ২০ প্রশ্ন</span>
+      <span>⏱️ ২০ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="icon">🔢</div>
+
+    <h3>গণিত</h3>
+
+    <p>
+      সহজ থেকে মাঝারি বিভিন্ন গণিত প্রশ্ন সমাধান করুন।
+    </p>
+
+    <div class="info">
+      <span>❓ ১৫ প্রশ্ন</span>
+      <span>⏱️ ১৫ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="icon">🧪</div>
+
+    <h3>বিজ্ঞান</h3>
+
+    <p>
+      বিজ্ঞান বিষয়ের গুরুত্বপূর্ণ প্রশ্ন দিয়ে নিজেকে যাচাই করুন।
+    </p>
+
+    <div class="info">
+      <span>❓ ১৮ প্রশ্ন</span>
+      <span>⏱️ ১৮ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="icon">💻</div>
+
+    <h3>কম্পিউটার</h3>
+
+    <p>
+      কম্পিউটার ও প্রযুক্তি বিষয়ক বিভিন্ন প্রশ্নের উত্তর দিন।
+    </p>
+
+    <div class="info">
+      <span>❓ ১৫ প্রশ্ন</span>
+      <span>⏱️ ১৫ মিনিট</span>
+    </div>
+
+    <a href="exam.html" class="start">
+      🚀 কুইজ শুরু করুন
+    </a>
+
+  </div>
+
+</section>
+
+
+<div class="notice">
+  💡 <strong>পরামর্শ:</strong>
+  প্রতিটি প্রশ্ন মনোযোগ দিয়ে পড়ুন এবং নিজের জ্ঞান দিয়ে উত্তর দিন।
+</div>
+
+
+<footer>
+  <strong>জ্ঞানতরঙ্গ</strong><br>
+  শিখি · জানি · এগিয়ে যাই<br><br>
+  © ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।
+</footer>
+
+</div>
+
+</body>
+  </html>
