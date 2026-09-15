@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Category Management | জ্ঞানতরঙ্গ</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans Bengali",
+    "Noto Sans",
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(124,58,237,.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(236,72,153,.10),
+      transparent 30%
+    ),
+    #060817;
+
+  color:#fff;
+  min-height:100vh;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  height:70px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  background:rgba(8,11,28,.92);
+  backdrop-filter:blur(18px);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-box{
+  width:45px;
+  height:45px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#10142b;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  overflow:hidden;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+.brand-subtitle{
+  font-size:11px;
+  color:#8f96b3;
+  margin-top:3px;
+}
+
+.back-btn{
+  text-decoration:none;
+  color:#fff;
+
+  padding:10px 14px;
+
+  border-radius:12px;
+
+  background:#11152d;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  font-size:13px;
+  font-weight:700;
+}
+
+.container{
+  width:min(1050px,100%);
+  margin:auto;
+
+  padding:25px 16px 45px;
+}
+
+.page-heading{
+  margin-bottom:22px;
+}
+
+.page-heading h1{
+  font-size:27px;
+}
+
+.page-heading p{
+  margin-top:7px;
+  color:#8f96b3;
+  font-size:14px;
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card{
+  background:
+    linear-gradient(
+      145deg,
+      #11152d,
+      #0c1024
+    );
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius:21px;
+
+  padding:21px;
+
+  margin-bottom:25px;
+}
+
+.form-title{
+  font-size:18px;
+  font-weight:800;
+
+  margin-bottom:17px;
+}
+
+.form-grid{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:15px;
+}
+
+.form-group{
+  margin-bottom:2px;
+}
+
+.form-group.full{
+  grid-column:1 / -1;
+}
+
+.form-group label{
+  display:block;
+
+  margin-bottom:7px;
+
+  color:#d9dced;
+
+  font-size:13px;
+  font-weight:700;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+
+  color:#fff;
+
+  background:#090d20;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius:13px;
+
+  outline:none;
+
+  font-size:14px;
+
+  padding:12px 14px;
+}
+
+.form-group input{
+  height:48px;
+}
+
+.form-group textarea{
+  min-height:95px;
+  resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:#8b3dff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(124,58,237,.12);
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+
+  margin-top:17px;
+}
+
+.primary-btn,
+.cancel-btn{
+  min-height:47px;
+
+  padding:0 19px;
+
+  border-radius:13px;
+
+  border:none;
+
+  color:#fff;
+
+  font-weight:800;
+
+  cursor:pointer;
+}
+
+.primary-btn{
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #ec4899
+    );
+
+  box-shadow:
+    0 8px 22px
+    rgba(124,58,237,.22);
+}
+
+.cancel-btn{
+  background:#191d38;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  display:none;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+  display:none;
+
+  padding:12px 14px;
+
+  border-radius:12px;
+
+  margin-bottom:17px;
+
+  font-size:13px;
+
+  line-height:1.5;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.success{
+  background:rgba(34,197,94,.10);
+  border:
+    1px solid rgba(34,197,94,.22);
+  color:#80f0a6;
+}
+
+.message.error{
+  background:rgba(239,68,68,.10);
+  border:
+    1px solid rgba(239,68,68,.22);
+  color:#ff9b9b;
+}
+
+
+/* =========================
+   LIST
+========================= */
+
+.list-heading{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:13px;
+}
+
+.list-heading h2{
+  font-size:19px;
+}
+
+.total-badge{
+  padding:6px 10px;
+
+  border-radius:9px;
+
+  background:
+    rgba(124,58,237,.12);
+
+  border:
+    1px solid rgba(124,58,237,.20);
+
+  color:#c6a8ff;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+.category-list{
+  display:grid;
+  gap:12px;
+}
+
+.category-card{
+  display:flex;
+  align-items:center;
+
+  gap:15px;
+
+  padding:16px;
+
+  border-radius:17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #11152d,
+      #0c1024
+    );
+
+  border:
+    1px solid rgba(255,255,255,.08);
+}
+
+.category-icon{
+  flex:0 0 52px;
+
+  width:52px;
+  height:52px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:15px;
+
+  font-size:24px;
+
+  background:
+    rgba(124,58,237,.12);
+
+  border:
+    1px solid rgba(124,58,237,.18);
+}
+
+.category-info{
+  min-width:0;
+  flex:1;
+}
+
+.category-name{
+  font-size:16px;
+  font-weight:800;
+
+  word-break:break-word;
+}
+
+.category-description{
+  margin-top:4px;
+
+  color:#858ca8;
+
+  font-size:12px;
+
+  line-height:1.5;
+
+  word-break:break-word;
+}
+
+.category-meta{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+
+  gap:6px;
+
+  margin-top:7px;
+}
+
+.badge{
+  display:inline-flex;
+
+  padding:4px 8px;
+
+  border-radius:7px;
+
+  font-size:10px;
+
+  font-weight:800;
+}
+
+.badge.active{
+  color:#7ff0a5;
+  background:rgba(34,197,94,.10);
+}
+
+.badge.inactive{
+  color:#ffb1b1;
+  background:rgba(239,68,68,.10);
+}
+
+.badge.order{
+  color:#c7b0ff;
+  background:rgba(124,58,237,.10);
+}
+
+.category-actions{
+  display:flex;
+
+  gap:7px;
+
+  flex-shrink:0;
+}
+
+.action-btn{
+  width:39px;
+  height:39px;
+
+  border-radius:11px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  background:#181c37;
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-size:16px;
+}
+
+.action-btn:hover{
+  border-color:
+    rgba(139,61,255,.45);
+}
+
+.action-btn.delete:hover{
+  border-color:
+    rgba(239,68,68,.45);
+}
+
+.empty{
+  text-align:center;
+
+  padding:45px 20px;
+
+  border-radius:18px;
+
+  background:#10142b;
+
+  border:
+    1px solid rgba(255,255,255,.07);
+
+  color:#858ca8;
+}
+
+.empty-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  text-align:center;
+
+  padding:35px;
+
+  color:#858ca8;
+
+  font-size:14px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:650px){
+
+  .header{
+    height:64px;
+    padding:0 12px;
+  }
+
+  .logo-box{
+    width:40px;
+    height:40px;
+  }
+
+  .brand-title{
+    font-size:15px;
+  }
+
+  .brand-subtitle{
+    font-size:10px;
+  }
+
+  .back-btn{
+    padding:8px 10px;
+    font-size:11px;
+  }
+
+  .container{
+    padding:
+      20px 12px 35px;
+  }
+
+  .page-heading h1{
+    font-size:23px;
+  }
+
+  .form-card{
+    padding:17px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .form-actions{
+    flex-direction:column;
+  }
+
+  .primary-btn,
+  .cancel-btn{
+    width:100%;
+  }
+
+  .category-card{
+    align-items:flex-start;
+    padding:14px;
+  }
+
+  .category-icon{
+    flex-basis:46px;
+    width:46px;
+    height:46px;
+    font-size:21px;
+  }
+
+  .category-actions{
+    flex-direction:column;
+  }
+
+  .action-btn{
+    width:36px;
+    height:36px;
+  }
+}
+</style>
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+  <div class="brand">
+
+    <div class="logo-box">
+
+      <img
+        src="file_0000000031b8821193be8a110779a350.png"
+        alt="জ্ঞানতরঙ্গ">
+
+    </div>
+
+    <div>
+
+      <div class="brand-title">
+        জ্ঞানতরঙ্গ
+      </div>
+
+      <div class="brand-subtitle">
+        Category Management
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <a
+    href="admin.html"
+    class="back-btn">
+
+    ← Admin Panel
+
+  </a>
+
+</header>
+
+
+
+<main class="container">
+
+
+  <div class="page-heading">
+
+    <h1>
+      📚 Category Management
+    </h1>
+
+    <p>
+      কুইজের ক্যাটাগরি যোগ করুন এবং পরিচালনা করুন।
+    </p>
+
+  </div>
+
+
+
+  <div
+    id="message"
+    class="message">
+  </div>
+
+
+
+  <!-- =========================
+       CATEGORY FORM
+  ========================== -->
+
+  <section class="form-card">
+
+    <div
+      id="formTitle"
+      class="form-title">
+
+      ➕ নতুন Category যোগ করুন
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="form-group">
+
+        <label>
+          Category Name *
+        </label>
+
+        <input
+          id="categoryName"
+          type="text"
+          placeholder="যেমন: সাধারণ জ্ঞান"
+          maxlength="100">
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Icon
+        </label>
+
+        <input
+          id="categoryIcon"
+          type="text"
+          placeholder="📚"
+          maxlength="10">
+
+      </div>
+
+
+
+      <div class="form-group full">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          id="categoryDescription"
+          placeholder="এই ক্যাটাগরি সম্পর্কে সংক্ষিপ্ত বিবরণ লিখুন..."
+          maxlength="500"></textarea>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Display Order
+        </label>
+
+        <input
+          id="displayOrder"
+          type="number"
+          min="0"
+          value="0"
+          placeholder="0">
+
+      </div>
+
+
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        id="saveBtn"
+        class="primary-btn"
+        type="button">
+
+        ➕ Category যোগ করুন
+
+      </button>
+
+
+      <button
+        id="cancelBtn"
+        class="cancel-btn"
+        type="button">
+
+        বাতিল
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       CATEGORY LIST
+  ========================== -->
+
+  <div class="list-heading">
+
+    <h2>
+      📋 সব Category
+    </h2>
+
+    <span
+      id="totalBadge"
+      class="total-badge">
+
+      0 টি
+
+    </span>
+
+  </div>
+
+
+  <div
+    id="categoryList"
+    class="category-list">
+
+    <div class="loading">
+      ⏳ Category লোড হচ্ছে...
+    </div>
+
+  </div>
+
+
+</main>
+
+
+
+<script>
+
+/* ==========================================
+   SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+  "https://oycecrzerykrqkoivdwg.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
+
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let currentAdmin = null;
+
+let editingCategoryId = null;
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const messageBox =
+  document.getElementById(
+    "message"
+  );
+
+const categoryList =
+  document.getElementById(
+    "categoryList"
+  );
+
+const totalBadge =
+  document.getElementById(
+    "totalBadge"
+  );
+
+const saveBtn =
+  document.getElementById(
+    "saveBtn"
+  );
+
+const cancelBtn =
+  document.getElementById(
+    "cancelBtn"
+  );
+
+const formTitle =
+  document.getElementById(
+    "formTitle"
+  );
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(
+  text,
+  type = "success"
+){
+
+  messageBox.textContent =
+    text;
+
+  messageBox.className =
+    "message show " + type;
+
+
+  setTimeout(
+    function(){
+
+      messageBox.className =
+        "message";
+
+    },
+    4000
+  );
+
+}
+
+
+/* ==========================================
+   ADMIN CHECK
+========================================== */
+
+async function checkAdmin(){
+
+  try{
+
+    const {
+      data:{
+        session
+      }
+    } =
+      await supabaseClient
+      .auth
+      .getSession();
+
+
+    if(
+      !session ||
+      !session.user
+    ){
+
+      window.location.href =
+        "admin.html";
+
+      return false;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        full_name,
+        email,
+        role,
+        is_active
+      `)
+      .eq(
+        "id",
+        session.user.id
+      )
+      .maybeSingle();
+
+
+    if(error){
+
+      console.error(error);
+
+      window.location.href =
+        "admin.html";
+
+      return false;
+    }
+
+
+    if(
+      !data ||
+      String(data.role)
+        .toLowerCase()
+        !== "admin" ||
+      data.is_active === false
+    ){
+
+      await supabaseClient.auth
+        .signOut();
+
+      window.location.href =
+        "admin.html";
+
+      return false;
+    }
+
+
+    currentAdmin =
+      data;
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    window.location.href =
+      "admin.html";
+
+    return false;
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD CATEGORIES
+========================================== */
+
+async function loadCategories(){
+
+  categoryList.innerHTML =
+    `
+      <div class="loading">
+        ⏳ Category লোড হচ্ছে...
+      </div>
+    `;
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+      .from("quiz_categories")
+      .select(`
+        id,
+        name,
+        description,
+        icon,
+        display_order,
+        is_active
+      `)
+      .order(
+        "display_order",
+        {
+          ascending:true
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+
+    if(error){
+
+      console.error(error);
+
+      categoryList.innerHTML =
+        `
+          <div class="empty">
+
+            <div class="empty-icon">
+              ⚠️
+            </div>
+
+            Category লোড করা যায়নি।
+
+          </div>
+        `;
+
+      showMessage(
+        "❌ Category লোড করতে সমস্যা হয়েছে।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    totalBadge.textContent =
+      `${data.length} টি`;
+
+
+    if(!data.length){
+
+      categoryList.innerHTML =
+        `
+          <div class="empty">
+
+            <div class="empty-icon">
+              📚
+            </div>
+
+            এখনো কোনো Category যোগ করা হয়নি।
+
+          </div>
+        `;
+
+      return;
+    }
+
+
+    categoryList.innerHTML =
+      data
+      .map(
+        category =>
+          createCategoryCard(
+            category
+          )
+      )
+      .join("");
+
+
+  }catch(error){
+
+    console.error(error);
+
+    categoryList.innerHTML =
+      `
+        <div class="empty">
+          ❌ একটি সমস্যা হয়েছে।
+        </div>
+      `;
+
+  }
+
+}
+
+
+/* ==========================================
+   CREATE CARD
+========================================== */
+
+function createCategoryCard(
+  category
+){
+
+  const safeName =
+    escapeHtml(
+      category.name || ""
+    );
+
+  const safeDescription =
+    escapeHtml(
+      category.description || ""
+    );
+
+  const safeIcon =
+    escapeHtml(
+      category.icon || "📚"
+    );
+
+
+  const status =
+    category.is_active !== false;
+
+
+  return `
+
+    <div class="category-card">
+
+      <div class="category-icon">
+        ${safeIcon}
+      </div>
+
+
+      <div class="category-info">
+
+        <div class="category-name">
+          ${safeName}
+        </div>
+
+
+        <div class="category-description">
+
+          ${
+            safeDescription ||
+            "কোনো Description নেই।"
+          }
+
+        </div>
+
+
+        <div class="category-meta">
+
+          <span
+            class="badge ${
+              status
+                ? "active"
+                : "inactive"
+            }">
+
+            ${
+              status
+                ? "✅ Active"
+                : "❌ Inactive"
+            }
+
+          </span>
+
+
+          <span
+            class="badge order">
+
+            🔢 Order:
+            ${
+              category.display_order ?? 0
+            }
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="category-actions">
+
+
+        <button
+          class="action-btn"
+          title="Edit"
+          onclick="editCategory(
+            '${category.id}'
+          )">
+
+          ✏️
+
+        </button>
+
+
+        <button
+          class="action-btn"
+          title="${
+            status
+              ? "Inactive করুন"
+              : "Active করুন"
+          }"
+          onclick="toggleCategory(
+            '${category.id}',
+            ${status}
+          )">
+
+          ${
+            status
+              ? "⏸️"
+              : "▶️"
+          }
+
+        </button>
+
+
+        <button
+          class="action-btn delete"
+          title="Delete"
+          onclick="deleteCategory(
+            '${category.id}',
+            '${escapeJs(
+              category.name || ""
+            )}'
+          )">
+
+          🗑️
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHtml(
+  value
+){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   ESCAPE JS
+========================================== */
+
+function escapeJs(
+  value
+){
+
+  return String(value)
+    .replaceAll(
+      "\\",
+      "\\\\"
+    )
+    .replaceAll(
+      "'",
+      "\\'"
+    )
+    .replaceAll(
+      "\n",
+      "\\n"
+    )
+    .replaceAll(
+      "\r",
+      "\\r"
+    );
+
+}
+
+
+/* ==========================================
+   SAVE CATEGORY
+========================================== */
+
+saveBtn.addEventListener(
+  "click",
+  async function(){
+
+    const name =
+      document
+      .getElementById(
+        "categoryName"
+      )
+      .value
+      .trim();
+
+
+    const icon =
+      document
+      .getElementById(
+        "categoryIcon"
+      )
+      .value
+      .trim();
+
+
+    const description =
+      document
+      .getElementById(
+        "categoryDescription"
+      )
+      .value
+      .trim();
+
+
+    const displayOrder =
+      Number(
+        document
+        .getElementById(
+          "displayOrder"
+        )
+        .value
+      ) || 0;
+
+
+    if(!name){
+
+      showMessage(
+        "⚠️ Category Name লিখুন।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    saveBtn.disabled =
+      true;
+
+    saveBtn.textContent =
+      "⏳ সংরক্ষণ হচ্ছে...";
+
+
+    try{
+
+      if(editingCategoryId){
+
+        const {
+          error
+        } =
+          await supabaseClient
+          .from(
+            "quiz_categories"
+          )
+          .update({
+
+            name:name,
+
+            icon:
+              icon || "📚",
+
+            description:
+              description || null,
+
+            display_order:
+              displayOrder
+
+          })
+          .eq(
+            "id",
+            editingCategoryId
+          );
+
+
+        if(error){
+
+          console.error(error);
+
+          showMessage(
+            "❌ Category আপডেট করা যায়নি।",
+            "error"
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "✅ Category সফলভাবে আপডেট হয়েছে।"
+        );
+
+
+      }else{
+
+        const {
+          error
+        } =
+          await supabaseClient
+          .from(
+            "quiz_categories"
+          )
+          .insert({
+
+            name:name,
+
+            icon:
+              icon || "📚",
+
+            description:
+              description || null,
+
+            display_order:
+              displayOrder,
+
+            is_active:true
+
+          });
+
+
+        if(error){
+
+          console.error(error);
+
+          if(
+            error.code === "23505"
+          ){
+
+            showMessage(
+              "❌ এই Category আগে থেকেই আছে।",
+              "error"
+            );
+
+          }else{
+
+            showMessage(
+              "❌ Category যোগ করা যায়নি।",
+              "error"
+            );
+
+          }
+
+          return;
+        }
+
+
+        showMessage(
+          "✅ নতুন Category সফলভাবে যোগ হয়েছে।"
+        );
+
+      }
+
+
+      resetForm();
+
+      await loadCategories();
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        "❌ একটি অপ্রত্যাশিত সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      saveBtn.disabled =
+        false;
+
+    
