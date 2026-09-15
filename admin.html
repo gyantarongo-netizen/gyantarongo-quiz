@@ -25,16 +25,12 @@ body{
     sans-serif;
 
   background:
-    radial-gradient(
-      circle at top left,
+    radial-gradient(circle at top left,
       rgba(124,58,237,.16),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at bottom right,
+      transparent 32%),
+    radial-gradient(circle at bottom right,
       rgba(236,72,153,.10),
-      transparent 30%
-    ),
+      transparent 30%),
     #060817;
 
   color:#fff;
@@ -46,9 +42,7 @@ input{
   font-family:inherit;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header{
   position:sticky;
@@ -118,11 +112,7 @@ input{
   color:#fff;
 
   background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #ec4899
-    );
+    linear-gradient(135deg,#7c3aed,#ec4899);
 
   padding:10px 15px;
 
@@ -131,14 +121,10 @@ input{
   font-weight:700;
   cursor:pointer;
 
-  box-shadow:
-    0 6px 20px
-    rgba(124,58,237,.25);
+  box-shadow:0 6px 20px rgba(124,58,237,.25);
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container{
   width:min(1150px,100%);
@@ -161,12 +147,10 @@ input{
   font-size:14px;
 }
 
-/* =========================
-   LOGIN
-========================= */
+/* LOGIN */
 
 .login-wrapper{
-  min-height:calc(100vh - 70px);
+  min-height:100vh;
 
   display:flex;
   align-items:center;
@@ -185,16 +169,14 @@ input{
       rgba(11,14,32,.97)
     );
 
-  border:
-    1px solid rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.09);
 
   border-radius:24px;
 
   padding:28px 22px;
 
   box-shadow:
-    0 25px 70px
-    rgba(0,0,0,.38);
+    0 25px 70px rgba(0,0,0,.38);
 }
 
 .login-icon{
@@ -250,7 +232,6 @@ input{
 
 .form-group input{
   width:100%;
-
   height:50px;
 
   padding:0 15px;
@@ -259,9 +240,7 @@ input{
 
   background:#0b0f25;
 
-  border:
-    1px solid
-    rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.10);
 
   border-radius:14px;
 
@@ -274,8 +253,7 @@ input{
   border-color:#8b3dff;
 
   box-shadow:
-    0 0 0 3px
-    rgba(124,58,237,.13);
+    0 0 0 3px rgba(124,58,237,.13);
 }
 
 .login-btn{
@@ -283,7 +261,6 @@ input{
   height:52px;
 
   border:none;
-
   border-radius:14px;
 
   color:#fff;
@@ -301,8 +278,7 @@ input{
     );
 
   box-shadow:
-    0 10px 28px
-    rgba(124,58,237,.28);
+    0 10px 28px rgba(124,58,237,.28);
 }
 
 .login-btn:disabled{
@@ -340,9 +316,7 @@ input{
   color:#7ff0a5;
 }
 
-/* =========================
-   DASHBOARD
-========================= */
+/* DASHBOARD */
 
 .dashboard{
   display:none;
@@ -351,6 +325,8 @@ input{
 .dashboard.show{
   display:block;
 }
+
+/* STATS */
 
 .stats-grid{
   display:grid;
@@ -379,9 +355,7 @@ input{
       #0c1024
     );
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
 
   overflow:hidden;
 }
@@ -399,8 +373,7 @@ input{
 
   border-radius:50%;
 
-  background:
-    rgba(124,58,237,.10);
+  background:rgba(124,58,237,.10);
 
   filter:blur(5px);
 }
@@ -429,9 +402,7 @@ input{
   font-size:13px;
 }
 
-/* =========================
-   MANAGEMENT
-========================= */
+/* MANAGEMENT */
 
 .section-title{
   margin-bottom:14px;
@@ -471,9 +442,7 @@ input{
       rgba(12,16,36,.95)
     );
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
 
   transition:
     transform .2s ease,
@@ -484,12 +453,10 @@ input{
 .menu-card:hover{
   transform:translateY(-3px);
 
-  border-color:
-    rgba(139,61,255,.40);
+  border-color:rgba(139,61,255,.40);
 
   box-shadow:
-    0 15px 35px
-    rgba(0,0,0,.25);
+    0 15px 35px rgba(0,0,0,.25);
 }
 
 .menu-icon{
@@ -511,9 +478,7 @@ input{
       rgba(236,72,153,.12)
     );
 
-  border:
-    1px solid
-    rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.07);
 
   margin-bottom:14px;
 }
@@ -546,17 +511,12 @@ input{
 
   color:#b8a3ff;
 
-  background:
-    rgba(124,58,237,.10);
+  background:rgba(124,58,237,.10);
 
-  border:
-    1px solid
-    rgba(124,58,237,.18);
+  border:1px solid rgba(124,58,237,.18);
 }
 
-/* =========================
-   ADMIN INFO
-========================= */
+/* ADMIN INFO */
 
 .admin-card{
   padding:20px;
@@ -570,9 +530,7 @@ input{
       rgba(12,16,36,.95)
     );
 
-  border:
-    1px solid
-    rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
 }
 
 .admin-card h3{
@@ -587,9 +545,7 @@ input{
 
   padding:10px 0;
 
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.05);
 
   font-size:13px;
 }
@@ -607,9 +563,7 @@ input{
   font-weight:700;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:850px){
 
@@ -650,8 +604,7 @@ input{
   }
 
   .container{
-    padding:
-      20px 12px 30px;
+    padding:20px 12px 30px;
   }
 
   .welcome h1{
@@ -694,9 +647,7 @@ input{
 
 <body>
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <section id="loginSection">
 
@@ -708,18 +659,13 @@ input{
         🔐
       </div>
 
-      <h2>
-        Admin Login
-      </h2>
+      <h2>Admin Login</h2>
 
       <p class="subtitle">
         জ্ঞানতরঙ্গ Admin Control Panel
       </p>
 
-      <div
-        id="loginMessage"
-        class="message">
-      </div>
+      <div id="loginMessage" class="message"></div>
 
       <form id="loginForm">
 
@@ -771,13 +717,9 @@ input{
 </section>
 
 
-<!-- =========================
-     DASHBOARD
-========================= -->
+<!-- DASHBOARD -->
 
-<section
-  id="dashboard"
-  class="dashboard">
+<section id="dashboard" class="dashboard">
 
   <header class="header">
 
@@ -822,9 +764,7 @@ input{
 
       <h1>
         👋 স্বাগতম,
-        <span id="adminName">
-          Admin
-        </span>
+        <span id="adminName">Admin</span>
       </h1>
 
       <p>
@@ -844,9 +784,7 @@ input{
           👥
         </div>
 
-        <div
-          id="studentCount"
-          class="stat-number">
+        <div id="studentCount" class="stat-number">
           —
         </div>
 
@@ -863,9 +801,7 @@ input{
           📝
         </div>
 
-        <div
-          id="quizCount"
-          class="stat-number">
+        <div id="quizCount" class="stat-number">
           —
         </div>
 
@@ -882,9 +818,7 @@ input{
           📚
         </div>
 
-        <div
-          id="categoryCount"
-          class="stat-number">
+        <div id="categoryCount" class="stat-number">
           —
         </div>
 
@@ -901,9 +835,7 @@ input{
           ⏳
         </div>
 
-        <div
-          id="pendingCount"
-          class="stat-number">
+        <div id="pendingCount" class="stat-number">
           —
         </div>
 
@@ -923,9 +855,6 @@ input{
     </div>
 
     <div class="menu-grid">
-
-
-      <!-- CATEGORY MANAGEMENT -->
 
       <a
         href="category-management.html"
@@ -950,8 +879,6 @@ input{
       </a>
 
 
-      <!-- QUIZ MANAGEMENT -->
-
       <a
         href="quiz-management.html"
         class="menu-card">
@@ -974,8 +901,6 @@ input{
 
       </a>
 
-
-      <!-- REGISTRATION -->
 
       <a
         href="#"
@@ -1001,8 +926,6 @@ input{
       </a>
 
 
-      <!-- PAYMENT -->
-
       <a
         href="#"
         class="menu-card"
@@ -1026,8 +949,6 @@ input{
 
       </a>
 
-
-      <!-- QUESTION -->
 
       <a
         href="#"
@@ -1053,8 +974,6 @@ input{
       </a>
 
 
-      <!-- RESULT -->
-
       <a
         href="#"
         class="menu-card"
@@ -1078,7 +997,6 @@ input{
 
       </a>
 
-
     </div>
 
 
@@ -1092,49 +1010,33 @@ input{
 
       <div class="admin-row">
 
-        <span>
-          নাম
-        </span>
+        <span>নাম</span>
 
-        <span id="infoName">
-          —
-        </span>
+        <span id="infoName">—</span>
 
       </div>
 
       <div class="admin-row">
 
-        <span>
-          Email
-        </span>
+        <span>Email</span>
 
-        <span id="infoEmail">
-          —
-        </span>
+        <span id="infoEmail">—</span>
 
       </div>
 
       <div class="admin-row">
 
-        <span>
-          Role
-        </span>
+        <span>Role</span>
 
-        <span id="infoRole">
-          —
-        </span>
+        <span id="infoRole">—</span>
 
       </div>
 
       <div class="admin-row">
 
-        <span>
-          Account Status
-        </span>
+        <span>Account Status</span>
 
-        <span id="infoStatus">
-          —
-        </span>
+        <span id="infoStatus">—</span>
 
       </div>
 
@@ -1148,7 +1050,7 @@ input{
 <script>
 
 /* ==========================================
-   SUPABASE
+   SUPABASE CONFIG
 ========================================== */
 
 const SUPABASE_URL =
@@ -1156,7 +1058,8 @@ const SUPABASE_URL =
 
 /*
   এখানে তোমার আগের Supabase ANON / PUBLIC KEY বসাও।
-  service_role / secret key কখনো বসাবে না।
+
+  ⚠️ service_role / secret key এখানে কখনো বসাবে না।
 */
 
 const SUPABASE_ANON_KEY =
@@ -1175,34 +1078,22 @@ const supabaseClient =
 ========================================== */
 
 const loginSection =
-  document.getElementById(
-    "loginSection"
-  );
+  document.getElementById("loginSection");
 
 const dashboard =
-  document.getElementById(
-    "dashboard"
-  );
+  document.getElementById("dashboard");
 
 const loginForm =
-  document.getElementById(
-    "loginForm"
-  );
+  document.getElementById("loginForm");
 
 const loginBtn =
-  document.getElementById(
-    "loginBtn"
-  );
+  document.getElementById("loginBtn");
 
 const logoutBtn =
-  document.getElementById(
-    "logoutBtn"
-  );
+  document.getElementById("logoutBtn");
 
 const loginMessage =
-  document.getElementById(
-    "loginMessage"
-  );
+  document.getElementById("loginMessage");
 
 
 /* ==========================================
@@ -1219,126 +1110,7 @@ function showLoginMessage(
 
   loginMessage.className =
     "message show " + type;
-
 }
-
-
-/* ==========================================
-   LOGIN
-========================================== */
-
-loginForm.addEventListener(
-  "submit",
-  async function(event){
-
-    event.preventDefault();
-
-    const email =
-      document
-      .getElementById("email")
-      .value
-      .trim();
-
-    const password =
-      document
-      .getElementById("password")
-      .value;
-
-    if(!email || !password){
-
-      showLoginMessage(
-        "⚠️ Email এবং Password দিন।",
-        "error"
-      );
-
-      return;
-    }
-
-
-    loginBtn.disabled = true;
-
-    loginBtn.textContent =
-      "⏳ যাচাই হচ্ছে...";
-
-
-    try{
-
-      const { data, error } =
-        await supabaseClient.auth
-        .signInWithPassword({
-          email: email,
-          password: password
-        });
-
-
-      if(error){
-
-        console.error(error);
-
-        showLoginMessage(
-          "❌ Email অথবা Password সঠিক নয়।",
-          "error"
-        );
-
-        return;
-      }
-
-
-      if(!data.user){
-
-        showLoginMessage(
-          "❌ Login করা যায়নি।",
-          "error"
-        );
-
-        return;
-      }
-
-
-      const isAdmin =
-        await verifyAdmin(
-          data.user
-        );
-
-
-      if(!isAdmin){
-
-        await supabaseClient.auth.signOut();
-
-        showLoginMessage(
-          "🚫 এই Account-এর Admin অনুমতি নেই।",
-          "error"
-        );
-
-        return;
-      }
-
-
-      await loadDashboard(
-        data.user
-      );
-
-
-    }catch(error){
-
-      console.error(error);
-
-      showLoginMessage(
-        "❌ একটি অপ্রত্যাশিত সমস্যা হয়েছে। আবার চেষ্টা করুন।",
-        "error"
-      );
-
-    }finally{
-
-      loginBtn.disabled = false;
-
-      loginBtn.textContent =
-        "🔐 Admin Login";
-
-    }
-
-  }
-);
 
 
 /* ==========================================
@@ -1349,13 +1121,18 @@ async function verifyAdmin(user){
 
   try{
 
+    /*
+      IMPORTANT:
+      profiles table-এ email column নেই।
+      তাই এখানে email select করা হচ্ছে না।
+    */
+
     const { data, error } =
       await supabaseClient
       .from("profiles")
       .select(`
         id,
         full_name,
-        email,
         role,
         is_active
       `)
@@ -1370,36 +1147,53 @@ async function verifyAdmin(user){
         error
       );
 
+      showLoginMessage(
+        "❌ Admin profile যাচাই করা যায়নি: " +
+        error.message,
+        "error"
+      );
+
       return false;
     }
 
 
     if(!data){
 
-      return false;
-    }
-
-
-    if(
-      String(data.role)
-      .toLowerCase()
-      !== "admin"
-    ){
+      showLoginMessage(
+        "❌ এই User-এর profiles-এ কোনো Admin profile নেই।",
+        "error"
+      );
 
       return false;
     }
 
 
     if(
-      data.is_active === false
+      String(data.role || "")
+      .toLowerCase() !== "admin"
     ){
+
+      showLoginMessage(
+        "🚫 এই Account-এর Admin অনুমতি নেই।",
+        "error"
+      );
 
       return false;
     }
 
 
-    window.currentAdmin =
-      data;
+    if(data.is_active === false){
+
+      showLoginMessage(
+        "🚫 Admin Account বর্তমানে নিষ্ক্রিয়।",
+        "error"
+      );
+
+      return false;
+    }
+
+
+    window.currentAdmin = data;
 
     return true;
 
@@ -1408,8 +1202,13 @@ async function verifyAdmin(user){
 
     console.error(error);
 
-    return false;
+    showLoginMessage(
+      "❌ Admin verification-এ সমস্যা হয়েছে: " +
+      error.message,
+      "error"
+    );
 
+    return false;
   }
 
 }
@@ -1422,40 +1221,38 @@ async function verifyAdmin(user){
 async function loadDashboard(user){
 
   const admin =
-    window.currentAdmin;
+    window.currentAdmin || {};
 
 
   loginSection.style.display =
     "none";
 
-  dashboard.classList.add(
-    "show"
-  );
+  dashboard.classList.add("show");
 
 
   const name =
-    admin?.full_name ||
+    admin.full_name ||
     "Admin";
 
 
   document.getElementById(
     "adminName"
-  ).textContent =
-    name;
+  ).textContent = name;
 
 
   document.getElementById(
     "infoName"
-  ).textContent =
-    name;
+  ).textContent = name;
 
+
+  /*
+    Email এখন Auth user থেকে নেওয়া হচ্ছে।
+  */
 
   document.getElementById(
     "infoEmail"
   ).textContent =
-    admin?.email ||
-    user.email ||
-    "-";
+    user.email || "-";
 
 
   document.getElementById(
@@ -1481,10 +1278,147 @@ async function loadDashboard(user){
 
 async function loadStats(){
 
+  /*
+    RLS-এর কারণে কোনো count query fail করলে
+    পুরো dashboard বন্ধ হবে না।
+  */
+
+
   try{
 
     /* STUDENTS */
 
-    const students =
+    const studentsResult =
       await supabaseClient
-  
+      .from("profiles")
+      .select("id", {
+        count:"exact",
+        head:true
+      });
+
+
+    document.getElementById(
+      "studentCount"
+    ).textContent =
+      studentsResult.error
+      ? "—"
+      : (studentsResult.count ?? 0);
+
+
+    /* QUIZZES */
+
+    const quizzesResult =
+      await supabaseClient
+      .from("quizzes")
+      .select("id", {
+        count:"exact",
+        head:true
+      });
+
+
+    document.getElementById(
+      "quizCount"
+    ).textContent =
+      quizzesResult.error
+      ? "—"
+      : (quizzesResult.count ?? 0);
+
+
+    /* CATEGORIES */
+
+    const categoriesResult =
+      await supabaseClient
+      .from("quiz_categories")
+      .select("id", {
+        count:"exact",
+        head:true
+      });
+
+
+    document.getElementById(
+      "categoryCount"
+    ).textContent =
+      categoriesResult.error
+      ? "—"
+      : (categoriesResult.count ?? 0);
+
+
+    /* PENDING REGISTRATIONS */
+
+    const pendingResult =
+      await supabaseClient
+      .from("quiz_registrations")
+      .select("id", {
+        count:"exact",
+        head:true
+      })
+      .eq(
+        "registration_status",
+        "pending"
+      );
+
+
+    document.getElementById(
+      "pendingCount"
+    ).textContent =
+      pendingResult.error
+      ? "—"
+      : (pendingResult.count ?? 0);
+
+
+  }catch(error){
+
+    console.error(
+      "Stats error:",
+      error
+    );
+
+    /*
+      Stats না এলেও Dashboard থাকবে।
+    */
+
+    document.getElementById(
+      "studentCount"
+    ).textContent = "—";
+
+    document.getElementById(
+      "quizCount"
+    ).textContent = "—";
+
+    document.getElementById(
+      "categoryCount"
+    ).textContent = "—";
+
+    document.getElementById(
+      "pendingCount"
+    ).textContent = "—";
+  }
+
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+loginForm.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+
+    loginMessage.className =
+      "message";
+
+
+    const email =
+      document
+      .getElementById("email")
+      .value
+      .trim();
+
+
+    const password =
+      document
+      .getElementById("
