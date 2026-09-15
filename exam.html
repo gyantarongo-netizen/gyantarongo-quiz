@@ -6,58 +6,69 @@
 
 <title>পরীক্ষা | জ্ঞানতরঙ্গ</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
 *{
-  margin:0;
-  padding:0;
   box-sizing:border-box;
 }
 
-:root{
-  --bg:#060817;
-  --card:#10142b;
-  --card2:#151a35;
-  --purple:#8b3dff;
-  --pink:#ec3fa7;
-  --green:#2fd68a;
-  --gold:#ffb21c;
-  --text:#f5f5fb;
-  --muted:#a9adc4;
-  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
-}
-
 body{
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  margin:0;
+  font-family:
+    "Noto Sans Bengali",
+    "Noto Sans",
+    Arial,
+    sans-serif;
   background:
-    radial-gradient(circle at top,rgba(124,58,237,.18),transparent 38%),
-    var(--bg);
-  color:var(--text);
+    radial-gradient(
+      circle at top,
+      #151438 0%,
+      #080B1C 45%,
+      #050611 100%
+    );
+  color:#fff;
   min-height:100vh;
 }
 
-.app{
-  max-width:900px;
-  margin:auto;
-  padding:0 16px 40px;
+button{
+  font-family:inherit;
 }
 
-header{
-  min-height:72px;
+.page{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+  padding:16px;
+}
+
+/* HEADER */
+
+.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  gap:12px;
+  padding:12px 0 18px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:10px;
 }
 
 .logo-box{
-  width:45px;
-  height:45px;
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#11152D;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
 .logo-box img{
@@ -66,464 +77,1283 @@ header{
   object-fit:contain;
 }
 
-.brand h1{
+.brand-title{
   font-size:19px;
+  font-weight:800;
 }
 
-.brand p{
-  color:var(--muted);
-  font-size:10px;
+.brand-sub{
+  font-size:12px;
+  color:#9CA3AF;
+  margin-top:2px;
 }
 
-.timer{
-  background:rgba(236,63,167,.10);
-  border:1px solid rgba(236,63,167,.25);
-  color:#ff72c4;
-  padding:9px 13px;
-  border-radius:12px;
-  font-weight:bold;
+.bd-time{
+  text-align:right;
+  color:#B9C0D4;
+  font-size:11px;
+  line-height:1.5;
 }
 
-.progress-box{
-  margin-top:25px;
-  background:var(--card);
+.bd-time strong{
+  display:block;
+  color:#fff;
+  font-size:12px;
+}
+
+/* CARD */
+
+.card{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,21,45,.96),
+      rgba(10,13,31,.96)
+    );
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.28);
+  margin-bottom:16px;
+}
+
+/* EXAM INFO */
+
+.exam-title{
+  font-size:25px;
+  font-weight:900;
+  line-height:1.35;
+  margin:0 0 8px;
+}
+
+.exam-category{
+  color:#A78BFA;
+  font-size:14px;
+  margin-bottom:18px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.info-item{
+  background:#0C1025;
   border:1px solid rgba(255,255,255,.07);
-  border-radius:16px;
-  padding:15px;
+  border-radius:14px;
+  padding:12px;
 }
 
-.progress-top{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:13px;
+.info-label{
+  color:#8F96AA;
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.info-value{
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+
+/* STATUS */
+
+.status-card{
+  text-align:center;
+  padding:28px 18px;
+}
+
+.status-icon{
+  font-size:48px;
   margin-bottom:10px;
 }
 
-.progress{
-  height:7px;
-  background:#252943;
-  border-radius:20px;
+.status-title{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.status-text{
+  color:#AEB5C8;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.countdown{
+  margin:20px 0;
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#C4B5FD;
+}
+
+.start-btn,
+.next-btn,
+.submit-btn{
+  width:100%;
+  min-height:54px;
+  border:0;
+  border-radius:16px;
+  color:#fff;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.start-btn{
+  background:
+    linear-gradient(
+      135deg,
+      #7C3AED,
+      #EC4899
+    );
+  box-shadow:
+    0 10px 28px rgba(124,58,237,.30);
+}
+
+.start-btn:active,
+.next-btn:active,
+.submit-btn:active{
+  transform:scale(.98);
+}
+
+.start-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* EXAM */
+
+.exam-running{
+  display:none;
+}
+
+.exam-running.show{
+  display:block;
+}
+
+.timer-box{
+  position:sticky;
+  top:10px;
+  z-index:20;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.96),
+      rgba(236,72,153,.96)
+    );
+  border-radius:18px;
+  padding:13px 16px;
+  margin-bottom:14px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.30);
+}
+
+.timer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+
+.timer-label{
+  font-size:12px;
+  opacity:.85;
+}
+
+.timer{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.progress-wrap{
+  margin-top:9px;
+  height:5px;
+  background:rgba(255,255,255,.20);
+  border-radius:10px;
   overflow:hidden;
 }
 
-.progress-bar{
+.progress{
   height:100%;
-  width:20%;
-  background:var(--gradient);
-  border-radius:20px;
-  transition:.3s;
+  width:100%;
+  background:#fff;
+  transition:width .5s linear;
 }
 
-.message{
-  margin-top:18px;
-  color:var(--muted);
-  text-align:center;
-  font-size:13px;
-}
+/* QUESTION */
 
 .question-card{
-  margin-top:18px;
-  background:linear-gradient(145deg,#11152f,#0c1025);
-  border:1px solid rgba(255,255,255,.08);
+  background:
+    linear-gradient(
+      145deg,
+      #11152D,
+      #0B0F24
+    );
+  border:1px solid rgba(255,255,255,.09);
   border-radius:22px;
-  padding:25px;
+  padding:20px;
 }
 
 .question-number{
-  color:#ff63bc;
+  color:#A78BFA;
   font-size:13px;
-  font-weight:bold;
-  margin-bottom:13px;
+  font-weight:800;
+  margin-bottom:10px;
 }
 
-.question{
-  font-size:23px;
-  line-height:1.6;
-  margin-bottom:22px;
-}
-
-.options{
-  display:grid;
-  gap:12px;
+.question-text{
+  font-size:20px;
+  line-height:1.7;
+  font-weight:800;
+  margin-bottom:20px;
 }
 
 .option{
   width:100%;
   text-align:left;
-  padding:15px 17px;
-  border-radius:13px;
+  background:#151A36;
+  color:#F5F7FF;
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.035);
-  color:white;
-  font-family:inherit;
-  font-size:15px;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:9px;
+  font-size:16px;
+  line-height:1.5;
   cursor:pointer;
-  transition:.2s;
+  transition:.2s ease;
 }
 
 .option:hover{
-  border-color:rgba(139,61,255,.7);
-  background:rgba(139,61,255,.10);
+  border-color:rgba(167,139,250,.5);
 }
 
 .option.selected{
-  background:rgba(139,61,255,.20);
-  border-color:#9a55ff;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.40),
+      rgba(236,72,153,.25)
+    );
+  border-color:#A78BFA;
+  box-shadow:
+    0 0 0 1px rgba(167,139,250,.15);
+}
+
+.option.disabled{
+  cursor:default;
+  pointer-events:none;
+}
+
+.option-letter{
+  display:inline-flex;
+  width:31px;
+  height:31px;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:#242A4A;
+  margin-right:8px;
+  font-weight:900;
+}
+
+.option.selected .option-letter{
+  background:#7C3AED;
+}
+
+/* AI NOTICE */
+
+.small-notice{
+  text-align:center;
+  font-size:10px;
+  color:#777F96;
+  padding:2px 8px 5px;
+  line-height:1.3;
+}
+
+/* NEXT */
+
+.next-area{
+  margin-top:18px;
 }
 
 .next-btn{
-  width:100%;
-  margin-top:22px;
-  border:none;
-  padding:15px;
-  border-radius:13px;
-  background:var(--gradient);
-  color:white;
-  font-family:inherit;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+  background:
+    linear-gradient(
+      135deg,
+      #7C3AED,
+      #8B3DFF
+    );
 }
 
-.next-btn:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
+/* RESULT */
 
-footer{
+.finish-card{
+  display:none;
   text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:30px 0;
 }
+
+.finish-card.show{
+  display:block;
+}
+
+.finish-icon{
+  font-size:58px;
+  margin-bottom:10px;
+}
+
+.finish-title{
+  font-size:25px;
+  font-weight:900;
+}
+
+.finish-text{
+  color:#AEB5C8;
+  line-height:1.7;
+  margin-top:8px;
+}
+
+/* MESSAGE */
+
+.message{
+  display:none;
+  padding:13px 15px;
+  border-radius:14px;
+  margin-bottom:15px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:rgba(239,68,68,.10);
+  border:1px solid rgba(239,68,68,.30);
+  color:#FCA5A5;
+}
+
+.message.success{
+  background:rgba(34,197,94,.10);
+  border:1px solid rgba(34,197,94,.30);
+  color:#86EFAC;
+}
+
+/* MOBILE */
 
 @media(max-width:600px){
-  .app{
-    padding:0 13px 30px;
+
+  .page{
+    padding:12px;
   }
 
-  header{
-    min-height:65px;
+  .logo-box{
+    width:43px;
+    height:43px;
   }
 
-  .brand h1{
+  .brand-title{
     font-size:17px;
   }
 
-  .timer{
-    font-size:12px;
-    padding:8px 10px;
+  .exam-title{
+    font-size:22px;
   }
 
+  .card,
   .question-card{
-    padding:20px 16px;
+    border-radius:19px;
+    padding:16px;
   }
 
-  .question{
-    font-size:19px;
+  .info-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .question-text{
+    font-size:18px;
   }
 
   .option{
-    font-size:14px;
-    padding:14px;
+    font-size:15px;
+    padding:13px;
   }
+
+  .countdown{
+    font-size:27px;
+  }
+
+  .timer{
+    font-size:22px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="page">
 
-<header>
+  <div class="topbar">
 
-  <div class="brand">
+    <div class="brand">
 
-    <div class="logo-box">
-      <img
-        src="file_0000000031b8821193be8a110779a350.png"
-        alt="জ্ঞানতরঙ্গ">
+      <div class="logo-box">
+
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ লোগো">
+
+      </div>
+
+      <div>
+
+        <div class="brand-title">
+          জ্ঞানতরঙ্গ
+        </div>
+
+        <div class="brand-sub">
+          অনলাইন পরীক্ষা
+        </div>
+
+      </div>
+
     </div>
 
-    <div>
-      <h1>জ্ঞানতরঙ্গ</h1>
-      <p>শিখি · জানি · এগিয়ে যাই</p>
+    <div class="bd-time">
+
+      <strong>
+        🇧🇩 বাংলাদেশ সময়
+      </strong>
+
+      <span id="bdDateTime">
+        লোড হচ্ছে...
+      </span>
+
     </div>
 
   </div>
 
-  <div class="timer">
-    ⏱️ <span id="timer">20:00</span>
+
+  <div
+    id="message"
+    class="message">
   </div>
 
-</header>
+
+  <!-- EXAM INFORMATION -->
+
+  <div
+    id="examInfo"
+    class="card">
+
+    <h1
+      id="examTitle"
+      class="exam-title">
+      পরীক্ষা লোড হচ্ছে...
+    </h1>
+
+    <div
+      id="examCategory"
+      class="exam-category">
+      --
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+
+        <div class="info-label">
+          📅 পরীক্ষা শুরু
+        </div>
+
+        <div
+          id="examStartText"
+          class="info-value">
+          --
+        </div>
+
+      </div>
 
 
-<div class="progress-box">
+      <div class="info-item">
 
-  <div class="progress-top">
-    <span id="progressText">প্রশ্ন ১ / ৫</span>
-    <span id="answered">০ উত্তর দেওয়া হয়েছে</span>
+        <div class="info-label">
+          🏁 পরীক্ষা শেষ
+        </div>
+
+        <div
+          id="examEndText"
+          class="info-value">
+          --
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-label">
+          ⏱️ আপনার সময়
+        </div>
+
+        <div
+          id="durationText"
+          class="info-value">
+          --
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-label">
+          📝 মোট প্রশ্ন
+        </div>
+
+        <div
+          id="questionCountText"
+          class="info-value">
+          --
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
 
-</div>
+  <!-- WAITING -->
 
+  <div
+    id="waitingCard"
+    class="card status-card">
 
-<div class="message">
-  💡 মনোযোগ ধরে রাখুন। প্রতিটি প্রশ্ন আপনাকে সাফল্যের আরও কাছে নিয়ে যাচ্ছে।
-</div>
+    <div
+      id="statusIcon"
+      class="status-icon">
+      ⏳
+    </div>
 
+    <div
+      id="statusTitle"
+      class="status-title">
+      পরীক্ষা লোড হচ্ছে...
+    </div>
 
-<div class="question-card">
+    <div
+      id="statusText"
+      class="status-text">
+      একটু অপেক্ষা করুন।
+    </div>
 
-  <div class="question-number" id="questionNumber">
-    প্রশ্ন ১
-  </div>
+    <div
+      id="countdown"
+      class="countdown">
+      --:--:--
+    </div>
 
-  <div class="question" id="question">
-    বাংলাদেশের রাজধানী কোনটি?
-  </div>
-
-  <div class="options" id="options">
-
-    <button class="option" onclick="selectOption(this)">
-      ক) চট্টগ্রাম
+    <button
+      id="startExamBtn"
+      class="start-btn"
+      onclick="startExam()"
+      disabled>
+      পরীক্ষা শুরু করুন
     </button>
 
-    <button class="option" onclick="selectOption(this)">
-      খ) ঢাকা
-    </button>
+  </div>
 
-    <button class="option" onclick="selectOption(this)">
-      গ) রাজশাহী
-    </button>
 
-    <button class="option" onclick="selectOption(this)">
-      ঘ) খুলনা
-    </button>
+  <!-- RUNNING EXAM -->
+
+  <div
+    id="examRunning"
+    class="exam-running">
+
+    <div class="timer-box">
+
+      <div class="timer-row">
+
+        <div>
+
+          <div class="timer-label">
+            ⏱️ আপনার বাকি সময়
+          </div>
+
+          <div
+            id="personalTimer"
+            class="timer">
+            20:00
+          </div>
+
+        </div>
+
+        <div
+          id="questionProgress"
+          class="timer-label">
+          1 / 1
+        </div>
+
+      </div>
+
+      <div class="progress-wrap">
+
+        <div
+          id="timerProgress"
+          class="progress">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="questionArea">
+    </div>
 
   </div>
 
-  <button
-    class="next-btn"
-    id="nextBtn"
-    onclick="nextQuestion()"
-    disabled>
-    পরবর্তী প্রশ্ন →
-  </button>
 
-</div>
+  <!-- FINISH -->
 
+  <div
+    id="finishCard"
+    class="card finish-card">
 
-<footer>
-  <strong>জ্ঞানতরঙ্গ</strong><br>
-  শিখি · জানি · এগিয়ে যাই
-</footer>
+    <div class="finish-icon">
+      🎉
+    </div>
+
+    <div class="finish-title">
+      পরীক্ষা সম্পন্ন হয়েছে
+    </div>
+
+    <div
+      id="finishText"
+      class="finish-text">
+      আপনার উত্তরগুলো সংরক্ষণ করা হয়েছে।
+    </div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-const questions = [
+/* =====================================================
+   SUPABASE
+   ===================================================== */
 
-  {
-    question:"বাংলাদেশের রাজধানী কোনটি?",
-    options:[
-      "ক) চট্টগ্রাম",
-      "খ) ঢাকা",
-      "গ) রাজশাহী",
-      "ঘ) খুলনা"
-    ],
-    answer:1
-  },
+const SUPABASE_URL =
+  "https://oycecrzerykrqkoivdwg.supabase.co";
 
-  {
-    question:"বাংলাদেশের জাতীয় ফুল কোনটি?",
-    options:[
-      "ক) গোলাপ",
-      "খ) জবা",
-      "গ) শাপলা",
-      "ঘ) বেলি"
-    ],
-    answer:2
-  },
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
 
-  {
-    question:"বাংলাদেশের স্বাধীনতা দিবস কবে?",
-    options:[
-      "ক) ২১ ফেব্রুয়ারি",
-      "খ) ২৬ মার্চ",
-      "গ) ১৬ ডিসেম্বর",
-      "ঘ) ১৪ এপ্রিল"
-    ],
-    answer:1
-  },
-
-  {
-    question:"বাংলাদেশের বিজয় দিবস কবে?",
-    options:[
-      "ক) ২৬ মার্চ",
-      "খ) ২১ ফেব্রুয়ারি",
-      "গ) ১৬ ডিসেম্বর",
-      "ঘ) ১৫ আগস্ট"
-    ],
-    answer:2
-  },
-
-  {
-    question:"বাংলাদেশের জাতীয় কবি কে?",
-    options:[
-      "ক) রবীন্দ্রনাথ ঠাকুর",
-      "খ) কাজী নজরুল ইসলাম",
-      "গ) জীবনানন্দ দাশ",
-      "ঘ) জসীমউদ্দীন"
-    ],
-    answer:1
-  }
-
-];
-
-let currentQuestion = 0;
-let score = 0;
-let selected = false;
-let time = 1200;
-
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
-const answeredEl = document.getElementById("answered");
-const questionNumber = document.getElementById("questionNumber");
-const timerEl = document.getElementById("timer");
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
 
-function loadQuestion(){
+/* =====================================================
+   VARIABLES
+   ===================================================== */
 
-  selected = false;
-  nextBtn.disabled = true;
+let registration = null;
+let quiz = null;
+let questions = [];
 
-  const q = questions[currentQuestion];
+let currentQuestionIndex = 0;
 
-  questionNumber.textContent =
-    "প্রশ্ন " + (currentQuestion + 1);
+let selectedAnswers = {};
 
-  questionEl.textContent = q.question;
+let examAttempt = null;
 
-  progressText.textContent =
-    "প্রশ্ন " +
-    (currentQuestion + 1) +
-    " / " +
-    questions.length;
+let personalEndTime = null;
+let globalEndTime = null;
 
-  progressBar.style.width =
-    ((currentQuestion + 1) / questions.length * 100) + "%";
+let timerInterval = null;
+let windowInterval = null;
 
-  answeredEl.textContent =
-    currentQuestion + " উত্তর দেওয়া হয়েছে";
+let examStarted = false;
+let examFinished = false;
 
-  optionsEl.innerHTML = "";
+let calculatedScore = 0;
+let calculatedNegative = 0;
+let calculatedCorrect = 0;
+let calculatedWrong = 0;
+let calculatedSkipped = 0;
+let calculatedTotalMarks = 0;
 
-  q.options.forEach(function(option,index){
 
-    const button = document.createElement("button");
+/* =====================================================
+   SESSION
+   ===================================================== */
 
-    button.className = "option";
-    button.textContent = option;
+const registrationId =
+  sessionStorage.getItem(
+    "verified_registration_id"
+  );
 
-    button.onclick = function(){
-      selectOption(button,index);
-    };
+const rollNumber =
+  sessionStorage.getItem(
+    "verified_roll_number"
+  );
 
-    optionsEl.appendChild(button);
+const sessionQuizId =
+  sessionStorage.getItem(
+    "verified_quiz_id"
+  );
 
-  });
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+function showMessage(
+  text,
+  type="error"
+){
+
+  const box =
+    document.getElementById(
+      "message"
+    );
+
+  box.textContent =
+    text;
+
+  box.className =
+    "message show " + type;
 
 }
 
 
-function selectOption(button,index){
+/* =====================================================
+   BANGLADESH TIME
+   ===================================================== */
 
-  if(selected) return;
+function updateBangladeshTime(){
 
-  selected = true;
+  const now =
+    new Date();
 
-  const buttons =
-    document.querySelectorAll(".option");
+  const dateText =
+    now.toLocaleDateString(
+      "bn-BD",
+      {
+        timeZone:"Asia/Dhaka",
+        year:"numeric",
+        month:"long",
+        day:"numeric",
+        weekday:"long"
+      }
+    );
 
-  buttons.forEach(function(btn){
-    btn.classList.remove("selected");
-  });
+  const timeText =
+    now.toLocaleTimeString(
+      "bn-BD",
+      {
+        timeZone:"Asia/Dhaka",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:true
+      }
+    );
 
-  button.classList.add("selected");
+  document.getElementById(
+    "bdDateTime"
+  ).textContent =
+    dateText + " | " + timeText;
 
-  if(index === questions[currentQuestion].answer){
-    score++;
+}
+
+setInterval(
+  updateBangladeshTime,
+  1000
+);
+
+updateBangladeshTime();
+
+
+/* =====================================================
+   FORMAT DATE
+   ===================================================== */
+
+function formatBangladeshDate(
+  value
+){
+
+  if(!value){
+    return "--";
   }
 
-  nextBtn.disabled = false;
+  const date =
+    new Date(value);
+
+  return date.toLocaleString(
+    "bn-BD",
+    {
+      timeZone:"Asia/Dhaka",
+      year:"numeric",
+      month:"long",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit",
+      hour12:true
+    }
+  );
+
 }
 
 
-function nextQuestion(){
+/* =====================================================
+   COUNTDOWN FORMAT
+   ===================================================== */
 
-  if(!selected) return;
+function formatCountdown(
+  milliseconds
+){
 
-  currentQuestion++;
-
-  if(currentQuestion >= questions.length){
-
-    localStorage.setItem("quizScore",score);
-    localStorage.setItem("quizTotal",questions.length);
-
-    window.location.href = "result.html";
-
-    return;
+  if(milliseconds <= 0){
+    return "00:00:00";
   }
 
-  loadQuestion();
-}
+  const totalSeconds =
+    Math.floor(
+      milliseconds / 1000
+    );
 
-
-function updateTimer(){
-
-  time--;
-
-  if(time <= 0){
-
-    localStorage.setItem("quizScore",score);
-    localStorage.setItem("quizTotal",questions.length);
-
-    window.location.href = "result.html";
-
-    return;
-  }
+  const hours =
+    Math.floor(
+      totalSeconds / 3600
+    );
 
   const minutes =
-    Math.floor(time / 60);
+    Math.floor(
+      (totalSeconds % 3600) / 60
+    );
 
   const seconds =
-    time % 60;
+    totalSeconds % 60;
 
-  timerEl.textContent =
-    String(minutes).padStart(2,"0") +
-    ":" +
-    String(seconds).padStart(2,"0");
+  return [
+    String(hours).padStart(2,"0"),
+    String(minutes).padStart(2,"0"),
+    String(seconds).padStart(2,"0")
+  ].join(":");
 
 }
 
 
-loadQuestion();
+/* =====================================================
+   LOAD REGISTRATION
+   ===================================================== */
 
-setInterval(updateTimer,1000);
+async function loadRegistration(){
 
-</script>
+  if(!registrationId){
 
-</body>
-  </html>
+    showMessage(
+      "🔐 আপনার পরীক্ষার Session পাওয়া যায়নি। আগে Roll Number যাচাই করুন।",
+      "error"
+    );
+
+    document.getElementById(
+      "statusIcon"
+    ).textContent = "🔐";
+
+    document.getElementById(
+      "statusTitle"
+    ).textContent =
+      "Roll Number যাচাই করুন";
+
+    document.getElementById(
+      "statusText"
+    ).textContent =
+      "আগে পরীক্ষা প্রবেশ পেজ থেকে আপনার অনুমোদিত Roll Number যাচাই করুন।";
+
+    document.getElementById(
+      "countdown"
+    ).textContent = "";
+
+    return false;
+  }
+
+  try{
+
+    const result =
+      await supabaseClient
+      .from("quiz_registrations")
+      .select(`
+        id,
+        quiz_id,
+        student_id,
+        roll_number,
+        student_name,
+        mobile,
+        email,
+        institution,
+        registration_status,
+        payment_status,
+        amount
+      `)
+      .eq(
+        "id",
+        registrationId
+      )
+      .maybeSingle();
+
+    if(result.error){
+
+      console.error(
+        result.error
+      );
+
+      showMessage(
+        "❌ Registration তথ্য লোড করা যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    if(!result.data){
+
+      showMessage(
+        "❌ আপনার Registration পাওয়া যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    registration =
+      result.data;
+
+    if(
+      registration.registration_status &&
+      registration.registration_status.toLowerCase() !== "approved"
+    ){
+
+      showMessage(
+        "⏳ আপনার Registration এখনো Admin অনুমোদন করেননি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    if(
+      registration.payment_status &&
+      (
+        registration.payment_status.toLowerCase() === "pending" ||
+        registration.payment_status.toLowerCase() === "rejected"
+      )
+    ){
+
+      showMessage(
+        registration.payment_status.toLowerCase() === "pending"
+        ? "💳 আপনার পেমেন্ট এখনো যাচাই করা হয়নি।"
+        : "❌ আপনার পেমেন্ট প্রত্যাখ্যান করা হয়েছে।",
+        "error"
+      );
+
+      return false;
+    }
+
+    return true;
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "❌ Registration যাচাই করতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+    return false;
+  }
+
+}
+
+
+/* =====================================================
+   LOAD QUIZ
+   ===================================================== */
+
+async function loadQuiz(){
+
+  const quizId =
+    sessionQuizId ||
+    registration.quiz_id;
+
+  if(!quizId){
+
+    showMessage(
+      "❌ এই Registration-এর সঙ্গে কোনো Quiz যুক্ত নেই।",
+      "error"
+    );
+
+    return false;
+  }
+
+  try{
+
+    const result =
+      await supabaseClient
+      .from("quizzes")
+      .select(`
+        id,
+        category_id,
+        title,
+        slug,
+        description,
+        duration_minutes,
+        total_marks,
+        negative_mark,
+        passing_marks,
+        fee,
+        prize,
+        status,
+        start_at,
+        end_at,
+        total_questions,
+        instructions
+      `)
+      .eq(
+        "id",
+        quizId
+      )
+      .maybeSingle();
+
+    if(result.error){
+
+      console.error(
+        result.error
+      );
+
+      showMessage(
+        "❌ Quiz তথ্য লোড করা যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    if(!result.data){
+
+      showMessage(
+        "❌ Quiz পাওয়া যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    quiz =
+      result.data;
+
+    return true;
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "❌ Quiz লোড করতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+    return false;
+  }
+
+}
+
+
+/* =====================================================
+   LOAD CATEGORY
+   ===================================================== */
+
+async function loadCategory(){
+
+  if(
+    !quiz ||
+    !quiz.category_id
+  ){
+
+    document.getElementById(
+      "examCategory"
+    ).textContent =
+      "অনলাইন পরীক্ষা";
+
+    return;
+  }
+
+  try{
+
+    const result =
+      await supabaseClient
+      .from("quiz_categories")
+      .select(`
+        id,
+        name
+      `)
+      .eq(
+        "id",
+        quiz.category_id
+      )
+      .maybeSingle();
+
+    if(
+      result.data &&
+      result.data.name
+    ){
+
+      document.getElementById(
+        "examCategory"
+      ).textContent =
+        result.data.name;
+
+    }else{
+
+      document.getElementById(
+        "examCategory"
+      ).textContent =
+        "অনলাইন পরীক্ষা";
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "examCategory"
+    ).textContent =
+      "অনলাইন পরীক্ষা";
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD QUESTIONS
+   ===================================================== */
+
+async function loadQuestions(){
+
+  if(!quiz){
+
+    return false;
+  }
+
+  try{
+
+    const quizQuestionResult =
+      await supabaseClient
+      .from("quiz_questions")
+      .select(`
+        id,
+        quiz_id,
+        question_id,
+        question_order,
+        marks,
+        negative_marks
+      `)
+      .eq(
+        "quiz_id",
+        quiz.id
+      )
+      .order(
+        "question_order",
+        {
+          ascending:true
+        }
+      );
+
+    if(
+      quizQuestionResult.error
+    ){
+
+      console.error(
+        quizQuestionResult.error
+      );
+
+      showMessage(
+        "❌ Quiz-এর প্রশ্ন লোড করা যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+    if(
+      !quizQuestionResult.data ||
+      quizQuestionResult.data.length === 0
+    ){
+
+      showMessage(
+        "⚠️ এই Quiz-এ এখনো কোনো প্রশ্ন যোগ করা হয়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+
+    const questionIds =
+      quizQuestionResult.data.map(
+        item => item.question_id
+      );
+
+    const questionResult =
+      await supabaseClient
+      .from("questions")
+      .select(`
+        id,
+        question_text,
+        explanation,
+        marks,
+        negative_marks,
+        difficulty,
+        question_type,
+        status
+      `)
+      .in(
+        "id",
+        questionIds
+      );
+
+    if(questionResult.error){
+
+      console.error(
+        questionResult.error
+      );
+
+      showMessage(
+        "❌ Question তথ্য লোড করা যায়নি।",
+        "error"
+      );
+
+      return false;
+    }
+
+
+    const optionResult =
+      await sup
