@@ -1422,3 +1422,346 @@ loginForm.addEventListener(
     const password =
       document
       .getElementById("
+/* ==========================================
+   LOGIN
+========================================== */
+
+loginForm.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    loginMessage.className = "message";
+    loginMessage.textContent = "";
+
+    const email =
+      document
+      .getElementById("email")
+      .value
+      .trim();
+
+    const password =
+      document
+      .getElementById("password")
+      .value;
+
+    if(!email || !password){
+
+      showLoginMessage(
+        "⚠️ Email এবং Password দিন।",
+        "error"
+      );
+
+      return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "⏳ Login হচ্ছে...";
+
+    try{
+
+      /*
+        Supabase Auth Login
+      */
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+
+      if(error){
+
+        console.error(
+          "Login error:",
+          error
+        );
+
+        showLoginMessage(
+          "❌ Login ব্যর্থ: " + error.message,
+          "error"
+        );
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "🔐 Admin Login";
+
+        return;
+      }
+
+
+      if(!data || !data.user){
+
+        showLoginMessage(
+          "❌ Login User পাওয়া যায়নি।",
+          "error"
+        );
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "🔐 Admin Login";
+
+        return;
+      }
+
+
+      /*
+        Admin Profile Verification
+      */
+
+      showLoginMessage(
+        "⏳ Admin Account যাচাই করা হচ্ছে...",
+        "success"
+      );
+
+
+      const isAdmin =
+        await verifyAdmin(data.user);
+
+
+      if(!isAdmin){
+
+        /*
+          Admin না হলে Session বন্ধ করে দিচ্ছি।
+        */
+
+        await supabaseClient.auth.signOut();
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "🔐 Admin Login";
+
+        return;
+      }
+
+
+      /*
+        সব ঠিক থাকলে Dashboard
+      */
+
+      await loadDashboard(data.user);
+
+
+    }catch(error){
+
+      console.error(
+        "Unexpected login error:",
+        error
+      );
+
+      showLoginMessage(
+        "❌ Login-এর সময় সমস্যা হয়েছে: " +
+        (error.message || error),
+        "error"
+      );
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = "🔐 Admin Login";
+    }
+
+  }
+);
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutBtn.addEventListener(
+  "click",
+  async function(){
+
+    logoutBtn.disabled = true;
+    logoutBtn.textContent = "⏳ Logout...";
+
+    try{
+
+      const { error } =
+        await supabaseClient.auth.signOut();
+
+
+      if(error){
+
+        console.error(
+          "Logout error:",
+          error
+        );
+
+        alert(
+          "Logout করতে সমস্যা হয়েছে: " +
+          error.message
+        );
+
+        logoutBtn.disabled = false;
+        logoutBtn.textContent = "🚪 Logout";
+
+        return;
+      }
+
+
+      window.currentAdmin = null;
+
+      dashboard.classList.remove("show");
+      loginSection.style.display = "";
+
+      loginForm.reset();
+
+      loginMessage.className =
+        "message";
+
+      loginMessage.textContent = "";
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = "🔐 Admin Login";
+
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "Logout-এর সময় সমস্যা হয়েছে।"
+      );
+
+      logoutBtn.disabled = false;
+      logoutBtn.textContent = "🚪 Logout";
+    }
+
+  }
+);
+
+
+/* ==========================================
+   SESSION CHECK
+========================================== */
+
+async function checkSession(){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if(error){
+
+      console.error(
+        "Session error:",
+        error
+      );
+
+      return;
+    }
+
+
+    const session =
+      data?.session;
+
+
+    if(!session || !session.user){
+
+      return;
+    }
+
+
+    /*
+      Existing Session থাকলে
+      Admin verification করা হবে।
+    */
+
+    const isAdmin =
+      await verifyAdmin(session.user);
+
+
+    if(isAdmin){
+
+      await loadDashboard(
+        session.user
+      );
+
+    }else{
+
+      await supabaseClient.auth.signOut();
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Session check error:",
+      error
+    );
+  }
+
+}
+
+
+/* ==========================================
+   AUTH STATE CHANGE
+========================================== */
+
+supabaseClient.auth.onAuthStateChange(
+  async function(event, session){
+
+    console.log(
+      "Auth event:",
+      event
+    );
+
+    /*
+      SIGNED_OUT হলে Login দেখাবে
+    */
+
+    if(event === "SIGNED_OUT"){
+
+      window.currentAdmin = null;
+
+      dashboard.classList.remove(
+        "show"
+      );
+
+      loginSection.style.display = "";
+
+      return;
+    }
+
+  }
+);
+
+
+/* ==========================================
+   COMING SOON
+========================================== */
+
+function comingSoon(
+  event,
+  moduleName
+){
+
+  event.preventDefault();
+
+  alert(
+    "🚧 " +
+    moduleName +
+    "\n\nএই Management Module পরবর্তী ধাপে তৈরি করা হবে।"
+  );
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+checkSession();
+
+</script>
+
+</body>
+</html>
