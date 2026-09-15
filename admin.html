@@ -25,16 +25,25 @@ body{
     sans-serif;
 
   background:
-    radial-gradient(circle at top left,
+    radial-gradient(
+      circle at top left,
       rgba(124,58,237,.16),
-      transparent 32%),
-    radial-gradient(circle at bottom right,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
       rgba(236,72,153,.10),
-      transparent 30%),
+      transparent 30%
+    ),
     #060817;
 
   color:#fff;
   min-height:100vh;
+}
+
+button,
+input{
+  font-family:inherit;
 }
 
 /* =========================
@@ -132,7 +141,7 @@ body{
 ========================= */
 
 .container{
-  width:min(1150px, 100%);
+  width:min(1150px,100%);
   margin:auto;
   padding:24px 16px 40px;
 }
@@ -351,7 +360,7 @@ body{
 
   gap:15px;
 
-  margin-bottom:24px;
+  margin-bottom:28px;
 }
 
 .stat-card{
@@ -401,29 +410,34 @@ body{
 }
 
 .stat-number{
+  position:relative;
+  z-index:2;
+
   margin-top:12px;
 
-  font-size:27px;
+  font-size:28px;
   font-weight:900;
 }
 
 .stat-label{
-  margin-top:4px;
+  position:relative;
+  z-index:2;
 
-  font-size:12px;
+  margin-top:3px;
 
   color:#858ca8;
+  font-size:13px;
 }
 
 /* =========================
-   MENU
+   MANAGEMENT
 ========================= */
 
 .section-title{
-  font-size:19px;
-  font-weight:800;
-
   margin-bottom:14px;
+
+  font-size:18px;
+  font-weight:800;
 }
 
 .menu-grid{
@@ -433,26 +447,28 @@ body{
     repeat(3,1fr);
 
   gap:15px;
+
+  margin-bottom:25px;
 }
 
 .menu-card{
-  position:relative;
+  display:block;
 
   text-decoration:none;
 
   color:#fff;
 
-  padding:21px;
+  padding:20px;
 
-  min-height:145px;
+  min-height:190px;
 
-  border-radius:19px;
+  border-radius:18px;
 
   background:
     linear-gradient(
       145deg,
-      #11152d,
-      #0c1024
+      rgba(17,21,45,.95),
+      rgba(12,16,36,.95)
     );
 
   border:
@@ -469,10 +485,10 @@ body{
   transform:translateY(-3px);
 
   border-color:
-    rgba(139,61,255,.45);
+    rgba(139,61,255,.40);
 
   box-shadow:
-    0 12px 30px
+    0 15px 35px
     rgba(0,0,0,.25);
 }
 
@@ -486,53 +502,56 @@ body{
 
   border-radius:14px;
 
-  font-size:23px;
+  font-size:24px;
 
   background:
-    rgba(124,58,237,.13);
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.18),
+      rgba(236,72,153,.12)
+    );
 
   border:
     1px solid
-    rgba(124,58,237,.18);
+    rgba(255,255,255,.07);
 
   margin-bottom:14px;
 }
 
 .menu-card h3{
   font-size:16px;
+  margin-bottom:8px;
 }
 
 .menu-card p{
-  margin-top:6px;
-
-  font-size:12px;
-
-  line-height:1.5;
-
   color:#858ca8;
+
+  font-size:13px;
+
+  line-height:1.6;
+
+  min-height:42px;
 }
 
 .coming{
-  position:absolute;
+  display:inline-block;
 
-  top:15px;
-  right:15px;
+  margin-top:13px;
 
-  padding:4px 8px;
+  padding:5px 9px;
 
   border-radius:8px;
 
-  font-size:9px;
-  font-weight:700;
+  font-size:11px;
 
-  color:#ffcc6d;
+  color:#b8a3ff;
 
   background:
-    rgba(245,158,11,.10);
+    rgba(124,58,237,.10);
 
   border:
     1px solid
-    rgba(245,158,11,.18);
+    rgba(124,58,237,.18);
 }
 
 /* =========================
@@ -540,9 +559,7 @@ body{
 ========================= */
 
 .admin-card{
-  margin-top:24px;
-
-  padding:19px;
+  padding:20px;
 
   border-radius:18px;
 
@@ -605,7 +622,6 @@ body{
     grid-template-columns:
       repeat(2,1fr);
   }
-
 }
 
 @media(max-width:550px){
@@ -661,12 +677,16 @@ body{
   }
 
   .menu-card{
-    min-height:125px;
+    min-height:auto;
+    padding:17px;
   }
 
-  .login-card{
-    padding:24px 17px;
-    border-radius:20px;
+  .admin-card{
+    padding:17px;
+  }
+
+  .admin-row{
+    font-size:12px;
   }
 }
 </style>
@@ -685,13 +705,15 @@ body{
     <div class="login-card">
 
       <div class="login-icon">
-        🛡️
+        🔐
       </div>
 
-      <h2>Admin Panel</h2>
+      <h2>
+        Admin Login
+      </h2>
 
       <p class="subtitle">
-        জ্ঞানতরঙ্গ পরিচালনা কেন্দ্র
+        জ্ঞানতরঙ্গ Admin Control Panel
       </p>
 
       <div
@@ -799,8 +821,9 @@ body{
     <div class="welcome">
 
       <h1>
-        👋 স্বাগতম, <span id="adminName">
-        Admin
+        👋 স্বাগতম,
+        <span id="adminName">
+          Admin
         </span>
       </h1>
 
@@ -902,10 +925,11 @@ body{
     <div class="menu-grid">
 
 
+      <!-- CATEGORY MANAGEMENT -->
+
       <a
-        href="#"
-        class="menu-card"
-        onclick="comingSoon(event,'Category Management')">
+        href="category-management.html"
+        class="menu-card">
 
         <div class="menu-icon">
           📚
@@ -920,16 +944,17 @@ body{
         </p>
 
         <span class="coming">
-          পরবর্তী ধাপ
+          খুলুন →
         </span>
 
       </a>
 
 
+      <!-- QUIZ MANAGEMENT -->
+
       <a
-        href="#"
-        class="menu-card"
-        onclick="comingSoon(event,'Quiz Management')">
+        href="quiz-management.html"
+        class="menu-card">
 
         <div class="menu-icon">
           📝
@@ -944,11 +969,13 @@ body{
         </p>
 
         <span class="coming">
-          পরবর্তী ধাপ
+          খুলুন →
         </span>
 
       </a>
 
+
+      <!-- REGISTRATION -->
 
       <a
         href="#"
@@ -974,6 +1001,8 @@ body{
       </a>
 
 
+      <!-- PAYMENT -->
+
       <a
         href="#"
         class="menu-card"
@@ -998,6 +1027,8 @@ body{
       </a>
 
 
+      <!-- QUESTION -->
+
       <a
         href="#"
         class="menu-card"
@@ -1021,6 +1052,8 @@ body{
 
       </a>
 
+
+      <!-- RESULT -->
 
       <a
         href="#"
@@ -1120,6 +1153,11 @@ body{
 
 const SUPABASE_URL =
   "https://oycecrzerykrqkoivdwg.supabase.co";
+
+/*
+  এখানে তোমার আগের Supabase ANON / PUBLIC KEY বসাও।
+  service_role / secret key কখনো বসাবে না।
+*/
 
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
@@ -1449,37 +1487,4 @@ async function loadStats(){
 
     const students =
       await supabaseClient
-      .from("profiles")
-      .select(
-        "id",
-        {
-          count:"exact",
-          head:true
-        }
-      )
-      .eq(
-        "role",
-        "student"
-      );
-
-
-    if(!students.error){
-
-      document.getElementById(
-        "studentCount"
-      ).textContent =
-        students.count ?? 0;
-
-    }
-
-
-    /* QUIZZES */
-
-    const quizzes =
-      await supabaseClient
-      .from("quizzes")
-      .select(
-        "id",
-        {
-          count:"exact",
-      
+  
