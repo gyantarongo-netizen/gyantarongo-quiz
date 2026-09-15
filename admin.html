@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel | জ্ঞানতরঙ্গ</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans Bengali",
+    "Noto Sans",
+    sans-serif;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,58,237,.16),
+      transparent 32%),
+    radial-gradient(circle at bottom right,
+      rgba(236,72,153,.10),
+      transparent 30%),
+    #060817;
+
+  color:#fff;
+  min-height:100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  height:70px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 18px;
+
+  background:rgba(8,11,28,.90);
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-box{
+  width:45px;
+  height:45px;
+
+  border-radius:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#10142b;
+
+  border:1px solid rgba(255,255,255,.10);
+
+  overflow:hidden;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-text{
+  line-height:1.2;
+}
+
+.brand-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+.brand-subtitle{
+  font-size:11px;
+  color:#8f96b3;
+  margin-top:3px;
+}
+
+.logout-btn{
+  border:none;
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #ec4899
+    );
+
+  padding:10px 15px;
+
+  border-radius:12px;
+
+  font-weight:700;
+  cursor:pointer;
+
+  box-shadow:
+    0 6px 20px
+    rgba(124,58,237,.25);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+  width:min(1150px, 100%);
+  margin:auto;
+  padding:24px 16px 40px;
+}
+
+.welcome{
+  margin-bottom:22px;
+}
+
+.welcome h1{
+  font-size:27px;
+  line-height:1.3;
+}
+
+.welcome p{
+  margin-top:7px;
+  color:#8f96b3;
+  font-size:14px;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-wrapper{
+  min-height:calc(100vh - 70px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:25px 16px;
+}
+
+.login-card{
+  width:min(440px,100%);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,21,45,.97),
+      rgba(11,14,32,.97)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  border-radius:24px;
+
+  padding:28px 22px;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.38);
+}
+
+.login-icon{
+  width:70px;
+  height:70px;
+
+  margin:0 auto 18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:20px;
+
+  font-size:34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.25),
+      rgba(236,72,153,.18)
+    );
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.login-card h2{
+  text-align:center;
+  font-size:24px;
+}
+
+.login-card .subtitle{
+  text-align:center;
+  color:#8f96b3;
+  font-size:13px;
+  margin-top:7px;
+  margin-bottom:24px;
+}
+
+.form-group{
+  margin-bottom:17px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+
+  font-size:13px;
+  font-weight:700;
+
+  color:#d9dced;
+}
+
+.form-group input{
+  width:100%;
+
+  height:50px;
+
+  padding:0 15px;
+
+  color:#fff;
+
+  background:#0b0f25;
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
+  border-radius:14px;
+
+  outline:none;
+
+  font-size:15px;
+}
+
+.form-group input:focus{
+  border-color:#8b3dff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(124,58,237,.13);
+}
+
+.login-btn{
+  width:100%;
+  height:52px;
+
+  border:none;
+
+  border-radius:14px;
+
+  color:#fff;
+
+  font-size:16px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #ec4899
+    );
+
+  box-shadow:
+    0 10px 28px
+    rgba(124,58,237,.28);
+}
+
+.login-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.message{
+  display:none;
+
+  padding:12px 14px;
+
+  border-radius:12px;
+
+  margin-bottom:16px;
+
+  font-size:13px;
+
+  line-height:1.5;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:rgba(239,68,68,.10);
+  border:1px solid rgba(239,68,68,.25);
+  color:#ff9b9b;
+}
+
+.message.success{
+  background:rgba(34,197,94,.10);
+  border:1px solid rgba(34,197,94,.25);
+  color:#7ff0a5;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard{
+  display:none;
+}
+
+.dashboard.show{
+  display:block;
+}
+
+.stats-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+
+  margin-bottom:24px;
+}
+
+.stat-card{
+  position:relative;
+
+  padding:19px;
+
+  min-height:130px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #11152d,
+      #0c1024
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  overflow:hidden;
+}
+
+.stat-card::after{
+  content:"";
+
+  position:absolute;
+
+  width:90px;
+  height:90px;
+
+  right:-30px;
+  bottom:-30px;
+
+  border-radius:50%;
+
+  background:
+    rgba(124,58,237,.10);
+
+  filter:blur(5px);
+}
+
+.stat-icon{
+  font-size:24px;
+}
+
+.stat-number{
+  margin-top:12px;
+
+  font-size:27px;
+  font-weight:900;
+}
+
+.stat-label{
+  margin-top:4px;
+
+  font-size:12px;
+
+  color:#858ca8;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.section-title{
+  font-size:19px;
+  font-weight:800;
+
+  margin-bottom:14px;
+}
+
+.menu-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:15px;
+}
+
+.menu-card{
+  position:relative;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  padding:21px;
+
+  min-height:145px;
+
+  border-radius:19px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #11152d,
+      #0c1024
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.menu-card:hover{
+  transform:translateY(-3px);
+
+  border-color:
+    rgba(139,61,255,.45);
+
+  box-shadow:
+    0 12px 30px
+    rgba(0,0,0,.25);
+}
+
+.menu-icon{
+  width:48px;
+  height:48px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:14px;
+
+  font-size:23px;
+
+  background:
+    rgba(124,58,237,.13);
+
+  border:
+    1px solid
+    rgba(124,58,237,.18);
+
+  margin-bottom:14px;
+}
+
+.menu-card h3{
+  font-size:16px;
+}
+
+.menu-card p{
+  margin-top:6px;
+
+  font-size:12px;
+
+  line-height:1.5;
+
+  color:#858ca8;
+}
+
+.coming{
+  position:absolute;
+
+  top:15px;
+  right:15px;
+
+  padding:4px 8px;
+
+  border-radius:8px;
+
+  font-size:9px;
+  font-weight:700;
+
+  color:#ffcc6d;
+
+  background:
+    rgba(245,158,11,.10);
+
+  border:
+    1px solid
+    rgba(245,158,11,.18);
+}
+
+/* =========================
+   ADMIN INFO
+========================= */
+
+.admin-card{
+  margin-top:24px;
+
+  padding:19px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,21,45,.95),
+      rgba(12,16,36,.95)
+    );
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+}
+
+.admin-card h3{
+  font-size:16px;
+  margin-bottom:12px;
+}
+
+.admin-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+
+  padding:10px 0;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.05);
+
+  font-size:13px;
+}
+
+.admin-row:last-child{
+  border-bottom:none;
+}
+
+.admin-row span:first-child{
+  color:#858ca8;
+}
+
+.admin-row span:last-child{
+  text-align:right;
+  font-weight:700;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+  .stats-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .menu-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:550px){
+
+  .header{
+    height:64px;
+    padding:0 13px;
+  }
+
+  .logo-box{
+    width:40px;
+    height:40px;
+  }
+
+  .brand-title{
+    font-size:15px;
+  }
+
+  .brand-subtitle{
+    font-size:10px;
+  }
+
+  .logout-btn{
+    padding:8px 11px;
+    font-size:12px;
+  }
+
+  .container{
+    padding:
+      20px 12px 30px;
+  }
+
+  .welcome h1{
+    font-size:23px;
+  }
+
+  .stats-grid{
+    gap:10px;
+  }
+
+  .stat-card{
+    min-height:115px;
+    padding:15px;
+  }
+
+  .stat-number{
+    font-size:23px;
+  }
+
+  .menu-grid{
+    grid-template-columns:1fr;
+    gap:11px;
+  }
+
+  .menu-card{
+    min-height:125px;
+  }
+
+  .login-card{
+    padding:24px 17px;
+    border-radius:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section id="loginSection">
+
+  <div class="login-wrapper">
+
+    <div class="login-card">
+
+      <div class="login-icon">
+        🛡️
+      </div>
+
+      <h2>Admin Panel</h2>
+
+      <p class="subtitle">
+        জ্ঞানতরঙ্গ পরিচালনা কেন্দ্র
+      </p>
+
+      <div
+        id="loginMessage"
+        class="message">
+      </div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+
+          <label for="email">
+            Admin Email
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="আপনার Admin Email"
+            autocomplete="email"
+            required>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="আপনার Password"
+            autocomplete="current-password"
+            required>
+
+        </div>
+
+        <button
+          id="loginBtn"
+          class="login-btn"
+          type="submit">
+
+          🔐 Admin Login
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section
+  id="dashboard"
+  class="dashboard">
+
+  <header class="header">
+
+    <div class="brand">
+
+      <div class="logo-box">
+
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ">
+
+      </div>
+
+      <div class="brand-text">
+
+        <div class="brand-title">
+          জ্ঞানতরঙ্গ
+        </div>
+
+        <div class="brand-subtitle">
+          Admin Control Panel
+        </div>
+
+      </div>
+
+    </div>
+
+    <button
+      id="logoutBtn"
+      class="logout-btn">
+
+      🚪 Logout
+
+    </button>
+
+  </header>
+
+
+  <main class="container">
+
+    <div class="welcome">
+
+      <h1>
+        👋 স্বাগতম, <span id="adminName">
+        Admin
+        </span>
+      </h1>
+
+      <p>
+        এখান থেকে জ্ঞানতরঙ্গের পুরো সিস্টেম পরিচালনা করতে পারবেন।
+      </p>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats-grid">
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <div
+          id="studentCount"
+          class="stat-number">
+          —
+        </div>
+
+        <div class="stat-label">
+          মোট শিক্ষার্থী
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          📝
+        </div>
+
+        <div
+          id="quizCount"
+          class="stat-number">
+          —
+        </div>
+
+        <div class="stat-label">
+          মোট কুইজ
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          📚
+        </div>
+
+        <div
+          id="categoryCount"
+          class="stat-number">
+          —
+        </div>
+
+        <div class="stat-label">
+          ক্যাটাগরি
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ⏳
+        </div>
+
+        <div
+          id="pendingCount"
+          class="stat-number">
+          —
+        </div>
+
+        <div class="stat-label">
+          Pending Registration
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- MANAGEMENT -->
+
+    <div class="section-title">
+      ⚙️ Management
+    </div>
+
+    <div class="menu-grid">
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Category Management')">
+
+        <div class="menu-icon">
+          📚
+        </div>
+
+        <h3>
+          Category Management
+        </h3>
+
+        <p>
+          কুইজের ক্যাটাগরি যোগ, এডিট ও নিয়ন্ত্রণ করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Quiz Management')">
+
+        <div class="menu-icon">
+          📝
+        </div>
+
+        <h3>
+          Quiz Management
+        </h3>
+
+        <p>
+          কুইজ, সময়, ফি, পুরস্কার ও অন্যান্য তথ্য পরিচালনা করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Registration Management')">
+
+        <div class="menu-icon">
+          👥
+        </div>
+
+        <h3>
+          Registration
+        </h3>
+
+        <p>
+          শিক্ষার্থীর রেজিস্ট্রেশন ও অনুমোদন পরিচালনা করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Payment Management')">
+
+        <div class="menu-icon">
+          💳
+        </div>
+
+        <h3>
+          Payment Verification
+        </h3>
+
+        <p>
+          Paid Quiz-এর পেমেন্ট যাচাই ও Approve/Reject করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Question Management')">
+
+        <div class="menu-icon">
+          ❓
+        </div>
+
+        <h3>
+          Question Management
+        </h3>
+
+        <p>
+          প্রশ্ন, অপশন, সঠিক উত্তর ও Negative Marking পরিচালনা করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+      <a
+        href="#"
+        class="menu-card"
+        onclick="comingSoon(event,'Result Management')">
+
+        <div class="menu-icon">
+          🏆
+        </div>
+
+        <h3>
+          Result Management
+        </h3>
+
+        <p>
+          ফলাফল যাচাই, Ranking ও Result Publish করুন।
+        </p>
+
+        <span class="coming">
+          পরবর্তী ধাপ
+        </span>
+
+      </a>
+
+
+    </div>
+
+
+    <!-- ADMIN INFO -->
+
+    <div class="admin-card">
+
+      <h3>
+        🔐 Admin Account
+      </h3>
+
+      <div class="admin-row">
+
+        <span>
+          নাম
+        </span>
+
+        <span id="infoName">
+          —
+        </span>
+
+      </div>
+
+      <div class="admin-row">
+
+        <span>
+          Email
+        </span>
+
+        <span id="infoEmail">
+          —
+        </span>
+
+      </div>
+
+      <div class="admin-row">
+
+        <span>
+          Role
+        </span>
+
+        <span id="infoRole">
+          —
+        </span>
+
+      </div>
+
+      <div class="admin-row">
+
+        <span>
+          Account Status
+        </span>
+
+        <span id="infoStatus">
+          —
+        </span>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</section>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE
+========================================== */
+
+const SUPABASE_URL =
+  "https://oycecrzerykrqkoivdwg.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
+
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const loginSection =
+  document.getElementById(
+    "loginSection"
+  );
+
+const dashboard =
+  document.getElementById(
+    "dashboard"
+  );
+
+const loginForm =
+  document.getElementById(
+    "loginForm"
+  );
+
+const loginBtn =
+  document.getElementById(
+    "loginBtn"
+  );
+
+const logoutBtn =
+  document.getElementById(
+    "logoutBtn"
+  );
+
+const loginMessage =
+  document.getElementById(
+    "loginMessage"
+  );
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showLoginMessage(
+  message,
+  type = "error"
+){
+
+  loginMessage.textContent =
+    message;
+
+  loginMessage.className =
+    "message show " + type;
+
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+loginForm.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    const email =
+      document
+      .getElementById("email")
+      .value
+      .trim();
+
+    const password =
+      document
+      .getElementById("password")
+      .value;
+
+    if(!email || !password){
+
+      showLoginMessage(
+        "⚠️ Email এবং Password দিন।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginBtn.textContent =
+      "⏳ যাচাই হচ্ছে...";
+
+
+    try{
+
+      const { data, error } =
+        await supabaseClient.auth
+        .signInWithPassword({
+          email: email,
+          password: password
+        });
+
+
+      if(error){
+
+        console.error(error);
+
+        showLoginMessage(
+          "❌ Email অথবা Password সঠিক নয়।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      if(!data.user){
+
+        showLoginMessage(
+          "❌ Login করা যায়নি।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const isAdmin =
+        await verifyAdmin(
+          data.user
+        );
+
+
+      if(!isAdmin){
+
+        await supabaseClient.auth.signOut();
+
+        showLoginMessage(
+          "🚫 এই Account-এর Admin অনুমতি নেই।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      await loadDashboard(
+        data.user
+      );
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showLoginMessage(
+        "❌ একটি অপ্রত্যাশিত সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+        "error"
+      );
+
+    }finally{
+
+      loginBtn.disabled = false;
+
+      loginBtn.textContent =
+        "🔐 Admin Login";
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   VERIFY ADMIN
+========================================== */
+
+async function verifyAdmin(user){
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        full_name,
+        email,
+        role,
+        is_active
+      `)
+      .eq("id", user.id)
+      .maybeSingle();
+
+
+    if(error){
+
+      console.error(
+        "Admin verification error:",
+        error
+      );
+
+      return false;
+    }
+
+
+    if(!data){
+
+      return false;
+    }
+
+
+    if(
+      String(data.role)
+      .toLowerCase()
+      !== "admin"
+    ){
+
+      return false;
+    }
+
+
+    if(
+      data.is_active === false
+    ){
+
+      return false;
+    }
+
+
+    window.currentAdmin =
+      data;
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(error);
+
+    return false;
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD DASHBOARD
+========================================== */
+
+async function loadDashboard(user){
+
+  const admin =
+    window.currentAdmin;
+
+
+  loginSection.style.display =
+    "none";
+
+  dashboard.classList.add(
+    "show"
+  );
+
+
+  const name =
+    admin?.full_name ||
+    "Admin";
+
+
+  document.getElementById(
+    "adminName"
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    "infoName"
+  ).textContent =
+    name;
+
+
+  document.getElementById(
+    "infoEmail"
+  ).textContent =
+    admin?.email ||
+    user.email ||
+    "-";
+
+
+  document.getElementById(
+    "infoRole"
+  ).textContent =
+    "ADMIN";
+
+
+  document.getElementById(
+    "infoStatus"
+  ).textContent =
+    "✅ Active";
+
+
+  await loadStats();
+
+}
+
+
+/* ==========================================
+   LOAD STATS
+========================================== */
+
+async function loadStats(){
+
+  try{
+
+    /* STUDENTS */
+
+    const students =
+      await supabaseClient
+      .from("profiles")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "role",
+        "student"
+      );
+
+
+    if(!students.error){
+
+      document.getElementById(
+        "studentCount"
+      ).textContent =
+        students.count ?? 0;
+
+    }
+
+
+    /* QUIZZES */
+
+    const quizzes =
+      await supabaseClient
+      .from("quizzes")
+      .select(
+        "id",
+        {
+          count:"exact",
+      
