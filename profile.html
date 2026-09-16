@@ -624,19 +624,22 @@ input:disabled{
 
 
 <script>
+<script type="module">
 
-const SUPABASE_URL =
-  "https://oycecrzerykrqkoivdwg.supabase.co";
+import { auth, db } from "./firebase-config.js";
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 let currentUser = null;
@@ -646,22 +649,19 @@ let currentUser = null;
    MESSAGE
 ========================= */
 
-function showMessage(
-  text,
-  type = "success"
-){
+function showMessage(text, type = "success") {
 
-  const box =
-    document.getElementById("message");
+  const box = document.getElementById("message");
+
+  if (!box) return;
 
   box.textContent = text;
 
-  box.className =
-    "message show " + type;
+  box.className = "message show " + type;
 
   window.scrollTo({
-    top:0,
-    behavior:"smooth"
+    top: 0,
+    behavior: "smooth"
   });
 }
 
@@ -670,7 +670,7 @@ function showMessage(
    LOGIN
 ========================= */
 
-async function loginStudent(){
+async function loginStudent() {
 
   const button =
     document.getElementById("loginBtn");
@@ -686,7 +686,7 @@ async function loginStudent(){
       .getElementById("loginPassword")
       .value;
 
-  if(!email || !password){
+  if (!email || !password) {
 
     showMessage(
       "⚠️ ইমেইল ও পাসওয়ার্ড দিন।",
@@ -701,18 +701,26 @@ async function loginStudent(){
   button.textContent =
     "⏳ লগইন হচ্ছে...";
 
+  try {
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+    const result =
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
+    currentUser =
+      result.user;
 
-  if(error){
+    showMessage(
+      "✅ সফলভাবে লগইন হয়েছে।",
+      "success"
+    );
+
+    await loadProfile();
+
+  } catch (error) {
 
     console.error(error);
 
@@ -721,27 +729,13 @@ async function loginStudent(){
       "error"
     );
 
+  } finally {
+
     button.disabled = false;
 
     button.textContent =
       "🔐 লগইন করুন";
-
-    return;
   }
-
-
-  currentUser =
-    data.user;
-
-
-  showMessage(
-    "✅ সফলভাবে লগইন হয়েছে।",
-    "success"
-  );
-
-
-  await loadProfile();
-
 }
 
 
@@ -749,7 +743,9 @@ async function loginStudent(){
    LOAD PROFILE
 ========================= */
 
-async function loadProfile(){
+async function loadProfile() {
+
+  if (!currentUser) return;
 
   document
     .getElementById("authSection")
@@ -760,31 +756,110 @@ async function loadProfile(){
     .classList.remove("hidden");
 
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(`
-        id,
-        student_uid,
-        full_name,
-        mobile,
-        email,
-        institution,
-        district,
-        division,
-        class_name,
-        profile_image_url,
-        role,
-        is_active
-      `)
-      .eq("id", currentUser.id)
-      .maybeSingle();
+  try {
+
+    const profileRef =
+      doc(
+        db,
+        "profiles",
+        currentUser.uid
+      );
+
+    const snapshot =
+      await getDoc(profileRef);
 
 
-  if(error){
+    if (!snapshot.exists()) {
+
+      showMessage(
+        "⚠️ আপনার Profile এখনো তৈরি হয়নি। তথ্য পূরণ করে Save করুন।",
+        "error"
+      );
+
+      document
+        .getElementById("email")
+        .value =
+        currentUser.email || "";
+
+      return;
+    }
+
+
+    const data =
+      snapshot.data();
+
+
+    document
+      .getElementById("fullName")
+      .value =
+      data.full_name || "";
+
+
+    document
+      .getElementById("mobile")
+      .value =
+      data.mobile || "";
+
+
+    document
+      .getElementById("email")
+      .value =
+      data.email ||
+      currentUser.email ||
+      "";
+
+
+    document
+      .getElementById("institution")
+      .value =
+      data.institution || "";
+
+
+    document
+      .getElementById("className")
+      .value =
+      data.class_name || "";
+
+
+    document
+      .getElementById("district")
+      .value =
+      data.district || "";
+
+
+    document
+      .getElementById("division")
+      .value =
+      data.division || "";
+
+
+    document
+      .getElementById("profileImageUrl")
+      .value =
+      data.profile_image_url || "";
+
+
+    document
+      .getElementById("profileName")
+      .textContent =
+      data.full_name ||
+      "শিক্ষার্থী";
+
+
+    document
+      .getElementById("studentId")
+      .textContent =
+      data.student_uid ||
+      "Student ID তৈরি হয়নি";
+
+
+    updateAvatar(
+      data.profile_image_url,
+      data.full_name
+    );
+
+
+  } catch (error) {
 
     console.error(error);
 
@@ -792,96 +867,7 @@ async function loadProfile(){
       "❌ Profile তথ্য লোড করতে সমস্যা হয়েছে।",
       "error"
     );
-
-    return;
   }
-
-
-  if(!data){
-
-    showMessage(
-      "⚠️ আপনার Profile এখনো তৈরি হয়নি। তথ্য পূরণ করে Save করুন।",
-      "error"
-    );
-
-    document
-      .getElementById("email")
-      .value =
-      currentUser.email || "";
-
-    return;
-  }
-
-
-  document
-    .getElementById("fullName")
-    .value =
-    data.full_name || "";
-
-
-  document
-    .getElementById("mobile")
-    .value =
-    data.mobile || "";
-
-
-  document
-    .getElementById("email")
-    .value =
-    data.email ||
-    currentUser.email ||
-    "";
-
-
-  document
-    .getElementById("institution")
-    .value =
-    data.institution || "";
-
-
-  document
-    .getElementById("className")
-    .value =
-    data.class_name || "";
-
-
-  document
-    .getElementById("district")
-    .value =
-    data.district || "";
-
-
-  document
-    .getElementById("division")
-    .value =
-    data.division || "";
-
-
-  document
-    .getElementById("profileImageUrl")
-    .value =
-    data.profile_image_url || "";
-
-
-  document
-    .getElementById("profileName")
-    .textContent =
-    data.full_name ||
-    "শিক্ষার্থী";
-
-
-  document
-    .getElementById("studentId")
-    .textContent =
-    data.student_uid ||
-    "Student ID তৈরি হয়নি";
-
-
-  updateAvatar(
-    data.profile_image_url,
-    data.full_name
-  );
-
 }
 
 
@@ -889,9 +875,9 @@ async function loadProfile(){
    SAVE PROFILE
 ========================= */
 
-async function saveProfile(){
+async function saveProfile() {
 
-  if(!currentUser){
+  if (!currentUser) {
 
     showMessage(
       "🔐 আগে লগইন করুন।",
@@ -955,7 +941,7 @@ async function saveProfile(){
       .trim();
 
 
-  if(!fullName){
+  if (!fullName) {
 
     showMessage(
       "⚠️ পূর্ণ নাম লিখুন।",
@@ -966,7 +952,7 @@ async function saveProfile(){
   }
 
 
-  if(!mobile){
+  if (!mobile) {
 
     showMessage(
       "⚠️ মোবাইল নম্বর লিখুন।",
@@ -983,100 +969,69 @@ async function saveProfile(){
     "⏳ সংরক্ষণ হচ্ছে...";
 
 
-  try{
+  try {
 
-    const {
-      data:existing,
-      error:existingError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select("id,student_uid")
-        .eq("id", currentUser.id)
-        .maybeSingle();
+    const profileRef =
+      doc(
+        db,
+        "profiles",
+        currentUser.uid
+      );
 
 
-    if(existingError){
-
-      throw existingError;
-
-    }
+    const existingSnapshot =
+      await getDoc(profileRef);
 
 
-    let studentUid =
-      existing?.student_uid || null;
+    let studentUid = null;
+
+    let role = "student";
+
+    let isActive = true;
 
 
-    if(!studentUid){
+    if (existingSnapshot.exists()) {
 
-      const {
-        data:latest,
-        error:latestError
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select("student_uid")
-          .not(
-            "student_uid",
-            "is",
-            null
-          )
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
-          )
-          .limit(1)
-          .maybeSingle();
-
-
-      if(latestError){
-
-        throw latestError;
-
-      }
-
-
-      let nextNumber = 1;
-
-
-      if(
-        latest &&
-        latest.student_uid
-      ){
-
-        const match =
-          latest.student_uid.match(
-            /(\d+)$/
-          );
-
-
-        if(match){
-
-          nextNumber =
-            parseInt(
-              match[1],
-              10
-            ) + 1;
-
-        }
-
-      }
+      const existing =
+        existingSnapshot.data();
 
 
       studentUid =
-        "GT-STU-" +
-        String(nextNumber)
-          .padStart(6,"0");
+        existing.student_uid || null;
 
+      role =
+        existing.role || "student";
+
+      isActive =
+        existing.is_active !== undefined
+          ? existing.is_active
+          : true;
+    }
+
+
+    /*
+      নতুন Student-এর জন্য
+      অস্থায়ী Student ID তৈরি।
+      পরবর্তীতে Admin/Cloud Function
+      দিয়ে sequential ID system করব।
+    */
+
+    if (!studentUid) {
+
+      const number =
+        String(
+          Date.now()
+        ).slice(-6);
+
+      studentUid =
+        "GT-STU-" + number;
     }
 
 
     const profileData = {
 
       id:
-        currentUser.id,
+        currentUser.uid,
 
       student_uid:
         studentUid,
@@ -1106,31 +1061,34 @@ async function saveProfile(){
         profileImageUrl || null,
 
       role:
-        existing?.role || "student",
+        role,
 
       is_active:
-        true
-
+        isActive
     };
 
 
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .upsert(
-          profileData,
-          {
-            onConflict:"id"
-          }
-        );
+    if (existingSnapshot.exists()) {
 
+      /*
+        Existing profile update
+      */
 
-    if(error){
+      await updateDoc(
+        profileRef,
+        profileData
+      );
 
-      throw error;
+    } else {
 
+      /*
+        New student profile
+      */
+
+      await setDoc(
+        profileRef,
+        profileData
+      );
     }
 
 
@@ -1158,24 +1116,22 @@ async function saveProfile(){
     );
 
 
-  }catch(error){
+  } catch (error) {
 
     console.error(error);
 
     showMessage(
-      "❌ Profile সংরক্ষণ করা যায়নি। Supabase Database/RLS পরীক্ষা করতে হবে।",
+      "❌ Profile সংরক্ষণ করা যায়নি। Firebase Firestore Rules পরীক্ষা করতে হবে।",
       "error"
     );
 
-  }finally{
+  } finally {
 
     button.disabled = false;
 
     button.textContent =
       "💾 তথ্য সংরক্ষণ করুন";
-
   }
-
 }
 
 
@@ -1186,13 +1142,16 @@ async function saveProfile(){
 function updateAvatar(
   imageUrl,
   name
-){
+) {
 
   const avatar =
     document.getElementById("avatar");
 
 
-  if(imageUrl){
+  if (!avatar) return;
+
+
+  if (imageUrl) {
 
     avatar.innerHTML =
       `<img
@@ -1200,7 +1159,6 @@ function updateAvatar(
         alt="Profile">`;
 
     return;
-
   }
 
 
@@ -1212,7 +1170,6 @@ function updateAvatar(
 
   avatar.textContent =
     first;
-
 }
 
 
@@ -1220,15 +1177,14 @@ function updateAvatar(
    ESCAPE
 ========================= */
 
-function escapeHtml(value){
+function escapeHtml(value) {
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 
@@ -1236,89 +1192,96 @@ function escapeHtml(value){
    LOGOUT
 ========================= */
 
-async function logoutStudent(){
+async function logoutStudent() {
 
-  const {
-    error
-  } =
-    await supabaseClient.auth.signOut();
+  try {
+
+    await signOut(auth);
+
+    currentUser = null;
 
 
-  if(error){
+    document
+      .getElementById("profileSection")
+      .classList.add("hidden");
+
+
+    document
+      .getElementById("authSection")
+      .classList.remove("hidden");
+
+
+    document
+      .getElementById("loginEmail")
+      .value = "";
+
+
+    document
+      .getElementById("loginPassword")
+      .value = "";
+
+
+    showMessage(
+      "✅ সফলভাবে Logout হয়েছে।",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
 
     showMessage(
       "❌ Logout করা যায়নি।",
       "error"
     );
-
-    return;
   }
-
-
-  currentUser = null;
-
-
-  document
-    .getElementById("profileSection")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("authSection")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("loginEmail")
-    .value = "";
-
-
-  document
-    .getElementById("loginPassword")
-    .value = "";
-
-
-  showMessage(
-    "✅ সফলভাবে Logout হয়েছে।",
-    "success"
-  );
-
 }
 
 
 /* =========================
-   INITIAL SESSION
+   AUTH STATE
 ========================= */
 
-async function initialize(){
+onAuthStateChanged(
+  auth,
+  async (user) => {
 
-  const {
-    data
-  } =
-    await supabaseClient
-      .auth
-      .getSession();
+    if (user) {
 
+      currentUser =
+        user;
 
-  const session =
-    data.session;
+      await loadProfile();
 
+    } else {
 
-  if(session){
+      currentUser = null;
 
-    currentUser =
-      session.user;
+      document
+        .getElementById("profileSection")
+        .classList.add("hidden");
 
-    await loadProfile();
-
+      document
+        .getElementById("authSection")
+        .classList.remove("hidden");
+    }
   }
+);
 
-}
 
+/* =========================
+   GLOBAL FUNCTIONS
+========================= */
 
-initialize();
+window.loginStudent =
+  loginStudent;
+
+window.saveProfile =
+  saveProfile;
+
+window.logoutStudent =
+  logoutStudent;
 
 </script>
 
-</body>
-</html>
