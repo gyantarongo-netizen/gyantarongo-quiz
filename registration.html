@@ -40,7 +40,6 @@ let currentUser = null;
 let currentProfile = null;
 let quizzes = [];
 let selectedQuiz = null;
-let paymentMethods = [];
 
 
 /* =========================
@@ -59,6 +58,7 @@ function showMessage(text, type = "info") {
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
@@ -71,6 +71,7 @@ function showRegistrationMessage(text, type = "error") {
 
   box.className =
     "message show " + type;
+
 }
 
 
@@ -140,6 +141,7 @@ window.loginStudent = async function() {
     );
 
     return;
+
   }
 
 
@@ -252,6 +254,7 @@ window.signupStudent = async function() {
     );
 
     return;
+
   }
 
 
@@ -263,6 +266,7 @@ window.signupStudent = async function() {
     );
 
     return;
+
   }
 
 
@@ -274,6 +278,7 @@ window.signupStudent = async function() {
     );
 
     return;
+
   }
 
 
@@ -284,8 +289,6 @@ window.signupStudent = async function() {
 
 
   try {
-
-    /* Firebase Auth account */
 
     const result =
       await createUserWithEmailAndPassword(
@@ -299,14 +302,10 @@ window.signupStudent = async function() {
       result.user;
 
 
-    /* Student ID */
-
     const studentId =
       "GT-STU-" +
       Date.now().toString().slice(-6);
 
-
-    /* Firestore profile */
 
     await setDoc(
       doc(db, "profiles", user.uid),
@@ -465,6 +464,7 @@ async function loadStudentData() {
       );
 
       return;
+
     }
 
 
@@ -482,6 +482,21 @@ async function loadStudentData() {
       );
 
       return;
+
+    }
+
+
+    if (
+      currentProfile.is_active === false
+    ) {
+
+      showMessage(
+        "❌ আপনার Student Account বর্তমানে নিষ্ক্রিয়।",
+        "error"
+      );
+
+      return;
+
     }
 
 
@@ -577,6 +592,9 @@ async function loadQuizzes() {
     document.getElementById("emptyQuiz");
 
 
+  quizzes = [];
+
+
   loading.classList.remove("hidden");
 
   grid.classList.add("hidden");
@@ -593,15 +611,16 @@ async function loadQuizzes() {
     const q =
       query(
         quizzesRef,
-        where("registration_open", "==", true)
+        where(
+          "registration_open",
+          "==",
+          true
+        )
       );
 
 
     const snapshot =
       await getDocs(q);
-
-
-    quizzes = [];
 
 
     snapshot.forEach(
@@ -624,6 +643,7 @@ async function loadQuizzes() {
       empty.classList.remove("hidden");
 
       return;
+
     }
 
 
@@ -756,7 +776,9 @@ function renderQuizzes() {
               </div>
 
               <div class="info-value">
-                ${Number(quiz.question_count || 0)}
+                ${Number(
+                  quiz.question_count || 0
+                )}
               </div>
 
             </div>
@@ -769,7 +791,9 @@ function renderQuizzes() {
               </div>
 
               <div class="info-value">
-                ${Number(quiz.duration_minutes || 20)} মিনিট
+                ${Number(
+                  quiz.duration_minutes || 20
+                )} মিনিট
               </div>
 
             </div>
@@ -782,7 +806,9 @@ function renderQuizzes() {
               </div>
 
               <div class="info-value">
-                ${Number(quiz.participants || 0)} জন
+                ${Number(
+                  quiz.participants || 0
+                )} জন
               </div>
 
             </div>
@@ -802,7 +828,9 @@ function renderQuizzes() {
 
           <button
             class="primary-btn"
-            onclick="openRegistration('${escapeAttribute(quiz.id)}')">
+            onclick="openRegistration('${escapeAttribute(
+              quiz.id
+            )}')">
 
             📝 রেজিস্ট্রেশন করুন
 
@@ -845,6 +873,7 @@ async function(quizId) {
     );
 
     return;
+
   }
 
 
@@ -856,6 +885,7 @@ async function(quizId) {
     );
 
     return;
+
   }
 
 
@@ -979,6 +1009,11 @@ async function loadPaymentMethods() {
 
     console.error(error);
 
+    showRegistrationMessage(
+      "❌ পেমেন্ট পদ্ধতি লোড করা যায়নি।",
+      "error"
+    );
+
   }
 
 }
@@ -999,6 +1034,7 @@ async function() {
     );
 
     return;
+
   }
 
 
@@ -1010,6 +1046,7 @@ async function() {
     );
 
     return;
+
   }
 
 
@@ -1029,7 +1066,9 @@ async function() {
 
   try {
 
-    /* Already registered check */
+    /* =========================
+       ALREADY REGISTERED CHECK
+    ========================= */
 
     const registrationsRef =
       collection(
@@ -1045,11 +1084,6 @@ async function() {
           "student_uid",
           "==",
           currentUser.uid
-        ),
-        where(
-          "quiz_id",
-          "==",
-          selectedQuiz.id
         )
       );
 
@@ -1058,7 +1092,30 @@ async function() {
       await getDocs(existingQuery);
 
 
-    if (!existingSnapshot.empty) {
+    let alreadyRegistered = false;
+
+
+    existingSnapshot.forEach(
+      (item) => {
+
+        const data =
+          item.data();
+
+
+        if (
+          data.quiz_id ===
+          selectedQuiz.id
+        ) {
+
+          alreadyRegistered = true;
+
+        }
+
+      }
+    );
+
+
+    if (alreadyRegistered) {
 
       showRegistrationMessage(
         "⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন।",
@@ -1066,10 +1123,13 @@ async function() {
       );
 
       return;
+
     }
 
 
-    /* Payment */
+    /* =========================
+       PAYMENT
+    ========================= */
 
     let paymentData = null;
 
@@ -1077,20 +1137,27 @@ async function() {
     if (fee > 0) {
 
       const paymentMethod =
-        document.getElementById("paymentMethod")
+        document
+          .getElementById("paymentMethod")
           .value;
 
       const paymentNumber =
-        document.getElementById("paymentNumber")
-          .value.trim();
+        document
+          .getElementById("paymentNumber")
+          .value
+          .trim();
 
       const transactionId =
-        document.getElementById("transactionId")
-          .value.trim();
+        document
+          .getElementById("transactionId")
+          .value
+          .trim();
 
       const paymentScreenshot =
-        document.getElementById("paymentScreenshot")
-          .value.trim();
+        document
+          .getElementById("paymentScreenshot")
+          .value
+          .trim();
 
 
       if (
@@ -1105,6 +1172,7 @@ async function() {
         );
 
         return;
+
       }
 
 
@@ -1127,13 +1195,19 @@ async function() {
     }
 
 
-    /* Quiz Roll */
+    /* =========================
+       CREATE ROLL NUMBER
+    ========================= */
 
     const rollNumber =
-      await generateQuizRoll();
+      await generateQuizRoll(
+        selectedQuiz.id
+      );
 
 
-    /* Registration */
+    /* =========================
+       SAVE REGISTRATION
+    ========================= */
 
     await addDoc(
       registrationsRef,
@@ -1172,9 +1246,7 @@ async function() {
           paymentData,
 
         status:
-          fee > 0
-            ? "pending"
-            : "approved",
+          "pending",
 
         created_at:
           serverTimestamp()
@@ -1185,7 +1257,8 @@ async function() {
 
     showRegistrationMessage(
       "🎉 রেজিস্ট্রেশন সফল হয়েছে। আপনার Quiz Roll Number: " +
-      rollNumber,
+      rollNumber +
+      "। অনুমোদনের পর আপনি কুইজে অংশ নিতে পারবেন।",
       "success"
     );
 
@@ -1216,7 +1289,7 @@ async function() {
    QUIZ ROLL NUMBER
 ========================= */
 
-async function generateQuizRoll() {
+async function generateQuizRoll(quizId) {
 
   const registrationsRef =
     collection(
@@ -1225,10 +1298,19 @@ async function generateQuizRoll() {
     );
 
 
-  const snapshot =
-    await getDocs(
-      registrationsRef
+  const q =
+    query(
+      registrationsRef,
+      where(
+        "quiz_id",
+        "==",
+        quizId
+      )
     );
+
+
+  const snapshot =
+    await getDocs(q);
 
 
   const number =
