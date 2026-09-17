@@ -339,7 +339,7 @@ footer{
     </div>
 
     <div class="score-label">
-      মোট নম্বর
+  প্রাপ্ত নম্বর
     </div>
 
   </div>
@@ -378,7 +378,16 @@ footer{
   </div>
 
 </div>
+<div class="rank-box" id="rankBox" style="display:none;">
 
+  <div class="rank-icon">🏆</div>
+
+  <div>
+    <strong id="rankText">০তম</strong>
+    <span id="participantText">০ জনের মধ্যে</span>
+  </div>
+
+  </div>
 
   <div class="message" id="message">
     🌟 এভাবেই এগিয়ে যান!
@@ -428,7 +437,6 @@ footer{
   const searchBtn = document.getElementById("searchBtn");
   const searchMessage = document.getElementById("searchMessage");
 
-
   const resultCard = document.querySelector(".result-card");
 
 
@@ -453,7 +461,6 @@ footer{
     searchMessage.textContent =
       "⏳ ফলাফল খোঁজা হচ্ছে...";
 
-
     searchBtn.disabled = true;
 
 
@@ -462,11 +469,12 @@ footer{
       const resultsRef = collection(db, "results");
 
 
+      // Roll Number অনুযায়ী প্রকাশিত ফলাফল
       const q = query(
-  resultsRef,
-  where("roll_number", "==", rollNumber),
-  where("published", "==", true)
-);
+        resultsRef,
+        where("roll_number", "==", rollNumber),
+        where("published", "==", true)
+      );
 
 
       const snapshot = await getDocs(q);
@@ -522,7 +530,8 @@ footer{
 
       // Roll Number
       document.getElementById("subtitle").textContent =
-        "Roll Number: " + (resultData.roll_number || rollNumber);
+        "Roll Number: " +
+        (resultData.roll_number || rollNumber);
 
 
       // প্রাপ্ত নম্বর
@@ -574,6 +583,92 @@ footer{
         minutes + " মিনিট " +
         String(seconds).padStart(2, "0") +
         " সেকেন্ড";
+
+
+      // =========================
+      // Rank হিসাব
+      // =========================
+
+      const allResultsQuery = query(
+        resultsRef,
+        where("quiz_name", "==", resultData.quiz_name),
+        where("published", "==", true)
+      );
+
+
+      const allResultsSnapshot =
+        await getDocs(allResultsQuery);
+
+
+      const allResults = [];
+
+
+      allResultsSnapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+
+        allResults.push({
+
+          uid: data.student_uid,
+
+          marks:
+            Number(data.obtained_marks ?? 0),
+
+          time:
+            Number(data.time_taken_seconds ?? 0)
+
+        });
+
+      });
+
+
+      // বেশি নম্বর আগে
+      // একই নম্বর হলে কম সময় আগে
+      allResults.sort((a, b) => {
+
+        if (b.marks !== a.marks) {
+
+          return b.marks - a.marks;
+
+        }
+
+
+        return a.time - b.time;
+
+      });
+
+
+      let rank = 0;
+
+
+      for (let i = 0; i < allResults.length; i++) {
+
+        if (
+          allResults[i].uid ===
+          resultData.student_uid
+        ) {
+
+          rank = i + 1;
+
+          break;
+
+        }
+
+      }
+
+
+      // Rank দেখানো
+      document.getElementById("rankBox").style.display =
+        "flex";
+
+
+      document.getElementById("rankText").textContent =
+        rank + "তম";
+
+
+      document.getElementById("participantText").textContent =
+        allResults.length + " জনের মধ্যে";
 
 
       // Message
