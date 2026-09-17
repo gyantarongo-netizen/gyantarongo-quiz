@@ -398,9 +398,10 @@ footer{
 
 
       const q = query(
-        resultsRef,
-        where("roll_number", "==", rollNumber)
-      );
+  resultsRef,
+  where("roll_number", "==", rollNumber),
+  where("published", "==", true)
+);
 
 
       const snapshot = await getDocs(q);
