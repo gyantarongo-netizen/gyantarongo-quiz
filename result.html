@@ -245,6 +245,31 @@ footer{
 
 </header>
 
+<section class="search-card">
+
+  <h2>🏆 ফলাফল দেখুন</h2>
+
+  <p>আপনার Roll Number লিখুন</p>
+
+  <input
+    type="text"
+    id="rollInput"
+    placeholder="যেমন: GT-26-0001"
+    autocomplete="off"
+  >
+
+  <button
+    class="btn primary"
+    id="searchBtn"
+    type="button"
+  >
+    🔎 ফলাফল দেখুন
+  </button>
+
+  <div id="searchMessage"></div>
+
+</section>
+
 
 <section class="result-card">
 
@@ -319,78 +344,6 @@ footer{
 </div>
 
 
-<script>
-
-const score =
-  Number(localStorage.getItem("quizScore")) || 0;
-
-const total =
-  Number(localStorage.getItem("quizTotal")) || 5;
-
-const wrong =
-  total - score;
-
-const percent =
-  Math.round((score / total) * 100);
-
-
-document.getElementById("score").textContent =
-  score + " / " + total;
-
-document.getElementById("correct").textContent =
-  score;
-
-document.getElementById("wrong").textContent =
-  wrong;
-
-document.getElementById("percent").textContent =
-  percent + "%";
-
-
-if(percent >= 80){
-
-  document.getElementById("trophy").textContent = "🏆";
-
-  document.getElementById("title").textContent =
-    "অভিনন্দন! 🎉";
-
-  document.getElementById("subtitle").textContent =
-    "আপনার পরিশ্রম সত্যিই দারুণ ফল দিয়েছে।";
-
-  document.getElementById("message").textContent =
-    "🌟 অসাধারণ! আপনার জ্ঞান ও প্রস্তুতি প্রশংসনীয়। এভাবেই এগিয়ে যান!";
-
-}
-else if(percent >= 50){
-
-  document.getElementById("trophy").textContent = "🥈";
-
-  document.getElementById("title").textContent =
-    "খুব ভালো! 👍";
-
-  document.getElementById("subtitle").textContent =
-    "আপনি ভালো করেছেন। আরও একটু চেষ্টা করলে আরও ভালো হবে।";
-
-  document.getElementById("message").textContent =
-    "💪 নিয়মিত অনুশীলন করুন। আপনার সাফল্য আরও কাছে!";
-
-}
-else{
-
-  document.getElementById("trophy").textContent = "🌱";
-
-  document.getElementById("title").textContent =
-    "আবার চেষ্টা করুন!";
-
-  document.getElementById("subtitle").textContent =
-    "হতাশ হবেন না—প্রতিটি ভুল নতুন কিছু শেখার সুযোগ।";
-
-  document.getElementById("message").textContent =
-    "📚 ভুলগুলো থেকে শিখুন এবং আবার চেষ্টা করুন। আপনি পারবেন!";
-
-}
-
-</script>
 
 </body>
 </html>
