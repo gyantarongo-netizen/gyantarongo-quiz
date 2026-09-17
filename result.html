@@ -345,5 +345,195 @@ footer{
 
 
 
+<!-- নিচের Firebase code এখানে বসবে -->
+
+<script type="module">
+
+  import { db } from "./firebase-config.js";
+
+  import {
+    collection,
+    query,
+    where,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+  const rollInput = document.getElementById("rollInput");
+  const searchBtn = document.getElementById("searchBtn");
+  const searchMessage = document.getElementById("searchMessage");
+
+
+  const resultCard = document.querySelector(".result-card");
+
+
+  // শুরুতে Result Card লুকানো থাকবে
+  resultCard.style.display = "none";
+
+
+  searchBtn.addEventListener("click", async () => {
+
+    const rollNumber = rollInput.value.trim();
+
+
+    if (!rollNumber) {
+
+      searchMessage.textContent =
+        "⚠️ আগে আপনার Roll Number লিখুন।";
+
+      return;
+    }
+
+
+    searchMessage.textContent =
+      "⏳ ফলাফল খোঁজা হচ্ছে...";
+
+
+    searchBtn.disabled = true;
+
+
+    try {
+
+      const resultsRef = collection(db, "results");
+
+
+      const q = query(
+        resultsRef,
+        where("roll_number", "==", rollNumber)
+      );
+
+
+      const snapshot = await getDocs(q);
+
+
+      if (snapshot.empty) {
+
+        resultCard.style.display = "none";
+
+        searchMessage.textContent =
+          "❌ এই Roll Number-এর কোনো ফলাফল পাওয়া যায়নি।";
+
+        return;
+      }
+
+
+      let resultData = null;
+
+
+      snapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+        if (data.published === true) {
+          resultData = data;
+        }
+
+      });
+
+
+      if (!resultData) {
+
+        resultCard.style.display = "none";
+
+        searchMessage.textContent =
+          "⏳ এই Roll Number-এর ফলাফল এখনো প্রকাশিত হয়নি।";
+
+        return;
+      }
+
+
+      // Result পাওয়া গেছে
+      resultCard.style.display = "block";
+
+      searchMessage.textContent =
+        "✅ ফলাফল পাওয়া গেছে।";
+
+
+      // Quiz name
+      document.getElementById("title").textContent =
+        resultData.quiz_name || "কুইজ ফলাফল";
+
+
+      // Roll Number
+      document.getElementById("subtitle").textContent =
+        "Roll Number: " + (resultData.roll_number || rollNumber);
+
+
+      // প্রাপ্ত নম্বর
+      document.getElementById("score").textContent =
+        (resultData.obtained_marks ?? 0) +
+        " / " +
+        (resultData.total_marks ?? 0);
+
+
+      // সঠিক
+      document.getElementById("correct").textContent =
+        resultData.correct ?? 0;
+
+
+      // ভুল
+      document.getElementById("wrong").textContent =
+        resultData.wrong ?? 0;
+
+
+      // অনুত্তরিত
+      document.getElementById("unanswered").textContent =
+        resultData.unanswered ?? 0;
+
+
+      // Negative Mark
+      document.getElementById("negative").textContent =
+        resultData.negative_mark ?? 0;
+
+
+      // Percentage
+      document.getElementById("percent").textContent =
+        (resultData.percentage ?? 0) + "%";
+
+
+      // সময়
+      const totalSeconds =
+        Number(resultData.time_taken_seconds ?? 0);
+
+
+      const minutes =
+        Math.floor(totalSeconds / 60);
+
+
+      const seconds =
+        totalSeconds % 60;
+
+
+      document.getElementById("timeTaken").textContent =
+        minutes + " মিনিট " +
+        String(seconds).padStart(2, "0") +
+        " সেকেন্ড";
+
+
+      // Message
+      document.getElementById("message").textContent =
+        "🌟 আপনার ফলাফল সফলভাবে প্রকাশিত হয়েছে।";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      resultCard.style.display = "none";
+
+      searchMessage.textContent =
+        "❌ ফলাফল খুঁজতে সমস্যা হয়েছে। আবার চেষ্টা করুন।";
+
+    } finally {
+
+      searchBtn.disabled = false;
+
+    }
+
+  });
+
+
+</script>
+  
 </body>
 </html>
