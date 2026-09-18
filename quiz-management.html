@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz Management | জ্ঞানতরঙ্গ</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     *{
@@ -937,8 +936,8 @@
         <div class="switch-row">
 
           <div class="switch-text">
-            <strong>Quiz Active</strong>
-            <span>শিক্ষার্থীদের জন্য সক্রিয় থাকবে</span>
+  <strong>Registration Open</strong>
+  <span>শিক্ষার্থীদের জন্য রেজিস্ট্রেশন চালু থাকবে</span>
           </div>
 
           <label class="switch">
@@ -995,115 +994,1475 @@
 </div>
 
 
-<script>
+<script type="module">
 
-  const SUPABASE_URL =
-    "https://oycecrzerykrqkoivdwg.supabase.co";
+import { auth, db } from "./firebase-config.js";
 
-  const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+let quizzes = [];
+let categories = [];
+let editingQuizId = null;
+
+const defaultCategories = [
+  {
+    id: "islamic",
+    name: "ইসলামী কুইজ"
+  },
+  {
+    id: "seerat",
+    name: "সিরাত প্রতিযোগিতা"
+  },
+  {
+    id: "quran",
+    name: "কোরআন প্রতিযোগিতা"
+  },
+  {
+    id: "hadith",
+    name: "হাদিস"
+  },
+  {
+    id: "islamic-gk",
+    name: "ইসলামী সাধারণ জ্ঞান"
+  },
+  {
+    id: "gk",
+    name: "শুধু সাধারণ জ্ঞান"
+  },
+  {
+    id: "national",
+    name: "জাতীয় কুইজ প্রতিযোগিতা"
+  },
+  {
+    id: "academic",
+    name: "একাডেমিক কুইজ প্রতিযোগিতা"
+  }
+];
+
+
+// ================================
+// ADMIN CHECK
+// ================================
+
+async function checkAdmin(user) {
+
+  if (!user) {
+    alert("অনুগ্রহ করে Admin হিসেবে Login করুন।");
+    window.location.href = "admin.html";
+    return false;
+  }
+
+  try {
+
+    const profileRef = doc(
+      db,
+      "profiles",
+      user.uid
+    );
+
+    const profileSnap = await getDoc(profileRef);
+
+    if (!profileSnap.exists()) {
+      alert("Admin Profile পাওয়া যায়নি।");
+      window.location.href = "admin.html";
+      return false;
+    }
+
+    const profile = profileSnap.data();
+
+    if (
+      profile.role !== "admin" ||
+      profile.is_active !== true
+    ) {
+      alert("আপনার Admin অনুমতি নেই।");
+      window.location.href = "index.html";
+      return false;
+    }
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Admin যাচাই করতে সমস্যা হয়েছে।"
+    );
+
+    return false;
+  }
+}
+
+
+// ================================
+// AUTH STATE
+// ================================
+
+onAuthStateChanged(auth, async (user) => {
+
+  const ok = await checkAdmin(user);
+
+  if (!ok) return;
+
+  await loadCategories();
+  await loadQuizzes();
+
+});
+
+
+// ================================
+// LOGOUT
+// ================================
+
+async function logout() {
+
+  try {
+
+    await signOut(auth);
+
+    window.location.href = "admin.html";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Logout করতে সমস্যা হয়েছে।");
+  }
+}
+
+window.logout = logout;
+
+
+// ================================
+// LOAD CATEGORIES
+// ================================
+
+async function loadCategories() {
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "quiz_categories")
+      );
+
+    categories = [];
+
+    snapshot.forEach((item) => {
+
+      const data = item.data();
+
+      categories.push({
+        id: item.id,
+        name:
+          data.name ||
+          data.title ||
+          "Category"
+      });
+
+    });
+
+    if (categories.length === 0) {
+      categories = [...defaultCategories];
+    }
+
+  } catch (error) {
+
+    console.log(
+      "Firebase category না থাকায় default category ব্যবহার হচ্ছে।"
+    );
+
+    categories = [...defaultCategories];
+  }
+
+
+  fillCategorySelects();
+}
+
+
+// ================================
+// CATEGORY SELECT
+// ================================
+
+function fillCategorySelects() {
+
+  const categorySelect =
+    document.getElementById("categoryId");
+
+  const filterCategory =
+    document.getElementById("filterCategory");
+
+
+  if (categorySelect) {
+
+    categorySelect.innerHTML =
+      `<option value="">Category নির্বাচন করুন</option>`;
+
+    categories.forEach((category) => {
+
+      const option =
+        document.createElement("option");
+
+      option.value = category.id;
+      option.textContent = category.name;
+
+      categorySelect.appendChild(option);
+
+    });
+  }
+
+
+  if (filterCategory) {
+
+    filterCategory.innerHTML =
+      `<option value="">সব Category</option>`;
+
+    categories.forEach((category) => {
+
+      const option =
+        document.createElement("option");
+
+      option.value = category.id;
+      option.textContent = category.name;
+
+      filterCategory.appendChild(option);
+
+    });
+  }
+
+}
+
+
+// ================================
+// LOAD QUIZZES
+// ================================
+
+async function loadQuizzes() {
+
+  const quizList =
+    document.getElementById("quizList");
+
+  quizList.innerHTML =
+    `<div class="loading">
+      Quiz লোড হচ্ছে...
+    </div>`;
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(db, "quizzes")
+      );
+
+    quizzes = [];
+
+    snapshot.forEach((item) => {
+
+      quizzes.push({
+        id: item.id,
+        ...item.data()
+      });
+
+    });
+
+
+    quizzes.sort((a, b) => {
+
+      const aTime =
+        a.created_at?.seconds ||
+        0;
+
+      const bTime =
+        b.created_at?.seconds ||
+        0;
+
+      return bTime - aTime;
+
+    });
+
+
+    updateStats();
+    renderQuizzes();
+
+  } catch (error) {
+
+    console.error(error);
+
+    quizList.innerHTML =
+      `<div class="empty">
+        ❌ Quiz লোড করতে সমস্যা হয়েছে।
+      </div>`;
+
+  }
+
+}
+
+
+// ================================
+// STATS
+// ================================
+
+function updateStats() {
+
+  const total =
+    quizzes.length;
+
+  const active =
+    quizzes.filter(
+      q => q.is_active === true
+    ).length;
+
+  const paid =
+    quizzes.filter(
+      q => Number(q.fee || 0) > 0
+    ).length;
+
+
+  document.getElementById(
+    "totalQuiz"
+  ).textContent = total;
+
+
+  document.getElementById(
+    "activeQuiz"
+  ).textContent = active;
+
+
+  document.getElementById(
+    "paidQuiz"
+  ).textContent = paid;
+
+}
+
+
+// ================================
+// RENDER QUIZZES
+// ================================
+
+function renderQuizzes() {
+
+  const list =
+    document.getElementById("quizList");
+
+  const search =
+    (
+      document.getElementById(
+        "searchInput"
+      )?.value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const category =
+    document.getElementById(
+      "filterCategory"
+    )?.value || "";
+
+
+  let filtered =
+    quizzes.filter((quiz) => {
+
+      const title =
+        (
+          quiz.title ||
+          quiz.quiz_name ||
+          ""
+        ).toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        title.includes(search);
+
+
+      const matchesCategory =
+        !category ||
+        quiz.category_id === category;
+
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+
+    });
+
+
+  if (filtered.length === 0) {
+
+    list.innerHTML =
+      `<div class="empty">
+        📭 কোনো Quiz পাওয়া যায়নি।
+      </div>`;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    filtered.map(
+      quiz => quizCardHTML(quiz)
+    ).join("");
+
+}
+
+
+// ================================
+// QUIZ CARD
+// ================================
+
+function quizCardHTML(quiz) {
+
+  const title =
+    quiz.title ||
+    quiz.quiz_name ||
+    "নামহীন Quiz";
+
+
+  const category =
+    quiz.category_name ||
+    getCategoryName(
+      quiz.category_id
     );
 
 
-  let quizzes = [];
-  let categories = [];
-  let currentAdmin = null;
+  const status =
+    quiz.status ||
+    "draft";
 
 
-  // ================================
-  // AUTH CHECK
-  // ================================
-
-  async function checkAdmin(){
-
-    const {
-      data: { session },
-      error
-    } = await supabaseClient.auth.getSession();
-
-    if(error || !session){
-
-      window.location.href = "admin.html";
-      return false;
-    }
+  const active =
+    quiz.is_active === true;
 
 
-    const { data: profile, error: profileError } =
-      await supabaseClient
-        .from("profiles")
-        .select("id,full_name,role,is_active")
-        .eq("id", session.user.id)
-        .single();
+  const fee =
+    Number(
+      quiz.fee || 0
+    );
 
 
-    if(
-      profileError ||
-      !profile ||
-      profile.role !== "admin" ||
-      profile.is_active === false
-    ){
-
-      alert("আপনার Admin Access নেই।");
-
-      await supabaseClient.auth.signOut();
-
-      window.location.href = "admin.html";
-
-      return false;
-    }
+  const participants =
+    Number(
+      quiz.participants_count || 0
+    );
 
 
-    currentAdmin = profile;
+  return `
 
-    return true;
+    <div class="quiz-card">
+
+      <div class="quiz-top">
+
+        <div>
+
+          <div class="quiz-title">
+            ${escapeHtml(title)}
+          </div>
+
+          <div class="quiz-category">
+            ${escapeHtml(category)}
+          </div>
+
+        </div>
+
+
+        <span class="status ${
+          active
+          ? "active"
+          : "inactive"
+        }">
+
+          ${
+            active
+            ? "● Active"
+            : "● Inactive"
+          }
+
+        </span>
+
+      </div>
+
+
+      <div class="quiz-meta">
+
+        <div class="meta">
+
+          <small>প্রশ্ন</small>
+
+          <strong>
+            ${Number(
+              quiz.total_questions || 0
+            )} টি
+          </strong>
+
+        </div>
+
+
+        <div class="meta">
+
+          <small>সময়</small>
+
+          <strong>
+            ${Number(
+              quiz.duration_minutes || 0
+            )} মিনিট
+          </strong>
+
+        </div>
+
+
+        <div class="meta">
+
+          <small>ফি</small>
+
+          <strong>
+            ${
+              fee > 0
+              ? "৳ " + fee
+              : "ফ্রি"
+            }
+          </strong>
+
+        </div>
+
+
+        <div class="meta">
+
+          <small>অংশগ্রহণকারী</small>
+
+          <strong>
+            ${participants} জন
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      ${
+        quiz.description
+        ? `
+          <div class="quiz-description">
+            ${escapeHtml(
+              quiz.description
+            )}
+          </div>
+        `
+        : ""
+      }
+
+
+      <div class="quiz-actions">
+
+        <button
+          class="action-btn"
+          onclick="editQuiz('${quiz.id}')">
+
+          ✏️ Edit
+
+        </button>
+
+
+        <button
+          class="action-btn"
+          onclick="toggleQuiz('${quiz.id}')">
+
+          ${
+            active
+            ? "⏸️ বন্ধ করুন"
+            : "▶️ চালু করুন"
+          }
+
+        </button>
+
+
+        <button
+          class="action-btn delete"
+          onclick="deleteQuiz('${quiz.id}')">
+
+          🗑️ Delete
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+// ================================
+// CATEGORY NAME
+// ================================
+
+function getCategoryName(id) {
+
+  const category =
+    categories.find(
+      c => c.id === id
+    );
+
+  return category
+    ? category.name
+    : "অন্যান্য";
+
+}
+
+
+// ================================
+// ADD MODAL
+// ================================
+
+function openAddModal() {
+
+  editingQuizId = null;
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    "নতুন Quiz তৈরি করুন";
+
+
+  document.getElementById(
+    "quizForm"
+  ).reset();
+
+
+  document.getElementById(
+    "quizId"
+  ).value = "";
+
+
+  document.getElementById(
+    "fee"
+  ).value = 0;
+
+
+  document.getElementById(
+    "duration"
+  ).value = 20;
+
+
+  document.getElementById(
+    "totalQuestions"
+  ).value = 20;
+
+
+  document.getElementById(
+    "totalMarks"
+  ).value = 20;
+
+
+  document.getElementById(
+    "passingMarks"
+  ).value = 8;
+
+
+  document.getElementById(
+    "negativeMark"
+  ).value = 0.25;
+
+
+  document.getElementById(
+    "isActive"
+  ).checked = true;
+
+
+  document.getElementById(
+    "status"
+  ).value = "published";
+
+
+  document.getElementById(
+    "quizModal"
+  ).classList.remove("hidden");
+
+}
+
+window.openAddModal = openAddModal;
+
+
+// ================================
+// CLOSE MODAL
+// ================================
+
+function closeModal() {
+
+  document.getElementById(
+    "quizModal"
+  ).classList.add("hidden");
+
+}
+
+window.closeModal = closeModal;
+
+
+// ================================
+// SAVE QUIZ
+// ================================
+
+async function saveQuiz(event) {
+
+  event.preventDefault();
+
+
+  const user =
+    auth.currentUser;
+
+
+  if (!user) {
+
+    alert("Admin Login পাওয়া যায়নি।");
+
+    return;
   }
 
 
-  // ================================
-  // LOAD CATEGORIES
-  // ================================
-
-  async function loadCategories(){
-
-    const { data, error } =
-      await supabaseClient
-        .from("quiz_categories")
-        .select(`
-          id,
-          name,
-          is_active,
-          display_order
-        `)
-        .order("display_order", {
-          ascending:true
-        });
+  const title =
+    document.getElementById(
+      "title"
+    ).value.trim();
 
 
-    if(error){
+  const categoryId =
+    document.getElementById(
+      "categoryId"
+    ).value;
 
-      console.error(error);
 
-      alert(
-        "Category লোড করা যায়নি:\n" +
-        error.message
+  if (!title || !categoryId) {
+
+    alert(
+      "Quiz-এর নাম এবং Category নির্বাচন করুন।"
+    );
+
+    return;
+  }
+
+
+  const categoryName =
+    getCategoryName(categoryId);
+
+
+  const isActive =
+    document.getElementById(
+      "isActive"
+    ).checked;
+
+
+  const status =
+    document.getElementById(
+      "status"
+    ).value;
+
+
+  const fee =
+    Number(
+      document.getElementById(
+        "fee"
+      ).value || 0
+    );
+
+
+  const totalQuestions =
+    Number(
+      document.getElementById(
+        "totalQuestions"
+      ).value || 0
+    );
+
+
+  const totalMarks =
+    Number(
+      document.getElementById(
+        "totalMarks"
+      ).value || 0
+    );
+
+
+  const passingMarks =
+    Number(
+      document.getElementById(
+        "passingMarks"
+      ).value || 0
+    );
+
+
+  const negativeMark =
+    Number(
+      document.getElementById(
+        "negativeMark"
+      ).value || 0
+    );
+
+
+  const duration =
+    Number(
+      document.getElementById(
+        "duration"
+      ).value || 20
+    );
+
+
+  const maxParticipantsValue =
+    document.getElementById(
+      "maxParticipants"
+    ).value;
+
+
+  const maxParticipants =
+    maxParticipantsValue
+    ? Number(maxParticipantsValue)
+    : null;
+
+
+  const registrationStart =
+    getDateValue(
+      "registrationStart"
+    );
+
+
+  const registrationEnd =
+    getDateValue(
+      "registrationEnd"
+    );
+
+
+  const startAt =
+    getDateValue(
+      "startAt"
+    );
+
+
+  const endAt =
+    getDateValue(
+      "endAt"
+    );
+
+
+  const data = {
+
+    title: title,
+
+    quiz_name: title,
+
+    category_id: categoryId,
+
+    category_name: categoryName,
+
+    image_url:
+      document.getElementById(
+        "imageUrl"
+      ).value.trim(),
+
+    description:
+      document.getElementById(
+        "description"
+      ).value.trim(),
+
+    registration_start:
+      registrationStart,
+
+    registration_end:
+      registrationEnd,
+
+    registration_open:
+      isActive,
+
+    fee: fee,
+
+    start_at:
+      startAt,
+
+    end_at:
+      endAt,
+
+    duration_minutes:
+      duration,
+
+    total_questions:
+      totalQuestions,
+
+    total_marks:
+      totalMarks,
+
+    passing_marks:
+      passingMarks,
+
+    negative_mark:
+      negativeMark,
+
+    prize:
+      document.getElementById(
+        "prize"
+      ).value.trim(),
+
+    max_participants:
+      maxParticipants,
+
+    participants_count:
+      editingQuizId
+      ? (
+          quizzes.find(
+            q => q.id === editingQuizId
+          )?.participants_count || 0
+        )
+      : 0,
+
+    instructions:
+      document.getElementById(
+        "instructions"
+      ).value.trim(),
+
+    is_active:
+      isActive,
+
+    status:
+      status,
+
+    updated_at:
+      serverTimestamp()
+
+  };
+
+
+  const saveBtn =
+    document.getElementById(
+      "saveBtn"
+    );
+
+
+  saveBtn.disabled = true;
+
+  saveBtn.textContent =
+    "সংরক্ষণ হচ্ছে...";
+
+
+  try {
+
+    if (editingQuizId) {
+
+      await updateDoc(
+        doc(
+          db,
+          "quizzes",
+          editingQuizId
+        ),
+        data
       );
 
-      return;
+      alert(
+        "✅ Quiz সফলভাবে আপডেট হয়েছে।"
+      );
+
+    } else {
+
+      data.created_at =
+        serverTimestamp();
+
+      data.created_by =
+        auth.currentUser.uid;
+
+
+      await addDoc(
+        collection(
+          db,
+          "quizzes"
+        ),
+        data
+      );
+
+
+      alert(
+        "✅ নতুন Quiz সফলভাবে তৈরি হয়েছে।"
+      );
+
     }
 
 
-    categories = data || [];
+    closeModal();
 
-    fillCategorySelects();
+    await loadQuizzes();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "❌ Quiz Save করতে সমস্যা হয়েছে।\n\n" +
+      error.message
+    );
+
+  } finally {
+
+    saveBtn.disabled = false;
+
+    saveBtn.textContent =
+      "Quiz Save করুন";
+
+  }
+
+}
+
+window.saveQuiz = saveQuiz;
+
+
+// ================================
+// EDIT QUIZ
+// ================================
+
+async function editQuiz(id) {
+
+  const quiz =
+    quizzes.find(
+      q => q.id === id
+    );
+
+
+  if (!quiz) return;
+
+
+  editingQuizId = id;
+
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    "Quiz Edit করুন";
+
+
+  document.getElementById(
+    "quizId"
+  ).value = id;
+
+
+  document.getElementById(
+    "title"
+  ).value =
+    quiz.title ||
+    quiz.quiz_name ||
+    "";
+
+
+  document.getElementById(
+    "categoryId"
+  ).value =
+    quiz.category_id || "";
+
+
+  document.getElementById(
+    "imageUrl"
+  ).value =
+    quiz.image_url || "";
+
+
+  document.getElementById(
+    "description"
+  ).value =
+    quiz.description || "";
+
+
+  setDateInput(
+    "registrationStart",
+    quiz.registration_start
+  );
+
+
+  setDateInput(
+    "registrationEnd",
+    quiz.registration_end
+  );
+
+
+  document.getElementById(
+    "fee"
+  ).value =
+    quiz.fee ?? 0;
+
+
+  setDateInput(
+    "startAt",
+    quiz.start_at
+  );
+
+
+  setDateInput(
+    "endAt",
+    quiz.end_at
+  );
+
+
+  document.getElementById(
+    "duration"
+  ).value =
+    quiz.duration_minutes ?? 20;
+
+
+  document.getElementById(
+    "totalQuestions"
+  ).value =
+    quiz.total_questions ?? 0;
+
+
+  document.getElementById(
+    "totalMarks"
+  ).value =
+    quiz.total_marks ?? 0;
+
+
+  document.getElementById(
+    "passingMarks"
+  ).value =
+    quiz.passing_marks ?? 0;
+
+
+  document.getElementById(
+    "negativeMark"
+  ).value =
+    quiz.negative_mark ?? 0;
+
+
+  document.getElementById(
+    "prize"
+  ).value =
+    quiz.prize || "";
+
+
+  document.getElementById(
+    "maxParticipants"
+  ).value =
+    quiz.max_participants ?? "";
+
+
+  document.getElementById(
+    "instructions"
+  ).value =
+    quiz.instructions || "";
+
+
+  document.getElementById(
+    "isActive"
+  ).checked =
+    quiz.is_active === true;
+
+
+  document.getElementById(
+    "status"
+  ).value =
+    quiz.status || "draft";
+
+
+  document.getElementById(
+    "quizModal"
+  ).classList.remove("hidden");
+
+}
+
+window.editQuiz = editQuiz;
+
+
+// ================================
+// TOGGLE QUIZ
+// ================================
+
+async function toggleQuiz(id) {
+
+  const quiz =
+    quizzes.find(
+      q => q.id === id
+    );
+
+
+  if (!quiz) return;
+
+
+  const newValue =
+    quiz.is_active !== true;
+
+
+  try {
+
+    await updateDoc(
+      doc(
+        db,
+        "quizzes",
+        id
+      ),
+      {
+
+        is_active:
+          newValue,
+
+        registration_open:
+          newValue,
+
+        updated_at:
+          serverTimestamp()
+
+      }
+    );
+
+
+    await loadQuizzes();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Quiz status পরিবর্তন করতে সমস্যা হয়েছে।"
+    );
+
+  }
+
+}
+
+window.toggleQuiz = toggleQuiz;
+
+
+// ================================
+// DELETE QUIZ
+// ================================
+
+async function deleteQuiz(id) {
+
+  const quiz =
+    quizzes.find(
+      q => q.id === id
+    );
+
+
+  if (!quiz) return;
+
+
+  const title =
+    quiz.title ||
+    quiz.quiz_name ||
+    "এই Quiz";
+
+
+  const confirmed =
+    confirm(
+      `"${title}" মুছে ফেলতে চান?`
+    );
+
+
+  if (!confirmed) return;
+
+
+  try {
+
+    await deleteDoc(
+      doc(
+        db,
+        "quizzes",
+        id
+      )
+    );
+
+
+    alert(
+      "🗑️ Quiz মুছে ফেলা হয়েছে।"
+    );
+
+
+    await loadQuizzes();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Quiz মুছতে সমস্যা হয়েছে।"
+    );
+
+  }
+
+}
+
+window.deleteQuiz = deleteQuiz;
+
+
+// ================================
+// DATE HELPERS
+// ================================
+
+function getDateValue(id) {
+
+  const value =
+    document.getElementById(
+      id
+    ).value;
+
+
+  if (!value) return null;
+
+
+  return new Date(value);
+
+}
+
+
+function setDateInput(id, value) {
+
+  const input =
+    document.getElementById(
+      id
+    );
+
+
+  if (!value) {
+
+    input.value = "";
+
+    return;
   }
 
 
-  function fillCategorySelects(){
+  let date;
 
-    const categorySelect =
-      do
+
+  if (
+    typeof value.toDate ===
+    "function"
+  ) {
+
+    date =
+      value.toDate();
+
+  } else {
+
+    date =
+      new Date(value);
+
+  }
+
+
+  if (
+    isNaN(date.getTime())
+  ) {
+
+    input.value = "";
+
+    return;
+  }
+
+
+  const year =
+    date.getFullYear();
+
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+
+  const hours =
+    String(
+      date.getHours()
+    ).padStart(2, "0");
+
+
+  const minutes =
+    String(
+      date.getMinutes()
+    ).padStart(2, "0");
+
+
+  input.value =
+    `${year}-${month}-${day}T${hours}:${minutes}`;
+
+}
+
+
+// ================================
+// HTML SECURITY
+// ================================
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+// ================================
+// INITIAL GLOBAL FUNCTIONS
+// ================================
+
+window.renderQuizzes =
+  renderQuizzes;
+
+window.openAddModal =
+  openAddModal;
+
+window.closeModal =
+  closeModal;
+
+window.saveQuiz =
+  saveQuiz;
+
+window.editQuiz =
+  editQuiz;
+
+window.toggleQuiz =
+  toggleQuiz;
+
+window.deleteQuiz =
+  deleteQuiz;
+
+window.logout =
+  logout;
+
+
+</script>
+
