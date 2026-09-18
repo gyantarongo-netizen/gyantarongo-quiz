@@ -1,1359 +1,1667 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>পরীক্ষা | জ্ঞানতরঙ্গ</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:
-    "Noto Sans Bengali",
-    "Noto Sans",
-    Arial,
-    sans-serif;
-  background:
-    radial-gradient(
-      circle at top,
-      #151438 0%,
-      #080B1C 45%,
-      #050611 100%
-    );
-  color:#fff;
-  min-height:100vh;
-}
-
-button{
-  font-family:inherit;
-}
-
-.page{
-  width:100%;
-  max-width:850px;
-  margin:auto;
-  padding:16px;
-}
-
-/* HEADER */
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 0 18px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo-box{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:#11152D;
-  border:1px solid rgba(255,255,255,.12);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.logo-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.brand-title{
-  font-size:19px;
-  font-weight:800;
-}
-
-.brand-sub{
-  font-size:12px;
-  color:#9CA3AF;
-  margin-top:2px;
-}
-
-.bd-time{
-  text-align:right;
-  color:#B9C0D4;
-  font-size:11px;
-  line-height:1.5;
-}
-
-.bd-time strong{
-  display:block;
-  color:#fff;
-  font-size:12px;
-}
-
-/* CARD */
-
-.card{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(17,21,45,.96),
-      rgba(10,13,31,.96)
-    );
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:22px;
-  padding:20px;
-  box-shadow:
-    0 15px 45px rgba(0,0,0,.28);
-  margin-bottom:16px;
-}
-
-/* EXAM INFO */
-
-.exam-title{
-  font-size:25px;
-  font-weight:900;
-  line-height:1.35;
-  margin:0 0 8px;
-}
-
-.exam-category{
-  color:#A78BFA;
-  font-size:14px;
-  margin-bottom:18px;
-}
-
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.info-item{
-  background:#0C1025;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:14px;
-  padding:12px;
-}
-
-.info-label{
-  color:#8F96AA;
-  font-size:11px;
-  margin-bottom:5px;
-}
-
-.info-value{
-  color:#fff;
-  font-size:14px;
-  font-weight:700;
-}
-
-/* STATUS */
-
-.status-card{
-  text-align:center;
-  padding:28px 18px;
-}
-
-.status-icon{
-  font-size:48px;
-  margin-bottom:10px;
-}
-
-.status-title{
-  font-size:22px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.status-text{
-  color:#AEB5C8;
-  font-size:14px;
-  line-height:1.7;
-}
-
-.countdown{
-  margin:20px 0;
-  font-size:32px;
-  font-weight:900;
-  letter-spacing:1px;
-  color:#C4B5FD;
-}
-
-.start-btn,
-.next-btn,
-.submit-btn{
-  width:100%;
-  min-height:54px;
-  border:0;
-  border-radius:16px;
-  color:#fff;
-  font-size:17px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.start-btn{
-  background:
-    linear-gradient(
-      135deg,
-      #7C3AED,
-      #EC4899
-    );
-  box-shadow:
-    0 10px 28px rgba(124,58,237,.30);
-}
-
-.start-btn:active,
-.next-btn:active,
-.submit-btn:active{
-  transform:scale(.98);
-}
-
-.start-btn:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-/* EXAM */
-
-.exam-running{
-  display:none;
-}
-
-.exam-running.show{
-  display:block;
-}
-
-.timer-box{
-  position:sticky;
-  top:10px;
-  z-index:20;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.96),
-      rgba(236,72,153,.96)
-    );
-  border-radius:18px;
-  padding:13px 16px;
-  margin-bottom:14px;
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.30);
-}
-
-.timer-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.timer-label{
-  font-size:12px;
-  opacity:.85;
-}
-
-.timer{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.progress-wrap{
-  margin-top:9px;
-  height:5px;
-  background:rgba(255,255,255,.20);
-  border-radius:10px;
-  overflow:hidden;
-}
-
-.progress{
-  height:100%;
-  width:100%;
-  background:#fff;
-  transition:width .5s linear;
-}
-
-/* QUESTION */
-
-.question-card{
-  background:
-    linear-gradient(
-      145deg,
-      #11152D,
-      #0B0F24
-    );
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:22px;
-  padding:20px;
-}
-
-.question-number{
-  color:#A78BFA;
-  font-size:13px;
-  font-weight:800;
-  margin-bottom:10px;
-}
-
-.question-text{
-  font-size:20px;
-  line-height:1.7;
-  font-weight:800;
-  margin-bottom:20px;
-}
-
-.option{
-  width:100%;
-  text-align:left;
-  background:#151A36;
-  color:#F5F7FF;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:15px;
-  padding:15px;
-  margin-bottom:9px;
-  font-size:16px;
-  line-height:1.5;
-  cursor:pointer;
-  transition:.2s ease;
-}
-
-.option:hover{
-  border-color:rgba(167,139,250,.5);
-}
-
-.option.selected{
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.40),
-      rgba(236,72,153,.25)
-    );
-  border-color:#A78BFA;
-  box-shadow:
-    0 0 0 1px rgba(167,139,250,.15);
-}
-
-.option.disabled{
-  cursor:default;
-  pointer-events:none;
-}
-
-.option-letter{
-  display:inline-flex;
-  width:31px;
-  height:31px;
-  align-items:center;
-  justify-content:center;
-  border-radius:9px;
-  background:#242A4A;
-  margin-right:8px;
-  font-weight:900;
-}
-
-.option.selected .option-letter{
-  background:#7C3AED;
-}
-
-/* AI NOTICE */
-
-.small-notice{
-  text-align:center;
-  font-size:10px;
-  color:#777F96;
-  padding:2px 8px 5px;
-  line-height:1.3;
-}
-
-/* NEXT */
-
-.next-area{
-  margin-top:18px;
-}
-
-.next-btn{
-  background:
-    linear-gradient(
-      135deg,
-      #7C3AED,
-      #8B3DFF
-    );
-}
-
-/* RESULT */
-
-.finish-card{
-  display:none;
-  text-align:center;
-}
-
-.finish-card.show{
-  display:block;
-}
-
-.finish-icon{
-  font-size:58px;
-  margin-bottom:10px;
-}
-
-.finish-title{
-  font-size:25px;
-  font-weight:900;
-}
-
-.finish-text{
-  color:#AEB5C8;
-  line-height:1.7;
-  margin-top:8px;
-}
-
-/* MESSAGE */
-
-.message{
-  display:none;
-  padding:13px 15px;
-  border-radius:14px;
-  margin-bottom:15px;
-  font-size:13px;
-  line-height:1.6;
-}
-
-.message.show{
-  display:block;
-}
-
-.message.error{
-  background:rgba(239,68,68,.10);
-  border:1px solid rgba(239,68,68,.30);
-  color:#FCA5A5;
-}
-
-.message.success{
-  background:rgba(34,197,94,.10);
-  border:1px solid rgba(34,197,94,.30);
-  color:#86EFAC;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-  .page{
-    padding:12px;
-  }
-
-  .logo-box{
-    width:43px;
-    height:43px;
-  }
-
-  .brand-title{
-    font-size:17px;
-  }
-
-  .exam-title{
-    font-size:22px;
-  }
-
-  .card,
-  .question-card{
-    border-radius:19px;
-    padding:16px;
-  }
-
-  .info-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .question-text{
-    font-size:18px;
-  }
-
-  .option{
-    font-size:15px;
-    padding:13px;
-  }
-
-  .countdown{
-    font-size:27px;
-  }
-
-  .timer{
-    font-size:22px;
-  }
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>জ্ঞানতরঙ্গ | পরীক্ষা</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans Bengali", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #21104d 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #3b0d38 0%, transparent 35%),
+        #060817;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(900px, 94%);
+      margin: auto;
+      padding: 20px 0 50px;
+    }
+
+    /* HEADER */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .brand-text h1 {
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    .logout-btn {
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      padding: 9px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* LOGIN */
+
+    .login-box,
+    .exam-box,
+    .finish-box {
+      background: rgba(16,20,43,.92);
+      border: 1px solid rgba(139,61,255,.25);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.35);
+    }
+
+    .login-box h2,
+    .finish-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .login-box p,
+    .finish-box p {
+      color: #b9bdd0;
+      line-height: 1.7;
+    }
+
+    .input {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #080b1d;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .input:focus {
+      border-color: #8b3dff;
+      box-shadow: 0 0 0 3px rgba(139,61,255,.12);
+    }
+
+    .primary-btn {
+      width: 100%;
+      margin-top: 14px;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      background: linear-gradient(135deg, #8b3dff, #ec3fa7);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 14px;
+      color: #ffcc66;
+      line-height: 1.6;
+    }
+
+    /* EXAM HEADER */
+
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .quiz-title {
+      font-size: 22px;
+    }
+
+    .student-roll {
+      color: #aeb4c9;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .timer {
+      min-width: 120px;
+      text-align: center;
+      padding: 12px 15px;
+      border-radius: 13px;
+      background: rgba(47,214,138,.1);
+      border: 1px solid rgba(47,214,138,.3);
+      color: #2fd68a;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .timer.warning {
+      color: #ffb21c;
+      border-color: rgba(255,178,28,.4);
+      background: rgba(255,178,28,.1);
+    }
+
+    .timer.danger {
+      color: #ff4d6d;
+      border-color: rgba(255,77,109,.4);
+      background: rgba(255,77,109,.1);
+    }
+
+    /* PROGRESS */
+
+    .progress-area {
+      margin-bottom: 20px;
+    }
+
+    .progress-text {
+      color: #b9bdd0;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 8px;
+      background: #20243d;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg,#8b3dff,#ec3fa7);
+      transition: .3s;
+    }
+
+    /* QUESTION */
+
+    .question-number {
+      color: #9e68ff;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 20px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: #0b0f24;
+      color: #fff;
+      cursor: pointer;
+      transition: .2s;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .option:hover {
+      border-color: rgba(139,61,255,.6);
+      transform: translateY(-1px);
+    }
+
+    .option.selected {
+      border-color: #8b3dff;
+      background: rgba(139,61,255,.16);
+      box-shadow: 0 0 18px rgba(139,61,255,.12);
+    }
+
+    .option.locked {
+      cursor: not-allowed;
+    }
+
+    .ai-notice {
+      margin: 15px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #2fd68a;
+      background: rgba(47,214,138,.07);
+      border-radius: 8px;
+      color: #bdebd5;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .next-btn {
+      border: none;
+      padding: 13px 25px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#8b3dff,#ec3fa7);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .next-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    /* FINISH */
+
+    .finish-box {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .finish-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .finish-box .primary-btn {
+      max-width: 350px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 92%;
+        padding-top: 14px;
+      }
+
+      .quiz-title {
+        font-size: 19px;
+      }
+
+      .question-text {
+        font-size: 18px;
+      }
+
+      .exam-header {
+        align-items: flex-start;
+      }
+
+      .timer {
+        width: 100%;
+      }
+
+      .login-box,
+      .exam-box,
+      .finish-box {
+        padding: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="container">
+
+  <!-- HEADER -->
 
   <div class="topbar">
 
     <div class="brand">
 
-      <div class="logo-box">
+      <img
+        src="file_0000000031b8821193be8a110779a350.png"
+        alt="জ্ঞানতরঙ্গ">
 
-        <img
-          src="file_0000000031b8821193be8a110779a350.png"
-          alt="জ্ঞানতরঙ্গ লোগো">
-
+      <div class="brand-text">
+        <h1>জ্ঞানতরঙ্গ</h1>
+        <p>শিখি · জানি · এগিয়ে যাই</p>
       </div>
 
-      <div>
-
-        <div class="brand-title">
-          জ্ঞানতরঙ্গ
-        </div>
-
-        <div class="brand-sub">
-          অনলাইন পরীক্ষা
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="bd-time">
-
-      <strong>
-        🇧🇩 বাংলাদেশ সময়
-      </strong>
-
-      <span id="bdDateTime">
-        লোড হচ্ছে...
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <div
-    id="message"
-    class="message">
-  </div>
-
-
-  <!-- EXAM INFORMATION -->
-
-  <div
-    id="examInfo"
-    class="card">
-
-    <h1
-      id="examTitle"
-      class="exam-title">
-      পরীক্ষা লোড হচ্ছে...
-    </h1>
-
-    <div
-      id="examCategory"
-      class="exam-category">
-      --
-    </div>
-
-    <div class="info-grid">
-
-      <div class="info-item">
-
-        <div class="info-label">
-          📅 পরীক্ষা শুরু
-        </div>
-
-        <div
-          id="examStartText"
-          class="info-value">
-          --
-        </div>
-
-      </div>
-
-
-      <div class="info-item">
-
-        <div class="info-label">
-          🏁 পরীক্ষা শেষ
-        </div>
-
-        <div
-          id="examEndText"
-          class="info-value">
-          --
-        </div>
-
-      </div>
-
-
-      <div class="info-item">
-
-        <div class="info-label">
-          ⏱️ আপনার সময়
-        </div>
-
-        <div
-          id="durationText"
-          class="info-value">
-          --
-        </div>
-
-      </div>
-
-
-      <div class="info-item">
-
-        <div class="info-label">
-          📝 মোট প্রশ্ন
-        </div>
-
-        <div
-          id="questionCountText"
-          class="info-value">
-          --
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- WAITING -->
-
-  <div
-    id="waitingCard"
-    class="card status-card">
-
-    <div
-      id="statusIcon"
-      class="status-icon">
-      ⏳
-    </div>
-
-    <div
-      id="statusTitle"
-      class="status-title">
-      পরীক্ষা লোড হচ্ছে...
-    </div>
-
-    <div
-      id="statusText"
-      class="status-text">
-      একটু অপেক্ষা করুন।
-    </div>
-
-    <div
-      id="countdown"
-      class="countdown">
-      --:--:--
     </div>
 
     <button
-      id="startExamBtn"
-      class="start-btn"
-      onclick="startExam()"
-      disabled>
-      পরীক্ষা শুরু করুন
+      id="logoutBtn"
+      class="logout-btn hidden">
+      লগআউট
     </button>
 
   </div>
 
 
-  <!-- RUNNING EXAM -->
+  <!-- LOGIN / ROLL -->
 
-  <div
-    id="examRunning"
-    class="exam-running">
+  <section
+    id="loginSection"
+    class="login-box">
 
-    <div class="timer-box">
+    <h2>কুইজ পরীক্ষায় প্রবেশ করুন</h2>
 
-      <div class="timer-row">
+    <p>
+      প্রথমে আপনার Quiz Roll Number লিখুন।
+      শুধুমাত্র অনুমোদিত রেজিস্ট্রেশন থাকলেই পরীক্ষায় প্রবেশ করা যাবে।
+    </p>
 
-        <div>
+    <input
+      id="rollInput"
+      class="input"
+      type="text"
+      placeholder="Quiz Roll Number লিখুন">
 
-          <div class="timer-label">
-            ⏱️ আপনার বাকি সময়
-          </div>
+    <button
+      id="enterBtn"
+      class="primary-btn">
+      পরীক্ষায় প্রবেশ করুন
+    </button>
 
-          <div
-            id="personalTimer"
-            class="timer">
-            20:00
-          </div>
+    <div
+      id="loginMessage"
+      class="message">
+    </div>
 
+  </section>
+
+
+  <!-- EXAM -->
+
+  <section
+    id="examSection"
+    class="exam-box hidden">
+
+    <div class="exam-header">
+
+      <div>
+        <div
+          id="quizTitle"
+          class="quiz-title">
+          কুইজ
         </div>
 
         <div
-          id="questionProgress"
-          class="timer-label">
-          1 / 1
+          id="studentRoll"
+          class="student-roll">
         </div>
-
       </div>
 
-      <div class="progress-wrap">
-
-        <div
-          id="timerProgress"
-          class="progress">
-        </div>
-
+      <div
+        id="timer"
+        class="timer">
+        05:00
       </div>
 
     </div>
 
 
-    <div id="questionArea">
+    <div class="progress-area">
+
+      <div
+        id="progressText"
+        class="progress-text">
+        প্রশ্ন ১ / ৫
+      </div>
+
+      <div class="progress">
+        <div
+          id="progressBar"
+          class="progress-bar">
+        </div>
+      </div>
+
     </div>
 
-  </div>
+
+    <div
+      id="questionNumber"
+      class="question-number">
+      প্রশ্ন ১
+    </div>
+
+    <div
+      id="questionText"
+      class="question-text">
+    </div>
+
+
+    <div
+      id="options">
+    </div>
+
+
+    <div class="ai-notice">
+      💡 <b>জ্ঞানতরঙ্গ টিপস:</b>
+      উত্তর দেওয়ার আগে প্রশ্নটি ভালোভাবে পড়ে নিন।
+      একবার উত্তর নির্বাচন করলে তা পরিবর্তন করা যাবে না।
+    </div>
+
+
+    <div class="navigation">
+
+      <button
+        id="nextBtn"
+        class="next-btn"
+        disabled>
+        পরবর্তী →
+      </button>
+
+    </div>
+
+  </section>
 
 
   <!-- FINISH -->
 
-  <div
-    id="finishCard"
-    class="card finish-card">
+  <section
+    id="finishSection"
+    class="finish-box hidden">
 
     <div class="finish-icon">
       🎉
     </div>
 
-    <div class="finish-title">
-      পরীক্ষা সম্পন্ন হয়েছে
-    </div>
+    <h2>পরীক্ষা সম্পন্ন হয়েছে</h2>
 
-    <div
-      id="finishText"
-      class="finish-text">
-      আপনার উত্তরগুলো সংরক্ষণ করা হয়েছে।
-    </div>
+    <p id="finishMessage">
+      আপনার উত্তরগুলো সফলভাবে সংরক্ষণ করা হয়েছে।
+    </p>
 
-  </div>
+    <button
+      id="homeBtn"
+      class="primary-btn">
+      হোম পেজে ফিরে যান
+    </button>
+
+  </section>
 
 </div>
 
 
-<script>
+<script type="module">
 
-/* =====================================================
-   SUPABASE
-   ===================================================== */
+  import { auth, db } from "./firebase-config.js";
 
-const SUPABASE_URL =
-  "https://oycecrzerykrqkoivdwg.supabase.co";
+  import {
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-
-/* =====================================================
-   VARIABLES
-   ===================================================== */
-
-let registration = null;
-let quiz = null;
-let questions = [];
-
-let currentQuestionIndex = 0;
-
-let selectedAnswers = {};
-
-let examAttempt = null;
-
-let personalEndTime = null;
-let globalEndTime = null;
-
-let timerInterval = null;
-let windowInterval = null;
-
-let examStarted = false;
-let examFinished = false;
-
-let calculatedScore = 0;
-let calculatedNegative = 0;
-let calculatedCorrect = 0;
-let calculatedWrong = 0;
-let calculatedSkipped = 0;
-let calculatedTotalMarks = 0;
+  import {
+    doc,
+    getDoc,
+    collection,
+    query,
+    where,
+    getDocs,
+    setDoc,
+    updateDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =====================================================
-   SESSION
-   ===================================================== */
+  /* =========================
+     VARIABLES
+  ========================= */
 
-const registrationId =
-  sessionStorage.getItem(
-    "verified_registration_id"
-  );
+  let currentUser = null;
 
-const rollNumber =
-  sessionStorage.getItem(
-    "verified_roll_number"
-  );
+  let registration = null;
+  let quizData = null;
 
-const sessionQuizId =
-  sessionStorage.getItem(
-    "verified_quiz_id"
-  );
+  let questions = [];
 
+  let currentIndex = 0;
 
-/* =====================================================
-   MESSAGE
-   ===================================================== */
+  let selectedAnswer = null;
 
-function showMessage(
-  text,
-  type="error"
-){
+  let answers = [];
 
-  const box =
-    document.getElementById(
-      "message"
-    );
+  let timerInterval = null;
 
-  box.textContent =
-    text;
+  let remainingSeconds = 0;
 
-  box.className =
-    "message show " + type;
+  let attemptId = null;
 
-}
+  let submitted = false;
 
 
-/* =====================================================
-   BANGLADESH TIME
-   ===================================================== */
+  /* =========================
+     ELEMENTS
+  ========================= */
 
-function updateBangladeshTime(){
+  const loginSection =
+    document.getElementById("loginSection");
 
-  const now =
-    new Date();
+  const examSection =
+    document.getElementById("examSection");
 
-  const dateText =
-    now.toLocaleDateString(
-      "bn-BD",
-      {
-        timeZone:"Asia/Dhaka",
-        year:"numeric",
-        month:"long",
-        day:"numeric",
-        weekday:"long"
+  const finishSection =
+    document.getElementById("finishSection");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+  const rollInput =
+    document.getElementById("rollInput");
+
+  const enterBtn =
+    document.getElementById("enterBtn");
+
+  const loginMessage =
+    document.getElementById("loginMessage");
+
+  const quizTitle =
+    document.getElementById("quizTitle");
+
+  const studentRoll =
+    document.getElementById("studentRoll");
+
+  const timer =
+    document.getElementById("timer");
+
+  const progressText =
+    document.getElementById("progressText");
+
+  const progressBar =
+    document.getElementById("progressBar");
+
+  const questionNumber =
+    document.getElementById("questionNumber");
+
+  const questionText =
+    document.getElementById("questionText");
+
+  const optionsBox =
+    document.getElementById("options");
+
+  const nextBtn =
+    document.getElementById("nextBtn");
+
+  const finishMessage =
+    document.getElementById("finishMessage");
+
+  const homeBtn =
+    document.getElementById("homeBtn");
+
+
+  /* =========================
+     AUTH CHECK
+  ========================= */
+
+  onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+      currentUser = null;
+
+      loginMessage.textContent =
+        "⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।";
+
+      enterBtn.disabled = true;
+
+      logoutBtn.classList.add("hidden");
+
+      return;
+    }
+
+    currentUser = user;
+
+    enterBtn.disabled = false;
+
+    logoutBtn.classList.remove("hidden");
+
+    loginMessage.textContent =
+      "✅ অ্যাকাউন্ট সক্রিয় আছে। Roll Number দিয়ে প্রবেশ করুন।";
+
+  });
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  logoutBtn.addEventListener("click", async () => {
+
+    try {
+
+      await signOut(auth);
+
+      location.reload();
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  });
+
+
+  /* =========================
+     ENTER EXAM
+  ========================= */
+
+  enterBtn.addEventListener("click", async () => {
+
+    if (!currentUser) {
+
+      loginMessage.textContent =
+        "⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।";
+
+      return;
+
+    }
+
+    const rollNumber =
+      rollInput.value.trim();
+
+    if (!rollNumber) {
+
+      loginMessage.textContent =
+        "⚠️ আপনার Quiz Roll Number লিখুন।";
+
+      return;
+
+    }
+
+    enterBtn.disabled = true;
+
+    loginMessage.textContent =
+      "⏳ রেজিস্ট্রেশন যাচাই করা হচ্ছে...";
+
+
+    try {
+
+      /* =========================
+         FIND REGISTRATION
+      ========================= */
+
+      const registrationsRef =
+        collection(db, "quiz_registrations");
+
+      const registrationQuery =
+        query(
+          registrationsRef,
+          where(
+            "student_uid",
+            "==",
+            currentUser.uid
+          ),
+          where(
+            "roll_number",
+            "==",
+            rollNumber
+          )
+        );
+
+      const registrationSnapshot =
+        await getDocs(registrationQuery);
+
+
+      if (registrationSnapshot.empty) {
+
+        throw new Error(
+          "এই Roll Number আপনার অ্যাকাউন্টের সাথে মিলছে না।"
+        );
+
       }
-    );
 
-  const timeText =
-    now.toLocaleTimeString(
-      "bn-BD",
-      {
-        timeZone:"Asia/Dhaka",
-        hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit",
-        hour12:true
+
+      registrationSnapshot.forEach((item) => {
+
+        registration = {
+          id: item.id,
+          ...item.data()
+        };
+
+      });
+
+
+      /* =========================
+         CHECK APPROVAL
+      ========================= */
+
+      if (
+        registration.status !== "approved"
+      ) {
+
+        throw new Error(
+          "আপনার রেজিস্ট্রেশন এখনো অনুমোদিত হয়নি।"
+        );
+
       }
-    );
 
-  document.getElementById(
-    "bdDateTime"
-  ).textContent =
-    dateText + " | " + timeText;
 
-}
+      const quizId =
+        registration.quiz_id;
 
-setInterval(
-  updateBangladeshTime,
-  1000
-);
 
-updateBangladeshTime();
+      if (!quizId) {
 
+        throw new Error(
+          "এই রেজিস্ট্রেশনের সাথে কোনো Quiz ID পাওয়া যায়নি।"
+        );
 
-/* =====================================================
-   FORMAT DATE
-   ===================================================== */
+      }
 
-function formatBangladeshDate(
-  value
-){
 
-  if(!value){
-    return "--";
-  }
+      /* =========================
+         LOAD QUIZ
+      ========================= */
 
-  const date =
-    new Date(value);
+      loginMessage.textContent =
+        "⏳ কুইজের তথ্য লোড হচ্ছে...";
 
-  return date.toLocaleString(
-    "bn-BD",
-    {
-      timeZone:"Asia/Dhaka",
-      year:"numeric",
-      month:"long",
-      day:"numeric",
-      hour:"2-digit",
-      minute:"2-digit",
-      hour12:true
-    }
-  );
-
-}
-
-
-/* =====================================================
-   COUNTDOWN FORMAT
-   ===================================================== */
-
-function formatCountdown(
-  milliseconds
-){
-
-  if(milliseconds <= 0){
-    return "00:00:00";
-  }
-
-  const totalSeconds =
-    Math.floor(
-      milliseconds / 1000
-    );
-
-  const hours =
-    Math.floor(
-      totalSeconds / 3600
-    );
-
-  const minutes =
-    Math.floor(
-      (totalSeconds % 3600) / 60
-    );
-
-  const seconds =
-    totalSeconds % 60;
-
-  return [
-    String(hours).padStart(2,"0"),
-    String(minutes).padStart(2,"0"),
-    String(seconds).padStart(2,"0")
-  ].join(":");
-
-}
-
-
-/* =====================================================
-   LOAD REGISTRATION
-   ===================================================== */
-
-async function loadRegistration(){
-
-  if(!registrationId){
-
-    showMessage(
-      "🔐 আপনার পরীক্ষার Session পাওয়া যায়নি। আগে Roll Number যাচাই করুন।",
-      "error"
-    );
-
-    document.getElementById(
-      "statusIcon"
-    ).textContent = "🔐";
-
-    document.getElementById(
-      "statusTitle"
-    ).textContent =
-      "Roll Number যাচাই করুন";
-
-    document.getElementById(
-      "statusText"
-    ).textContent =
-      "আগে পরীক্ষা প্রবেশ পেজ থেকে আপনার অনুমোদিত Roll Number যাচাই করুন।";
-
-    document.getElementById(
-      "countdown"
-    ).textContent = "";
-
-    return false;
-  }
-
-  try{
-
-    const result =
-      await supabaseClient
-      .from("quiz_registrations")
-      .select(`
-        id,
-        quiz_id,
-        student_id,
-        roll_number,
-        student_name,
-        mobile,
-        email,
-        institution,
-        registration_status,
-        payment_status,
-        amount
-      `)
-      .eq(
-        "id",
-        registrationId
-      )
-      .maybeSingle();
-
-    if(result.error){
-
-      console.error(
-        result.error
-      );
-
-      showMessage(
-        "❌ Registration তথ্য লোড করা যায়নি।",
-        "error"
-      );
-
-      return false;
-    }
-
-    if(!result.data){
-
-      showMessage(
-        "❌ আপনার Registration পাওয়া যায়নি।",
-        "error"
-      );
-
-      return false;
-    }
-
-    registration =
-      result.data;
-
-    if(
-      registration.registration_status &&
-      registration.registration_status.toLowerCase() !== "approved"
-    ){
-
-      showMessage(
-        "⏳ আপনার Registration এখনো Admin অনুমোদন করেননি।",
-        "error"
-      );
-
-      return false;
-    }
-
-    if(
-      registration.payment_status &&
-      (
-        registration.payment_status.toLowerCase() === "pending" ||
-        registration.payment_status.toLowerCase() === "rejected"
-      )
-    ){
-
-      showMessage(
-        registration.payment_status.toLowerCase() === "pending"
-        ? "💳 আপনার পেমেন্ট এখনো যাচাই করা হয়নি।"
-        : "❌ আপনার পেমেন্ট প্রত্যাখ্যান করা হয়েছে।",
-        "error"
-      );
-
-      return false;
-    }
-
-    return true;
-
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      "❌ Registration যাচাই করতে সমস্যা হয়েছে।",
-      "error"
-    );
-
-    return false;
-  }
-
-}
-
-
-/* =====================================================
-   LOAD QUIZ
-   ===================================================== */
-
-async function loadQuiz(){
-
-  const quizId =
-    sessionQuizId ||
-    registration.quiz_id;
-
-  if(!quizId){
-
-    showMessage(
-      "❌ এই Registration-এর সঙ্গে কোনো Quiz যুক্ত নেই।",
-      "error"
-    );
-
-    return false;
-  }
-
-  try{
-
-    const result =
-      await supabaseClient
-      .from("quizzes")
-      .select(`
-        id,
-        category_id,
-        title,
-        slug,
-        description,
-        duration_minutes,
-        total_marks,
-        negative_mark,
-        passing_marks,
-        fee,
-        prize,
-        status,
-        start_at,
-        end_at,
-        total_questions,
-        instructions
-      `)
-      .eq(
-        "id",
-        quizId
-      )
-      .maybeSingle();
-
-    if(result.error){
-
-      console.error(
-        result.error
-      );
-
-      showMessage(
-        "❌ Quiz তথ্য লোড করা যায়নি।",
-        "error"
-      );
-
-      return false;
-    }
-
-    if(!result.data){
-
-      showMessage(
-        "❌ Quiz পাওয়া যায়নি।",
-        "error"
-      );
-
-      return false;
-    }
 
-    quiz =
-      result.data;
+      const quizRef =
+        doc(
+          db,
+          "quizzes",
+          quizId
+        );
 
-    return true;
-
-  }catch(error){
-
-    console.error(error);
-
-    showMessage(
-      "❌ Quiz লোড করতে সমস্যা হয়েছে।",
-      "error"
-    );
-
-    return false;
-  }
-
-}
-
-
-/* =====================================================
-   LOAD CATEGORY
-   ===================================================== */
-
-async function loadCategory(){
-
-  if(
-    !quiz ||
-    !quiz.category_id
-  ){
-
-    document.getElementById(
-      "examCategory"
-    ).textContent =
-      "অনলাইন পরীক্ষা";
-
-    return;
-  }
-
-  try{
-
-    const result =
-      await supabaseClient
-      .from("quiz_categories")
-      .select(`
-        id,
-        name
-      `)
-      .eq(
-        "id",
-        quiz.category_id
-      )
-      .maybeSingle();
-
-    if(
-      result.data &&
-      result.data.name
-    ){
-
-      document.getElementById(
-        "examCategory"
-      ).textContent =
-        result.data.name;
-
-    }else{
-
-      document.getElementById(
-        "examCategory"
-      ).textContent =
-        "অনলাইন পরীক্ষা";
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    document.getElementById(
-      "examCategory"
-    ).textContent =
-      "অনলাইন পরীক্ষা";
-
-  }
-
-}
-
-
-/* =====================================================
-   LOAD QUESTIONS
-   ===================================================== */
-
-async function loadQuestions(){
-
-  if(!quiz){
-
-    return false;
-  }
-
-  try{
-
-    const quizQuestionResult =
-      await supabaseClient
-      .from("quiz_questions")
-      .select(`
-        id,
-        quiz_id,
-        question_id,
-        question_order,
-        marks,
-        negative_marks
-      `)
-      .eq(
-        "quiz_id",
-        quiz.id
-      )
-      .order(
-        "question_order",
+      const quizSnapshot =
+        await getDoc(quizRef);
+
+
+      if (!quizSnapshot.exists()) {
+
+        throw new Error(
+          "কুইজটি পাওয়া যায়নি।"
+        );
+
+      }
+
+
+      quizData = {
+        id: quizSnapshot.id,
+        ...quizSnapshot.data()
+      };
+
+
+      /* =========================
+         CHECK QUIZ TIME
+      ========================= */
+
+      const now =
+        Date.now();
+
+
+      const startTime =
+        quizData.start_at
+          ?.toDate
+          ? quizData.start_at.toDate().getTime()
+          : new Date(
+              quizData.start_at
+            ).getTime();
+
+
+      const endTime =
+        quizData.end_at
+          ?.toDate
+          ? quizData.end_at.toDate().getTime()
+          : new Date(
+              quizData.end_at
+            ).getTime();
+
+
+      if (
+        !Number.isNaN(startTime) &&
+        now < startTime
+      ) {
+
+        throw new Error(
+          "পরীক্ষা এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার আসুন।"
+        );
+
+      }
+
+
+      if (
+        !Number.isNaN(endTime) &&
+        now >= endTime
+      ) {
+
+        throw new Error(
+          "এই পরীক্ষার সময় শেষ হয়ে গেছে।"
+        );
+
+      }
+
+
+      /* =========================
+         LOAD EXAM QUESTIONS
+      ========================= */
+
+      loginMessage.textContent =
+        "⏳ প্রশ্ন লোড হচ্ছে...";
+
+
+      const questionsRef =
+        collection(db, "exam_questions");
+
+
+      const questionQuery =
+        query(
+          questionsRef,
+          where(
+            "quiz_id",
+            "==",
+            quizId
+          )
+        );
+
+
+      const questionSnapshot =
+        await getDocs(questionQuery);
+
+
+      if (questionSnapshot.empty) {
+
+        throw new Error(
+          "এই কুইজের কোনো প্রশ্ন পাওয়া যায়নি।"
+        );
+
+      }
+
+
+      questions = [];
+
+
+      questionSnapshot.forEach((item) => {
+
+        questions.push({
+          id: item.id,
+          ...item.data()
+        });
+
+      });
+
+
+      /* =========================
+         SORT QUESTIONS
+      ========================= */
+
+      questions.sort((a, b) => {
+
+        const aOrder =
+          Number(
+            a.question_number ??
+            a.order ??
+            a.serial ??
+            999999
+          );
+
+        const bOrder =
+          Number(
+            b.question_number ??
+            b.order ??
+            b.serial ??
+            999999
+          );
+
+        return aOrder - bOrder;
+
+      });
+
+
+      /* =========================
+         PREVENT DUPLICATE ATTEMPT
+      ========================= */
+
+      attemptId =
+        quizId +
+        "_" +
+        currentUser.uid;
+
+
+      const existingAttemptRef =
+        doc(
+          db,
+          "attempts",
+          attemptId
+        );
+
+
+      const existingAttempt =
+        await getDoc(existingAttemptRef);
+
+
+      if (existingAttempt.exists()) {
+
+        const oldAttempt =
+          existingAttempt.data();
+
+        if (
+          oldAttempt.status === "submitted"
+        ) {
+
+          throw new Error(
+            "আপনি এই কুইজে ইতোমধ্যে পরীক্ষা দিয়েছেন।"
+          );
+
+        }
+
+        if (
+          oldAttempt.status === "started"
+        ) {
+
+          throw new Error(
+            "এই কুইজের একটি পরীক্ষা ইতোমধ্যে শুরু করা হয়েছে।"
+          );
+
+        }
+
+      }
+
+
+      /* =========================
+         CREATE ATTEMPT
+      ========================= */
+
+      const durationMinutes =
+        Number(
+          quizData.duration_minutes ?? 5
+        );
+
+
+      remainingSeconds =
+        durationMinutes * 60;
+
+
+      answers =
+        new Array(
+          questions.length
+        ).fill(null);
+
+
+      await setDoc(
+        existingAttemptRef,
         {
-          ascending:true
+
+          student_uid:
+            currentUser.uid,
+
+          quiz_id:
+            quizId,
+
+          registration_id:
+            registration.id,
+
+          roll_number:
+            rollNumber,
+
+          status:
+            "started",
+
+          started_at:
+            serverTimestamp(),
+
+          duration_minutes:
+            durationMinutes,
+
+          total_questions:
+            questions.length,
+
+          answers:
+            answers
+
         }
       );
 
-    if(
-      quizQuestionResult.error
-    ){
+
+      /* =========================
+         SHOW EXAM
+      ========================= */
+
+      loginSection.classList.add(
+        "hidden"
+      );
+
+      finishSection.classList.add(
+        "hidden"
+      );
+
+      examSection.classList.remove(
+        "hidden"
+      );
+
+
+      quizTitle.textContent =
+        quizData.title ||
+        quizData.quiz_name ||
+        "কুইজ পরীক্ষা";
+
+
+      studentRoll.textContent =
+        "Quiz Roll Number: " +
+        rollNumber;
+
+
+      currentIndex = 0;
+
+      submitted = false;
+
+      renderQuestion();
+
+      startTimer();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      loginMessage.textContent =
+        "❌ " +
+        (
+          error.message ||
+          "পরীক্ষায় প্রবেশ করতে সমস্যা হয়েছে।"
+        );
+
+    } finally {
+
+      enterBtn.disabled = false;
+
+    }
+
+  });
+
+
+  /* =========================
+     RENDER QUESTION
+  ========================= */
+
+  function renderQuestion() {
+
+    if (
+      currentIndex >= questions.length
+    ) {
+
+      submitExam();
+
+      return;
+
+    }
+
+
+    const question =
+      questions[currentIndex];
+
+
+    selectedAnswer =
+      answers[currentIndex];
+
+
+    questionNumber.textContent =
+      "প্রশ্ন " +
+      (currentIndex + 1);
+
+
+    progressText.textContent =
+      "প্রশ্ন " +
+      (currentIndex + 1) +
+      " / " +
+      questions.length;
+
+
+    const percent =
+      (
+        (currentIndex + 1) /
+        questions.length
+      ) * 100;
+
+
+    progressBar.style.width =
+      percent + "%";
+
+
+    questionText.textContent =
+      question.question ||
+      question.question_text ||
+      "প্রশ্ন পাওয়া যায়নি।";
+
+
+    optionsBox.innerHTML = "";
+
+
+    const optionList = [
+
+      {
+        key: "A",
+        text:
+          question.option_a ??
+          question.a ??
+          ""
+      },
+
+      {
+        key: "B",
+        text:
+          question.option_b ??
+          question.b ??
+          ""
+      },
+
+      {
+        key: "C",
+        text:
+          question.option_c ??
+          question.c ??
+          ""
+      },
+
+      {
+        key: "D",
+        text:
+          question.option_d ??
+          question.d ??
+          ""
+      }
+
+    ];
+
+
+    optionList.forEach((option) => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "option";
+
+
+      button.type =
+        "button";
+
+
+      button.textContent =
+        option.key +
+        ". " +
+        option.text;
+
+
+      if (
+        selectedAnswer ===
+        option.key
+      ) {
+
+        button.classList.add(
+          "selected"
+        );
+
+        button.classList.add(
+          "locked"
+        );
+
+      }
+
+
+      if (
+        selectedAnswer
+      ) {
+
+        button.disabled =
+          true;
+
+      }
+
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          selectAnswer(
+            option.key
+          );
+
+        }
+      );
+
+
+      optionsBox.appendChild(
+        button
+      );
+
+    });
+
+
+    nextBtn.disabled =
+      !selectedAnswer;
+
+
+    if (
+      currentIndex ===
+      questions.length - 1
+    ) {
+
+      nextBtn.textContent =
+        "পরীক্ষা জমা দিন ✓";
+
+    } else {
+
+      nextBtn.textContent =
+        "পরবর্তী →";
+
+    }
+
+  }
+
+
+  /* =========================
+     SELECT ANSWER
+  ========================= */
+
+  function selectAnswer(answer) {
+
+    if (
+      selectedAnswer
+    ) {
+
+      return;
+
+    }
+
+
+    selectedAnswer =
+      answer;
+
+
+    answers[currentIndex] =
+      answer;
+
+
+    const buttons =
+      optionsBox.querySelectorAll(
+        ".option"
+      );
+
+
+    buttons.forEach((button) => {
+
+      button.disabled = true;
+
+      button.classList.add(
+        "locked"
+      );
+
+
+      if (
+        button.textContent
+          .startsWith(
+            answer + "."
+          )
+      ) {
+
+        button.classList.add(
+          "selected"
+        );
+
+      }
+
+    });
+
+
+    nextBtn.disabled =
+      false;
+
+
+    saveProgress();
+
+  }
+
+
+  /* =========================
+     SAVE PROGRESS
+  ========================= */
+
+  async function saveProgress() {
+
+    if (
+      !attemptId
+    ) {
+
+      return;
+
+    }
+
+
+    try {
+
+      const attemptRef =
+        doc(
+          db,
+          "attempts",
+          attemptId
+        );
+
+
+      await updateDoc(
+        attemptRef,
+        {
+
+          answers:
+            answers,
+
+          current_question:
+            currentIndex
+
+        }
+      );
+
+    } catch (error) {
 
       console.error(
-        quizQuestionResult.error
+        "Progress save error:",
+        error
       );
 
-      showMessage(
-        "❌ Quiz-এর প্রশ্ন লোড করা যায়নি।",
-        "error"
-      );
-
-      return false;
     }
 
-    if(
-      !quizQuestionResult.data ||
-      quizQuestionResult.data.length === 0
-    ){
+  }
 
-      showMessage(
-        "⚠️ এই Quiz-এ এখনো কোনো প্রশ্ন যোগ করা হয়নি।",
-        "error"
+
+  /* =========================
+     NEXT
+  ========================= */
+
+  nextBtn.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        !selectedAnswer
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        currentIndex ===
+        questions.length - 1
+      ) {
+
+        await submitExam();
+
+        return;
+
+      }
+
+
+      currentIndex++;
+
+      renderQuestion();
+
+    }
+  );
+
+
+  /* =========================
+     TIMER
+  ========================= */
+
+  function startTimer() {
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    updateTimer();
+
+
+    timerInterval =
+      setInterval(
+        () => {
+
+          remainingSeconds--;
+
+          updateTimer();
+
+
+          if (
+            remainingSeconds <= 0
+          ) {
+
+            clearInterval(
+              timerInterval
+            );
+
+            submitExam();
+
+          }
+
+        },
+        1000
       );
 
-      return false;
+  }
+
+
+  function updateTimer() {
+
+    const minutes =
+      Math.floor(
+        remainingSeconds / 60
+      );
+
+
+    const seconds =
+      remainingSeconds % 60;
+
+
+    timer.textContent =
+      String(minutes).padStart(
+        2,
+        "0"
+      ) +
+      ":" +
+      String(seconds).padStart(
+        2,
+        "0"
+      );
+
+
+    timer.classList.remove(
+      "warning",
+      "danger"
+    );
+
+
+    if (
+      remainingSeconds <= 60
+    ) {
+
+      timer.classList.add(
+        "danger"
+      );
+
+    } else if (
+      remainingSeconds <= 180
+    ) {
+
+      timer.classList.add(
+        "warning"
+      );
+
+    }
+
+  }
+
+
+  /* =========================
+     SUBMIT EXAM
+  ========================= */
+
+  async function submitExam() {
+
+    if (
+      submitted
+    ) {
+
+      return;
+
     }
 
 
-    const questionIds =
-      quizQuestionResult.data.map(
-        item => item.question_id
+    submitted = true;
+
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    nextBtn.disabled =
+      true;
+
+
+    try {
+
+      const attemptRef =
+        doc(
+          db,
+          "attempts",
+          attemptId
+        );
+
+
+      const unanswered =
+        answers.filter(
+          answer =>
+            !answer
+        ).length;
+
+
+      const timeTaken =
+        (
+          Number(
+            quizData.duration_minutes ??
+            5
+          ) * 60
+        ) -
+        remainingSeconds;
+
+
+      await updateDoc(
+        attemptRef,
+        {
+
+          status:
+            "submitted",
+
+          submitted_at:
+            serverTimestamp(),
+
+          answers:
+            answers,
+
+          unanswered:
+            unanswered,
+
+          time_taken_seconds:
+            Math.max(
+              0,
+              timeTaken
+            )
+
+        }
       );
 
-    const questionResult =
-      await supabaseClient
-      .from("questions")
-      .select(`
-        id,
-        question_text,
-        explanation,
-        marks,
-        negative_marks,
-        difficulty,
-        question_type,
-        status
-      `)
-      .in(
-        "id",
-        questionIds
+
+      examSection.classList.add(
+        "hidden"
       );
 
-    if(questionResult.error){
+
+      finishSection.classList.remove(
+        "hidden"
+      );
+
+
+      finishMessage.textContent =
+        "আপনার পরীক্ষা সফলভাবে জমা হয়েছে। ফলাফল প্রকাশিত হলে Roll Number দিয়ে ফলাফল দেখা যাবে।";
+
+
+    } catch (error) {
 
       console.error(
-        questionResult.error
+        "Submit error:",
+        error
       );
 
-      showMessage(
-        "❌ Question তথ্য লোড করা যায়নি।",
-        "error"
+
+      submitted = false;
+
+
+      nextBtn.disabled =
+        false;
+
+
+      alert(
+        "❌ পরীক্ষা জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
       );
 
-      return false;
     }
 
+  }
 
-    const optionResult =
-      await sup
+
+  /* =========================
+     HOME
+  ========================= */
+
+  homeBtn.addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
