@@ -2966,26 +2966,21 @@ if(registrationMenu){
 
   registrationMenu.addEventListener(
     "click",
-    async (event) => {
+    async function(event){
 
       event.preventDefault();
-
-
-      if(dashboard){
-
-        dashboard.style.display =
-          "none";
-
-      }
-
 
       if(registrationSection){
 
         registrationSection.style.display =
           "block";
 
-      }
+        registrationSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
 
+      }
 
       await loadRegistrations();
 
@@ -3003,7 +2998,7 @@ if(backToDashboard){
 
   backToDashboard.addEventListener(
     "click",
-    () => {
+    function(){
 
       if(registrationSection){
 
@@ -3012,14 +3007,10 @@ if(backToDashboard){
 
       }
 
-
-      if(dashboard){
-
-        dashboard.style.display =
-          "block";
-
-      }
-
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
       if(registrationMessage){
 
@@ -3034,8 +3025,7 @@ if(backToDashboard){
     }
   );
 
-}
-
+  }
 
 /* ==========================================
    SEARCH
