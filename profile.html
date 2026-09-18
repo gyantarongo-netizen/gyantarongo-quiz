@@ -1,628 +1,3 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>প্রোফাইল | জ্ঞানতরঙ্গ</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    Arial,
-    sans-serif;
-  background:
-    radial-gradient(circle at top left,rgba(124,58,237,.16),transparent 32%),
-    radial-gradient(circle at top right,rgba(236,72,153,.10),transparent 30%),
-    #060817;
-  color:#fff;
-  min-height:100vh;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-.header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(6,8,23,.88);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo-box{
-  width:46px;
-  height:46px;
-  border-radius:13px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#10142B;
-  border:1px solid rgba(255,255,255,.10);
-}
-
-.logo-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.brand-text{
-  font-size:19px;
-  font-weight:800;
-}
-
-.brand-sub{
-  font-size:11px;
-  color:#9ca3af;
-  margin-top:2px;
-}
-
-.back-btn{
-  padding:9px 14px;
-  border-radius:12px;
-  background:#11152D;
-  border:1px solid rgba(255,255,255,.10);
-  font-size:13px;
-}
-
-.container{
-  width:100%;
-  max-width:850px;
-  margin:auto;
-  padding:24px 16px 100px;
-}
-
-.page-title{
-  font-size:27px;
-  font-weight:900;
-  margin-bottom:7px;
-}
-
-.page-subtitle{
-  color:#9ca3af;
-  font-size:14px;
-  line-height:1.6;
-  margin-bottom:22px;
-}
-
-.card{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(17,21,45,.96),
-      rgba(10,13,31,.96)
-    );
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 14px 35px rgba(0,0,0,.25);
-}
-
-.profile-top{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin-bottom:22px;
-}
-
-.avatar{
-  width:78px;
-  height:78px;
-  border-radius:50%;
-  overflow:hidden;
-  flex-shrink:0;
-  background:
-    linear-gradient(135deg,#7c3aed,#ec4899);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:900;
-  border:3px solid rgba(255,255,255,.10);
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.profile-name{
-  font-size:21px;
-  font-weight:800;
-}
-
-.student-id{
-  display:inline-block;
-  margin-top:6px;
-  padding:5px 9px;
-  border-radius:8px;
-  background:rgba(124,58,237,.14);
-  color:#c4b5fd;
-  font-size:12px;
-  font-weight:700;
-}
-
-.section-title{
-  font-size:17px;
-  font-weight:800;
-  margin-bottom:15px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.field.full{
-  grid-column:1/-1;
-}
-
-label{
-  color:#d1d5db;
-  font-size:13px;
-  font-weight:700;
-}
-
-input,
-select{
-  width:100%;
-  padding:13px 14px;
-  border-radius:13px;
-  outline:none;
-  color:#fff;
-  background:#080B1C;
-  border:1px solid rgba(255,255,255,.10);
-  font-size:14px;
-}
-
-input:focus,
-select:focus{
-  border-color:#8b3dff;
-  box-shadow:0 0 0 3px rgba(124,58,237,.12);
-}
-
-select option{
-  background:#10142B;
-}
-
-input:disabled{
-  opacity:.65;
-}
-
-.primary-btn,
-.danger-btn{
-  width:100%;
-  min-height:52px;
-  border:0;
-  border-radius:14px;
-  color:#fff;
-  font-size:15px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.primary-btn{
-  background:linear-gradient(135deg,#7c3aed,#ec4899);
-  box-shadow:0 9px 24px rgba(124,58,237,.25);
-}
-
-.danger-btn{
-  background:#1b1020;
-  border:1px solid rgba(236,72,153,.20);
-  color:#f9a8d4;
-}
-
-.primary-btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-.message{
-  display:none;
-  padding:13px 14px;
-  border-radius:13px;
-  margin-bottom:16px;
-  font-size:13px;
-  line-height:1.6;
-}
-
-.message.show{
-  display:block;
-}
-
-.message.success{
-  background:rgba(34,197,94,.10);
-  border:1px solid rgba(34,197,94,.25);
-  color:#86efac;
-}
-
-.message.error{
-  background:rgba(239,68,68,.10);
-  border:1px solid rgba(239,68,68,.25);
-  color:#fca5a5;
-}
-
-.loading{
-  text-align:center;
-  padding:40px 15px;
-  color:#9ca3af;
-}
-
-.auth-box{
-  max-width:520px;
-  margin:20px auto;
-}
-
-.password-note{
-  color:#9ca3af;
-  font-size:11px;
-  line-height:1.5;
-  margin-top:5px;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:30;
-  background:rgba(6,8,23,.94);
-  backdrop-filter:blur(15px);
-  border-top:1px solid rgba(255,255,255,.08);
-}
-
-.bottom-nav-inner{
-  max-width:700px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
-
-.nav-item{
-  text-align:center;
-  padding:9px 3px 10px;
-  color:#8f96aa;
-  font-size:10px;
-}
-
-.nav-item span{
-  display:block;
-  font-size:19px;
-  margin-bottom:2px;
-}
-
-.nav-item.active{
-  color:#c4b5fd;
-}
-
-@media(max-width:650px){
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .field.full{
-    grid-column:auto;
-  }
-
-  .page-title{
-    font-size:24px;
-  }
-
-  .card{
-    padding:17px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header class="header">
-  <div class="header-inner">
-
-    <a href="index.html" class="brand">
-      <div class="logo-box">
-        <img
-          src="file_0000000031b8821193be8a110779a350.png"
-          alt="জ্ঞানতরঙ্গ লোগো">
-      </div>
-
-      <div>
-        <div class="brand-text">জ্ঞানতরঙ্গ</div>
-        <div class="brand-sub">শিক্ষা • কুইজ • জ্ঞান</div>
-      </div>
-    </a>
-
-    <a href="index.html" class="back-btn">
-      ← হোম
-    </a>
-
-  </div>
-</header>
-
-
-<main class="container">
-
-  <h1 class="page-title">👤 আমার প্রোফাইল</h1>
-
-  <p class="page-subtitle">
-    আপনার স্থায়ী শিক্ষার্থী অ্যাকাউন্ট ও তথ্য এখান থেকে পরিচালনা করুন।
-  </p>
-
-
-  <div id="message" class="message"></div>
-
-
-  <!-- AUTH SECTION -->
-  <section id="authSection" class="card auth-box">
-
-    <div class="section-title">
-      🔐 শিক্ষার্থী লগইন
-    </div>
-
-    <div class="field">
-      <label>ইমেইল</label>
-      <input
-        type="email"
-        id="loginEmail"
-        placeholder="আপনার ইমেইল লিখুন">
-    </div>
-
-    <br>
-
-    <div class="field">
-      <label>পাসওয়ার্ড</label>
-      <input
-        type="password"
-        id="loginPassword"
-        placeholder="পাসওয়ার্ড লিখুন">
-    </div>
-
-    <br>
-
-    <button
-      class="primary-btn"
-      id="loginBtn"
-      onclick="loginStudent()">
-      🔐 লগইন করুন
-    </button>
-
-  </section>
-
-
-  <!-- PROFILE SECTION -->
-  <section id="profileSection" class="hidden">
-
-    <div class="card">
-
-      <div class="profile-top">
-
-        <div class="avatar" id="avatar">
-          👤
-        </div>
-
-        <div>
-          <div
-            class="profile-name"
-            id="profileName">
-            শিক্ষার্থী
-          </div>
-
-          <div
-            class="student-id"
-            id="studentId">
-            Student ID
-          </div>
-        </div>
-
-      </div>
-
-      <div class="section-title">
-        📋 ব্যক্তিগত তথ্য
-      </div>
-
-      <div class="form-grid">
-
-        <div class="field">
-          <label>পূর্ণ নাম *</label>
-
-          <input
-            type="text"
-            id="fullName"
-            placeholder="পূর্ণ নাম">
-        </div>
-
-
-        <div class="field">
-          <label>মোবাইল নম্বর *</label>
-
-          <input
-            type="tel"
-            id="mobile"
-            placeholder="01XXXXXXXXX">
-        </div>
-
-
-        <div class="field full">
-          <label>ইমেইল</label>
-
-          <input
-            type="email"
-            id="email"
-            disabled>
-        </div>
-
-
-        <div class="field">
-          <label>প্রতিষ্ঠান</label>
-
-          <input
-            type="text"
-            id="institution"
-            placeholder="স্কুল / কলেজ / বিশ্ববিদ্যালয়">
-        </div>
-
-
-        <div class="field">
-          <label>শ্রেণি</label>
-
-          <input
-            type="text"
-            id="className"
-            placeholder="যেমন: দশম">
-        </div>
-
-
-        <div class="field">
-          <label>জেলা</label>
-
-          <input
-            type="text"
-            id="district"
-            placeholder="আপনার জেলা">
-        </div>
-
-
-        <div class="field">
-          <label>বিভাগ</label>
-
-          <input
-            type="text"
-            id="division"
-            placeholder="আপনার বিভাগ">
-        </div>
-
-
-        <div class="field full">
-          <label>Profile Photo URL</label>
-
-          <input
-            type="url"
-            id="profileImageUrl"
-            placeholder="ছবির URL চাইলে এখানে দিন">
-
-          <div class="password-note">
-            ℹ️ ছবি Upload System আমরা পরের ধাপে Storage দিয়ে সেটআপ করব।
-          </div>
-        </div>
-
-      </div>
-
-      <br>
-
-      <button
-        class="primary-btn"
-        id="saveBtn"
-        onclick="saveProfile()">
-        💾 তথ্য সংরক্ষণ করুন
-      </button>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="section-title">
-        🔐 অ্যাকাউন্ট
-      </div>
-
-      <button
-        class="danger-btn"
-        onclick="logoutStudent()">
-        🚪 লগআউট
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <div
-    id="loading"
-    class="loading hidden">
-    ⏳ তথ্য লোড হচ্ছে...
-  </div>
-
-</main>
-
-
-<nav class="bottom-nav">
-
-  <div class="bottom-nav-inner">
-
-    <a href="index.html" class="nav-item">
-      <span>🏠</span>
-      হোম
-    </a>
-
-    <a href="quiz.html" class="nav-item">
-      <span>🚀</span>
-      কুইজ
-    </a>
-
-    <a href="category.html" class="nav-item">
-      <span>📚</span>
-      ক্যাটাগরি
-    </a>
-
-    <a href="result.html" class="nav-item">
-      <span>🏆</span>
-      ফলাফল
-    </a>
-
-    <a href="profile.html" class="nav-item active">
-      <span>👤</span>
-      প্রোফাইল
-    </a>
-
-  </div>
-
-</nav>
-
-
 <script type="module">
 
 import { auth, db } from "./firebase-config.js";
@@ -637,16 +12,21 @@ import {
   doc,
   getDoc,
   setDoc,
-  updateDoc
+  updateDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+/* =========================================
+   CURRENT USER
+========================================= */
 
 let currentUser = null;
 
 
-/* =========================
+/* =========================================
    MESSAGE
-========================= */
+========================================= */
 
 function showMessage(text, type = "success") {
 
@@ -656,7 +36,8 @@ function showMessage(text, type = "success") {
 
   box.textContent = text;
 
-  box.className = "message show " + type;
+  box.className =
+    "message show " + type;
 
   window.scrollTo({
     top: 0,
@@ -665,9 +46,9 @@ function showMessage(text, type = "success") {
 }
 
 
-/* =========================
+/* =========================================
    LOGIN
-========================= */
+========================================= */
 
 async function loginStudent() {
 
@@ -685,6 +66,7 @@ async function loginStudent() {
       .getElementById("loginPassword")
       .value;
 
+
   if (!email || !password) {
 
     showMessage(
@@ -695,10 +77,12 @@ async function loginStudent() {
     return;
   }
 
+
   button.disabled = true;
 
   button.textContent =
     "⏳ লগইন হচ্ছে...";
+
 
   try {
 
@@ -712,12 +96,15 @@ async function loginStudent() {
     currentUser =
       result.user;
 
+
     showMessage(
       "✅ সফলভাবে লগইন হয়েছে।",
       "success"
     );
 
+
     await loadProfile();
+
 
   } catch (error) {
 
@@ -727,6 +114,7 @@ async function loginStudent() {
       "❌ লগইন করা যায়নি। ইমেইল বা পাসওয়ার্ড পরীক্ষা করুন।",
       "error"
     );
+
 
   } finally {
 
@@ -738,21 +126,30 @@ async function loginStudent() {
 }
 
 
-/* =========================
+/* =========================================
    LOAD PROFILE
-========================= */
+========================================= */
 
 async function loadProfile() {
 
   if (!currentUser) return;
 
-  document
-    .getElementById("authSection")
-    .classList.add("hidden");
 
-  document
-    .getElementById("profileSection")
-    .classList.remove("hidden");
+  const authSection =
+    document.getElementById("authSection");
+
+  const profileSection =
+    document.getElementById("profileSection");
+
+  const loading =
+    document.getElementById("loading");
+
+
+  if (authSection)
+    authSection.classList.add("hidden");
+
+  if (loading)
+    loading.classList.remove("hidden");
 
 
   try {
@@ -764,21 +161,29 @@ async function loadProfile() {
         currentUser.uid
       );
 
+
     const snapshot =
       await getDoc(profileRef);
 
 
+    /*
+      PROFILE না থাকলে
+    */
+
     if (!snapshot.exists()) {
+
+      if (profileSection)
+        profileSection.classList.remove("hidden");
+
+
+      document.getElementById("email").value =
+        currentUser.email || "";
+
 
       showMessage(
         "⚠️ আপনার Profile এখনো তৈরি হয়নি। তথ্য পূরণ করে Save করুন।",
         "error"
       );
-
-      document
-        .getElementById("email")
-        .value =
-        currentUser.email || "";
 
       return;
     }
@@ -788,74 +193,92 @@ async function loadProfile() {
       snapshot.data();
 
 
-    document
-      .getElementById("fullName")
-      .value =
+    /*
+      ACCOUNT STATUS
+    */
+
+    if (data.is_active === false) {
+
+      showMessage(
+        "❌ আপনার অ্যাকাউন্ট বর্তমানে নিষ্ক্রিয়।",
+        "error"
+      );
+
+      await signOut(auth);
+
+      return;
+    }
+
+
+    /*
+      FORM DATA
+    */
+
+    document.getElementById("fullName").value =
       data.full_name || "";
 
 
-    document
-      .getElementById("mobile")
-      .value =
+    document.getElementById("mobile").value =
       data.mobile || "";
 
 
-    document
-      .getElementById("email")
-      .value =
+    document.getElementById("email").value =
       data.email ||
       currentUser.email ||
       "";
 
 
-    document
-      .getElementById("institution")
-      .value =
+    document.getElementById("institution").value =
       data.institution || "";
 
 
-    document
-      .getElementById("className")
-      .value =
+    document.getElementById("className").value =
       data.class_name || "";
 
 
-    document
-      .getElementById("district")
-      .value =
+    document.getElementById("district").value =
       data.district || "";
 
 
-    document
-      .getElementById("division")
-      .value =
+    document.getElementById("division").value =
       data.division || "";
 
 
-    document
-      .getElementById("profileImageUrl")
-      .value =
-      data.profile_image_url || "";
+    document.getElementById("profileImageUrl").value =
+      data.profile_image_url ||
+      data.profile_photo_url ||
+      "";
 
 
-    document
-      .getElementById("profileName")
-      .textContent =
+    /*
+      PROFILE HEADER
+    */
+
+    document.getElementById("profileName").textContent =
       data.full_name ||
       "শিক্ষার্থী";
 
 
-    document
-      .getElementById("studentId")
-      .textContent =
+    document.getElementById("studentId").textContent =
       data.student_uid ||
+      data.student_id ||
       "Student ID তৈরি হয়নি";
 
 
+    /*
+      AVATAR
+    */
+
     updateAvatar(
-      data.profile_image_url,
-      data.full_name
+      data.profile_image_url ||
+      data.profile_photo_url ||
+      "",
+      data.full_name || "শিক্ষার্থী"
     );
+
+
+    if (profileSection)
+      profileSection.classList.remove("hidden");
 
 
   } catch (error) {
@@ -866,13 +289,19 @@ async function loadProfile() {
       "❌ Profile তথ্য লোড করতে সমস্যা হয়েছে।",
       "error"
     );
+
+
+  } finally {
+
+    if (loading)
+      loading.classList.add("hidden");
   }
 }
 
 
-/* =========================
-   SAVE PROFILE
-========================= */
+/* =========================================
+   SAVE / UPDATE PROFILE
+========================================= */
 
 async function saveProfile() {
 
@@ -940,6 +369,10 @@ async function saveProfile() {
       .trim();
 
 
+  /*
+    REQUIRED
+  */
+
   if (!fullName) {
 
     showMessage(
@@ -965,7 +398,7 @@ async function saveProfile() {
   button.disabled = true;
 
   button.textContent =
-    "⏳ সংরক্ষণ হচ্ছে...";
+    "⏳ তথ্য সংরক্ষণ হচ্ছে...";
 
 
   try {
@@ -978,54 +411,65 @@ async function saveProfile() {
       );
 
 
-    const existingSnapshot =
+    const snapshot =
       await getDoc(profileRef);
 
 
-    let studentUid = null;
+    /*
+      EXISTING PROFILE DATA
+    */
 
-    let role = "student";
+    let oldData = {};
 
-    let isActive = true;
+    if (snapshot.exists()) {
 
-
-    if (existingSnapshot.exists()) {
-
-      const existing =
-        existingSnapshot.data();
-
-
-      studentUid =
-        existing.student_uid || null;
-
-      role =
-        existing.role || "student";
-
-      isActive =
-        existing.is_active !== undefined
-          ? existing.is_active
-          : true;
+      oldData =
+        snapshot.data();
     }
 
 
     /*
-      নতুন Student-এর জন্য
-      অস্থায়ী Student ID তৈরি।
-      পরবর্তীতে Admin/Cloud Function
-      দিয়ে sequential ID system করব।
+      KEEP EXISTING STUDENT ID
+    */
+
+    let studentUid =
+      oldData.student_uid ||
+      oldData.student_id ||
+      "";
+
+
+    /*
+      NEW STUDENT ID
+      শুধুমাত্র Profile না থাকলে
     */
 
     if (!studentUid) {
 
       const number =
-        String(
-          Date.now()
-        ).slice(-6);
+        String(Date.now()).slice(-6);
 
       studentUid =
         "GT-STU-" + number;
     }
 
+
+    /*
+      ROLE / ACTIVE STATUS
+      আগের তথ্য থাকলে সেটাই থাকবে
+    */
+
+    const role =
+      oldData.role ||
+      "student";
+
+
+    const isActive =
+      oldData.is_active !== false;
+
+
+    /*
+      PROFILE DATA
+    */
 
     const profileData = {
 
@@ -1042,36 +486,46 @@ async function saveProfile() {
         mobile,
 
       email:
-        currentUser.email || null,
+        currentUser.email ||
+        oldData.email ||
+        null,
 
       institution:
-        institution || null,
-
-      district:
-        district || null,
-
-      division:
-        division || null,
+        institution ||
+        null,
 
       class_name:
-        className || null,
+        className ||
+        null,
+
+      district:
+        district ||
+        null,
+
+      division:
+        division ||
+        null,
 
       profile_image_url:
-        profileImageUrl || null,
+        profileImageUrl ||
+        null,
 
       role:
         role,
 
       is_active:
-        isActive
+        isActive,
+
+      updated_at:
+        serverTimestamp()
     };
 
 
-    if (existingSnapshot.exists()) {
+    /*
+      UPDATE / CREATE
+    */
 
-      /*
-        Existing profile update
-      */
+    if (snapshot.exists()) {
 
       await updateDoc(
         profileRef,
@@ -1080,25 +534,27 @@ async function saveProfile() {
 
     } else {
 
-      /*
-        New student profile
-      */
-
       await setDoc(
         profileRef,
-        profileData
+        {
+          ...profileData,
+          created_at:
+            serverTimestamp()
+        }
       );
     }
 
 
-    document
-      .getElementById("profileName")
+    /*
+      UPDATE SCREEN
+    */
+
+    document.getElementById("profileName")
       .textContent =
       fullName;
 
 
-    document
-      .getElementById("studentId")
+    document.getElementById("studentId")
       .textContent =
       studentUid;
 
@@ -1110,19 +566,24 @@ async function saveProfile() {
 
 
     showMessage(
-      "✅ আপনার Profile সফলভাবে সংরক্ষণ হয়েছে।",
+      "✅ আপনার Profile সফলভাবে আপডেট হয়েছে।",
       "success"
     );
 
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Profile Save Error:",
+      error
+    );
+
 
     showMessage(
-      "❌ Profile সংরক্ষণ করা যায়নি। Firebase Firestore Rules পরীক্ষা করতে হবে।",
+      "❌ Profile সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
       "error"
     );
+
 
   } finally {
 
@@ -1134,9 +595,9 @@ async function saveProfile() {
 }
 
 
-/* =========================
+/* =========================================
    AVATAR
-========================= */
+========================================= */
 
 function updateAvatar(
   imageUrl,
@@ -1152,44 +613,51 @@ function updateAvatar(
 
   if (imageUrl) {
 
-    avatar.innerHTML =
-      `<img
-        src="${escapeHtml(imageUrl)}"
-        alt="Profile">`;
+    avatar.innerHTML = "";
+
+
+    const img =
+      document.createElement("img");
+
+    img.src =
+      imageUrl;
+
+    img.alt =
+      "Profile";
+
+    img.onerror = () => {
+
+      avatar.textContent =
+        getFirstLetter(name);
+    };
+
+
+    avatar.appendChild(img);
 
     return;
   }
 
 
-  const first =
-    name
-      ? name.trim().charAt(0)
-      : "👤";
-
-
   avatar.textContent =
-    first;
+    getFirstLetter(name);
 }
 
 
-/* =========================
-   ESCAPE
-========================= */
+/* =========================================
+   FIRST LETTER
+========================================= */
 
-function escapeHtml(value) {
+function getFirstLetter(name) {
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+  if (!name) return "👤";
+
+  return name.trim().charAt(0) || "👤";
 }
 
 
-/* =========================
+/* =========================================
    LOGOUT
-========================= */
+========================================= */
 
 async function logoutStudent() {
 
@@ -1221,7 +689,7 @@ async function logoutStudent() {
 
 
     showMessage(
-      "✅ সফলভাবে Logout হয়েছে।",
+      "✅ সফলভাবে লগআউট হয়েছে।",
       "success"
     );
 
@@ -1231,16 +699,16 @@ async function logoutStudent() {
     console.error(error);
 
     showMessage(
-      "❌ Logout করা যায়নি।",
+      "❌ লগআউট করা যায়নি।",
       "error"
     );
   }
 }
 
 
-/* =========================
+/* =========================================
    AUTH STATE
-========================= */
+========================================= */
 
 onAuthStateChanged(
   auth,
@@ -1257,21 +725,24 @@ onAuthStateChanged(
 
       currentUser = null;
 
+
       document
         .getElementById("profileSection")
         .classList.add("hidden");
+
 
       document
         .getElementById("authSection")
         .classList.remove("hidden");
     }
+
   }
 );
 
 
-/* =========================
+/* =========================================
    GLOBAL FUNCTIONS
-========================= */
+========================================= */
 
 window.loginStudent =
   loginStudent;
@@ -1283,4 +754,3 @@ window.logoutStudent =
   logoutStudent;
 
 </script>
-
