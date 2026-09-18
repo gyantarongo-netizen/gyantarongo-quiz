@@ -1,6 +1,710 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>প্রোফাইল | জ্ঞানতরঙ্গ</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:"Noto Sans Bengali","Hind Siliguri",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(139,61,255,.18),transparent 35%),
+    radial-gradient(circle at bottom left,rgba(236,63,167,.12),transparent 35%),
+    #060817;
+  color:#fff;
+  min-height:100vh;
+  padding-bottom:85px;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(6,8,23,.94);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.header-inner{
+  max-width:850px;
+  margin:auto;
+  min-height:70px;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-box{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-text{
+  font-size:19px;
+  font-weight:900;
+}
+
+.brand-sub{
+  color:#9ca3af;
+  font-size:10px;
+  margin-top:2px;
+}
+
+.back-btn{
+  padding:9px 13px;
+  border-radius:11px;
+  background:rgba(124,58,237,.12);
+  border:1px solid rgba(139,61,255,.25);
+  color:#c4b5fd;
+  font-size:12px;
+  font-weight:800;
+}
+
+.container{
+  width:min(100% - 24px,760px);
+  margin:25px auto;
+}
+
+.page-title{
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.page-subtitle{
+  color:#9ca3af;
+  font-size:13px;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.card{
+  background:linear-gradient(145deg,rgba(16,20,43,.97),rgba(11,14,31,.97));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:17px;
+  box-shadow:0 16px 45px rgba(0,0,0,.22);
+}
+
+.auth-box{
+  max-width:520px;
+  margin:20px auto;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.message{
+  display:none;
+  padding:13px 15px;
+  border-radius:14px;
+  margin-bottom:16px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.success{
+  background:rgba(34,197,94,.10);
+  border:1px solid rgba(34,197,94,.25);
+  color:#86efac;
+}
+
+.message.error{
+  background:rgba(239,68,68,.10);
+  border:1px solid rgba(239,68,68,.25);
+  color:#fca5a5;
+}
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-bottom:20px;
+  margin-bottom:20px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.avatar{
+  width:72px;
+  height:72px;
+  min-width:72px;
+  border-radius:20px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:#fff;
+  font-size:30px;
+  font-weight:900;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-name{
+  font-size:21px;
+  font-weight:900;
+}
+
+.student-id{
+  display:inline-block;
+  margin-top:6px;
+  padding:5px 9px;
+  border-radius:8px;
+  background:rgba(124,58,237,.14);
+  color:#c4b5fd;
+  font-size:12px;
+  font-weight:800;
+}
+
+.section-title{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
+  color:#d1d5db;
+  font-size:13px;
+  font-weight:800;
+}
+
+input{
+  width:100%;
+  padding:13px 14px;
+  border-radius:13px;
+  outline:none;
+  color:#fff;
+  background:#080b1c;
+  border:1px solid rgba(255,255,255,.10);
+  font-size:14px;
+}
+
+input:focus{
+  border-color:#8b3dff;
+  box-shadow:0 0 0 3px rgba(124,58,237,.12);
+}
+
+input:disabled{
+  opacity:.62;
+}
+
+.password-note{
+  color:#8f96aa;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.edit-note{
+  color:#9ca3af;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:14px;
+  padding:11px 12px;
+  border-radius:11px;
+  background:rgba(139,61,255,.07);
+  border:1px solid rgba(139,61,255,.13);
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn{
+  width:100%;
+  min-height:52px;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.primary-btn{
+  border:0;
+  color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+.secondary-btn{
+  color:#6ee7b7;
+  background:rgba(47,214,138,.10);
+  border:1px solid rgba(47,214,138,.25);
+  margin-bottom:10px;
+}
+
+.danger-btn{
+  color:#f9a8d4;
+  background:#1b1020;
+  border:1px solid rgba(236,72,153,.20);
+}
+
+.primary-btn:disabled{
+  opacity:.55;
+}
+
+.loading{
+  text-align:center;
+  padding:45px 15px;
+  color:#9ca3af;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:100;
+  background:rgba(6,8,23,.96);
+  backdrop-filter:blur(18px);
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.bottom-nav-inner{
+  max-width:700px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.nav-item{
+  text-align:center;
+  padding:9px 3px 10px;
+  color:#8f96aa;
+  font-size:10px;
+}
+
+.nav-item span{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
+}
+
+.nav-item.active{
+  color:#c4b5fd;
+}
+
+@media(max-width:650px){
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .page-title{
+    font-size:24px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .avatar{
+    width:64px;
+    height:64px;
+    min-width:64px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+
+    <a href="index.html" class="brand">
+
+      <div class="logo-box">
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ">
+      </div>
+
+      <div>
+        <div class="brand-text">জ্ঞানতরঙ্গ</div>
+        <div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+      </div>
+
+    </a>
+
+    <a href="index.html" class="back-btn">
+      ← হোম
+    </a>
+
+  </div>
+</header>
+
+
+<main class="container">
+
+  <h1 class="page-title">
+    👤 আমার প্রোফাইল
+  </h1>
+
+  <p class="page-subtitle">
+    আপনার স্থায়ী শিক্ষার্থী অ্যাকাউন্টের তথ্য দেখুন ও পরিবর্তন করুন।
+  </p>
+
+  <div id="message" class="message"></div>
+
+
+  <!-- LOGIN -->
+
+  <section id="authSection" class="card auth-box">
+
+    <div class="section-title">
+      🔐 শিক্ষার্থী লগইন
+    </div>
+
+    <div class="field">
+
+      <label>ইমেইল</label>
+
+      <input
+        type="email"
+        id="loginEmail"
+        placeholder="আপনার ইমেইল লিখুন">
+
+    </div>
+
+    <br>
+
+    <div class="field">
+
+      <label>পাসওয়ার্ড</label>
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="পাসওয়ার্ড লিখুন">
+
+    </div>
+
+    <br>
+
+    <button
+      class="primary-btn"
+      id="loginBtn">
+
+      🔐 লগইন করুন
+
+    </button>
+
+  </section>
+
+
+  <div id="loading" class="loading hidden">
+    ⏳ তথ্য লোড হচ্ছে...
+  </div>
+
+
+  <!-- PROFILE -->
+
+  <section id="profileSection" class="hidden">
+
+    <div class="card">
+
+      <div class="profile-top">
+
+        <div class="avatar" id="avatar">
+          👤
+        </div>
+
+        <div>
+
+          <div
+            class="profile-name"
+            id="profileName">
+
+            শিক্ষার্থী
+
+          </div>
+
+          <div
+            class="student-id"
+            id="studentId">
+
+            Student ID
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="section-title">
+        📋 ব্যক্তিগত তথ্য
+      </div>
+
+
+      <div class="edit-note">
+
+        ✏️ তথ্য পরিবর্তন করতে
+        <b>“তথ্য পরিবর্তন করুন”</b>
+        চাপুন।
+
+        <br>
+
+        Student ID ও ইমেইল পরিবর্তন করা যাবে না।
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <div class="field">
+
+          <label>পূর্ণ নাম *</label>
+
+          <input
+            type="text"
+            id="fullName"
+            placeholder="পূর্ণ নাম"
+            disabled>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>মোবাইল নম্বর *</label>
+
+          <input
+            type="tel"
+            id="mobile"
+            placeholder="01XXXXXXXXX"
+            disabled>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>ইমেইল</label>
+
+          <input
+            type="email"
+            id="email"
+            disabled>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>প্রতিষ্ঠান</label>
+
+          <input
+            type="text"
+            id="institution"
+            placeholder="স্কুল / কলেজ / বিশ্ববিদ্যালয়"
+            disabled>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>শ্রেণি</label>
+
+          <input
+            type="text"
+            id="className"
+            placeholder="যেমন: দশম"
+            disabled>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>জেলা</label>
+
+          <input
+            type="text"
+            id="district"
+            placeholder="আপনার জেলা"
+            disabled>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>বিভাগ</label>
+
+          <input
+            type="text"
+            id="division"
+            placeholder="আপনার বিভাগ"
+            disabled>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>Profile Photo URL</label>
+
+          <input
+            type="url"
+            id="profileImageUrl"
+            placeholder="ছবির URL"
+            disabled>
+
+          <div class="password-note">
+            ℹ️ ছবি Upload System পরে Firebase Storage দিয়ে করা হবে।
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <br>
+
+
+      <button
+        class="secondary-btn"
+        id="editBtn">
+
+        ✏️ তথ্য পরিবর্তন করুন
+
+      </button>
+
+
+      <button
+        class="primary-btn hidden"
+        id="saveBtn">
+
+        💾 পরিবর্তন সংরক্ষণ করুন
+
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="section-title">
+        🔐 অ্যাকাউন্ট
+      </div>
+
+      <button
+        class="danger-btn"
+        id="logoutBtn">
+
+        🚪 লগআউট
+
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <div class="bottom-nav-inner">
+
+    <a href="index.html" class="nav-item">
+      <span>🏠</span>
+      হোম
+    </a>
+
+    <a href="quiz.html" class="nav-item">
+      <span>🚀</span>
+      কুইজ
+    </a>
+
+    <a href="category.html" class="nav-item">
+      <span>📚</span>
+      ক্যাটাগরি
+    </a>
+
+    <a href="result.html" class="nav-item">
+      <span>🏆</span>
+      ফলাফল
+    </a>
+
+    <a href="profile.html" class="nav-item active">
+      <span>👤</span>
+      প্রোফাইল
+    </a>
+
+  </div>
+
+</nav>
+
+
 <script type="module">
 
-import { auth, db } from "./firebase-config.js";
+import {
+  auth,
+  db
+} from "./firebase-config.js";
 
 import {
   signInWithEmailAndPassword,
@@ -17,189 +721,197 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================================
-   CURRENT USER
-========================================= */
-
 let currentUser = null;
 
 
-/* =========================================
-   MESSAGE
-========================================= */
+const $ = id =>
+  document.getElementById(id);
 
-function showMessage(text, type = "success") {
 
-  const box = document.getElementById("message");
+function message(text,type="success"){
 
-  if (!box) return;
+  $("message").textContent = text;
 
-  box.textContent = text;
-
-  box.className =
+  $("message").className =
     "message show " + type;
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
 }
 
 
-/* =========================================
-   LOGIN
-========================================= */
+function editMode(on){
 
-async function loginStudent() {
+  [
+    "fullName",
+    "mobile",
+    "institution",
+    "className",
+    "district",
+    "division",
+    "profileImageUrl"
+  ].forEach(id => {
 
-  const button =
-    document.getElementById("loginBtn");
+    $(id).disabled = !on;
+
+  });
+
+  if(on){
+
+    $("editBtn").classList.add("hidden");
+
+    $("saveBtn").classList.remove("hidden");
+
+  }else{
+
+    $("editBtn").classList.remove("hidden");
+
+    $("saveBtn").classList.add("hidden");
+
+  }
+
+}
+
+
+function avatar(url,name){
+
+  const box = $("avatar");
+
+  box.innerHTML = "";
+
+  if(url){
+
+    const img =
+      document.createElement("img");
+
+    img.src = url;
+
+    img.alt = "Profile";
+
+    img.onerror = () => {
+
+      box.textContent =
+        (name || "👤").trim().charAt(0);
+
+    };
+
+    box.appendChild(img);
+
+  }else{
+
+    box.textContent =
+      (name || "👤").trim().charAt(0);
+
+  }
+
+}
+
+
+async function login(){
 
   const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
+    $("loginEmail").value.trim();
 
   const password =
-    document
-      .getElementById("loginPassword")
-      .value;
+    $("loginPassword").value;
 
+  if(!email || !password){
 
-  if (!email || !password) {
-
-    showMessage(
+    message(
       "⚠️ ইমেইল ও পাসওয়ার্ড দিন।",
       "error"
     );
 
     return;
+
   }
 
+  $("loginBtn").disabled = true;
 
-  button.disabled = true;
-
-  button.textContent =
+  $("loginBtn").textContent =
     "⏳ লগইন হচ্ছে...";
 
 
-  try {
+  try{
 
-    const result =
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    currentUser =
-      result.user;
-
-
-    showMessage(
-      "✅ সফলভাবে লগইন হয়েছে।",
-      "success"
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
     );
 
-
-    await loadProfile();
-
-
-  } catch (error) {
+  }catch(error){
 
     console.error(error);
 
-    showMessage(
+    message(
       "❌ লগইন করা যায়নি। ইমেইল বা পাসওয়ার্ড পরীক্ষা করুন।",
       "error"
     );
 
+  }finally{
 
-  } finally {
+    $("loginBtn").disabled = false;
 
-    button.disabled = false;
-
-    button.textContent =
+    $("loginBtn").textContent =
       "🔐 লগইন করুন";
+
   }
+
 }
 
 
-/* =========================================
-   LOAD PROFILE
-========================================= */
+async function loadProfile(){
 
-async function loadProfile() {
+  if(!currentUser) return;
 
-  if (!currentUser) return;
+  $("authSection").classList.add("hidden");
 
+  $("loading").classList.remove("hidden");
 
-  const authSection =
-    document.getElementById("authSection");
+  try{
 
-  const profileSection =
-    document.getElementById("profileSection");
-
-  const loading =
-    document.getElementById("loading");
-
-
-  if (authSection)
-    authSection.classList.add("hidden");
-
-  if (loading)
-    loading.classList.remove("hidden");
-
-
-  try {
-
-    const profileRef =
+    const ref =
       doc(
         db,
         "profiles",
         currentUser.uid
       );
 
-
-    const snapshot =
-      await getDoc(profileRef);
-
-
-    /*
-      PROFILE না থাকলে
-    */
-
-    if (!snapshot.exists()) {
-
-      if (profileSection)
-        profileSection.classList.remove("hidden");
+    const snap =
+      await getDoc(ref);
 
 
-      document.getElementById("email").value =
+    if(!snap.exists()){
+
+      $("profileSection")
+        .classList.remove("hidden");
+
+      $("email").value =
         currentUser.email || "";
 
+      $("profileName").textContent =
+        "নতুন শিক্ষার্থী";
 
-      showMessage(
-        "⚠️ আপনার Profile এখনো তৈরি হয়নি। তথ্য পূরণ করে Save করুন।",
-        "error"
+      $("studentId").textContent =
+        "Student ID তৈরি হবে";
+
+      editMode(true);
+
+      message(
+        "📝 আপনার বাকি তথ্যগুলো পূরণ করুন।",
+        "success"
       );
 
       return;
+
     }
 
 
-    const data =
-      snapshot.data();
+    const data = snap.data();
 
 
-    /*
-      ACCOUNT STATUS
-    */
+    if(data.is_active === false){
 
-    if (data.is_active === false) {
-
-      showMessage(
+      message(
         "❌ আপনার অ্যাকাউন্ট বর্তমানে নিষ্ক্রিয়।",
         "error"
       );
@@ -207,271 +919,193 @@ async function loadProfile() {
       await signOut(auth);
 
       return;
+
     }
 
 
-    /*
-      FORM DATA
-    */
-
-    document.getElementById("fullName").value =
+    $("fullName").value =
       data.full_name || "";
 
-
-    document.getElementById("mobile").value =
+    $("mobile").value =
       data.mobile || "";
 
-
-    document.getElementById("email").value =
+    $("email").value =
       data.email ||
       currentUser.email ||
       "";
 
-
-    document.getElementById("institution").value =
+    $("institution").value =
       data.institution || "";
 
-
-    document.getElementById("className").value =
+    $("className").value =
       data.class_name || "";
 
-
-    document.getElementById("district").value =
+    $("district").value =
       data.district || "";
 
-
-    document.getElementById("division").value =
+    $("division").value =
       data.division || "";
 
-
-    document.getElementById("profileImageUrl").value =
+    $("profileImageUrl").value =
       data.profile_image_url ||
       data.profile_photo_url ||
       "";
 
 
-    /*
-      PROFILE HEADER
-    */
-
-    document.getElementById("profileName").textContent =
+    $("profileName").textContent =
       data.full_name ||
       "শিক্ষার্থী";
 
-
-    document.getElementById("studentId").textContent =
+    $("studentId").textContent =
       data.student_uid ||
       data.student_id ||
       "Student ID তৈরি হয়নি";
 
 
-    /*
-      AVATAR
-    */
-
-    updateAvatar(
+    avatar(
       data.profile_image_url ||
       data.profile_photo_url ||
       "",
-      data.full_name || "শিক্ষার্থী"
+      data.full_name ||
+      "শিক্ষার্থী"
     );
 
 
-    if (profileSection)
-      profileSection.classList.remove("hidden");
+    $("profileSection")
+      .classList.remove("hidden");
+
+    editMode(false);
 
 
-  } catch (error) {
+  }catch(error){
 
-    console.error(error);
+    console.error(
+      "Profile load error:",
+      error
+    );
 
-    showMessage(
-      "❌ Profile তথ্য লোড করতে সমস্যা হয়েছে।",
+    $("profileSection")
+      .classList.remove("hidden");
+
+    message(
+      "❌ প্রোফাইল লোড করতে সমস্যা হয়েছে।",
       "error"
     );
 
+  }finally{
 
-  } finally {
+    $("loading")
+      .classList.add("hidden");
 
-    if (loading)
-      loading.classList.add("hidden");
   }
+
 }
 
 
-/* =========================================
-   SAVE / UPDATE PROFILE
-========================================= */
+async function saveProfile(){
 
-async function saveProfile() {
+  if(!currentUser){
 
-  if (!currentUser) {
-
-    showMessage(
+    message(
       "🔐 আগে লগইন করুন।",
       "error"
     );
 
     return;
+
   }
 
 
-  const button =
-    document.getElementById("saveBtn");
-
-
   const fullName =
-    document
-      .getElementById("fullName")
-      .value
-      .trim();
-
+    $("fullName").value.trim();
 
   const mobile =
-    document
-      .getElementById("mobile")
-      .value
-      .trim();
-
+    $("mobile").value.trim();
 
   const institution =
-    document
-      .getElementById("institution")
-      .value
-      .trim();
-
+    $("institution").value.trim();
 
   const className =
-    document
-      .getElementById("className")
-      .value
-      .trim();
-
+    $("className").value.trim();
 
   const district =
-    document
-      .getElementById("district")
-      .value
-      .trim();
-
+    $("district").value.trim();
 
   const division =
-    document
-      .getElementById("division")
-      .value
-      .trim();
+    $("division").value.trim();
+
+  const image =
+    $("profileImageUrl").value.trim();
 
 
-  const profileImageUrl =
-    document
-      .getElementById("profileImageUrl")
-      .value
-      .trim();
+  if(!fullName){
 
-
-  /*
-    REQUIRED
-  */
-
-  if (!fullName) {
-
-    showMessage(
+    message(
       "⚠️ পূর্ণ নাম লিখুন।",
       "error"
     );
 
     return;
+
   }
 
 
-  if (!mobile) {
+  if(!mobile){
 
-    showMessage(
+    message(
       "⚠️ মোবাইল নম্বর লিখুন।",
       "error"
     );
 
     return;
+
   }
 
 
-  button.disabled = true;
+  $("saveBtn").disabled = true;
 
-  button.textContent =
-    "⏳ তথ্য সংরক্ষণ হচ্ছে...";
+  $("saveBtn").textContent =
+    "⏳ সংরক্ষণ হচ্ছে...";
 
 
-  try {
+  try{
 
-    const profileRef =
+    const ref =
       doc(
         db,
         "profiles",
         currentUser.uid
       );
 
+    const snap =
+      await getDoc(ref);
 
-    const snapshot =
-      await getDoc(profileRef);
 
+    let old = {};
 
-    /*
-      EXISTING PROFILE DATA
-    */
+    if(snap.exists()){
 
-    let oldData = {};
+      old = snap.data();
 
-    if (snapshot.exists()) {
-
-      oldData =
-        snapshot.data();
     }
 
 
-    /*
-      KEEP EXISTING STUDENT ID
-    */
-
     let studentUid =
-      oldData.student_uid ||
-      oldData.student_id ||
+      old.student_uid ||
+      old.student_id ||
       "";
 
 
-    /*
-      NEW STUDENT ID
-      শুধুমাত্র Profile না থাকলে
-    */
-
-    if (!studentUid) {
-
-      const number =
-        String(Date.now()).slice(-6);
+    if(!studentUid){
 
       studentUid =
-        "GT-STU-" + number;
+        "GT-STU-" +
+        String(Date.now()).slice(-6);
+
     }
 
 
-    /*
-      ROLE / ACTIVE STATUS
-      আগের তথ্য থাকলে সেটাই থাকবে
-    */
-
-    const role =
-      oldData.role ||
-      "student";
-
-
-    const isActive =
-      oldData.is_active !== false;
-
-
-    /*
-      PROFILE DATA
-    */
-
-    const profileData = {
+    const data = {
 
       id:
         currentUser.uid,
@@ -487,270 +1121,213 @@ async function saveProfile() {
 
       email:
         currentUser.email ||
-        oldData.email ||
+        old.email ||
         null,
 
       institution:
-        institution ||
-        null,
+        institution || null,
 
       class_name:
-        className ||
-        null,
+        className || null,
 
       district:
-        district ||
-        null,
+        district || null,
 
       division:
-        division ||
-        null,
+        division || null,
 
       profile_image_url:
-        profileImageUrl ||
-        null,
+        image || null,
 
       role:
-        role,
+        old.role || "student",
 
       is_active:
-        isActive,
+        old.is_active !== false,
 
       updated_at:
         serverTimestamp()
+
     };
 
 
-    /*
-      UPDATE / CREATE
-    */
-
-    if (snapshot.exists()) {
+    if(snap.exists()){
 
       await updateDoc(
-        profileRef,
-        profileData
+        ref,
+        data
       );
 
-    } else {
+    }else{
 
       await setDoc(
-        profileRef,
+        ref,
         {
-          ...profileData,
+          ...data,
           created_at:
             serverTimestamp()
         }
       );
+
     }
 
 
-    /*
-      UPDATE SCREEN
-    */
-
-    document.getElementById("profileName")
-      .textContent =
+    $("profileName").textContent =
       fullName;
 
-
-    document.getElementById("studentId")
-      .textContent =
+    $("studentId").textContent =
       studentUid;
 
-
-    updateAvatar(
-      profileImageUrl,
+    avatar(
+      image,
       fullName
     );
 
+    editMode(false);
 
-    showMessage(
-      "✅ আপনার Profile সফলভাবে আপডেট হয়েছে।",
+
+    message(
+      "✅ আপনার তথ্য সফলভাবে আপডেট হয়েছে।",
       "success"
     );
 
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
-      "Profile Save Error:",
+      "Profile save error:",
       error
     );
 
-
-    showMessage(
-      "❌ Profile সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
+    message(
+      "❌ তথ্য সংরক্ষণ করা যায়নি। Firebase Firestore Rules পরীক্ষা করুন।",
       "error"
     );
 
+  }finally{
 
-  } finally {
+    $("saveBtn").disabled = false;
 
-    button.disabled = false;
+    $("saveBtn").textContent =
+      "💾 পরিবর্তন সংরক্ষণ করুন";
 
-    button.textContent =
-      "💾 তথ্য সংরক্ষণ করুন";
-  }
-}
-
-
-/* =========================================
-   AVATAR
-========================================= */
-
-function updateAvatar(
-  imageUrl,
-  name
-) {
-
-  const avatar =
-    document.getElementById("avatar");
-
-
-  if (!avatar) return;
-
-
-  if (imageUrl) {
-
-    avatar.innerHTML = "";
-
-
-    const img =
-      document.createElement("img");
-
-    img.src =
-      imageUrl;
-
-    img.alt =
-      "Profile";
-
-    img.onerror = () => {
-
-      avatar.textContent =
-        getFirstLetter(name);
-    };
-
-
-    avatar.appendChild(img);
-
-    return;
   }
 
-
-  avatar.textContent =
-    getFirstLetter(name);
 }
 
 
-/* =========================================
-   FIRST LETTER
-========================================= */
+async function logout(){
 
-function getFirstLetter(name) {
-
-  if (!name) return "👤";
-
-  return name.trim().charAt(0) || "👤";
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-async function logoutStudent() {
-
-  try {
+  try{
 
     await signOut(auth);
 
     currentUser = null;
 
-
-    document
-      .getElementById("profileSection")
+    $("profileSection")
       .classList.add("hidden");
 
-
-    document
-      .getElementById("authSection")
+    $("authSection")
       .classList.remove("hidden");
 
+    $("loginEmail").value = "";
 
-    document
-      .getElementById("loginEmail")
-      .value = "";
+    $("loginPassword").value = "";
 
+    editMode(false);
 
-    document
-      .getElementById("loginPassword")
-      .value = "";
-
-
-    showMessage(
+    message(
       "✅ সফলভাবে লগআউট হয়েছে।",
       "success"
     );
 
-
-  } catch (error) {
+  }catch(error){
 
     console.error(error);
 
-    showMessage(
+    message(
       "❌ লগআউট করা যায়নি।",
       "error"
     );
+
   }
+
 }
 
 
-/* =========================================
-   AUTH STATE
-========================================= */
+$("loginBtn")
+  .addEventListener("click",login);
+
+$("editBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      editMode(true);
+
+      message(
+        "✏️ এখন আপনার তথ্য পরিবর্তন করতে পারবেন।",
+        "success"
+      );
+
+    }
+  );
+
+$("saveBtn")
+  .addEventListener(
+    "click",
+    saveProfile
+  );
+
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+$("loginPassword")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(event.key === "Enter"){
+        login();
+      }
+
+    }
+  );
+
 
 onAuthStateChanged(
   auth,
-  async (user) => {
+  async user => {
 
-    if (user) {
+    if(user){
 
-      currentUser =
-        user;
+      currentUser = user;
 
       await loadProfile();
 
-    } else {
+    }else{
 
       currentUser = null;
 
-
-      document
-        .getElementById("profileSection")
+      $("loading")
         .classList.add("hidden");
 
+      $("profileSection")
+        .classList.add("hidden");
 
-      document
-        .getElementById("authSection")
+      $("authSection")
         .classList.remove("hidden");
+
     }
 
   }
 );
 
-
-/* =========================================
-   GLOBAL FUNCTIONS
-========================================= */
-
-window.loginStudent =
-  loginStudent;
-
-window.saveProfile =
-  saveProfile;
-
-window.logoutStudent =
-  logoutStudent;
-
 </script>
+
+</body>
+</html>
