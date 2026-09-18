@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>প্রশ্ন ব্যবস্থাপনা | জ্ঞানতরঙ্গ</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:"Noto Sans Bengali",Arial,sans-serif;
+  background:#060817;
+  color:#fff;
+}
+
+.header{
+  background:#10142b;
+  border-bottom:1px solid #292d52;
+  padding:14px 16px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.header-inner{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:#fff;
+}
+
+.logo-box{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#171b38;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-text{
+  font-size:20px;
+  font-weight:800;
+}
+
+.brand-sub{
+  font-size:11px;
+  color:#a9afd0;
+}
+
+.back-btn{
+  text-decoration:none;
+  color:#fff;
+  background:#191e3c;
+  border:1px solid #30365e;
+  padding:9px 13px;
+  border-radius:10px;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px 14px 50px;
+}
+
+.page-title{
+  margin-bottom:18px;
+}
+
+.page-title h1{
+  margin:0;
+  font-size:27px;
+}
+
+.page-title p{
+  color:#aeb4d4;
+  margin:7px 0 0;
+}
+
+.card{
+  background:#10142b;
+  border:1px solid #292e55;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.card h2{
+  margin:0 0 15px;
+  font-size:20px;
+}
+
+label{
+  display:block;
+  margin:13px 0 7px;
+  color:#dfe2f5;
+  font-size:14px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px 13px;
+  border-radius:11px;
+  border:1px solid #343a65;
+  background:#080b1c;
+  color:#fff;
+  outline:none;
+  font-size:14px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#8b3dff;
+  box-shadow:0 0 0 2px rgba(139,61,255,.15);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.option-box{
+  background:#0b0f23;
+  border:1px solid #292e55;
+  border-radius:14px;
+  padding:13px;
+  margin-top:10px;
+}
+
+.option-row{
+  display:grid;
+  grid-template-columns:35px 1fr;
+  align-items:center;
+  gap:8px;
+}
+
+.option-row input[type="radio"]{
+  width:20px;
+  height:20px;
+  accent-color:#8b3dff;
+}
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#8b3dff,#ec3fa7);
+}
+
+.btn-secondary{
+  background:#20264a;
+}
+
+.btn-danger{
+  background:#9b263f;
+}
+
+.btn-success{
+  background:#167a58;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+.message{
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
+  display:none;
+}
+
+.question-card{
+  background:#0b0f23;
+  border:1px solid #292e55;
+  border-radius:15px;
+  padding:15px;
+  margin-top:12px;
+}
+
+.question-title{
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.question-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.badge{
+  background:#191e3c;
+  border:1px solid #30365e;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:12px;
+  color:#cbd0ea;
+}
+
+.answer{
+  padding:7px 0;
+  color:#bfc5df;
+  font-size:14px;
+}
+
+.correct{
+  color:#2fd68a;
+  font-weight:700;
+}
+
+.question-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.question-actions button{
+  padding:8px 11px;
+  border-radius:9px;
+  border:0;
+  color:#fff;
+  cursor:pointer;
+}
+
+.edit-btn{
+  background:#6b45c7;
+}
+
+.delete-btn{
+  background:#8e2840;
+}
+
+.empty{
+  text-align:center;
+  color:#9ea5c8;
+  padding:25px 10px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-title h1{
+    font-size:23px;
+  }
+
+  .brand-text{
+    font-size:18px;
+  }
+
+  .card{
+    padding:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+
+    <a href="index.html" class="brand">
+      <div class="logo-box">
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ">
+      </div>
+
+      <div>
+        <div class="brand-text">জ্ঞানতরঙ্গ</div>
+        <div class="brand-sub">প্রশ্ন ব্যবস্থাপনা</div>
+      </div>
+    </a>
+
+    <a href="admin.html" class="back-btn">← Admin</a>
+
+  </div>
+</header>
+
+
+<main class="container">
+
+  <div class="page-title">
+    <h1>📝 প্রশ্ন ব্যবস্থাপনা</h1>
+    <p>কুইজের প্রশ্ন যোগ, সম্পাদনা ও মুছে ফেলুন</p>
+  </div>
+
+
+  <div id="message" class="message"></div>
+
+
+  <!-- প্রশ্ন যোগ করার ফর্ম -->
+  <section class="card">
+
+    <h2 id="formTitle">➕ নতুন প্রশ্ন যোগ করুন</h2>
+
+    <label for="quizSelect">কুইজ নির্বাচন করুন</label>
+    <select id="quizSelect">
+      <option value="">কুইজ লোড হচ্ছে...</option>
+    </select>
+
+
+    <label for="questionText">প্রশ্ন</label>
+    <textarea
+      id="questionText"
+      placeholder="প্রশ্নটি লিখুন..."
+    ></textarea>
+
+
+    <div class="option-box">
+
+      <label>অপশনগুলো — সঠিক উত্তরের পাশে টিক দিন</label>
+
+      <div class="option-row">
+        <input type="radio" name="correct" value="A">
+        <input id="optionA" type="text" placeholder="অপশন A">
+      </div>
+
+      <div class="option-row">
+        <input type="radio" name="correct" value="B">
+        <input id="optionB" type="text" placeholder="অপশন B">
+      </div>
+
+      <div class="option-row">
+        <input type="radio" name="correct" value="C">
+        <input id="optionC" type="text" placeholder="অপশন C">
+      </div>
+
+      <div class="option-row">
+        <input type="radio" name="correct" value="D">
+        <input id="optionD" type="text" placeholder="অপশন D">
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div>
+        <label for="marks">প্রশ্নের নম্বর</label>
+        <input
+          id="marks"
+          type="number"
+          value="1"
+          min="0"
+          step="0.25">
+      </div>
+
+      <div>
+        <label for="negativeMark">ভুল উত্তরের জন্য নম্বর</label>
+        <input
+          id="negativeMark"
+          type="number"
+          value="0.25"
+          min="0"
+          step="0.25">
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn btn-primary"
+        id="saveBtn">
+        💾 প্রশ্ন সংরক্ষণ
+      </button>
+
+      <button
+        class="btn btn-secondary hidden"
+        id="cancelBtn">
+        বাতিল
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- প্রশ্ন তালিকা -->
+  <section class="card">
+
+    <h2>📚 প্রশ্ন তালিকা</h2>
+
+    <div id="questionList">
+      <div class="empty">
+        প্রশ্ন লোড হচ্ছে...
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+
+<script type="module">
+
+import { auth, db } from "./firebase-config.js";
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const message = document.getElementById("message");
+
+const quizSelect = document.getElementById("quizSelect");
+const questionText = document.getElementById("questionText");
+
+const optionA = document.getElementById("optionA");
+const optionB = document.getElementById("optionB");
+const optionC = document.getElementById("optionC");
+const optionD = document.getElementById("optionD");
+
+const marks = document.getElementById("marks");
+const negativeMark = document.getElementById("negativeMark");
+
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+
+const questionList = document.getElementById("questionList");
+const formTitle = document.getElementById("formTitle");
+
+
+let currentUser = null;
+let editingId = null;
+let allQuestions = [];
+
+
+function showMessage(text, type = "success") {
+
+  message.textContent = text;
+  message.style.display = "block";
+
+  if(type === "error"){
+    message.style.background = "#3a1723";
+    message.style.border = "1px solid #8e2840";
+    message.style.color = "#ff9fb4";
+  }else{
+    message.style.background = "#102d25";
+    message.style.border = "1px solid #167a58";
+    message.style.color = "#7ff0c4";
+  }
+
+  setTimeout(() => {
+    message.style.display = "none";
+  }, 3500);
+}
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+async function verifyAdmin(user){
+
+  if(!user) return false;
+
+  const profileRef = doc(db,"profiles",user.uid);
+  const profileSnap = await getDoc(profileRef);
+
+  if(!profileSnap.exists()) return false;
+
+  const profile = profileSnap.data();
+
+  return (
+    profile.role === "admin" &&
+    profile.is_active === true
+  );
+}
+
+
+async function loadQuizzes(){
+
+  quizSelect.innerHTML =
+    `<option value="">কুইজ নির্বাচন করুন</option>`;
+
+  const snapshot =
+    await getDocs(collection(db,"quizzes"));
+
+  const quizzes = [];
+
+  snapshot.forEach(docSnap => {
+
+    const data = docSnap.data();
+
+    quizzes.push({
+      id: docSnap.id,
+      ...data
+    });
+
+  });
+
+
+  quizzes.sort((a,b) =>
+    String(a.title || a.quiz_name || "")
+      .localeCompare(
+        String(b.title || b.quiz_name || ""),
+        "bn"
+      )
+  );
+
+
+  quizzes.forEach(quiz => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = quiz.id;
+
+    option.textContent =
+      quiz.title ||
+      quiz.quiz_name ||
+      "নামহীন কুইজ";
+
+    quizSelect.appendChild(option);
+
+  });
+
+
+  if(quizzes.length === 0){
+
+    quizSelect.innerHTML =
+      `<option value="">কোনো কুইজ পাওয়া যায়নি</option>`;
+
+  }
+
+}
+
+
+async function loadQuestions(){
+
+  questionList.innerHTML =
+    `<div class="empty">প্রশ্ন লোড হচ্ছে...</div>`;
+
+  const snapshot =
+    await getDocs(collection(db,"questions"));
+
+  allQuestions = [];
+
+  snapshot.forEach(docSnap => {
+
+    allQuestions.push({
+      id: docSnap.id,
+      ...docSnap.data()
+    });
+
+  });
+
+
+  renderQuestions();
+
+}
+
+
+function renderQuestions(){
+
+  const selectedQuiz =
+    quizSelect.value;
+
+
+  let questions = allQuestions;
+
+
+  if(selectedQuiz){
+
+    questions =
+      questions.filter(
+        q => q.quiz_id === selectedQuiz
+      );
+
+  }
+
+
+  if(questions.length === 0){
+
+    questionList.innerHTML =
+      `<div class="empty">
+        এই কুইজে এখনো কোনো প্রশ্ন যোগ করা হয়নি।
+      </div>`;
+
+    return;
+
+  }
+
+
+  questionList.innerHTML = "";
+
+
+  questions.forEach((q,index) => {
+
+    const correct =
+      q.correct_answer || "";
+
+    const options =
+      q.options || {};
+
+
+    const card =
+      document.createElement("div");
+
+    card.className = "question-card";
+
+
+    card.innerHTML = `
+
+      <div class="question-title">
+        ${index + 1}. ${escapeHTML(q.question || q.question_text)}
+      </div>
+
+      <div class="question-meta">
+
+        <span class="badge">
+          নম্বর: ${escapeHTML(q.marks ?? 1)}
+        </span>
+
+        <span class="badge">
+          ভুল: ${escapeHTML(q.negative_mark ?? 0)}
+        </span>
+
+      </div>
+
+
+      <div class="answer ${correct === "A" ? "correct" : ""}">
+        A. ${escapeHTML(options.A || "")}
+        ${correct === "A" ? " ✓ সঠিক" : ""}
+      </div>
+
+      <div class="answer ${correct === "B" ? "correct" : ""}">
+        B. ${escapeHTML(options.B || "")}
+        ${correct === "B" ? " ✓ সঠিক" : ""}
+      </div>
+
+      <div class="answer ${correct === "C" ? "correct" : ""}">
+        C. ${escapeHTML(options.C || "")}
+        ${correct === "C" ? " ✓ সঠিক" : ""}
+      </div>
+
+      <div class="answer ${correct === "D" ? "correct" : ""}">
+        D. ${escapeHTML(options.D || "")}
+        ${correct === "D" ? " ✓ সঠিক" : ""}
+      </div>
+
+
+      <div class="question-actions">
+
+        <button
+          class="edit-btn"
+          data-id="${q.id}">
+          ✏️ সম্পাদনা
+        </button>
+
+        <button
+          class="delete-btn"
+          data-id="${q.id}">
+          🗑️ মুছে ফেলুন
+        </button>
+
+      </div>
+
+    `;
+
+
+    card
+      .querySelector(".edit-btn")
+      .addEventListener(
+        "click",
+        () => editQuestion(q.id)
+      );
+
+
+    card
+      .querySelector(".delete-btn")
+      .addEventListener(
+        "click",
+        () => removeQuestion(q.id)
+      );
+
+
+    questionList.appendChild(card);
+
+  });
+
+}
+
+
+quizSelect.addEventListener(
+  "change",
+  renderQuestions
+);
+
+
+saveBtn.addEventListener(
+  "click",
+  saveQuestion
+);
+
+
+async function saveQuestion(){
+
+  const quizId =
+    quizSelect.value;
+
+  const text =
+    questionText.value.trim();
+
+  const A =
+    optionA.value.trim();
+
+  const B =
+    optionB.value.trim();
+
+  const C =
+    optionC.value.trim();
+
+  const D =
+    optionD.value.trim();
+
+
+  const correctRadio =
+    document.querySelector(
+      'input[name="correct"]:checked'
+    );
+
+
+  const questionMarks =
+    Number(marks.value || 1);
+
+  const questionNegative =
+    Number(negativeMark.value || 0);
+
+
+  if(!quizId){
+
+    showMessage(
+      "⚠️ আগে একটি কুইজ নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!text){
+
+    showMessage(
+      "⚠️ প্রশ্ন লিখুন।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!A || !B || !C || !D){
+
+    showMessage(
+      "⚠️ চারটি অপশনই পূরণ করুন।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!correctRadio){
+
+    showMessage(
+      "⚠️ সঠিক উত্তর নির্বাচন করুন।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const correct =
+    correctRadio.value;
+
+
+  saveBtn.disabled = true;
+
+
+  try{
+
+    const quizRef =
+      doc(db,"quizzes",quizId);
+
+    const quizSnap =
+      await getDoc(quizRef);
+
+
+    const quizData =
+      quizSnap.exists()
+        ? quizSnap.data()
+        : {};
+
+
+    const questionData = {
+
+      quiz_id: quizId,
+
+      quiz_name:
+        quizData.title ||
+        quizData.quiz_name ||
+        "",
+
+      question: text,
+
+      options: {
+        A,
+        B,
+        C,
+        D
+      },
+
+      correct_answer: correct,
+
+      marks: questionMarks,
+
+      negative_mark:
+        questionNegative,
+
+      updated_at:
+        serverTimestamp(),
+
+      updated_by:
+        currentUser.uid
+
+    };
+
+
+    if(editingId){
+
+      await updateDoc(
+        doc(db,"questions",editingId),
+        questionData
+      );
+
+      showMessage(
+        "✅ প্রশ্ন সফলভাবে আপডেট হয়েছে।"
+      );
+
+    }else{
+
+      questionData.created_at =
+        serverTimestamp();
+
+      questionData.created_by =
+        currentUser.uid;
+
+
+      await addDoc(
+        collection(db,"questions"),
+        questionData
+      );
+
+
+      showMessage(
+        "✅ প্রশ্ন সফলভাবে যোগ হয়েছে।"
+      );
+
+    }
+
+
+    resetForm();
+
+    await loadQuestions();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "❌ প্রশ্ন সংরক্ষণ করতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+  }finally{
+
+    saveBtn.disabled = false;
+
+  }
+
+}
+
+
+function editQuestion(id){
+
+  const q =
+    allQuestions.find(
+      item => item.id === id
+    );
+
+
+  if(!q) return;
+
+
+  editingId = id;
+
+
+  quizSelect.value =
+    q.quiz_id || "";
+
+
+  questionText.value =
+    q.question ||
+    q.question_text ||
+    "";
+
+
+  const options =
+    q.options || {};
+
+
+  optionA.value =
+    options.A || "";
+
+  optionB.value =
+    options.B || "";
+
+  optionC.value =
+    options.C || "";
+
+  optionD.value =
+    options.D || "";
+
+
+  marks.value =
+    q.marks ?? 1;
+
+
+  negativeMark.value =
+    q.negative_mark ?? 0;
+
+
+  document
+    .querySelectorAll(
+      'input[name="correct"]'
+    )
+    .forEach(radio => {
+
+      radio.checked =
+        radio.value ===
+        q.correct_answer;
+
+    });
+
+
+  formTitle.textContent =
+    "✏️ প্রশ্ন সম্পাদনা করুন";
+
+
+  saveBtn.textContent =
+    "💾 পরিবর্তন সংরক্ষণ";
+
+
+  cancelBtn.classList.remove(
+    "hidden"
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+async function removeQuestion(id){
+
+  const ok =
+    confirm(
+      "এই প্রশ্নটি কি মুছে ফেলতে চান?"
+    );
+
+
+  if(!ok) return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(db,"questions",id)
+    );
+
+
+    showMessage(
+      "✅ প্রশ্ন মুছে ফেলা হয়েছে।"
+    );
+
+
+    await loadQuestions();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "❌ প্রশ্ন মুছে ফেলতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+  }
+
+}
+
+
+cancelBtn.addEventListener(
+  "click",
+  resetForm
+);
+
+
+function resetForm(){
+
+  editingId = null;
+
+  questionText.value = "";
+
+  optionA.value = "";
+  optionB.value = "";
+  optionC.value = "";
+  optionD.value = "";
+
+  marks.value = "1";
+
+  negativeMark.value = "0.25";
+
+
+  document
+    .querySelectorAll(
+      'input[name="correct"]'
+    )
+    .forEach(
+      radio => radio.checked = false
+    );
+
+
+  formTitle.textContent =
+    "➕ নতুন প্রশ্ন যোগ করুন";
+
+
+  saveBtn.textContent =
+    "💾 প্রশ্ন সংরক্ষণ";
+
+
+  cancelBtn.classList.add(
+    "hidden"
+  );
+
+}
+
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      alert(
+        "প্রথমে Admin Login করুন।"
+      );
+
+      location.href =
+        "admin.html";
+
+      return;
+
+    }
+
+
+    try{
+
+      const admin =
+        await verifyAdmin(user);
+
+
+      if(!admin){
+
+        alert(
+          "আপনার Admin অনুমতি নেই।"
+        );
+
+        location.href =
+          "admin.html";
+
+        return;
+
+      }
+
+
+      currentUser = user;
+
+
+      await loadQuizzes();
+
+      await loadQuestions();
+
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "ডাটা লোড করতে সমস্যা হয়েছে।"
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
