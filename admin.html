@@ -1194,28 +1194,28 @@ body{
 
 
 
-      <a
-        href="#"
-        class="menu-card"
-        onclick="comingSoon(event,'Registration Management')">
+  <a
+  href="javascript:void(0)"
+  class="menu-card"
+  id="registrationMenu">
 
-        <div class="menu-icon">
-          👥
-        </div>
+  <div class="menu-icon">
+    👥
+  </div>
 
-        <h3>
-          Registration
-        </h3>
+  <h3>
+    Registration
+  </h3>
 
-        <p>
-          শিক্ষার্থীর রেজিস্ট্রেশন ও অনুমোদন পরিচালনা করুন।
-        </p>
+  <p>
+    শিক্ষার্থীদের রেজিস্ট্রেশন দেখুন এবং অনুমোদন বা বাতিল করুন।
+  </p>
 
-        <span class="coming">
-          পরবর্তী ধাপ
-        </span>
+  <span class="coming">
+    রেজিস্ট্রেশন পরিচালনা
+  </span>
 
-      </a>
+  </a>
 
 
 
@@ -1272,7 +1272,153 @@ body{
 
     </div>
 
+<!-- ==========================================
+     REGISTRATION MANAGEMENT
+========================================== -->
 
+<div
+  class="admin-card"
+  id="registrationSection"
+  style="display:none;">
+
+  <div class="section-title">
+    👥 Registration Management
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <div
+    id="registrationMessage"
+    class="message">
+  </div>
+
+
+  <!-- SEARCH & FILTER -->
+
+  <div class="registration-tools">
+
+    <input
+      type="text"
+      id="registrationSearch"
+      placeholder="Quiz Roll Number বা শিক্ষার্থীর নাম লিখুন"
+    >
+
+    <select id="registrationStatusFilter">
+
+      <option value="all">
+        সব রেজিস্ট্রেশন
+      </option>
+
+      <option value="pending">
+        Pending
+      </option>
+
+      <option value="approved">
+        Approved
+      </option>
+
+      <option value="rejected">
+        Rejected
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <!-- REGISTRATION LIST -->
+
+  <div
+    id="registrationList"
+    class="registration-list">
+
+    <div class="loading">
+      রেজিস্ট্রেশন লোড হচ্ছে...
+    </div>
+
+  </div>
+
+
+  <!-- BACK BUTTON -->
+
+  <button
+    type="button"
+    id="backToDashboard"
+    class="primary-btn"
+    style="margin-top:20px;">
+
+    ← Dashboard-এ ফিরে যান
+
+  </button>
+
+</div>
+
+
+<!-- ==========================================
+     ADMIN INFO
+========================================== -->
+
+<div class="admin-card">
+
+  <h3>
+    🔐 Admin Account
+  </h3>
+
+
+  <div class="admin-row">
+
+    <span>
+      নাম
+    </span>
+
+    <span id="infoName">
+      —
+    </span>
+
+  </div>
+
+
+  <div class="admin-row">
+
+    <span>
+      Email
+    </span>
+
+    <span id="infoEmail">
+      —
+    </span>
+
+  </div>
+
+
+  <div class="admin-row">
+
+    <span>
+      Role
+    </span>
+
+    <span id="infoRole">
+      —
+    </span>
+
+  </div>
+
+
+  <div class="admin-row">
+
+    <span>
+      Account Status
+    </span>
+
+    <span id="infoStatus">
+      —
+    </span>
+
+  </div>
+
+
+  </div>
 
     <!-- ADMIN INFO -->
 
@@ -1381,7 +1527,11 @@ import {
 
   getDoc,
 
-  doc
+  doc,
+
+  updateDoc,
+
+  serverTimestamp
 
 }
 from
@@ -2110,6 +2260,871 @@ onAuthStateChanged(
 
 /* ==========================================
    COMING SOON
+========================================== */
+
+/* ==========================================
+   REGISTRATION MANAGEMENT
+========================================== */
+
+const registrationMenu =
+  document.getElementById(
+    "registrationMenu"
+  );
+
+const registrationSection =
+  document.getElementById(
+    "registrationSection"
+  );
+
+const registrationList =
+  document.getElementById(
+    "registrationList"
+  );
+
+const registrationMessage =
+  document.getElementById(
+    "registrationMessage"
+  );
+
+const registrationSearch =
+  document.getElementById(
+    "registrationSearch"
+  );
+
+const registrationStatusFilter =
+  document.getElementById(
+    "registrationStatusFilter"
+  );
+
+const backToDashboard =
+  document.getElementById(
+    "backToDashboard"
+  );
+
+
+let allRegistrations = [];
+
+
+/* ==========================================
+   REGISTRATION MESSAGE
+========================================== */
+
+function showRegistrationMessage(
+  message,
+  type = "success"
+){
+
+  if(!registrationMessage){
+    return;
+  }
+
+  registrationMessage.textContent =
+    message;
+
+  registrationMessage.className =
+    "message show " + type;
+
+}
+
+
+/* ==========================================
+   STATUS LABEL
+========================================== */
+
+function statusLabel(status){
+
+  if(status === "approved"){
+    return "অনুমোদিত";
+  }
+
+  if(status === "rejected"){
+    return "বাতিল";
+  }
+
+  return "অপেক্ষমাণ";
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeRegistrationHtml(value){
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+
+}
+
+
+/* ==========================================
+   DATE FORMAT
+========================================== */
+
+function formatRegistrationDate(value){
+
+  if(!value){
+    return "—";
+  }
+
+  try{
+
+    let date;
+
+    if(
+      typeof value.toDate ===
+      "function"
+    ){
+
+      date = value.toDate();
+
+    }else{
+
+      date = new Date(value);
+
+    }
+
+    if(
+      Number.isNaN(
+        date.getTime()
+      )
+    ){
+
+      return "—";
+
+    }
+
+    return date.toLocaleString(
+      "bn-BD",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }
+    );
+
+  }catch(error){
+
+    return "—";
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD REGISTRATIONS
+========================================== */
+
+async function loadRegistrations(){
+
+  if(!registrationList){
+    return;
+  }
+
+  registrationList.innerHTML = `
+    <div class="loading">
+      ⏳ রেজিস্ট্রেশন লোড হচ্ছে...
+    </div>
+  `;
+
+  try{
+
+    const registrationsRef =
+      collection(
+        db,
+        "quiz_registrations"
+      );
+
+    const snapshot =
+      await getDocs(
+        registrationsRef
+      );
+
+    allRegistrations = [];
+
+    snapshot.forEach(
+      (registrationDoc) => {
+
+        const data =
+          registrationDoc.data();
+
+        allRegistrations.push({
+
+          id:
+            registrationDoc.id,
+
+          ...data
+
+        });
+
+      }
+    );
+
+
+    renderRegistrations();
+
+  }catch(error){
+
+    console.error(
+      "Registration Load Error:",
+      error
+    );
+
+    registrationList.innerHTML = `
+      <div class="message show error">
+        ❌ রেজিস্ট্রেশন লোড করতে সমস্যা হয়েছে।
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* ==========================================
+   RENDER REGISTRATIONS
+========================================== */
+
+function renderRegistrations(){
+
+  if(!registrationList){
+    return;
+  }
+
+
+  const searchText =
+    (
+      registrationSearch?.value ||
+      ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const selectedStatus =
+    registrationStatusFilter?.value ||
+    "all";
+
+
+  const filtered =
+    allRegistrations.filter(
+      (item) => {
+
+        const roll =
+          String(
+            item.roll_number ||
+            ""
+          ).toLowerCase();
+
+        const name =
+          String(
+            item.student_name ||
+            item.full_name ||
+            ""
+          ).toLowerCase();
+
+        const quizName =
+          String(
+            item.quiz_name ||
+            ""
+          ).toLowerCase();
+
+        const status =
+          String(
+            item.status ||
+            "pending"
+          ).toLowerCase();
+
+
+        const matchesSearch =
+          !searchText ||
+          roll.includes(searchText) ||
+          name.includes(searchText) ||
+          quizName.includes(searchText);
+
+
+        const matchesStatus =
+          selectedStatus === "all" ||
+          status === selectedStatus;
+
+
+        return (
+          matchesSearch &&
+          matchesStatus
+        );
+
+      }
+    );
+
+
+  if(filtered.length === 0){
+
+    registrationList.innerHTML = `
+      <div class="message show">
+        📭 কোনো রেজিস্ট্রেশন পাওয়া যায়নি।
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  registrationList.innerHTML =
+    filtered.map(
+      (item) => {
+
+        const status =
+          String(
+            item.status ||
+            "pending"
+          ).toLowerCase();
+
+
+        const name =
+          item.student_name ||
+          item.full_name ||
+          "নাম পাওয়া যায়নি";
+
+
+        const roll =
+          item.roll_number ||
+          "—";
+
+
+        const quizName =
+          item.quiz_name ||
+          "কুইজের নাম নেই";
+
+
+        const mobile =
+          item.mobile ||
+          "—";
+
+
+        const email =
+          item.email ||
+          "—";
+
+
+        const institution =
+          item.institution ||
+          "—";
+
+
+        const className =
+          item.class ||
+          "—";
+
+
+        const district =
+          item.district ||
+          "—";
+
+
+        const division =
+          item.division ||
+          "—";
+
+
+        const createdAt =
+          formatRegistrationDate(
+            item.created_at ||
+            item.createdAt
+          );
+
+
+        let statusClass =
+          "pending";
+
+
+        if(
+          status === "approved"
+        ){
+
+          statusClass =
+            "approved";
+
+        }else if(
+          status === "rejected"
+        ){
+
+          statusClass =
+            "rejected";
+
+        }
+
+
+        return `
+
+          <div
+            class="registration-item"
+            data-id="${escapeRegistrationHtml(item.id)}"
+          >
+
+            <div class="registration-header">
+
+              <div>
+
+                <h3>
+                  ${escapeRegistrationHtml(name)}
+                </h3>
+
+                <p>
+                  ${escapeRegistrationHtml(quizName)}
+                </p>
+
+              </div>
+
+
+              <span
+                class="registration-status ${statusClass}"
+              >
+                ${statusLabel(status)}
+              </span>
+
+            </div>
+
+
+            <div class="registration-details">
+
+              <div>
+                <strong>
+                  Quiz Roll Number
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(roll)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  মোবাইল
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(mobile)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  Email
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(email)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  প্রতিষ্ঠান
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(institution)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  শ্রেণি
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(className)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  জেলা
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(district)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  বিভাগ
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(division)}
+                </span>
+              </div>
+
+
+              <div>
+                <strong>
+                  রেজিস্ট্রেশনের সময়
+                </strong>
+
+                <span>
+                  ${escapeRegistrationHtml(createdAt)}
+                </span>
+              </div>
+
+            </div>
+
+
+            ${
+              status === "pending"
+              ?
+
+              `
+
+              <div class="registration-actions">
+
+                <button
+                  type="button"
+                  class="approve-registration"
+                  data-id="${escapeRegistrationHtml(item.id)}"
+                >
+                  ✅ Approve
+                </button>
+
+
+                <button
+                  type="button"
+                  class="reject-registration"
+                  data-id="${escapeRegistrationHtml(item.id)}"
+                >
+                  ❌ Reject
+                </button>
+
+              </div>
+
+              `
+
+              :
+
+              `
+
+              <div class="registration-actions">
+
+                <button
+                  type="button"
+                  class="approve-registration"
+                  data-id="${escapeRegistrationHtml(item.id)}"
+                >
+                  ${
+                    status === "approved"
+                    ? "↩️ আবার Pending করুন"
+                    : "✅ Approve করুন"
+                  }
+                </button>
+
+
+                <button
+                  type="button"
+                  class="reject-registration"
+                  data-id="${escapeRegistrationHtml(item.id)}"
+                >
+                  ${
+                    status === "rejected"
+                    ? "↩️ আবার Pending করুন"
+                    : "❌ Reject করুন"
+                  }
+                </button>
+
+              </div>
+
+              `
+
+            }
+
+          </div>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ==========================================
+   CHANGE REGISTRATION STATUS
+========================================== */
+
+async function changeRegistrationStatus(
+  registrationId,
+  newStatus
+){
+
+  if(!registrationId){
+    return;
+  }
+
+
+  try{
+
+    const registrationRef =
+      doc(
+        db,
+        "quiz_registrations",
+        registrationId
+      );
+
+
+    await updateDoc(
+      registrationRef,
+      {
+
+        status:
+          newStatus,
+
+        updated_at:
+          serverTimestamp()
+
+      }
+    );
+
+
+    const index =
+      allRegistrations.findIndex(
+        (item) =>
+          item.id === registrationId
+      );
+
+
+    if(index !== -1){
+
+      allRegistrations[index].status =
+        newStatus;
+
+    }
+
+
+    showRegistrationMessage(
+      newStatus === "approved"
+        ? "✅ রেজিস্ট্রেশন সফলভাবে Approved হয়েছে।"
+        : newStatus === "rejected"
+          ? "❌ রেজিস্ট্রেশন Reject করা হয়েছে।"
+          : "⏳ রেজিস্ট্রেশন আবার Pending করা হয়েছে।",
+      "success"
+    );
+
+
+    renderRegistrations();
+
+
+    if(
+      typeof loadStats ===
+      "function"
+    ){
+
+      await loadStats();
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Registration Status Error:",
+      error
+    );
+
+
+    showRegistrationMessage(
+      "❌ Status পরিবর্তন করতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   REGISTRATION MENU
+========================================== */
+
+if(registrationMenu){
+
+  registrationMenu.addEventListener(
+    "click",
+    async (event) => {
+
+      event.preventDefault();
+
+
+      if(dashboard){
+
+        dashboard.style.display =
+          "none";
+
+      }
+
+
+      if(registrationSection){
+
+        registrationSection.style.display =
+          "block";
+
+      }
+
+
+      await loadRegistrations();
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   BACK TO DASHBOARD
+========================================== */
+
+if(backToDashboard){
+
+  backToDashboard.addEventListener(
+    "click",
+    () => {
+
+      if(registrationSection){
+
+        registrationSection.style.display =
+          "none";
+
+      }
+
+
+      if(dashboard){
+
+        dashboard.style.display =
+          "block";
+
+      }
+
+
+      if(registrationMessage){
+
+        registrationMessage.className =
+          "message";
+
+        registrationMessage.textContent =
+          "";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+if(registrationSearch){
+
+  registrationSearch.addEventListener(
+    "input",
+    renderRegistrations
+  );
+
+}
+
+
+/* ==========================================
+   STATUS FILTER
+========================================== */
+
+if(registrationStatusFilter){
+
+  registrationStatusFilter.addEventListener(
+    "change",
+    renderRegistrations
+  );
+
+}
+
+
+/* ==========================================
+   APPROVE / REJECT BUTTON
+========================================== */
+
+if(registrationList){
+
+  registrationList.addEventListener(
+    "click",
+    async (event) => {
+
+      const approveButton =
+        event.target.closest(
+          ".approve-registration"
+        );
+
+
+      const rejectButton =
+        event.target.closest(
+          ".reject-registration"
+        );
+
+
+      if(approveButton){
+
+        const registrationId =
+          approveButton.dataset.id;
+
+
+        await changeRegistrationStatus(
+          registrationId,
+          "approved"
+        );
+
+        return;
+
+      }
+
+
+      if(rejectButton){
+
+        const registrationId =
+          rejectButton.dataset.id;
+
+
+        await changeRegistrationStatus(
+          registrationId,
+          "rejected"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   OLD COMING SOON
+   শুধু Payment / Result-এর জন্য
 ========================================== */
 
 window.comingSoon =
