@@ -11,371 +11,828 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root{
+      --bg:#060817;
+      --bg2:#090b20;
+      --card:#10142b;
+      --card2:#151a36;
+
+      --purple:#8b3dff;
+      --purple2:#6c2cff;
+      --pink:#ec3fa7;
+      --green:#2fd68a;
+      --gold:#ffb21c;
+      --red:#ff5470;
+      --cyan:#35d9ff;
+
+      --text:#ffffff;
+      --muted:#aeb5d6;
+
+      --border:rgba(255,255,255,.09);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+
+      --radius:22px;
     }
 
-    body {
-      font-family: "Noto Sans Bengali", sans-serif;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html,body{
+      min-height:100%;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali",sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(139,61,255,.20), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(236,63,167,.12), transparent 35%),
-        #060817;
-      color: #fff;
-      min-height: 100vh;
+        radial-gradient(circle at 10% 0%,rgba(139,61,255,.18),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(236,63,167,.12),transparent 28%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+      color:var(--text);
+      overflow-x:hidden;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(6,8,23,.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      padding: 14px 16px;
+    button,
+    input{
+      font-family:inherit;
     }
 
-    .topbar-inner {
-      max-width: 850px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    button{
+      cursor:pointer;
     }
 
-    .brand {
-      font-size: 20px;
-      font-weight: 800;
-      background: linear-gradient(90deg,#fff,#ec3fa7,#8b3dff);
-      -webkit-background-clip: text;
-      color: transparent;
+    .hidden{
+      display:none!important;
     }
 
-    .exam-clock {
-      background: rgba(236,63,167,.12);
-      border: 1px solid rgba(236,63,167,.35);
-      padding: 8px 13px;
-      border-radius: 12px;
-      font-weight: 700;
-      color: #ff8acb;
-      white-space: nowrap;
+    .app{
+      min-height:100vh;
     }
 
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-      padding: 24px 15px 50px;
+    /* =========================
+       TOP BAR
+    ========================= */
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(18px);
+      background:rgba(6,8,23,.84);
+      border-bottom:1px solid var(--border);
     }
 
-    .card {
-      background: rgba(16,20,43,.92);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 22px;
-      box-shadow: 0 15px 45px rgba(0,0,0,.28);
+    .topbar-inner{
+      max-width:1180px;
+      margin:auto;
+      min-height:72px;
+      padding:10px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
     }
 
-    .start-card {
-      padding: 28px 20px;
-      text-align: center;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
     }
 
-    .logo-circle {
-      width: 65px;
-      height: 65px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg,#8b3dff,#ec3fa7);
-      font-size: 28px;
-      box-shadow: 0 0 30px rgba(139,61,255,.35);
+    .brand img{
+      width:43px;
+      height:43px;
+      object-fit:contain;
+      border-radius:12px;
+      flex-shrink:0;
     }
 
-    h1 {
-      font-size: 25px;
-      margin-bottom: 8px;
+    .brand-text{
+      min-width:0;
     }
 
-    .subtitle {
-      color: #aeb4d0;
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 20px;
+    .brand-name{
+      font-size:18px;
+      font-weight:800;
+      line-height:1.1;
+      background:linear-gradient(90deg,#fff,#d4c2ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    .student-box {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 16px;
-      padding: 15px;
-      text-align: left;
-      margin-bottom: 20px;
+    .brand-sub{
+      color:var(--muted);
+      font-size:10px;
+      margin-top:3px;
     }
 
-    .student-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 7px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-      font-size: 14px;
+    .timer-box{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border:1px solid rgba(255,178,28,.28);
+      border-radius:15px;
+      background:rgba(255,178,28,.08);
+      box-shadow:0 0 25px rgba(255,178,28,.06);
     }
 
-    .student-row:last-child {
-      border-bottom: 0;
+    .timer-icon{
+      font-size:18px;
     }
 
-    .student-row span:first-child {
-      color: #9098b9;
+    .timer-label{
+      font-size:10px;
+      color:var(--muted);
+      line-height:1;
     }
 
-    .student-row span:last-child {
-      font-weight: 600;
-      text-align: right;
-      word-break: break-word;
+    .timer-value{
+      font-size:17px;
+      font-weight:800;
+      color:var(--gold);
+      direction:ltr;
+      white-space:nowrap;
     }
 
-    .warning {
-      background: rgba(255,178,28,.08);
-      border: 1px solid rgba(255,178,28,.25);
-      color: #ffd477;
-      padding: 14px;
-      border-radius: 14px;
-      text-align: left;
-      font-size: 13px;
-      line-height: 1.8;
-      margin-bottom: 20px;
+    /* =========================
+       MAIN
+    ========================= */
+
+    .container{
+      width:min(1180px,calc(100% - 28px));
+      margin:24px auto 50px;
     }
 
-    .primary-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      background: linear-gradient(135deg,#8b3dff,#ec3fa7);
-      box-shadow: 0 10px 25px rgba(139,61,255,.25);
+    .screen{
+      width:100%;
     }
 
-    .primary-btn:disabled {
-      opacity: .5;
-      cursor: not-allowed;
+    .hero-card{
+      background:
+        linear-gradient(145deg,rgba(139,61,255,.12),rgba(236,63,167,.04)),
+        var(--card);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
     }
 
-    .exam-card {
-      padding: 20px;
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      color:#d8c8ff;
+      background:rgba(139,61,255,.11);
+      border:1px solid rgba(139,61,255,.2);
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:12px;
+      margin-bottom:15px;
     }
 
-    .exam-header {
-      margin-bottom: 18px;
+    h1{
+      font-size:clamp(24px,4vw,38px);
+      line-height:1.25;
+      margin-bottom:10px;
     }
 
-    .quiz-title {
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 12px;
+    .hero-description{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
     }
 
-    .progress-row {
-      display: flex;
-      justify-content: space-between;
-      color: #aeb4d0;
-      font-size: 13px;
-      margin-bottom: 8px;
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:22px;
     }
 
-    .progress {
-      height: 7px;
-      background: rgba(255,255,255,.07);
-      border-radius: 20px;
-      overflow: hidden;
+    .info-card{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--border);
     }
 
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg,#8b3dff,#ec3fa7);
-      transition: width .3s ease;
+    .info-card .label{
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:5px;
     }
 
-    .question-card {
-      margin-top: 20px;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 18px;
-      padding: 20px;
+    .info-card .value{
+      font-size:16px;
+      font-weight:700;
     }
 
-    .question-time {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 18px;
+    /* =========================
+       RULES
+    ========================= */
+
+    .rules-card{
+      margin-top:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:23px;
+      box-shadow:var(--shadow);
     }
 
-    .question-number {
-      color: #b8c0df;
-      font-size: 14px;
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:19px;
+      font-weight:800;
+      margin-bottom:15px;
     }
 
-    .question-timer {
-      min-width: 78px;
-      text-align: center;
-      padding: 8px 12px;
-      border-radius: 10px;
-      background: rgba(47,214,138,.10);
-      border: 1px solid rgba(47,214,138,.25);
-      color: #62e9a5;
-      font-weight: 800;
+    .section-title .icon{
+      width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg,rgba(139,61,255,.2),rgba(236,63,167,.15));
     }
 
-    .question-text {
-      font-size: 19px;
-      line-height: 1.8;
-      font-weight: 700;
-      margin-bottom: 20px;
+    .rules-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
 
-    .options {
-      display: grid;
-      gap: 11px;
+    .rule-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      color:#dfe3f6;
+      line-height:1.7;
+      font-size:14px;
+      padding:11px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(255,255,255,.045);
     }
 
-    .option {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.035);
-      color: #fff;
-      border-radius: 14px;
-      padding: 14px;
-      text-align: left;
-      font-family: inherit;
-      font-size: 15px;
-      line-height: 1.6;
-      cursor: pointer;
-      transition: .2s;
+    .rule-number{
+      flex:0 0 25px;
+      height:25px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      background:rgba(139,61,255,.18);
+      color:#d7c8ff;
+      font-size:11px;
+      font-weight:800;
     }
 
-    .option:hover {
-      border-color: rgba(139,61,255,.7);
-      background: rgba(139,61,255,.08);
+    /* =========================
+       INSPIRATION
+    ========================= */
+
+    .inspiration{
+      margin-top:18px;
+      padding:20px;
+      border-radius:22px;
+      background:
+        linear-gradient(135deg,rgba(47,214,138,.09),rgba(139,61,255,.08)),
+        var(--card);
+      border:1px solid rgba(47,214,138,.14);
     }
 
-    .option.selected {
-      border-color: #8b3dff;
-      background: rgba(139,61,255,.17);
-      box-shadow: 0 0 18px rgba(139,61,255,.12);
+    .inspiration-title{
+      color:#8ff1c4;
+      font-weight:800;
+      margin-bottom:9px;
     }
 
-    .option-label {
-      display: inline-flex;
-      width: 30px;
-      height: 30px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9px;
-      margin-right: 8px;
-      background: rgba(255,255,255,.08);
-      color: #d8dcf2;
-      font-weight: 700;
+    .inspiration-text{
+      color:#dce8e3;
+      line-height:1.9;
+      white-space:pre-line;
+      font-size:14px;
     }
 
-    .nav-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:22px;
     }
 
-    .nav-btn {
-      flex: 1;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: #fff;
-      border-radius: 13px;
-      padding: 12px;
-      font-family: inherit;
-      font-weight: 700;
-      cursor: pointer;
+    .btn{
+      border:0;
+      border-radius:15px;
+      padding:13px 20px;
+      font-size:14px;
+      font-weight:800;
+      transition:.2s ease;
     }
 
-    .nav-btn.next {
-      background: linear-gradient(135deg,#8b3dff,#ec3fa7);
-      border: 0;
+    .btn:hover{
+      transform:translateY(-1px);
     }
 
-    .nav-btn:disabled {
-      opacity: .35;
-      cursor: not-allowed;
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--purple),var(--pink));
+      box-shadow:0 10px 28px rgba(139,61,255,.22);
     }
 
-    .submit-btn {
-      margin-top: 12px;
-      background: linear-gradient(135deg,#16a968,#2fd68a);
+    .btn-secondary{
+      color:#d9def7;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
     }
 
-    .notice {
-      margin-top: 16px;
-      padding: 13px;
-      border-radius: 13px;
-      background: rgba(139,61,255,.07);
-      border: 1px solid rgba(139,61,255,.18);
-      color: #c7cce5;
-      font-size: 12px;
-      line-height: 1.8;
+    .btn-danger{
+      color:#fff;
+      background:linear-gradient(135deg,#ff365d,#c71848);
     }
 
-    .hidden {
-      display: none !important;
+    .btn-success{
+      color:#06130d;
+      background:linear-gradient(135deg,#47e7a1,#20c77e);
     }
 
-    .error {
-      color: #ff7f9f;
-      background: rgba(255,50,90,.08);
-      border: 1px solid rgba(255,50,90,.25);
-      padding: 13px;
-      border-radius: 13px;
-      margin-top: 15px;
-      line-height: 1.7;
-      font-size: 13px;
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    .success {
-      color: #65e9a6;
+    /* =========================
+       EXAM SCREEN
+    ========================= */
+
+    .exam-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 290px;
+      gap:18px;
+      align-items:start;
     }
 
-    @media (max-width: 600px) {
-      .topbar {
-        padding: 11px 12px;
+    .exam-main{
+      min-width:0;
+    }
+
+    .exam-side{
+      position:sticky;
+      top:90px;
+    }
+
+    .question-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:25px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .question-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .question-number{
+      font-size:13px;
+      color:#cfc8e8;
+      font-weight:700;
+    }
+
+    .question-timer{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      padding:9px 12px;
+      border-radius:13px;
+      background:rgba(236,63,167,.08);
+      border:1px solid rgba(236,63,167,.18);
+      color:#ff8bd0;
+      font-size:14px;
+      font-weight:800;
+      direction:ltr;
+    }
+
+    .question-timer.warning{
+      color:#fff;
+      background:rgba(255,84,112,.14);
+      border-color:rgba(255,84,112,.35);
+      animation:pulse 1s infinite;
+    }
+
+    @keyframes pulse{
+      50%{
+        box-shadow:0 0 0 6px rgba(255,84,112,.06);
+      }
+    }
+
+    .progress-track{
+      width:100%;
+      height:6px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      overflow:hidden;
+      margin-bottom:22px;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--purple),var(--pink));
+      border-radius:999px;
+      transition:width .25s ease;
+    }
+
+    .question-text{
+      font-size:20px;
+      line-height:1.8;
+      font-weight:700;
+      margin-bottom:22px;
+      word-break:break-word;
+    }
+
+    .options{
+      display:flex;
+      flex-direction:column;
+      gap:11px;
+    }
+
+    .option{
+      width:100%;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      text-align:left;
+      color:#edf0ff;
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:14px;
+      transition:.2s ease;
+    }
+
+    .option:hover{
+      border-color:rgba(139,61,255,.5);
+      background:rgba(139,61,255,.07);
+    }
+
+    .option.selected{
+      border-color:rgba(139,61,255,.75);
+      background:
+        linear-gradient(135deg,rgba(139,61,255,.18),rgba(236,63,167,.08));
+      box-shadow:0 0 25px rgba(139,61,255,.08);
+    }
+
+    .option-letter{
+      flex:0 0 34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      border-radius:11px;
+      background:rgba(255,255,255,.06);
+      color:#c9cde6;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .option.selected .option-letter{
+      background:linear-gradient(135deg,var(--purple),var(--pink));
+      color:#fff;
+    }
+
+    .option-text{
+      line-height:1.7;
+      font-size:14px;
+      padding-top:4px;
+      word-break:break-word;
+    }
+
+    .question-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+    }
+
+    .answered-status{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* =========================
+       SIDE
+    ========================= */
+
+    .side-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .side-title{
+      font-weight:800;
+      margin-bottom:13px;
+    }
+
+    .student-mini{
+      padding:13px;
+      border-radius:15px;
+      background:rgba(255,255,255,.035);
+      margin-bottom:15px;
+    }
+
+    .student-mini .name{
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .student-mini .roll{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
+      direction:ltr;
+    }
+
+    .mini-stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin-bottom:15px;
+    }
+
+    .mini-stat{
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+    }
+
+    .mini-stat .num{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .mini-stat .lab{
+      font-size:10px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .warning-box{
+      padding:13px;
+      border-radius:15px;
+      background:rgba(255,178,28,.07);
+      border:1px solid rgba(255,178,28,.17);
+      color:#f6dfac;
+      font-size:11px;
+      line-height:1.7;
+    }
+
+    /* =========================
+       LOADING / ERROR
+    ========================= */
+
+    .center-card{
+      min-height:55vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+    }
+
+    .loader{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      border:3px solid rgba(255,255,255,.08);
+      border-top-color:var(--purple);
+      border-right-color:var(--pink);
+      animation:spin .8s linear infinite;
+      margin:0 auto 15px;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    .error-card{
+      background:rgba(255,84,112,.06);
+      border:1px solid rgba(255,84,112,.2);
+      border-radius:22px;
+      padding:24px;
+      text-align:center;
+    }
+
+    .error-icon{
+      font-size:38px;
+      margin-bottom:10px;
+    }
+
+    .error-title{
+      font-size:19px;
+      font-weight:800;
+      margin-bottom:7px;
+    }
+
+    .error-text{
+      color:#d8b8c0;
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    /* =========================
+       WARNING MODAL
+    ========================= */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:500;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(8px);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-card{
+      width:min(480px,100%);
+      background:#10142b;
+      border:1px solid var(--border);
+      border-radius:25px;
+      padding:25px;
+      box-shadow:0 30px 90px rgba(0,0,0,.55);
+      text-align:center;
+    }
+
+    .modal-icon{
+      width:58px;
+      height:58px;
+      margin:0 auto 13px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      background:rgba(255,178,28,.1);
+      border:1px solid rgba(255,178,28,.2);
+      font-size:27px;
+    }
+
+    .modal-title{
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .modal-text{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media(max-width:900px){
+      .info-grid{
+        grid-template-columns:repeat(2,1fr);
       }
 
-      .brand {
-        font-size: 17px;
+      .exam-layout{
+        grid-template-columns:1fr;
       }
 
-      .exam-clock {
-        font-size: 12px;
-        padding: 7px 9px;
+      .exam-side{
+        position:static;
+        order:-1;
       }
 
-      h1 {
-        font-size: 22px;
+      .side-card{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
       }
 
-      .question-text {
-        font-size: 17px;
+      .side-title{
+        grid-column:1/-1;
+        margin-bottom:0;
       }
 
-      .exam-card {
-        padding: 15px;
+      .student-mini{
+        margin-bottom:0;
+      }
+
+      .mini-stats{
+        margin-bottom:0;
+      }
+
+      .warning-box{
+        grid-column:1/-1;
+      }
+    }
+
+    @media(max-width:600px){
+      .topbar-inner{
+        min-height:64px;
+        padding:8px 12px;
+      }
+
+      .brand img{
+        width:37px;
+        height:37px;
+      }
+
+      .brand-name{
+        font-size:16px;
+      }
+
+      .brand-sub{
+        font-size:8px;
+      }
+
+      .timer-box{
+        padding:8px 10px;
+      }
+
+      .timer-label{
+        display:none;
+      }
+
+      .timer-value{
+        font-size:15px;
+      }
+
+      .container{
+        width:min(100% - 18px,1180px);
+        margin-top:14px;
+      }
+
+      .hero-card,
+      .rules-card,
+      .question-card{
+        padding:18px;
+        border-radius:20px;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+      }
+
+      .info-card{
+        padding:12px;
+      }
+
+      .question-text{
+        font-size:17px;
+      }
+
+      .question-footer{
+        align-items:stretch;
+        flex-direction:column;
+      }
+
+      .question-footer .btn{
+        width:100%;
+      }
+
+      .side-card{
+        grid-template-columns:1fr;
+      }
+
+      .side-title,
+      .warning-box{
+        grid-column:auto;
+      }
+
+      .mini-stats{
+        margin-bottom:0;
       }
     }
   </style>
@@ -383,132 +840,269 @@
 
 <body>
 
+<div class="app">
+
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">জ্ঞানতরঙ্গ</div>
-      <div class="exam-clock" id="totalTimer">--:--</div>
+
+      <div class="brand">
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="brand-text">
+          <div class="brand-name">জ্ঞানতরঙ্গ</div>
+          <div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+        </div>
+      </div>
+
+      <div class="timer-box">
+        <div class="timer-icon">⏱️</div>
+
+        <div>
+          <div class="timer-label">পরীক্ষার সময়</div>
+          <div class="timer-value" id="overallTimer">--:--</div>
+        </div>
+      </div>
+
     </div>
   </header>
 
+
   <main class="container">
 
-    <!-- START SCREEN -->
-    <section id="startScreen" class="card start-card">
-
-      <div class="logo-circle">📖</div>
-
-      <h1>পরীক্ষায় অংশগ্রহণ করুন</h1>
-
-      <p class="subtitle">
-        আপনার অনুমোদিত Quiz Roll Number দিয়ে পরীক্ষায় প্রবেশ করুন।
-      </p>
-
-      <div class="student-box">
-        <div class="student-row">
-          <span>শিক্ষার্থীর নাম</span>
-          <span id="studentName">লোড হচ্ছে...</span>
-        </div>
-
-        <div class="student-row">
-          <span>Student ID</span>
-          <span id="studentId">লোড হচ্ছে...</span>
-        </div>
-
-        <div class="student-row">
-          <span>Quiz Roll Number</span>
-          <span id="rollNumber">লোড হচ্ছে...</span>
+    <!-- LOADING -->
+    <section id="loadingScreen" class="screen center-card">
+      <div>
+        <div class="loader"></div>
+        <div style="font-weight:700;">পরীক্ষার তথ্য প্রস্তুত হচ্ছে...</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:6px;">
+          অনুগ্রহ করে একটু অপেক্ষা করুন
         </div>
       </div>
-
-      <div class="warning">
-        <b>⚠️ পরীক্ষার গুরুত্বপূর্ণ সতর্কতা</b><br><br>
-
-        • প্রতিটি প্রশ্নের জন্য নির্দিষ্ট সময় থাকবে।<br>
-        • সময় শেষ হলে স্বয়ংক্রিয়ভাবে পরবর্তী প্রশ্নে চলে যাবে।<br>
-        • পরীক্ষা চলাকালে অন্য ট্যাব বা অ্যাপ্লিকেশনে যাওয়া এড়িয়ে চলুন।<br>
-        • বারবার পরীক্ষা থেকে বের হওয়া বা পৃষ্ঠা পরিবর্তনের চেষ্টা রেকর্ড হতে পারে।<br>
-        • পরীক্ষা শুরু করার পর নির্ধারিত নিয়ম অনুযায়ী পরীক্ষা সম্পন্ন করতে হবে।
-      </div>
-
-      <button id="startExamBtn" class="primary-btn">
-        পরীক্ষা শুরু করুন
-      </button>
-
-      <div id="startError" class="error hidden"></div>
     </section>
 
 
-    <!-- EXAM SCREEN -->
-    <section id="examScreen" class="card exam-card hidden">
+    <!-- ERROR -->
+    <section id="errorScreen" class="screen hidden">
+      <div class="error-card">
 
-      <div class="exam-header">
+        <div class="error-icon">⚠️</div>
 
-        <div class="quiz-title" id="quizTitle">
+        <div class="error-title" id="errorTitle">
+          পরীক্ষা চালু করা যাচ্ছে না
+        </div>
+
+        <div class="error-text" id="errorText">
+          পরীক্ষার তথ্য পাওয়া যায়নি।
+        </div>
+
+        <div class="actions" style="justify-content:center;">
+          <button class="btn btn-secondary" onclick="location.href='index.html'">
+            হোমে ফিরে যান
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- PRE EXAM -->
+    <section id="preExamScreen" class="screen hidden">
+
+      <div class="hero-card">
+
+        <div class="eyebrow">
+          📝 পরীক্ষা শুরু করার আগে
+        </div>
+
+        <h1 id="quizTitle">
           পরীক্ষা
-        </div>
+        </h1>
 
-        <div class="progress-row">
-          <span id="questionCounter">প্রশ্ন ১ / ১</span>
-          <span id="answeredCounter">উত্তর দেওয়া: ০</span>
-        </div>
+        <p class="hero-description" id="quizDescription">
+          পরীক্ষার নির্দেশনা ভালোভাবে পড়ে তারপর পরীক্ষা শুরু করুন।
+        </p>
 
-        <div class="progress">
-          <div id="progressBar" class="progress-bar"></div>
+        <div class="info-grid">
+
+          <div class="info-card">
+            <div class="label">প্রশ্ন</div>
+            <div class="value" id="infoQuestions">—</div>
+          </div>
+
+          <div class="info-card">
+            <div class="label">মোট সময়</div>
+            <div class="value" id="infoDuration">—</div>
+          </div>
+
+          <div class="info-card">
+            <div class="label">প্রতি প্রশ্ন</div>
+            <div class="value" id="infoQuestionTime">—</div>
+          </div>
+
+          <div class="info-card">
+            <div class="label">রোল নম্বর</div>
+            <div class="value" id="infoRoll">—</div>
+          </div>
+
         </div>
 
       </div>
 
 
-      <div class="question-card">
+      <!-- RULES -->
+      <div class="rules-card">
 
-        <div class="question-time">
-          <div class="question-number" id="questionNumber">
-            প্রশ্ন ১
-          </div>
-
-          <div class="question-timer" id="questionTimer">
-            ৩০ সেকেন্ড
-          </div>
+        <div class="section-title">
+          <div class="icon">📋</div>
+          <div id="rulesTitle">পরীক্ষার নিয়মাবলি</div>
         </div>
 
-        <div class="question-text" id="questionText">
-          প্রশ্ন লোড হচ্ছে...
+        <div id="rulesList" class="rules-list">
+          <!-- JS -->
         </div>
 
-        <div class="options" id="optionsContainer"></div>
+      </div>
 
-        <div class="nav-buttons">
 
-          <button
-            id="prevBtn"
-            class="nav-btn"
-            type="button"
-          >
-            ← আগের প্রশ্ন
-          </button>
+      <!-- INSPIRATION -->
+      <div id="inspirationBox" class="inspiration hidden">
 
-          <button
-            id="nextBtn"
-            class="nav-btn next"
-            type="button"
-          >
-            পরের প্রশ্ন →
-          </button>
-
+        <div class="inspiration-title">
+          🌙 এক মিনিটের অনুপ্রেরণা
         </div>
+
+        <div id="inspirationText" class="inspiration-text"></div>
+
+      </div>
+
+
+      <div class="actions">
 
         <button
-          id="submitBtn"
-          class="primary-btn submit-btn hidden"
-          type="button"
+          id="startExamBtn"
+          class="btn btn-primary"
+          onclick="startExam()"
         >
-          পরীক্ষা জমা দিন
+          🚀 পরীক্ষা শুরু করুন
         </button>
 
-        <div class="notice">
-          🇧🇩 পরীক্ষার সময় বাংলাদেশ সময় অনুযায়ী গণনা করা হচ্ছে।
-          প্রতিটি প্রশ্নের নির্ধারিত সময় শেষ হলে উত্তর না দিলেও পরবর্তী প্রশ্নে চলে যাবে।
+        <button
+          class="btn btn-secondary"
+          onclick="location.href='index.html'"
+        >
+          ফিরে যান
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- EXAM -->
+    <section id="examScreen" class="screen hidden">
+
+      <div class="exam-layout">
+
+        <div class="exam-main">
+
+          <div class="question-card">
+
+            <div class="question-top">
+
+              <div class="question-number" id="questionNumber">
+                প্রশ্ন ১
+              </div>
+
+              <div id="questionTimer" class="question-timer">
+                ⏳ <span>00:30</span>
+              </div>
+
+            </div>
+
+            <div class="progress-track">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="questionText" class="question-text">
+              প্রশ্ন লোড হচ্ছে...
+            </div>
+
+            <div id="options" class="options">
+              <!-- JS -->
+            </div>
+
+            <div class="question-footer">
+
+              <div id="answeredStatus" class="answered-status">
+                উত্তর নির্বাচন করুন
+              </div>
+
+              <button
+                id="nextBtn"
+                class="btn btn-primary"
+                onclick="nextQuestion()"
+              >
+                পরের প্রশ্ন →
+              </button>
+
+            </div>
+
+          </div>
+
         </div>
+
+
+        <!-- SIDE -->
+        <aside class="exam-side">
+
+          <div class="side-card">
+
+            <div class="side-title">
+              👤 পরীক্ষার্থী
+            </div>
+
+            <div class="student-mini">
+
+              <div id="studentName" class="name">
+                —
+              </div>
+
+              <div id="studentRoll" class="roll">
+                —
+              </div>
+
+            </div>
+
+
+            <div class="mini-stats">
+
+              <div class="mini-stat">
+                <div id="currentQuestionMini" class="num">১</div>
+                <div class="lab">বর্তমান প্রশ্ন</div>
+              </div>
+
+              <div class="mini-stat">
+                <div id="answeredMini" class="num">০</div>
+                <div class="lab">উত্তর দেওয়া</div>
+              </div>
+
+            </div>
+
+
+            <div class="warning-box">
+              🔐 পরীক্ষার সময় অন্য ট্যাব/উইন্ডোতে যাওয়া বা পূর্ণস্ক্রিন থেকে বের হলে নিরাপত্তা সতর্কতা গণনা হতে পারে।
+              <br><br>
+              এটি ব্রাউজারভিত্তিক সতর্কতা; এটি নিজে থেকে কোনো AI cheating detector নয়।
+            </div>
+
+          </div>
+
+        </aside>
 
       </div>
 
@@ -517,522 +1111,1124 @@
   </main>
 
 
-  <script type="module">
+  <!-- WARNING MODAL -->
+  <div id="warningModal" class="modal">
 
-    import { auth, db } from "./firebase-config.js";
+    <div class="modal-card">
 
-    import {
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+      <div class="modal-icon">
+        ⚠️
+      </div>
 
-    import {
-      collection,
-      query,
-      where,
-      getDocs,
-      getDoc,
-      doc,
-      setDoc,
-      updateDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      <div class="modal-title">
+        নিরাপত্তা সতর্কতা
+      </div>
 
+      <div id="warningText" class="modal-text">
+        পরীক্ষার সময় অন্য ট্যাব বা উইন্ডোতে যাওয়া হয়েছে।
+      </div>
 
-    // ==========================================
-    // GLOBAL VARIABLES
-    // ==========================================
+      <div class="actions" style="justify-content:center;">
 
-    let currentUser = null;
-    let registration = null;
-    let quiz = null;
+        <button
+          class="btn btn-primary"
+          onclick="closeWarning()"
+        >
+          বুঝেছি
+        </button>
 
-    let allQuestions = [];
-    let selectedQuestions = [];
+      </div>
 
-    let currentQuestionIndex = 0;
+    </div>
 
-    let answers = {};
-
-    let questionTimerInterval = null;
-    let totalTimerInterval = null;
-
-    let questionSecondsLeft = 30;
-    let totalSecondsLeft = 600;
-
-    let attemptRef = null;
-    let attemptStartedAt = null;
-
-    let examStarted = false;
-    let warningShown = false;
+  </div>
 
 
-    // ==========================================
-    // ELEMENTS
-    // ==========================================
-
-    const startScreen = document.getElementById("startScreen");
-    const examScreen = document.getElementById("examScreen");
-
-    const studentName = document.getElementById("studentName");
-    const studentId = document.getElementById("studentId");
-    const rollNumberEl = document.getElementById("rollNumber");
-
-    const startExamBtn = document.getElementById("startExamBtn");
-    const startError = document.getElementById("startError");
-
-    const quizTitle = document.getElementById("quizTitle");
-
-    const questionCounter =
-      document.getElementById("questionCounter");
-
-    const answeredCounter =
-      document.getElementById("answeredCounter");
-
-    const progressBar =
-      document.getElementById("progressBar");
-
-    const questionNumber =
-      document.getElementById("questionNumber");
-
-    const questionTimer =
-      document.getElementById("questionTimer");
-
-    const questionText =
-      document.getElementById("questionText");
-
-    const optionsContainer =
-      document.getElementById("optionsContainer");
-
-    const prevBtn =
-      document.getElementById("prevBtn");
-
-    const nextBtn =
-      document.getElementById("nextBtn");
-
-    const submitBtn =
-      document.getElementById("submitBtn");
-
-    const totalTimer =
-      document.getElementById("totalTimer");
+</div>
 
 
-    // ==========================================
-    // RANDOM FUNCTION
-    // ==========================================
+<script type="module">
 
-    function shuffle(array) {
+  /* =========================================================
+     FIREBASE
+  ========================================================= */
 
-      const arr = [...array];
+  import {
+    auth,
+    db
+  } from "./firebase-config.js";
 
-      for (let i = arr.length - 1; i > 0; i--) {
+  import {
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-        const j =
-          Math.floor(Math.random() * (i + 1));
+  import {
+    doc,
+    getDoc,
+    getDocs,
+    collection,
+    query,
+    where,
+    addDoc,
+    updateDoc,
+    serverTimestamp,
+    orderBy,
+    limit
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-        [arr[i], arr[j]] =
-          [arr[j], arr[i]];
+
+  /* =========================================================
+     GLOBAL STATE
+  ========================================================= */
+
+  let currentUser = null;
+
+  let profile = null;
+  let quiz = null;
+  let registration = null;
+
+  let quizId = null;
+  let rollNumber = null;
+
+  let questions = [];
+
+  let currentQuestionIndex = 0;
+
+  let answers = {};
+
+  let questionTimerInterval = null;
+  let overallTimerInterval = null;
+
+  let questionSecondsLeft = 30;
+  let overallSecondsLeft = 0;
+
+  let examStarted = false;
+  let submitting = false;
+
+  let attemptId = null;
+  let attemptRef = null;
+
+  let examStartedAtMs = null;
+
+  let securityWarnings = 0;
+
+  let rulesData = null;
+
+  let inspirationData = null;
+
+
+  /* =========================================================
+     DOM HELPERS
+  ========================================================= */
+
+  const $ = id => document.getElementById(id);
+
+  function show(id){
+    $(id)?.classList.remove("hidden");
+  }
+
+  function hide(id){
+    $(id)?.classList.add("hidden");
+  }
+
+
+  /* =========================================================
+     URL
+  ========================================================= */
+
+  function getQuizId(){
+
+    const params = new URLSearchParams(location.search);
+
+    return (
+      params.get("quizId") ||
+      params.get("quiz") ||
+      localStorage.getItem("current_quiz_id") ||
+      localStorage.getItem("quiz_id")
+    );
+  }
+
+
+  /* =========================================================
+     FIRESTORE DATE HELPERS
+  ========================================================= */
+
+  function timestampToMs(value){
+
+    if(!value) return null;
+
+    if(typeof value === "number"){
+      return value;
+    }
+
+    if(typeof value === "string"){
+
+      const t = new Date(value).getTime();
+
+      return Number.isNaN(t) ? null : t;
+    }
+
+    if(value.toMillis){
+
+      return value.toMillis();
+    }
+
+    if(value.seconds){
+
+      return value.seconds * 1000;
+    }
+
+    return null;
+  }
+
+
+  function formatDateTime(value){
+
+    const ms = timestampToMs(value);
+
+    if(!ms) return "—";
+
+    return new Intl.DateTimeFormat(
+      "bn-BD",
+      {
+        timeZone:"Asia/Dhaka",
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    ).format(new Date(ms));
+  }
+
+
+  function formatDuration(seconds){
+
+    seconds = Math.max(0,Math.floor(seconds || 0));
+
+    const minutes = Math.floor(seconds / 60);
+
+    const secs = seconds % 60;
+
+    if(minutes > 0){
+
+      return `${minutes} মিনিট ${secs} সেকেন্ড`;
+
+    }
+
+    return `${secs} সেকেন্ড`;
+  }
+
+
+  function formatTimer(seconds){
+
+    seconds = Math.max(0,Math.floor(seconds || 0));
+
+    const minutes = Math.floor(seconds / 60);
+
+    const secs = seconds % 60;
+
+    return `${String(minutes).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+  }
+
+
+  /* =========================================================
+     TEXT HELPERS
+  ========================================================= */
+
+  function cleanText(value){
+
+    if(value === null || value === undefined){
+
+      return "";
+    }
+
+    return String(value).trim();
+  }
+
+
+  function escapeHtml(value){
+
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+
+  /* =========================================================
+     SHUFFLE
+     Fisher-Yates
+  ========================================================= */
+
+  function shuffle(array){
+
+    const arr = [...array];
+
+    for(let i = arr.length - 1; i > 0; i--){
+
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+
+    return arr;
+  }
+
+
+  /* =========================================================
+     NORMALIZE CORRECT ANSWER
+  ========================================================= */
+
+  function getCorrectAnswer(question){
+
+    const value =
+      question.correct_answer ??
+      question.correct_option ??
+      question.answer ??
+      question.correctAnswer ??
+      question.right_answer ??
+      "";
+
+    return String(value).trim().toLowerCase();
+  }
+
+
+  function normalizeOptionKey(value){
+
+    if(!value) return "";
+
+    const v = String(value).trim().toLowerCase();
+
+    const map = {
+      "a":"a",
+      "option_a":"a",
+      "optiona":"a",
+      "ক":"a",
+      "ক)":"a",
+
+      "b":"b",
+      "option_b":"b",
+      "optionb":"b",
+      "খ":"b",
+      "খ)":"b",
+
+      "c":"c",
+      "option_c":"c",
+      "optionc":"c",
+      "গ":"c",
+      "গ)":"c",
+
+      "d":"d",
+      "option_d":"d",
+      "optiond":"d",
+      "ঘ":"d",
+      "ঘ)":"d"
+    };
+
+    return map[v] || v;
+  }
+
+
+  /* =========================================================
+     OPTION VALUE
+  ========================================================= */
+
+  function getOptionValue(question,key){
+
+    const candidates = [
+      question[`option_${key}`],
+      question[`option${key.toUpperCase()}`],
+      question[key]
+    ];
+
+    for(const value of candidates){
+
+      if(
+        value !== undefined &&
+        value !== null &&
+        String(value).trim() !== ""
+      ){
+
+        return String(value);
+      }
+    }
+
+    return "";
+  }
+
+
+  /* =========================================================
+     GET QUESTION TIME
+  ========================================================= */
+
+  function getQuestionTime(question){
+
+    const value =
+      question.question_time_seconds ??
+      question.time_seconds ??
+      quiz?.question_time_seconds ??
+      30;
+
+    const seconds = Number(value);
+
+    if(!Number.isFinite(seconds)){
+
+      return 30;
+    }
+
+    return Math.min(
+      600,
+      Math.max(5,Math.floor(seconds))
+    );
+  }
+
+
+  /* =========================================================
+     AUTH
+  ========================================================= */
+
+  onAuthStateChanged(auth, async user => {
+
+    try{
+
+      if(!user){
+
+        showError(
+          "লগইন প্রয়োজন",
+          "পরীক্ষায় অংশগ্রহণের আগে আপনার শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।"
+        );
+
+        return;
       }
 
-      return arr;
+      currentUser = user;
+
+      await initializeExam();
+
+    }catch(error){
+
+      console.error(error);
+
+      showError(
+        "পরীক্ষা প্রস্তুত করা যায়নি",
+        getFirebaseErrorMessage(error)
+      );
+    }
+
+  });
+
+
+  /* =========================================================
+     INITIALIZE
+  ========================================================= */
+
+  async function initializeExam(){
+
+    quizId = getQuizId();
+
+    if(!quizId){
+
+      showError(
+        "পরীক্ষা পাওয়া যায়নি",
+        "পরীক্ষার লিংকে quizId পাওয়া যায়নি।"
+      );
+
+      return;
     }
 
 
-    // ==========================================
-    // FIRESTORE TIME → JS DATE
-    // ==========================================
+    /* PROFILE */
 
-    function toDate(value) {
+    const profileSnap =
+      await getDoc(
+        doc(db,"profiles",currentUser.uid)
+      );
 
-      if (!value) return null;
+    if(!profileSnap.exists()){
 
-      if (typeof value.toDate === "function") {
-        return value.toDate();
-      }
+      showError(
+        "প্রোফাইল পাওয়া যায়নি",
+        "প্রথমে আপনার শিক্ষার্থী প্রোফাইল সম্পূর্ণ করুন।"
+      );
 
-      if (value instanceof Date) {
-        return value;
-      }
+      return;
+    }
 
-      if (typeof value === "string") {
+    profile = profileSnap.data();
 
-        const d = new Date(value);
 
-        if (!isNaN(d.getTime())) {
-          return d;
+    /* QUIZ */
+
+    const quizSnap =
+      await getDoc(
+        doc(db,"quizzes",quizId)
+      );
+
+    if(!quizSnap.exists()){
+
+      showError(
+        "পরীক্ষা পাওয়া যায়নি",
+        "এই পরীক্ষার তথ্য Firestore-এ পাওয়া যায়নি।"
+      );
+
+      return;
+    }
+
+    quiz = {
+      id:quizSnap.id,
+      ...quizSnap.data()
+    };
+
+
+    /* REGISTRATION */
+
+    await loadRegistration();
+
+
+    /* TIME RESTRICTION */
+
+    const timeResult =
+      checkExamTime();
+
+    if(!timeResult.allowed){
+
+      showError(
+        timeResult.title,
+        timeResult.message
+      );
+
+      return;
+    }
+
+
+    /* QUESTIONS */
+
+    await loadQuestions();
+
+
+    if(!questions.length){
+
+      showError(
+        "প্রশ্ন পাওয়া যায়নি",
+        "এই পরীক্ষার জন্য এখনো কোনো প্রশ্ন প্রস্তুত করা হয়নি।"
+      );
+
+      return;
+    }
+
+
+    /* RULES */
+
+    await loadExamRules();
+
+
+    /* INSPIRATION */
+
+    await loadInspiration();
+
+
+    /* UI */
+
+    renderPreExam();
+
+
+    hide("loadingScreen");
+    show("preExamScreen");
+
+  }
+
+
+  /* =========================================================
+     REGISTRATION
+  ========================================================= */
+
+  async function loadRegistration(){
+
+    /* প্রথমে আগের flow-এর localStorage roll */
+
+    const storedRoll =
+      localStorage.getItem("quiz_roll_number");
+
+    if(storedRoll){
+
+      try{
+
+        const q = query(
+          collection(db,"quiz_registrations"),
+          where("roll_number","==",storedRoll),
+          limit(1)
+        );
+
+        const snap = await getDocs(q);
+
+        if(!snap.empty){
+
+          const data = snap.docs[0].data();
+
+          if(
+            data.quiz_id === quizId &&
+            (
+              data.student_uid === currentUser.uid ||
+              data.user_id === currentUser.uid ||
+              data.uid === currentUser.uid
+            )
+          ){
+
+            registration = {
+              id:snap.docs[0].id,
+              ...data
+            };
+
+            rollNumber =
+              data.roll_number ||
+              data.quiz_roll_number ||
+              storedRoll;
+
+            return;
+          }
         }
+
+      }catch(error){
+
+        console.warn(
+          "Stored roll lookup failed:",
+          error
+        );
       }
-
-      if (typeof value === "number") {
-        return new Date(value);
-      }
-
-      return null;
     }
 
 
-    // ==========================================
-    // BANGLADESH TIME DISPLAY
-    // ==========================================
+    /* Fallback: user + quiz */
 
-    function getBangladeshTime(date = new Date()) {
+    const fields = [
+      "student_uid",
+      "user_id",
+      "uid"
+    ];
 
-      return new Intl.DateTimeFormat(
-        "bn-BD",
-        {
-          timeZone: "Asia/Dhaka",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true
-        }
-      ).format(date);
-    }
+    for(const field of fields){
 
+      try{
 
-    // ==========================================
-    // ERROR
-    // ==========================================
+        const q = query(
+          collection(db,"quiz_registrations"),
+          where(field,"==",currentUser.uid),
+          limit(50)
+        );
 
-    function showStartError(message) {
+        const snap = await getDocs(q);
 
-      startError.textContent = "❌ " + message;
-      startError.classList.remove("hidden");
-      startExamBtn.disabled = false;
-    }
+        for(const d of snap.docs){
 
+          const data = d.data();
 
-    // ==========================================
-    // AUTH
-    // ==========================================
+          if(data.quiz_id !== quizId){
 
-    onAuthStateChanged(auth, async (user) => {
+            continue;
+          }
 
-      try {
+          const status =
+            String(data.status || "").toLowerCase();
 
-        if (!user) {
+          if(status !== "approved"){
 
-          window.location.href = "login.html";
+            continue;
+          }
+
+          registration = {
+            id:d.id,
+            ...data
+          };
+
+          rollNumber =
+            data.roll_number ||
+            data.quiz_roll_number ||
+            "";
+
+          if(rollNumber){
+
+            localStorage.setItem(
+              "quiz_roll_number",
+              rollNumber
+            );
+          }
+
           return;
         }
 
-        currentUser = user;
+      }catch(error){
 
-        await loadStudentProfile();
-
-        await loadRegistration();
-
-      } catch (error) {
-
-        console.error(error);
-
-        showStartError(
-          error.message ||
-          "তথ্য লোড করতে সমস্যা হয়েছে।"
+        console.warn(
+          `Registration lookup ${field} failed:`,
+          error
         );
       }
+    }
+
+
+    showError(
+      "অনুমোদিত রেজিস্ট্রেশন পাওয়া যায়নি",
+      "এই পরীক্ষায় অংশগ্রহণের জন্য আপনার রেজিস্ট্রেশন Admin কর্তৃক অনুমোদিত হতে হবে।"
+    );
+
+    throw new Error("No approved registration");
+  }
+
+
+  /* =========================================================
+     EXAM TIME
+     IMPORTANT: START TIME RESTRICTION REMAINS
+  ========================================================= */
+
+  function checkExamTime(){
+
+    const now = Date.now();
+
+    const start =
+      timestampToMs(
+        quiz.start_at ??
+        quiz.start_time ??
+        quiz.exam_start_at
+      );
+
+    const end =
+      timestampToMs(
+        quiz.end_at ??
+        quiz.end_time ??
+        quiz.exam_end_at
+      );
+
+
+    if(start && now < start){
+
+      return {
+        allowed:false,
+        title:"পরীক্ষা এখনো শুরু হয়নি",
+        message:
+          `পরীক্ষা শুরু হবে ${formatDateTime(start)}-এ।`
+      };
+    }
+
+
+    if(end && now >= end){
+
+      return {
+        allowed:false,
+        title:"পরীক্ষার সময় শেষ",
+        message:
+          `এই পরীক্ষার নির্ধারিত সময় ${formatDateTime(end)}-এ শেষ হয়েছে।`
+      };
+    }
+
+
+    return {
+      allowed:true
+    };
+  }
+
+
+  /* =========================================================
+     LOAD QUESTIONS
+     1. exam_questions
+     2. fallback questions
+  ========================================================= */
+
+  async function loadQuestions(){
+
+    let loaded = [];
+
+
+    /* ---------------------------------
+       exam_questions
+    --------------------------------- */
+
+    try{
+
+      const q = query(
+        collection(db,"exam_questions"),
+        where("quiz_id","==",quizId)
+      );
+
+      const snap = await getDocs(q);
+
+      loaded = snap.docs.map(d => ({
+        id:d.id,
+        ...d.data()
+      }));
+
+    }catch(error){
+
+      console.warn(
+        "exam_questions load failed:",
+        error
+      );
+    }
+
+
+    /* ---------------------------------
+       fallback questions
+    --------------------------------- */
+
+    if(!loaded.length){
+
+      try{
+
+        const q = query(
+          collection(db,"questions"),
+          where("quiz_id","==",quizId)
+        );
+
+        const snap = await getDocs(q);
+
+        loaded = snap.docs.map(d => ({
+          id:d.id,
+          ...d.data()
+        }));
+
+      }catch(error){
+
+        console.warn(
+          "questions fallback failed:",
+          error
+        );
+      }
+    }
+
+
+    questions = loaded.filter(q => {
+
+      return cleanText(q.question_text) !== "";
 
     });
 
 
-    // ==========================================
-    // LOAD PROFILE
-    // ==========================================
+    /*
+      If admin set question_count = 20
+      and there are 100 questions,
+      select 20 randomly.
 
-    async function loadStudentProfile() {
+      IMPORTANT:
+      This randomization happens only once
+      before the attempt is created.
+    */
 
-      const profileRef =
-        doc(db, "profiles", currentUser.uid);
+  }
 
-      const profileSnap =
-        await getDoc(profileRef);
 
-      if (!profileSnap.exists()) {
+  /* =========================================================
+     RULES
+  ========================================================= */
 
-        throw new Error(
-          "আপনার Student Profile পাওয়া যায়নি।"
+  async function loadExamRules(){
+
+    const defaultRules = {
+
+      title:"পরীক্ষার নিয়মাবলি",
+
+      rules:[
+        "প্রতিটি প্রশ্ন একবার করে দেখানো হবে।",
+        "প্রতিটি প্রশ্নের জন্য নির্ধারিত সময়ের মধ্যে উত্তর দিতে হবে।",
+        "প্রশ্নের সময় শেষ হলে উত্তর না দিলেও স্বয়ংক্রিয়ভাবে পরের প্রশ্নে চলে যাবে।",
+        "পরীক্ষার মোট সময় শেষ হলে পরীক্ষা স্বয়ংক্রিয়ভাবে জমা হবে।",
+        "প্রশ্ন ও অপশনের ক্রম পরীক্ষার্থীভেদে পরিবর্তিত হতে পারে।",
+        "ভুল উত্তরের জন্য নির্ধারিত Negative Marking প্রযোজ্য হবে।",
+        "পরীক্ষার সময় অন্য ট্যাব/উইন্ডোতে গেলে নিরাপত্তা সতর্কতা গণনা হতে পারে।",
+        "পূর্ণস্ক্রিন ব্যবহার করার পরামর্শ দেওয়া হচ্ছে।",
+        "পরীক্ষা জমা দেওয়ার পর উত্তর পরিবর্তন করা যাবে না।",
+        "ফলাফল Admin প্রকাশ করার পর শিক্ষার্থী ফলাফল দেখতে পারবে।"
+      ]
+
+    };
+
+
+    try{
+
+      const snap =
+        await getDoc(
+          doc(db,"website_settings","exam_rules")
         );
+
+      if(snap.exists()){
+
+        rulesData = {
+          ...defaultRules,
+          ...snap.data()
+        };
+
+      }else{
+
+        rulesData = defaultRules;
+
       }
 
-      const profile =
-        profileSnap.data();
+    }catch(error){
 
-      studentName.textContent =
-        profile.full_name ||
-        profile.name ||
-        "শিক্ষার্থী";
+      console.warn(
+        "Exam rules load failed:",
+        error
+      );
 
-      studentId.textContent =
-        currentUser.uid;
-
+      rulesData = defaultRules;
     }
 
+  }
 
-    // ==========================================
-    // LOAD APPROVED REGISTRATION
-    // ==========================================
 
-    async function loadRegistration() {
+  /* =========================================================
+     INSPIRATION
+  ========================================================= */
 
-      const savedRoll =
-        localStorage.getItem("quiz_roll_number");
+  async function loadInspiration(){
 
-      if (!savedRoll) {
+    try{
 
-        throw new Error(
-          "Quiz Roll Number পাওয়া যায়নি।"
+      const snap =
+        await getDoc(
+          doc(db,"website_settings","inspiration")
         );
+
+      if(!snap.exists()){
+
+        inspirationData = null;
+
+        return;
       }
 
-      rollNumberEl.textContent =
-        savedRoll;
+      const data = snap.data();
+
+      const active =
+        data.is_active !== false;
+
+      const published =
+        data.published !== false;
+
+      if(!active || !published){
+
+        inspirationData = null;
+
+        return;
+      }
+
+      inspirationData = data;
+
+    }catch(error){
+
+      console.warn(
+        "Inspiration load failed:",
+        error
+      );
+
+      inspirationData = null;
+    }
+
+  }
 
 
-      const q = query(
+  /* =========================================================
+     PRE EXAM UI
+  ========================================================= */
 
-        collection(db, "quiz_registrations"),
+  function renderPreExam(){
 
-        where(
-          "student_uid",
-          "==",
-          currentUser.uid
-        ),
+    $("quizTitle").textContent =
+      quiz.title ||
+      quiz.name ||
+      "জ্ঞানতরঙ্গ পরীক্ষা";
 
-        where(
-          "roll_number",
-          "==",
-          savedRoll
-        )
 
+    $("quizDescription").textContent =
+      quiz.description ||
+      "নিয়মগুলো ভালোভাবে পড়ে তারপর পরীক্ষা শুরু করুন।";
+
+
+    const questionCount =
+      Number(quiz.question_count) ||
+      questions.length;
+
+
+    $("infoQuestions").textContent =
+      `${questionCount}টি`;
+
+
+    const duration =
+      Number(
+        quiz.duration_minutes ??
+        quiz.duration ??
+        10
       );
 
 
-      const snapshot =
-        await getDocs(q);
+    $("infoDuration").textContent =
+      `${duration} মিনিট`;
 
 
-      if (snapshot.empty) {
+    const firstTime =
+      getQuestionTime(questions[0]);
 
-        throw new Error(
-          "এই Roll Number-এর কোনো Registration পাওয়া যায়নি।"
-        );
+
+    $("infoQuestionTime").textContent =
+      `${firstTime} সেকেন্ড`;
+
+
+    $("infoRoll").textContent =
+      rollNumber || "—";
+
+
+    $("rulesTitle").textContent =
+      rulesData?.title ||
+      "পরীক্ষার নিয়মাবলি";
+
+
+    const rules =
+      Array.isArray(rulesData?.rules)
+        ? rulesData.rules
+        : [];
+
+
+    $("rulesList").innerHTML =
+      rules.map((rule,index) => `
+        <div class="rule-item">
+          <div class="rule-number">
+            ${index + 1}
+          </div>
+
+          <div>
+            ${escapeHtml(rule)}
+          </div>
+        </div>
+      `).join("");
+
+
+    if(inspirationData){
+
+      const text =
+        inspirationData.message ||
+        inspirationData.text ||
+        "";
+
+      if(text){
+
+        $("inspirationText").textContent =
+          text;
+
+        show("inspirationBox");
+
       }
-
-
-      registration =
-        snapshot.docs[0].data();
-
-
-      if (registration.status !== "approved") {
-
-        throw new Error(
-          "আপনার Registration এখনো অনুমোদিত হয়নি।"
-        );
-      }
-
-
-      await loadQuiz(
-        registration.quiz_id
-      );
 
     }
 
-
-    // ==========================================
-    // LOAD QUIZ
-    // ==========================================
-
-    async function loadQuiz(quizId) {
-
-      const quizRef =
-        doc(db, "quizzes", quizId);
-
-      const quizSnap =
-        await getDoc(quizRef);
+  }
 
 
-      if (!quizSnap.exists()) {
+  /* =========================================================
+     START EXAM
+  ========================================================= */
 
-        throw new Error(
-          "Quiz পাওয়া যায়নি।"
-        );
-      }
+  window.startExam = async function(){
 
+    if(examStarted || submitting){
 
-      quiz =
-        quizSnap.data();
-
-
-      quiz._id = quizId;
-
-
-      quizTitle.textContent =
-        quiz.title ||
-        "জ্ঞানতরঙ্গ পরীক্ষা";
-
-
-      // ========================================
-      // BANGLADESH TIME CHECK
-      // ========================================
-
-      const now =
-        new Date();
-
-      const startAt =
-        toDate(quiz.start_at);
-
-      const endAt =
-        toDate(quiz.end_at);
-
-
-      if (startAt && now < startAt) {
-
-        throw new Error(
-          "পরীক্ষা এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার প্রবেশ করুন।"
-        );
-      }
-
-
-      if (endAt && now > endAt) {
-
-        throw new Error(
-          "এই পরীক্ষার সময় শেষ হয়ে গেছে।"
-        );
-      }
-
-
-      // ========================================
-      // TOTAL EXAM TIME
-      // ========================================
-
-      totalSecondsLeft =
-        Number(
-          quiz.duration_minutes || 10
-        ) * 60;
-
-
-      await loadQuestions();
-
+      return;
     }
 
 
-    // ==========================================
-    // LOAD QUESTIONS
-    // ==========================================
+    const timeCheck =
+      checkExamTime();
 
-    async function loadQuestions() {
+    if(!timeCheck.allowed){
 
-      const q = query(
-
-        collection(db, "exam_questions"),
-
-        where(
-          "quiz_id",
-          "==",
-          quiz._id
-        )
-
+      showError(
+        timeCheck.title,
+        timeCheck.message
       );
 
-
-      const snapshot =
-        await getDocs(q);
-
-
-      if (snapshot.empty) {
-
-        throw new Error(
-          "এই পরীক্ষায় কোনো প্রশ্ন পাওয়া যায়নি।"
-        );
-      }
-
-
-      allQuestions =
-        snapshot.docs.map(
-          d => ({
-            id: d.id,
-            ...d.data()
-          })
-        );
-
-
-      // ========================================
-      // ADMIN SETTING
-      // কতটি প্রশ্ন শিক্ষার্থী পাবে
-      // ========================================
-
-      const questionCount =
-        Number(
-          quiz.question_count ||
-          allQuestions.length
-        );
-
-
-      const finalCount =
-        Math.min(
-          questionCount,
-          allQuestions.length
-        );
-
-
-      // ========================================
-      // RANDOM QUESTION
-      // ========================================
-
-      selectedQuestions =
-        shuffle(allQuestions)
-        .slice(0, finalCount);
-
-
-      console.log(
-        "Random Questions:",
-        selectedQuestions.map(q => q.id)
-      );
-
+      return;
     }
 
 
-    // ==========================================
-    // START EXAM
-    // ==========================================
+    $("startExamBtn").disabled = true;
 
-    startExamBtn.addEventListener(
-      "click",
-      async () => {
+    $("startExamBtn").textContent =
+      "⏳ পরীক্ষা প্রস্তুত হচ্ছে...";
 
-        try {
 
-          startExamBtn.disabled = true;
+    try{
 
-          await startExam();
+      /*
+        Select questions ONCE.
+        This selected order is saved in attempt.
+      */
 
-        } catch (error) {
+      const requestedCount =
+        Number(quiz.question_count) ||
+        questions.length;
 
-          console.error(error);
 
-          showStartError(
-            error.message ||
-            "পরীক্ষা শুরু করা যায়নি।"
+      const selectedQuestions =
+        shuffle(questions)
+          .slice(
+            0,
+            Math.min(
+              requestedCount,
+              questions.length
+            )
           );
 
-        }
 
-      }
-    );
+      /*
+        Randomize options ONCE per question.
+        Save order inside attempt.
+      */
+
+      const preparedQuestions =
+        selectedQuestions.map(question => {
+
+          const optionObjects = [
+            {
+              key:"a",
+              text:getOptionValue(question,"a")
+            },
+            {
+              key:"b",
+              text:getOptionValue(question,"b")
+            },
+            {
+              key:"c",
+              text:getOptionValue(question,"c")
+            },
+            {
+              key:"d",
+              text:getOptionValue(question,"d")
+            }
+          ].filter(item =>
+            cleanText(item.text) !== ""
+          );
 
 
-    async function startExam() {
+          const randomizedOptions =
+            shuffle(optionObjects);
 
-      examStarted = true;
 
-      // ========================================
-      // ATTEMPT ID
-      // ========================================
+          return {
+            question_id:question.id,
 
-      const attemptId =
-        quiz._id +
-        "_" +
-        currentUser.uid;
+            options:
+              randomizedOptions.map(
+                item => item.key
+              )
+          };
+
+        });
+
+
+      /*
+        Unique attempt ID.
+        Old submitted attempts no longer
+        block a new attempt.
+      */
+
+      attemptId =
+        `${quizId}_${currentUser.uid}_${Date.now()}`;
 
 
       attemptRef =
@@ -1043,770 +2239,1274 @@
         );
 
 
-      // ========================================
-      // PREVIOUS ATTEMPT
-      // ========================================
-
-      const previousSnap =
-        await getDoc(attemptRef);
+      examStartedAtMs =
+        Date.now();
 
 
-      if (previousSnap.exists()) {
-
-        const previous =
-          previousSnap.data();
+      overallSecondsLeft =
+        getExamDurationSeconds();
 
 
-        if (
-          previous.status === "submitted"
-        ) {
+      const attemptData = {
 
-          throw new Error(
-            "আপনি এই পরীক্ষাটি ইতোমধ্যে জমা দিয়েছেন।"
+        quiz_id:quizId,
+
+        student_uid:currentUser.uid,
+
+        registration_id:
+          registration?.id || null,
+
+        roll_number:
+          rollNumber || null,
+
+        student_id:
+          profile.student_id ||
+          profile.uid ||
+          currentUser.uid,
+
+        student_name:
+          profile.full_name ||
+          profile.name ||
+          currentUser.displayName ||
+          "",
+
+        selected_question_ids:
+          preparedQuestions.map(
+            item => item.question_id
+          ),
+
+        question_order:
+          preparedQuestions.map(
+            item => item.question_id
+          ),
+
+        randomized_options:
+          preparedQuestions,
+
+        answers:{},
+
+        warnings_count:0,
+
+        status:"started",
+
+        started_at:
+          serverTimestamp(),
+
+        last_activity_at:
+          serverTimestamp(),
+
+        duration_seconds:
+          overallSecondsLeft,
+
+        created_at:
+          serverTimestamp(),
+
+        updated_at:
+          serverTimestamp()
+
+      };
+
+
+      await addDocToAttempt(
+        attemptRef,
+        attemptData
+      );
+
+
+      /*
+        Replace global questions
+        with the selected questions.
+      */
+
+      const questionMap =
+        new Map(
+          questions.map(q => [q.id,q])
+        );
+
+
+      questions =
+        preparedQuestions
+          .map(item =>
+            questionMap.get(item.question_id)
+          )
+          .filter(Boolean)
+          .map(question => {
+
+            const prepared =
+              preparedQuestions.find(
+                p => p.question_id === question.id
+              );
+
+
+            return {
+              ...question,
+
+              __randomized_options:
+                prepared.options
+            };
+
+          });
+
+
+      answers = {};
+
+
+      currentQuestionIndex = 0;
+
+      examStarted = true;
+
+
+      hide("preExamScreen");
+      show("examScreen");
+
+
+      $("studentName").textContent =
+        profile.full_name ||
+        profile.name ||
+        "শিক্ষার্থী";
+
+
+      $("studentRoll").textContent =
+        rollNumber ||
+        "রোল নম্বর নেই";
+
+
+      renderQuestion();
+
+      startOverallTimer();
+
+      installSecurityListeners();
+
+
+      /*
+        Fullscreen is recommended,
+        but browser may reject without user gesture.
+      */
+
+      requestFullscreenSafe();
+
+
+    }catch(error){
+
+      console.error(error);
+
+      $("startExamBtn").disabled = false;
+
+      $("startExamBtn").textContent =
+        "🚀 পরীক্ষা শুরু করুন";
+
+
+      showError(
+        "পরীক্ষা শুরু করা যায়নি",
+        getFirebaseErrorMessage(error)
+      );
+    }
+
+  };
+
+
+  /* =========================================================
+     ATTEMPT CREATE
+  ========================================================= */
+
+  async function addDocToAttempt(ref,data){
+
+    /*
+      Using set-like behavior through
+      update/create is avoided because
+      current rules already allow create.
+    */
+
+    const { setDoc } =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+      );
+
+    await setDoc(
+      ref,
+      data
+    );
+
+  }
+
+
+  /* =========================================================
+     EXAM DURATION
+  ========================================================= */
+
+  function getExamDurationSeconds(){
+
+    const durationMinutes =
+      Number(
+        quiz.duration_minutes ??
+        quiz.duration ??
+        10
+      );
+
+
+    let seconds =
+      Math.max(
+        1,
+        Math.floor(durationMinutes * 60)
+      );
+
+
+    /*
+      If quiz has explicit end_at,
+      don't allow timer beyond it.
+    */
+
+    const end =
+      timestampToMs(
+        quiz.end_at ??
+        quiz.end_time ??
+        quiz.exam_end_at
+      );
+
+
+    if(end){
+
+      const remaining =
+        Math.floor(
+          (end - Date.now()) / 1000
+        );
+
+
+      if(remaining > 0){
+
+        seconds =
+          Math.min(
+            seconds,
+            remaining
           );
-        }
 
       }
 
-
-      // ========================================
-      // CREATE ATTEMPT
-      // ========================================
-
-      attemptStartedAt =
-        new Date();
+    }
 
 
-      await setDoc(
+    return seconds;
+  }
+
+
+  /* =========================================================
+     RENDER QUESTION
+  ========================================================= */
+
+  function renderQuestion(){
+
+    clearQuestionTimer();
+
+
+    if(!questions.length){
+
+      submitExam("no_questions");
+
+      return;
+    }
+
+
+    if(
+      currentQuestionIndex >=
+      questions.length
+    ){
+
+      submitExam("completed");
+
+      return;
+    }
+
+
+    const question =
+      questions[currentQuestionIndex];
+
+
+    const total =
+      questions.length;
+
+
+    const current =
+      currentQuestionIndex + 1;
+
+
+    $("questionNumber").textContent =
+      `প্রশ্ন ${current} / ${total}`;
+
+
+    $("currentQuestionMini").textContent =
+      current;
+
+
+    $("answeredMini").textContent =
+      Object.keys(answers).length;
+
+
+    $("progressBar").style.width =
+      `${(current / total) * 100}%`;
+
+
+    $("questionText").textContent =
+      question.question_text ||
+      question.question ||
+      "";
+
+
+    const optionKeys =
+      question.__randomized_options ||
+      ["a","b","c","d"];
+
+
+    const selected =
+      answers[question.id];
+
+
+    $("options").innerHTML =
+      optionKeys.map((key,index) => {
+
+        const text =
+          getOptionValue(
+            question,
+            key
+          );
+
+
+        const letters =
+          ["ক","খ","গ","ঘ"];
+
+
+        const isSelected =
+          selected === key;
+
+
+        return `
+          <button
+            type="button"
+            class="option ${isSelected ? "selected" : ""}"
+            data-key="${escapeHtml(key)}"
+            onclick="selectAnswer('${escapeHtml(question.id)}','${escapeHtml(key)}')"
+          >
+
+            <div class="option-letter">
+              ${letters[index] || String.fromCharCode(65 + index)}
+            </div>
+
+            <div class="option-text">
+              ${escapeHtml(text)}
+            </div>
+
+          </button>
+        `;
+
+      }).join("");
+
+
+    if(selected){
+
+      $("answeredStatus").textContent =
+        "✓ উত্তর নির্বাচন করা হয়েছে";
+
+    }else{
+
+      $("answeredStatus").textContent =
+        "উত্তর নির্বাচন করুন";
+
+    }
+
+
+    const isLast =
+      currentQuestionIndex ===
+      questions.length - 1;
+
+
+    $("nextBtn").textContent =
+      isLast
+        ? "✓ পরীক্ষা জমা দিন"
+        : "পরের প্রশ্ন →";
+
+
+    /*
+      Question-specific timer:
+      question -> quiz default -> 30 sec
+    */
+
+    questionSecondsLeft =
+      getQuestionTime(question);
+
+
+    updateQuestionTimerUI();
+
+    startQuestionTimer();
+
+  }
+
+
+  /* =========================================================
+     SELECT ANSWER
+  ========================================================= */
+
+  window.selectAnswer = async function(
+    questionId,
+    optionKey
+  ){
+
+    if(
+      !examStarted ||
+      submitting
+    ){
+
+      return;
+    }
+
+
+    answers[questionId] =
+      optionKey;
+
+
+    const buttons =
+      document.querySelectorAll(".option");
+
+
+    buttons.forEach(button => {
+
+      button.classList.toggle(
+        "selected",
+        button.dataset.key === optionKey
+      );
+
+    });
+
+
+    $("answeredStatus").textContent =
+      "✓ উত্তর নির্বাচন করা হয়েছে";
+
+
+    $("answeredMini").textContent =
+      Object.keys(answers).length;
+
+
+    await saveAttemptProgress();
+
+  };
+
+
+  /* =========================================================
+     NEXT
+  ========================================================= */
+
+  window.nextQuestion = async function(){
+
+    if(
+      !examStarted ||
+      submitting
+    ){
+
+      return;
+    }
+
+
+    clearQuestionTimer();
+
+
+    if(
+      currentQuestionIndex >=
+      questions.length - 1
+    ){
+
+      await submitExam("manual_submit");
+
+      return;
+    }
+
+
+    currentQuestionIndex++;
+
+    renderQuestion();
+
+  };
+
+
+  /* =========================================================
+     QUESTION TIMER
+  ========================================================= */
+
+  function startQuestionTimer(){
+
+    clearQuestionTimer();
+
+
+    questionTimerInterval =
+      setInterval(async () => {
+
+        if(!examStarted || submitting){
+
+          clearQuestionTimer();
+
+          return;
+        }
+
+
+        questionSecondsLeft--;
+
+        updateQuestionTimerUI();
+
+
+        if(questionSecondsLeft <= 0){
+
+          clearQuestionTimer();
+
+          await handleQuestionTimeout();
+
+        }
+
+      },1000);
+
+  }
+
+
+  function clearQuestionTimer(){
+
+    if(questionTimerInterval){
+
+      clearInterval(
+        questionTimerInterval
+      );
+
+      questionTimerInterval = null;
+    }
+
+  }
+
+
+  function updateQuestionTimerUI(){
+
+    const timer =
+      $("questionTimer");
+
+
+    timer.querySelector("span").textContent =
+      formatTimer(questionSecondsLeft);
+
+
+    if(questionSecondsLeft <= 10){
+
+      timer.classList.add("warning");
+
+    }else{
+
+      timer.classList.remove("warning");
+
+    }
+
+  }
+
+
+  /* =========================================================
+     QUESTION TIMEOUT
+  ========================================================= */
+
+  async function handleQuestionTimeout(){
+
+    if(
+      !examStarted ||
+      submitting
+    ){
+
+      return;
+    }
+
+
+    /*
+      If no answer:
+      leave it unanswered.
+      Then automatically go next.
+    */
+
+    const question =
+      questions[currentQuestionIndex];
+
+
+    if(
+      question &&
+      answers[question.id] === undefined
+    ){
+
+      /*
+        Explicitly store null so that
+        unanswered status remains stable.
+      */
+
+      answers[question.id] = null;
+
+    }
+
+
+    await saveAttemptProgress();
+
+
+    if(
+      currentQuestionIndex >=
+      questions.length - 1
+    ){
+
+      await submitExam(
+        "question_timeout_last"
+      );
+
+      return;
+    }
+
+
+    currentQuestionIndex++;
+
+    renderQuestion();
+
+  }
+
+
+  /* =========================================================
+     OVERALL TIMER
+  ========================================================= */
+
+  function startOverallTimer(){
+
+    updateOverallTimerUI();
+
+
+    overallTimerInterval =
+      setInterval(async () => {
+
+        if(!examStarted || submitting){
+
+          return;
+        }
+
+
+        overallSecondsLeft--;
+
+        updateOverallTimerUI();
+
+
+        if(overallSecondsLeft <= 0){
+
+          clearOverallTimer();
+
+          await submitExam(
+            "overall_timeout"
+          );
+
+        }
+
+      },1000);
+
+  }
+
+
+  function clearOverallTimer(){
+
+    if(overallTimerInterval){
+
+      clearInterval(
+        overallTimerInterval
+      );
+
+      overallTimerInterval = null;
+    }
+
+  }
+
+
+  function updateOverallTimerUI(){
+
+    $("overallTimer").textContent =
+      formatTimer(
+        overallSecondsLeft
+      );
+
+
+    if(overallSecondsLeft <= 60){
+
+      $("overallTimer").style.color =
+        "var(--red)";
+
+    }else{
+
+      $("overallTimer").style.color =
+        "var(--gold)";
+
+    }
+
+  }
+
+
+  /* =========================================================
+     SAVE PROGRESS
+  ========================================================= */
+
+  async function saveAttemptProgress(){
+
+    if(
+      !attemptRef ||
+      submitting
+    ){
+
+      return;
+    }
+
+
+    try{
+
+      await updateDoc(
         attemptRef,
         {
-          student_uid:
-            currentUser.uid,
-
-          quiz_id:
-            quiz._id,
-
-          roll_number:
-            registration.roll_number,
-
-          status:
-            "started",
-
-          selected_question_ids:
-            selectedQuestions.map(
-              q => q.id
-            ),
-
-          answers:
-            {},
-
-          started_at:
+          answers,
+          current_question_index:
+            currentQuestionIndex,
+          warnings_count:
+            securityWarnings,
+          last_activity_at:
             serverTimestamp(),
-
           updated_at:
             serverTimestamp()
         }
       );
 
+    }catch(error){
 
-      startScreen.classList.add(
-        "hidden"
+      /*
+        Don't stop the exam because
+        a progress update failed.
+      */
+
+      console.warn(
+        "Progress save failed:",
+        error
       );
+    }
 
-      examScreen.classList.remove(
-        "hidden"
-      );
+  }
 
 
-      startTotalTimer();
+  /* =========================================================
+     SCORE CALCULATION
+  ========================================================= */
 
-      showQuestion(0);
+  function calculateScore(){
 
-      enableAntiCheat();
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    let totalMarks = 0;
+    let negativeTotal = 0;
+    let score = 0;
+
+
+    questions.forEach(question => {
+
+      const marks =
+        Number(
+          question.marks ??
+          1
+        );
+
+
+      const negative =
+        Number(
+          question.negative_mark ??
+          0
+        );
+
+
+      totalMarks +=
+        Number.isFinite(marks)
+          ? marks
+          : 1;
+
+
+      const answer =
+        answers[question.id];
+
+
+      if(
+        answer === undefined ||
+        answer === null ||
+        answer === ""
+      ){
+
+        unanswered++;
+
+        return;
+      }
+
+
+      const correctAnswer =
+        normalizeOptionKey(
+          getCorrectAnswer(question)
+        );
+
+
+      const selectedAnswer =
+        normalizeOptionKey(answer);
+
+
+      if(
+        correctAnswer &&
+        selectedAnswer === correctAnswer
+      ){
+
+        correct++;
+
+        score += marks;
+
+      }else{
+
+        wrong++;
+
+        score -= negative;
+
+        negativeTotal += negative;
+
+      }
+
+    });
+
+
+    /*
+      Don't allow negative score
+      unless quiz explicitly allows it.
+    */
+
+    const allowNegative =
+      quiz.allow_negative_score === true;
+
+
+    if(!allowNegative){
+
+      score =
+        Math.max(
+          0,
+          score
+        );
 
     }
 
 
-    // ==========================================
-    // QUESTION OPTIONS
-    // ==========================================
+    return {
 
-    function getOptions(question) {
+      correct,
 
-      const optionList = [
+      wrong,
 
-        {
-          key: "a",
-          text: question.option_a
-        },
+      unanswered,
 
-        {
-          key: "b",
-          text: question.option_b
-        },
+      total_marks:totalMarks,
 
-        {
-          key: "c",
-          text: question.option_c
-        },
+      negative_mark:negativeTotal,
 
-        {
-          key: "d",
-          text: question.option_d
-        }
+      score,
 
-      ];
+      total_questions:
+        questions.length
+
+    };
+
+  }
 
 
-      return shuffle(
-        optionList.filter(
-          option =>
-            option.text !== undefined &&
-            option.text !== null &&
-            String(option.text).trim() !== ""
+  /* =========================================================
+     SUBMIT EXAM
+  ========================================================= */
+
+  async function submitExam(reason){
+
+    if(
+      submitting ||
+      !attemptRef
+    ){
+
+      return;
+    }
+
+
+    submitting = true;
+
+
+    clearQuestionTimer();
+    clearOverallTimer();
+
+
+    /*
+      Calculate final statistics.
+    */
+
+    const statistics =
+      calculateScore();
+
+
+    const now =
+      Date.now();
+
+
+    const spentSeconds =
+      Math.max(
+        0,
+        Math.floor(
+          (now - examStartedAtMs) / 1000
         )
       );
 
-    }
 
+    try{
 
-    // ==========================================
-    // SHOW QUESTION
-    // ==========================================
+      await updateDoc(
+        attemptRef,
+        {
 
-    function showQuestion(index) {
+          answers,
 
-      clearInterval(
-        questionTimerInterval
-      );
+          status:"submitted",
 
+          submission_reason:
+            reason || "submitted",
 
-      currentQuestionIndex =
-        index;
+          correct:
+            statistics.correct,
 
+          wrong:
+            statistics.wrong,
 
-      const question =
-        selectedQuestions[index];
+          unanswered:
+            statistics.unanswered,
 
+          total_questions:
+            statistics.total_questions,
 
-      if (!question) return;
+          total_marks:
+            statistics.total_marks,
 
+          negative_mark:
+            statistics.negative_mark,
 
-      questionNumber.textContent =
-        "প্রশ্ন " +
-        (index + 1);
+          score:
+            statistics.score,
 
+          total_time_seconds:
+            spentSeconds,
 
-      questionCounter.textContent =
-        "প্রশ্ন " +
-        (index + 1) +
-        " / " +
-        selectedQuestions.length;
+          submitted_at:
+            serverTimestamp(),
 
+          warnings_count:
+            securityWarnings,
 
-      const progress =
-        ((index + 1) /
-          selectedQuestions.length) *
-        100;
+          last_activity_at:
+            serverTimestamp(),
 
-
-      progressBar.style.width =
-        progress + "%";
-
-
-      questionText.textContent =
-        question.question_text ||
-        "প্রশ্ন পাওয়া যায়নি।";
-
-
-      optionsContainer.innerHTML = "";
-
-
-      // ========================================
-      // RANDOM OPTIONS
-      // ========================================
-
-      const options =
-        getOptions(question);
-
-
-      const labels =
-        ["ক", "খ", "গ", "ঘ"];
-
-
-      options.forEach(
-        (option, i) => {
-
-          const button =
-            document.createElement("button");
-
-
-          button.type =
-            "button";
-
-
-          button.className =
-            "option";
-
-
-          if (
-            answers[question.id] ===
-            option.key
-          ) {
-
-            button.classList.add(
-              "selected"
-            );
-          }
-
-
-          button.innerHTML =
-            `<span class="option-label">
-              ${labels[i]}
-            </span>
-            ${escapeHtml(option.text)}`;
-
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              selectAnswer(
-                question.id,
-                option.key,
-                button
-              );
-
-            }
-          );
-
-
-          optionsContainer.appendChild(
-            button
-          );
+          updated_at:
+            serverTimestamp()
 
         }
       );
 
 
-      prevBtn.disabled =
-        index === 0;
+      examStarted = false;
 
 
-      if (
-        index ===
-        selectedQuestions.length - 1
-      ) {
-
-        nextBtn.classList.add(
-          "hidden"
-        );
-
-        submitBtn.classList.remove(
-          "hidden"
-        );
-
-      } else {
-
-        nextBtn.classList.remove(
-          "hidden"
-        );
-
-        submitBtn.classList.add(
-          "hidden"
-        );
-
-      }
+      removeSecurityListeners();
 
 
-      updateAnsweredCounter();
+      /*
+        Result page can use attemptId
+        to show this exact attempt.
+      */
+
+      const resultUrl =
+        `result.html?quizId=${encodeURIComponent(quizId)}&attemptId=${encodeURIComponent(attemptId)}`;
 
 
-      // ========================================
-      // QUESTION TIME
-      // ========================================
-
-      const perQuestionTime =
-        Number(
-          quiz.question_time_seconds ||
-          30
-        );
+      location.href = resultUrl;
 
 
-      questionSecondsLeft =
-        perQuestionTime;
+    }catch(error){
+
+      console.error(error);
+
+      submitting = false;
 
 
-      updateQuestionTimer();
-
-
-      questionTimerInterval =
-        setInterval(
-          () => {
-
-            questionSecondsLeft--;
-
-            updateQuestionTimer();
-
-
-            if (
-              questionSecondsLeft <= 0
-            ) {
-
-              clearInterval(
-                questionTimerInterval
-              );
-
-
-              autoNextQuestion();
-
-            }
-
-          },
-          1000
-        );
-
-    }
-
-
-    // ==========================================
-    // HTML ESCAPE
-    // ==========================================
-
-    function escapeHtml(value) {
-
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-    }
-
-
-    // ==========================================
-    // SELECT ANSWER
-    // ==========================================
-
-    function selectAnswer(
-      questionId,
-      answer,
-      clickedButton
-    ) {
-
-      answers[questionId] =
-        answer;
-
-
-      document
-        .querySelectorAll(".option")
-        .forEach(
-          button =>
-            button.classList.remove(
-              "selected"
-            )
-        );
-
-
-      clickedButton.classList.add(
-        "selected"
+      showWarning(
+        "পরীক্ষা জমা দিতে সমস্যা হয়েছে। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
       );
 
+    }
 
-      updateAnsweredCounter();
+  }
 
-      saveProgress();
 
+  /* =========================================================
+     SECURITY / ANTI-CHEAT WARNINGS
+  ========================================================= */
+
+  function handleVisibilityChange(){
+
+    if(
+      !examStarted ||
+      submitting
+    ){
+
+      return;
     }
 
 
-    // ==========================================
-    // ANSWER COUNT
-    // ==========================================
+    if(document.hidden){
 
-    function updateAnsweredCounter() {
-
-      const count =
-        Object.keys(answers).length;
+      securityWarnings++;
 
 
-      answeredCounter.textContent =
-        "উত্তর দেওয়া: " +
-        count;
+      saveAttemptProgress();
+
+
+      showWarning(
+        `পরীক্ষার সময় আপনি এই পেজ থেকে অন্যত্র গিয়েছেন। এটি নিরাপত্তা সতর্কতা হিসেবে গণনা করা হয়েছে। মোট সতর্কতা: ${securityWarnings}`
+      );
 
     }
 
-
-    // ==========================================
-    // QUESTION TIMER
-    // ==========================================
-
-    function updateQuestionTimer() {
-
-      questionTimer.textContent =
-        questionSecondsLeft +
-        " সেকেন্ড";
+  }
 
 
-      if (
-        questionSecondsLeft <= 5
-      ) {
+  function handleFullscreenChange(){
 
-        questionTimer.style.color =
-          "#ff7f9f";
+    if(
+      !examStarted ||
+      submitting
+    ){
 
-        questionTimer.style.borderColor =
-          "rgba(255,50,90,.4)";
-
-        questionTimer.style.background =
-          "rgba(255,50,90,.10)";
-
-      } else {
-
-        questionTimer.style.color =
-          "#62e9a5";
-
-        questionTimer.style.borderColor =
-          "rgba(47,214,138,.25)";
-
-        questionTimer.style.background =
-          "rgba(47,214,138,.10)";
-
-      }
-
+      return;
     }
 
 
-    // ==========================================
-    // AUTO NEXT
-    // ==========================================
+    if(!document.fullscreenElement){
 
-    function autoNextQuestion() {
+      securityWarnings++;
 
-      if (
-        currentQuestionIndex <
-        selectedQuestions.length - 1
-      ) {
 
-        showQuestion(
-          currentQuestionIndex + 1
-        );
+      saveAttemptProgress();
 
-      } else {
 
-        submitExam(
-          true
-        );
-
-      }
+      showWarning(
+        `পূর্ণস্ক্রিন থেকে বের হওয়া হয়েছে। নিরাপত্তা সতর্কতা গণনা করা হয়েছে। মোট সতর্কতা: ${securityWarnings}`
+      );
 
     }
 
+  }
 
-    // ==========================================
-    // NEXT
-    // ==========================================
 
-    nextBtn.addEventListener(
-      "click",
-      () => {
+  function handleBeforeUnload(event){
 
-        if (
-          currentQuestionIndex <
-          selectedQuestions.length - 1
-        ) {
+    if(
+      examStarted &&
+      !submitting
+    ){
 
-          showQuestion(
-            currentQuestionIndex + 1
-          );
+      /*
+        Browser normally controls this warning.
+      */
 
-        }
+      event.preventDefault();
 
-      }
+      event.returnValue = "";
+
+    }
+
+  }
+
+
+  function installSecurityListeners(){
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
     );
 
 
-    // ==========================================
-    // PREVIOUS
-    // ==========================================
-
-    prevBtn.addEventListener(
-      "click",
-      () => {
-
-        if (
-          currentQuestionIndex > 0
-        ) {
-
-          showQuestion(
-            currentQuestionIndex - 1
-          );
-
-        }
-
-      }
+    document.addEventListener(
+      "fullscreenchange",
+      handleFullscreenChange
     );
 
-
-    // ==========================================
-    // TOTAL TIMER
-    // ==========================================
-
-    function startTotalTimer() {
-
-      updateTotalTimer();
-
-
-      totalTimerInterval =
-        setInterval(
-          () => {
-
-            totalSecondsLeft--;
-
-            updateTotalTimer();
-
-
-            if (
-              totalSecondsLeft <= 0
-            ) {
-
-              clearInterval(
-                totalTimerInterval
-              );
-
-
-              submitExam(
-                true
-              );
-
-            }
-
-          },
-          1000
-        );
-
-    }
-
-
-    function updateTotalTimer() {
-
-      const minutes =
-        Math.floor(
-          totalSecondsLeft / 60
-        );
-
-
-      const seconds =
-        totalSecondsLeft % 60;
-
-
-      totalTimer.textContent =
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0");
-
-    }
-
-
-    // ==========================================
-    // SAVE PROGRESS
-    // ==========================================
-
-    async function saveProgress() {
-
-      if (!attemptRef) return;
-
-
-      try {
-
-        await updateDoc(
-          attemptRef,
-          {
-            answers:
-              answers,
-
-            current_question:
-              currentQuestionIndex,
-
-            updated_at:
-              serverTimestamp()
-          }
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Progress save error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    // ==========================================
-    // SUBMIT
-    // ==========================================
-
-    submitBtn.addEventListener(
-      "click",
-      () => {
-
-        submitExam(false);
-
-      }
-    );
-
-
-    async function submitExam(
-      automatic
-    ) {
-
-      if (!examStarted) return;
-
-
-      clearInterval(
-        questionTimerInterval
-      );
-
-      clearInterval(
-        totalTimerInterval
-      );
-
-
-      if (!automatic) {
-
-        const ok =
-          confirm(
-            "আপনি কি নিশ্চিতভাবে পরীক্ষা জমা দিতে চান?"
-          );
-
-
-        if (!ok) {
-
-          startTotalTimer();
-
-          showQuestion(
-            currentQuestionIndex
-          );
-
-          return;
-
-        }
-
-      }
-
-
-      try {
-
-        await updateDoc(
-          attemptRef,
-          {
-            status:
-              "submitted",
-
-            answers:
-              answers,
-
-            submitted_at:
-              serverTimestamp(),
-
-            updated_at:
-              serverTimestamp()
-          }
-        );
-
-
-        window.location.href =
-          "result.html";
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "পরীক্ষা জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
-        );
-
-      }
-
-    }
-
-
-    // ==========================================
-    // ANTI-CHEAT / WARNING
-    // ==========================================
-
-    function enableAntiCheat() {
-
-      document.addEventListener(
-        "visibilitychange",
-        () => {
-
-          if (
-            document.hidden &&
-            examStarted &&
-            !warningShown
-          ) {
-
-            warningShown = true;
-
-
-            alert(
-              "⚠️ সতর্কতা\n\n" +
-              "পরীক্ষা চলাকালে আপনি পরীক্ষার পৃষ্ঠা থেকে বের হয়েছেন। " +
-              "অনুগ্রহ করে পরীক্ষার পৃষ্ঠাতেই থাকুন।"
-            );
-
-          }
-
-        }
-      );
-
-
-      document.addEventListener(
-        "fullscreenchange",
-        () => {
-
-          if (
-            examStarted &&
-            !document.fullscreenElement
-          ) {
-
-            console.log(
-              "Fullscreen থেকে বের হয়েছে।"
-            );
-
-          }
-
-        }
-      );
-
-    }
-
-
-    // ==========================================
-    // PAGE EXIT WARNING
-    // ==========================================
 
     window.addEventListener(
       "beforeunload",
-      (event) => {
-
-        if (examStarted) {
-
-          event.preventDefault();
-
-          event.returnValue = "";
-
-        }
-
-      }
+      handleBeforeUnload
     );
 
-  </script>
+  }
+
+
+  function removeSecurityListeners(){
+
+    document.removeEventListener(
+      "visibilitychange",
+      handleVisibilityChange
+    );
+
+
+    document.removeEventListener(
+      "fullscreenchange",
+      handleFullscreenChange
+    );
+
+
+    window.removeEventListener(
+      "beforeunload",
+      handleBeforeUnload
+    );
+
+  }
+
+
+  /* =========================================================
+     FULLSCREEN
+  ========================================================= */
+
+  async function requestFullscreenSafe(){
+
+    try{
+
+      if(
+        !document.fullscreenElement &&
+        document.documentElement.requestFullscreen
+      ){
+
+        await document.documentElement.requestFullscreen();
+
+      }
+
+    }catch(error){
+
+      /*
+        Browser may reject fullscreen.
+        Exam continues normally.
+      */
+
+      console.warn(
+        "Fullscreen request rejected:",
+        error
+      );
+    }
+
+  }
+
+
+  /* =========================================================
+     WARNING MODAL
+  ========================================================= */
+
+  function showWarning(message){
+
+    $("warningText").textContent =
+      message;
+
+    $("warningModal").classList.add("show");
+
+  }
+
+
+  window.closeWarning = function(){
+
+    $("warningModal").classList.remove("show");
+
+  };
+
+
+  /* =========================================================
+     ERROR
+  ========================================================= */
+
+  function showError(title,message){
+
+    hide("loadingScreen");
+    hide("preExamScreen");
+    hide("examScreen");
+
+    $("errorTitle").textContent =
+      title || "সমস্যা হয়েছে";
+
+    $("errorText").textContent =
+      message || "অনুগ্রহ করে আবার চেষ্টা করুন।";
+
+    show("errorScreen");
+
+  }
+
+
+  /* =========================================================
+     FIREBASE ERROR MESSAGE
+  ========================================================= */
+
+  function getFirebaseErrorMessage(error){
+
+    const code =
+      error?.code || "";
+
+
+    if(
+      code.includes("permission-denied")
+    ){
+
+      return "Firebase অনুমতি পাওয়া যায়নি। Firestore Security Rules পরীক্ষা করতে হবে।";
+
+    }
+
+
+    if(
+      code.includes("network")
+    ){
+
+      return "ইন্টারনেট সংযোগে সমস্যা হয়েছে।";
+
+    }
+
+
+    return (
+      error?.message ||
+      "অজানা একটি সমস্যা হয়েছে।"
+    );
+
+  }
+
+
+  /* =========================================================
+     PAGE LEAVE SAFETY
+  ========================================================= */
+
+  window.addEventListener(
+    "pagehide",
+    () => {
+
+      if(
+        examStarted &&
+        !submitting
+      ){
+
+        /*
+          Best-effort progress save.
+          Firestore may not complete during
+          pagehide; beforeunload warning
+          is the main protection.
+        */
+
+        saveAttemptProgress();
+
+      }
+
+    }
+  );
+
+
+</script>
 
 </body>
 </html>
