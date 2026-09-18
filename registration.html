@@ -1269,10 +1269,12 @@ async function() {
 
   } catch (error) {
 
-    console.error(error);
+    console.error("REGISTRATION ERROR:", error);
 
     showRegistrationMessage(
-      "❌ রেজিস্ট্রেশন করা যায়নি। আবার চেষ্টা করুন।",
+      "❌ রেজিস্ট্রেশন করা যায়নি।\n" +
+      "Code: " + (error.code || "unknown") + "\n" +
+      "Message: " + (error.message || "unknown"),
       "error"
     );
 
