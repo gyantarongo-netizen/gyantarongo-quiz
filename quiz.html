@@ -108,8 +108,6 @@
       line-height:1.8;
     }
 
-    /* ROLL BOX */
-
     .login-card{
       max-width:650px;
       margin:0 auto 35px;
@@ -186,6 +184,11 @@
       cursor:pointer;
     }
 
+    .verify-btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
     .verify-message{
       display:none;
       margin-top:14px;
@@ -199,7 +202,17 @@
       line-height:1.7;
     }
 
-    /* QUIZ LIST */
+    .verify-message.success{
+      background:rgba(34,197,94,.08);
+      border-color:rgba(34,197,94,.20);
+      color:#7ff0aa;
+    }
+
+    .verify-message.error{
+      background:rgba(239,68,68,.08);
+      border-color:rgba(239,68,68,.20);
+      color:#ff9b9b;
+    }
 
     .section-heading{
       display:flex;
@@ -307,7 +320,7 @@
     }
 
     .start-btn{
-      display:none;
+      display:block;
       width:100%;
       padding:13px;
       border-radius:12px;
@@ -317,8 +330,6 @@
       font-size:13px;
       font-weight:800;
     }
-
-    /* NOTICE */
 
     .notice{
       margin-bottom:80px;
@@ -332,7 +343,28 @@
       line-height:1.8;
     }
 
-    /* MOBILE */
+    .loading{
+      grid-column:1/-1;
+      padding:30px;
+      border-radius:18px;
+      background:#0d1128;
+      border:1px solid rgba(255,255,255,.06);
+      text-align:center;
+      color:#858ca9;
+      font-size:13px;
+    }
+
+    .empty{
+      grid-column:1/-1;
+      padding:30px;
+      border-radius:18px;
+      background:#0d1128;
+      border:1px solid rgba(255,255,255,.06);
+      text-align:center;
+      color:#858ca9;
+      font-size:13px;
+      line-height:1.8;
+    }
 
     .mobile-nav{
       display:none;
@@ -421,8 +453,6 @@
 
 <body>
 
-  <!-- HEADER -->
-
   <header>
     <div class="container header-inner">
 
@@ -446,8 +476,6 @@
   </header>
 
 
-  <!-- HERO -->
-
   <section class="hero">
 
     <div class="container">
@@ -467,8 +495,6 @@
 
   </section>
 
-
-  <!-- ROLL VERIFICATION -->
 
   <main class="container">
 
@@ -500,7 +526,7 @@
         <input
           type="text"
           id="rollInput"
-          placeholder="যেমন: GT-26012345"
+          placeholder="যেমন: GT-26-123456"
           autocomplete="off">
 
       </div>
@@ -508,7 +534,7 @@
 
       <button
         class="verify-btn"
-        onclick="verifyRoll()">
+        id="verifyBtn">
 
         🔐 Roll যাচাই করুন
 
@@ -518,18 +544,10 @@
       <div
         class="verify-message"
         id="verifyMessage">
-
-        ⚠️ বর্তমানে Roll যাচাই করার জন্য
-        Database সংযোগ প্রয়োজন।
-        Supabase যুক্ত হলে এখানে আপনার
-        Registration ও Approval স্বয়ংক্রিয়ভাবে যাচাই হবে।
-
       </div>
 
     </div>
 
-
-    <!-- QUIZ LIST -->
 
     <div class="section-heading">
 
@@ -538,151 +556,22 @@
       </h2>
 
       <span>
-        Approved Quiz
+        অনুমোদিত কুইজ
       </span>
 
     </div>
 
 
-    <div class="quiz-grid">
+    <div
+      class="quiz-grid"
+      id="quizGrid">
 
-
-      <!-- QUIZ 1 -->
-
-      <article class="quiz-card">
-
-        <div class="quiz-top">
-
-          <div class="quiz-icon">
-            🧠
-          </div>
-
-          <div>
-
-            <small>
-              সাধারণ জ্ঞান
-            </small>
-
-            <h3>
-              বাংলাদেশ ও বিশ্ব সাধারণ জ্ঞান কুইজ
-            </h3>
-
-          </div>
-
-        </div>
-
-
-        <div class="info-grid">
-
-          <div class="info">
-            <span>📅 পরীক্ষা</span>
-            <strong>২৫ অক্টোবর ২০২৬</strong>
-          </div>
-
-          <div class="info">
-            <span>⏱️ সময়</span>
-            <strong>২০ মিনিট</strong>
-          </div>
-
-          <div class="info">
-            <span>❓ প্রশ্ন</span>
-            <strong>৫০টি</strong>
-          </div>
-
-          <div class="info">
-            <span>💰 ফি</span>
-            <strong>৳১০০</strong>
-          </div>
-
-        </div>
-
-
-        <div class="locked" id="lock1">
-          🔒 Roll যাচাই করার পর পরীক্ষা শুরু হবে
-        </div>
-
-        <a
-          href="exam.html"
-          class="start-btn"
-          id="start1">
-
-          🚀 পরীক্ষা শুরু করুন
-
-        </a>
-
-      </article>
-
-
-      <!-- QUIZ 2 -->
-
-      <article class="quiz-card">
-
-        <div class="quiz-top">
-
-          <div class="quiz-icon">
-            📖
-          </div>
-
-          <div>
-
-            <small>
-              বাংলা
-            </small>
-
-            <h3>
-              বাংলা ভাষা ও সাহিত্য কুইজ
-            </h3>
-
-          </div>
-
-        </div>
-
-
-        <div class="info-grid">
-
-          <div class="info">
-            <span>📅 পরীক্ষা</span>
-            <strong>৩০ অক্টোবর ২০২৬</strong>
-          </div>
-
-          <div class="info">
-            <span>⏱️ সময়</span>
-            <strong>২০ মিনিট</strong>
-          </div>
-
-          <div class="info">
-            <span>❓ প্রশ্ন</span>
-            <strong>৪০টি</strong>
-          </div>
-
-          <div class="info">
-            <span>💰 ফি</span>
-            <strong>ফ্রি</strong>
-          </div>
-
-        </div>
-
-
-        <div class="locked" id="lock2">
-          🔒 Roll যাচাই করার পর পরীক্ষা শুরু হবে
-        </div>
-
-        <a
-          href="exam.html"
-          class="start-btn"
-          id="start2">
-
-          🚀 পরীক্ষা শুরু করুন
-
-        </a>
-
-      </article>
-
+      <div class="loading">
+        ⏳ আপনার কুইজ লোড হচ্ছে...
+      </div>
 
     </div>
 
-
-    <!-- NOTICE -->
 
     <div class="notice">
 
@@ -700,8 +589,6 @@
 
   </main>
 
-
-  <!-- MOBILE NAV -->
 
   <nav class="mobile-nav">
 
@@ -725,7 +612,7 @@
       ফলাফল
     </a>
 
-    <a href="#">
+    <a href="profile.html">
       <span>👤</span>
       প্রোফাইল
     </a>
@@ -733,44 +620,566 @@
   </nav>
 
 
-  <script>
+  <script type="module">
 
-    function verifyRoll(){
+    import { auth, db } from "./firebase-config.js";
 
-      const roll =
-        document.getElementById("rollInput").value.trim();
+    import {
+      collection,
+      query,
+      where,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-      const message =
-        document.getElementById("verifyMessage");
 
-      if(roll === ""){
+    const rollInput =
+      document.getElementById("rollInput");
 
-        message.style.display = "block";
+    const verifyBtn =
+      document.getElementById("verifyBtn");
 
-        message.textContent =
-          "⚠️ অনুগ্রহ করে আপনার Registration Roll Number লিখুন।";
+    const verifyMessage =
+      document.getElementById("verifyMessage");
 
-        return;
+    const quizGrid =
+      document.getElementById("quizGrid");
+
+
+    function showMessage(text, type = "") {
+
+      verifyMessage.style.display = "block";
+
+      verifyMessage.className =
+        "verify-message " + type;
+
+      verifyMessage.textContent = text;
+    }
+
+
+    function formatDate(timestamp) {
+
+      if (!timestamp) {
+        return "তারিখ নির্ধারিত নয়";
       }
 
-      /*
-        এটি এখন Demo Verification।
+      try {
 
-        Supabase সংযোগ করার পর এখানে:
-        1. Roll খুঁজবে
-        2. Registration আছে কি না দেখবে
-        3. Paid হলে Payment Approved কি না দেখবে
-        4. Quiz Approved কি না দেখবে
-        5. আগে পরীক্ষা দিয়েছে কি না দেখবে
-        6. সব ঠিক থাকলে Exam খুলবে
-      */
+        const date =
+          timestamp.toDate();
 
-      message.style.display = "block";
+        return date.toLocaleDateString(
+          "bn-BD",
+          {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          }
+        );
 
-      message.textContent =
-        "ℹ️ Roll যাচাইয়ের Database ব্যবস্থা এখনো সংযুক্ত করা হয়নি। Supabase সংযোগের পর আপনার Roll অনুযায়ী শুধু অনুমোদিত কুইজই এখানে খুলবে।";
+      } catch {
+
+        return "তারিখ নির্ধারিত নয়";
+
+      }
+    }
+
+
+    function formatFee(fee) {
+
+      const amount =
+        Number(fee ?? 0);
+
+      if (amount <= 0) {
+        return "ফ্রি";
+      }
+
+      return "৳" + amount;
+    }
+
+
+    function quizIcon(categoryName = "") {
+
+      const name =
+        String(categoryName).toLowerCase();
+
+      if (
+        name.includes("ইসলাম") ||
+        name.includes("সিরাত") ||
+        name.includes("কোরআন") ||
+        name.includes("হাদিস")
+      ) {
+        return "☪️";
+      }
+
+      if (
+        name.includes("বাংলা") ||
+        name.includes("সাহিত্য")
+      ) {
+        return "📖";
+      }
+
+      if (
+        name.includes("একাডেমিক")
+      ) {
+        return "🎓";
+      }
+
+      return "🧠";
+    }
+
+
+    function showEmptyQuiz() {
+
+      quizGrid.innerHTML = `
+        <div class="empty">
+          🔒 এখনো কোনো অনুমোদিত কুইজ পাওয়া যায়নি।<br>
+          আপনার রেজিস্ট্রেশন অনুমোদিত হলে এখানে কুইজ দেখা যাবে।
+        </div>
+      `;
 
     }
+
+
+    function createQuizCard(registration) {
+
+      const quizName =
+        registration.quiz_name ||
+        "নির্ধারিত কুইজ";
+
+      const categoryName =
+        registration.category_name ||
+        "কুইজ প্রতিযোগিতা";
+
+      const quizId =
+        registration.quiz_id || "";
+
+      const roll =
+        registration.roll_number || "";
+
+      const card =
+        document.createElement("article");
+
+      card.className = "quiz-card";
+
+      card.innerHTML = `
+
+        <div class="quiz-top">
+
+          <div class="quiz-icon">
+            ${quizIcon(categoryName)}
+          </div>
+
+          <div>
+
+            <small>
+              ${categoryName}
+            </small>
+
+            <h3>
+              ${quizName}
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+          <div class="info">
+            <span>🎫 রোল</span>
+            <strong>${roll}</strong>
+          </div>
+
+          <div class="info">
+            <span>📅 পরীক্ষা</span>
+            <strong>
+              ${formatDate(registration.exam_start_at)}
+            </strong>
+          </div>
+
+          <div class="info">
+            <span>⏱️ সময়</span>
+            <strong>
+              ${registration.duration_minutes ?? "—"} মিনিট
+            </strong>
+          </div>
+
+          <div class="info">
+            <span>💰 ফি</span>
+            <strong>
+              ${formatFee(registration.fee)}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="locked"
+             id="lock-${registration.id}">
+
+          🔒 Roll যাচাই করুন
+
+        </div>
+
+
+        <a
+          href="exam.html?roll=${encodeURIComponent(roll)}&quiz=${encodeURIComponent(quizId)}"
+          class="start-btn"
+          id="start-${registration.id}"
+          style="display:none;">
+
+          🚀 পরীক্ষা শুরু করুন
+
+        </a>
+
+      `;
+
+      return card;
+    }
+
+
+    async function loadMyRegistrations() {
+
+      const user =
+        auth.currentUser;
+
+      if (!user) {
+
+        quizGrid.innerHTML = `
+          <div class="empty">
+            🔐 আপনার কুইজ দেখতে আগে আপনার শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      try {
+
+        const registrationsRef =
+          collection(db, "quiz_registrations");
+
+
+        const q =
+          query(
+            registrationsRef,
+            where(
+              "student_uid",
+              "==",
+              user.uid
+            )
+          );
+
+
+        const snapshot =
+          await getDocs(q);
+
+
+        quizGrid.innerHTML = "";
+
+
+        const approved =
+          [];
+
+
+        snapshot.forEach((docSnap) => {
+
+          const data =
+            docSnap.data();
+
+
+          if (
+            data.status === "approved"
+          ) {
+
+            approved.push({
+              id: docSnap.id,
+              ...data
+            });
+
+          }
+
+        });
+
+
+        if (approved.length === 0) {
+
+          showEmptyQuiz();
+          return;
+
+        }
+
+
+        approved.forEach((registration) => {
+
+          quizGrid.appendChild(
+            createQuizCard(registration)
+          );
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "Registration load error:",
+          error
+        );
+
+        quizGrid.innerHTML = `
+          <div class="empty">
+            ❌ আপনার কুইজ লোড করতে সমস্যা হয়েছে।<br>
+            কিছুক্ষণ পর আবার চেষ্টা করুন।
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    async function verifyRoll() {
+
+      const roll =
+        rollInput.value.trim();
+
+
+      if (!roll) {
+
+        showMessage(
+          "⚠️ অনুগ্রহ করে আপনার Registration Roll Number লিখুন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      const user =
+        auth.currentUser;
+
+
+      if (!user) {
+
+        showMessage(
+          "🔐 আগে আপনার শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      verifyBtn.disabled = true;
+
+      verifyBtn.textContent =
+        "⏳ Roll যাচাই হচ্ছে...";
+
+
+      try {
+
+        const registrationsRef =
+          collection(db, "quiz_registrations");
+
+
+        const q =
+          query(
+            registrationsRef,
+            where(
+              "student_uid",
+              "==",
+              user.uid
+            ),
+            where(
+              "roll_number",
+              "==",
+              roll
+            )
+          );
+
+
+        const snapshot =
+          await getDocs(q);
+
+
+        if (snapshot.empty) {
+
+          showMessage(
+            "❌ এই Roll Number আপনার অ্যাকাউন্টের সঙ্গে মিলছে না।",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        let registration = null;
+
+
+        snapshot.forEach((docSnap) => {
+
+          registration = {
+            id: docSnap.id,
+            ...docSnap.data()
+          };
+
+        });
+
+
+        if (!registration) {
+
+          showMessage(
+            "❌ রেজিস্ট্রেশন তথ্য পাওয়া যায়নি।",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          registration.status === "pending"
+        ) {
+
+          showMessage(
+            "⏳ আপনার রেজিস্ট্রেশন এখনো অনুমোদিত হয়নি। Admin অনুমোদনের পর পরীক্ষা দিতে পারবেন।",
+            ""
+          );
+
+          return;
+
+        }
+
+
+        if (
+          registration.status === "rejected"
+        ) {
+
+          showMessage(
+            "❌ আপনার রেজিস্ট্রেশনটি অনুমোদিত হয়নি।",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          registration.status !== "approved"
+        ) {
+
+          showMessage(
+            "⏳ আপনার রেজিস্ট্রেশনের অবস্থা এখনো নিশ্চিত নয়।",
+            ""
+          );
+
+          return;
+
+        }
+
+
+        showMessage(
+          "✅ Roll Number যাচাই সফল হয়েছে। আপনার অনুমোদিত কুইজ নিচে দেখানো হয়েছে।",
+          "success"
+        );
+
+
+        const allCards =
+          document.querySelectorAll(".quiz-card");
+
+
+        allCards.forEach((card) => {
+
+          const startBtn =
+            card.querySelector(".start-btn");
+
+          const locked =
+            card.querySelector(".locked");
+
+
+          if (
+            startBtn &&
+            startBtn.href.includes(
+              encodeURIComponent(
+                registration.roll_number
+              )
+            )
+          ) {
+
+            if (locked) {
+              locked.style.display = "none";
+            }
+
+            startBtn.style.display =
+              "block";
+
+          }
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "Roll verification error:",
+          error
+        );
+
+
+        showMessage(
+          "❌ Roll যাচাই করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+          "error"
+        );
+
+      } finally {
+
+        verifyBtn.disabled = false;
+
+        verifyBtn.textContent =
+          "🔐 Roll যাচাই করুন";
+
+      }
+
+    }
+
+
+    verifyBtn.addEventListener(
+      "click",
+      verifyRoll
+    );
+
+
+    rollInput.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          verifyRoll();
+
+        }
+
+      }
+    );
+
+
+    auth.onAuthStateChanged(
+      async () => {
+
+        await loadMyRegistrations();
+
+      }
+    );
 
   </script>
 
