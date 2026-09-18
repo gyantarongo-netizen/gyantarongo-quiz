@@ -1369,3 +1369,1247 @@ function escapeAttribute(value) {
 }
 
 </script>
+</head>
+
+<body>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#151a35;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f7ff;
+  --muted:#a9b0c7;
+  --border:rgba(255,255,255,.09);
+}
+
+body{
+  font-family:"Noto Sans Bengali","Noto Sans",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(139,61,255,.18),transparent 32%),
+    radial-gradient(circle at top left,rgba(236,63,167,.12),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(6,8,23,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  padding:13px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-box{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 20px rgba(139,61,255,.3);
+}
+
+.logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand-text{
+  font-size:20px;
+  font-weight:800;
+}
+
+.brand-sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.back-btn{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  padding:8px 13px;
+  border-radius:10px;
+  font-size:13px;
+}
+
+/* MAIN */
+
+.container{
+  width:min(1050px,calc(100% - 28px));
+  margin:25px auto;
+}
+
+.page-title{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.page-title h1{
+  font-size:28px;
+  font-weight:800;
+  background:linear-gradient(90deg,#fff,var(--pink),#b98cff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.page-title p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:7px;
+}
+
+/* MESSAGE */
+
+.message{
+  display:none;
+  padding:13px 15px;
+  border-radius:13px;
+  margin-bottom:16px;
+  font-size:14px;
+  border:1px solid var(--border);
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:rgba(255,70,90,.10);
+  border-color:rgba(255,70,90,.3);
+  color:#ffb8c0;
+}
+
+.message.success{
+  background:rgba(47,214,138,.10);
+  border-color:rgba(47,214,138,.3);
+  color:#7ff0b7;
+}
+
+.message.info{
+  background:rgba(139,61,255,.10);
+  border-color:rgba(139,61,255,.3);
+  color:#cbb5ff;
+}
+
+/* AUTH */
+
+.auth-card,
+.profile-card,
+.quiz-card{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.055),
+    rgba(255,255,255,.025)
+  );
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+.auth-card{
+  max-width:620px;
+  margin:auto;
+  padding:22px;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  background:rgba(0,0,0,.2);
+  padding:5px;
+  border-radius:13px;
+  margin-bottom:20px;
+}
+
+.tab-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:11px;
+  border-radius:10px;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:700;
+}
+
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;
+}
+
+.form-title{
+  font-size:19px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  color:#d9dded;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid var(--border);
+  outline:none;
+  background:#0b0f22;
+  color:#fff;
+  border-radius:11px;
+  padding:12px 13px;
+  font-family:inherit;
+  font-size:14px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(139,61,255,.10);
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.primary-btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:13px 16px;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 22px rgba(139,61,255,.22);
+}
+
+.primary-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.secondary-btn{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  margin-top:9px;
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  font-family:inherit;
+  cursor:pointer;
+}
+
+/* USER */
+
+.profile-card{
+  padding:18px;
+  margin-bottom:22px;
+}
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+}
+
+.profile-head h2{
+  font-size:18px;
+}
+
+.profile-head p{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.user-info{
+  line-height:2;
+  font-size:13px;
+  color:#dfe3f3;
+  padding:13px;
+  background:rgba(0,0,0,.18);
+  border-radius:12px;
+}
+
+/* QUIZ */
+
+.section-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0 13px;
+}
+
+.section-heading h2{
+  font-size:19px;
+}
+
+.section-heading span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.quiz-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.quiz-card{
+  overflow:hidden;
+}
+
+.quiz-image{
+  height:170px;
+  background:#090d1e;
+  overflow:hidden;
+}
+
+.quiz-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.quiz-image-placeholder{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+  background:
+    radial-gradient(circle,var(--purple),transparent 55%),
+    #090d1e;
+}
+
+.quiz-body{
+  padding:16px;
+}
+
+.quiz-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.category{
+  color:#bca0ff;
+  font-size:12px;
+  margin-bottom:13px;
+}
+
+.quiz-info{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-bottom:13px;
+}
+
+.info-item{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:8px 5px;
+  text-align:center;
+}
+
+.info-label{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.info-value{
+  font-size:12px;
+  font-weight:700;
+  margin-top:3px;
+}
+
+.fee-free{
+  color:var(--green);
+}
+
+.fee-paid{
+  color:var(--gold);
+}
+
+.details{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  min-height:42px;
+  margin-bottom:14px;
+}
+
+/* LOADING */
+
+.loading{
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+}
+
+.empty{
+  text-align:center;
+  padding:35px 20px;
+  background:rgba(255,255,255,.03);
+  border:1px dashed var(--border);
+  border-radius:16px;
+  color:var(--muted);
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(7px);
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(560px,100%);
+  max-height:92vh;
+  overflow-y:auto;
+  background:#0d1126;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+.modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.modal-head h2{
+  font-size:20px;
+}
+
+.modal-head p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.close-btn{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.payment-box{
+  margin-top:12px;
+  padding:14px;
+  border:1px solid rgba(255,178,28,.2);
+  background:rgba(255,178,28,.05);
+  border-radius:14px;
+}
+
+.payment-title{
+  color:var(--gold);
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:80;
+  background:rgba(7,9,22,.94);
+  backdrop-filter:blur(15px);
+  border-top:1px solid var(--border);
+}
+
+.bottom-inner{
+  max-width:650px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.bottom-link{
+  text-align:center;
+  padding:9px 3px 8px;
+  color:#8991aa;
+  font-size:10px;
+}
+
+.bottom-link span{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
+}
+
+.bottom-link.active{
+  color:#fff;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .page-title h1{
+    font-size:23px;
+  }
+
+  .quiz-grid{
+    grid-template-columns:1fr;
+  }
+
+  .two-col{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .quiz-info{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .quiz-image{
+    height:150px;
+  }
+
+  .container{
+    width:min(100% - 20px,1050px);
+  }
+
+  .auth-card{
+    padding:16px;
+  }
+
+  .brand-text{
+    font-size:18px;
+  }
+
+  .brand-sub{
+    font-size:9px;
+  }
+}
+</style>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <a href="index.html" class="brand">
+
+      <div class="logo-box">
+        <img
+          src="file_0000000031b8821193be8a110779a350.png"
+          alt="জ্ঞানতরঙ্গ লোগো">
+      </div>
+
+      <div>
+        <div class="brand-text">
+          জ্ঞানতরঙ্গ
+        </div>
+
+        <div class="brand-sub">
+          শিখি · জানি · এগিয়ে যাই
+        </div>
+      </div>
+
+    </a>
+
+    <a href="index.html" class="back-btn">
+      ← হোম
+    </a>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <div class="page-title">
+
+    <h1>
+      কুইজে রেজিস্ট্রেশন
+    </h1>
+
+    <p>
+      আগে Student Account তৈরি করুন, তারপর পছন্দের কুইজে রেজিস্ট্রেশন করুন
+    </p>
+
+  </div>
+
+
+  <div
+    id="message"
+    class="message">
+  </div>
+
+
+  <!-- AUTH SECTION -->
+
+  <section
+    id="authSection"
+    class="auth-card">
+
+    <div class="tabs">
+
+      <button
+        id="loginTab"
+        class="tab-btn active"
+        onclick="showAuthTab('login')">
+
+        🔐 লগইন
+
+      </button>
+
+      <button
+        id="signupTab"
+        class="tab-btn"
+        onclick="showAuthTab('signup')">
+
+        📝 নতুন অ্যাকাউন্ট
+
+      </button>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <div id="loginForm">
+
+      <div class="form-title">
+        Student Account-এ লগইন করুন
+      </div>
+
+      <div class="field">
+
+        <label>
+          ইমেইল *
+        </label>
+
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="আপনার ইমেইল লিখুন">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          পাসওয়ার্ড *
+        </label>
+
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="পাসওয়ার্ড লিখুন">
+
+      </div>
+
+
+      <button
+        id="loginBtn"
+        class="primary-btn"
+        onclick="loginStudent()">
+
+        🔐 লগইন করুন
+
+      </button>
+
+    </div>
+
+
+    <!-- SIGNUP -->
+
+    <div
+      id="signupForm"
+      class="hidden">
+
+      <div class="form-title">
+        নতুন Student Account তৈরি করুন
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          পূর্ণ নাম *
+        </label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="আপনার পূর্ণ নাম">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          মোবাইল নম্বর *
+        </label>
+
+        <input
+          id="signupMobile"
+          type="tel"
+          placeholder="01XXXXXXXXX">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ইমেইল *
+        </label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          placeholder="example@gmail.com">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          প্রতিষ্ঠান
+        </label>
+
+        <input
+          id="signupInstitution"
+          type="text"
+          placeholder="স্কুল / কলেজ / মাদ্রাসা">
+
+      </div>
+
+
+      <div class="two-col">
+
+        <div class="field">
+
+          <label>
+            শ্রেণি
+          </label>
+
+          <input
+            id="signupClass"
+            type="text"
+            placeholder="যেমন: দশম">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            জেলা
+          </label>
+
+          <input
+            id="signupDistrict"
+            type="text"
+            placeholder="জেলার নাম">
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          বিভাগ
+        </label>
+
+        <select id="signupDivision">
+
+          <option value="">
+            বিভাগ নির্বাচন করুন
+          </option>
+
+          <option>ঢাকা</option>
+          <option>চট্টগ্রাম</option>
+          <option>রাজশাহী</option>
+          <option>খুলনা</option>
+          <option>বরিশাল</option>
+          <option>সিলেট</option>
+          <option>রংপুর</option>
+          <option>ময়মনসিংহ</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="two-col">
+
+        <div class="field">
+
+          <label>
+            পাসওয়ার্ড *
+          </label>
+
+          <input
+            id="signupPassword"
+            type="password"
+            placeholder="কমপক্ষে ৬ অক্ষর">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            পাসওয়ার্ড নিশ্চিত করুন *
+          </label>
+
+          <input
+            id="signupConfirm"
+            type="password"
+            placeholder="আবার লিখুন">
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="signupBtn"
+        class="primary-btn"
+        onclick="signupStudent()">
+
+        🚀 অ্যাকাউন্ট তৈরি করুন
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- USER SECTION -->
+
+  <section
+    id="userSection"
+    class="hidden">
+
+
+    <div class="profile-card">
+
+      <div class="profile-head">
+
+        <div class="avatar">
+          👤
+        </div>
+
+        <div>
+
+          <h2>
+            আপনার Student Profile
+          </h2>
+
+          <p>
+            এই তথ্য আপনার কুইজ রেজিস্ট্রেশনে ব্যবহার হবে
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="userInfo"
+        class="user-info">
+      </div>
+
+    </div>
+
+
+    <div class="section-heading">
+
+      <h2>
+        📚 রেজিস্ট্রেশনের জন্য কুইজ
+      </h2>
+
+      <span>
+        বর্তমানে খোলা
+      </span>
+
+    </div>
+
+
+    <div
+      id="quizLoading"
+      class="loading">
+
+      ⏳ কুইজ লোড হচ্ছে...
+
+    </div>
+
+
+    <div
+      id="quizGrid"
+      class="quiz-grid hidden">
+    </div>
+
+
+    <div
+      id="emptyQuiz"
+      class="empty hidden">
+
+      <div style="font-size:42px;margin-bottom:10px;">
+        📭
+      </div>
+
+      <div style="font-weight:800;color:#fff;margin-bottom:6px;">
+        বর্তমানে কোনো কুইজের রেজিস্ট্রেশন খোলা নেই
+      </div>
+
+      <div>
+        নতুন কুইজের রেজিস্ট্রেশন চালু হলে এখানে দেখা যাবে।
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- REGISTRATION MODAL -->
+
+<div
+  id="registrationModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <div>
+
+        <h2>
+          📝 কুইজ রেজিস্ট্রেশন
+        </h2>
+
+        <p id="modalSubtitle">
+          কুইজ
+        </p>
+
+      </div>
+
+
+      <button
+        class="close-btn"
+        onclick="closeRegistrationModal()">
+
+        ×
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="registrationMessage"
+      class="message">
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        নাম
+      </label>
+
+      <input
+        id="regName"
+        type="text"
+        readonly>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        মোবাইল
+      </label>
+
+      <input
+        id="regMobile"
+        type="text"
+        readonly>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        প্রতিষ্ঠান
+      </label>
+
+      <input
+        id="regInstitution"
+        type="text"
+        readonly>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+
+    <div
+      id="paymentBox"
+      class="payment-box hidden">
+
+      <div class="payment-title">
+        💳 পেমেন্ট তথ্য
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          পেমেন্ট পদ্ধতি *
+        </label>
+
+        <select id="paymentMethod">
+
+          <option value="">
+            নির্বাচন করুন
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          যে নম্বর থেকে টাকা পাঠিয়েছেন *
+        </label>
+
+        <input
+          id="paymentNumber"
+          type="tel"
+          placeholder="01XXXXXXXXX">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Transaction ID *
+        </label>
+
+        <input
+          id="transactionId"
+          type="text"
+          placeholder="Transaction ID">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          পেমেন্ট Screenshot URL
+        </label>
+
+        <input
+          id="paymentScreenshot"
+          type="text"
+          placeholder="ঐচ্ছিক">
+
+      </div>
+
+    </div>
+
+
+    <button
+      id="confirmBtn"
+      class="primary-btn"
+      onclick="confirmRegistration()">
+
+      ✅ রেজিস্ট্রেশন নিশ্চিত করুন
+
+    </button>
+
+
+    <button
+      class="secondary-btn"
+      onclick="closeRegistrationModal()">
+
+      বাতিল
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+  <div class="bottom-inner">
+
+    <a
+      href="index.html"
+      class="bottom-link">
+
+      <span>🏠</span>
+      হোম
+
+    </a>
+
+
+    <a
+      href="quiz.html"
+      class="bottom-link">
+
+      <span>🚀</span>
+      কুইজ
+
+    </a>
+
+
+    <a
+      href="category.html"
+      class="bottom-link">
+
+      <span>📚</span>
+      ক্যাটাগরি
+
+    </a>
+
+
+    <a
+      href="result.html"
+      class="bottom-link">
+
+      <span>🏆</span>
+      ফলাফল
+
+    </a>
+
+
+    <a
+      href="profile.html"
+      class="bottom-link">
+
+      <span>👤</span>
+      প্রোফাইল
+
+    </a>
+
+  </div>
+
+</nav>
+
+
+</body>
+  </html>
