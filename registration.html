@@ -1088,8 +1088,29 @@ async function() {
       );
 
 
-    const existingSnapshot =
-      await getDocs(existingQuery);
+  let existingSnapshot;
+
+try {
+
+  existingSnapshot =
+    await getDocs(existingQuery);
+
+} catch (error) {
+
+  console.error(
+    "ALREADY REGISTERED CHECK ERROR:",
+    error
+  );
+
+  showRegistrationMessage(
+    "❌ রেজিস্ট্রেশন যাচাই করতে Firebase অনুমতি দিচ্ছে না।\n" +
+    "Code: " + (error.code || "unknown") + "\n" +
+    "Message: " + (error.message || "unknown"),
+    "error"
+  );
+
+  return;
+}
 
 
     let alreadyRegistered = false;
