@@ -1,1154 +1,1412 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>জ্ঞানতরঙ্গ | Admin Panel</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg:#060817;
-  --bg2:#090b20;
-  --card:#10142b;
-  --card2:#151a36;
-  --purple:#8b3dff;
-  --pink:#ec3fa7;
-  --green:#2fd68a;
-  --gold:#ffb21c;
-  --blue:#42a5ff;
-  --red:#ff5577;
-  --text:#fff;
-  --muted:#aeb5d6;
-  --border:rgba(255,255,255,.09);
-  --shadow:0 18px 50px rgba(0,0,0,.35);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:"Noto Sans Bengali",sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 10% 10%,rgba(139,61,255,.18),transparent 28%),
-    radial-gradient(circle at 90% 15%,rgba(236,63,167,.13),transparent 25%),
-    linear-gradient(135deg,var(--bg),var(--bg2));
-  min-height:100vh;
-}
-
-button,input,select,textarea{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* LOGIN */
-#loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-box{
-  width:100%;
-  max-width:430px;
-  padding:32px;
-  background:rgba(16,20,43,.9);
-  border:1px solid var(--border);
-  border-radius:28px;
-  box-shadow:var(--shadow),0 0 60px rgba(139,61,255,.12);
-  backdrop-filter:blur(18px);
-}
-
-.brand{
-  text-align:center;
-  margin-bottom:28px;
-}
-
-.logo{
-  width:62px;
-  height:62px;
-  object-fit:contain;
-  border-radius:16px;
-  margin-bottom:10px;
-}
-
-.brand h1{
-  margin:0;
-  font-size:27px;
-  font-weight:800;
-}
-
-.brand p{
-  color:var(--muted);
-  margin:7px 0 0;
-  font-size:13px;
-}
-
-label{
-  display:block;
-  color:#dfe3ff;
-  font-size:13px;
-  margin:15px 0 7px;
-}
-
-input,select,textarea{
-  width:100%;
-  border:1px solid var(--border);
-  background:#0b0f25;
-  color:#fff;
-  padding:13px 14px;
-  border-radius:13px;
-  outline:none;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:rgba(139,61,255,.8);
-  box-shadow:0 0 0 3px rgba(139,61,255,.1);
-}
-
-textarea{
-  min-height:110px;
-  resize:vertical;
-}
-
-.primary{
-  border:0;
-  color:#fff;
-  padding:13px 18px;
-  border-radius:13px;
-  font-weight:700;
-  background:linear-gradient(135deg,var(--purple),var(--pink));
-  box-shadow:0 8px 25px rgba(139,61,255,.22);
-}
-
-.primary:hover{
-  transform:translateY(-1px);
-}
-
-.full{
-  width:100%;
-  margin-top:20px;
-}
-
-.message{
-  margin-top:15px;
-  padding:12px;
-  border-radius:12px;
-  font-size:13px;
-  display:none;
-}
-
-.message.error{
-  display:block;
-  background:rgba(255,85,119,.1);
-  border:1px solid rgba(255,85,119,.25);
-  color:#ff9eb2;
-}
-
-/* APP */
-#app{
-  display:none;
-  min-height:100vh;
-}
-
-.layout{
-  display:flex;
-  min-height:100vh;
-}
-
-/* SIDEBAR */
-.sidebar{
-  width:270px;
-  flex-shrink:0;
-  padding:22px 15px;
-  background:rgba(8,10,28,.94);
-  border-right:1px solid var(--border);
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow-y:auto;
-}
-
-.side-brand{
-  padding:8px 12px 25px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.side-brand img{
-  width:48px;
-  height:48px;
-  object-fit:contain;
-  border-radius:13px;
-}
-
-.side-brand strong{
-  display:block;
-  font-size:18px;
-}
-
-.side-brand small{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.nav-title{
-  color:#747ca5;
-  font-size:11px;
-  padding:15px 12px 7px;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-
-.nav-btn{
-  width:100%;
-  border:1px solid transparent;
-  background:transparent;
-  color:#cfd4f4;
-  text-align:left;
-  padding:12px 13px;
-  border-radius:13px;
-  margin:3px 0;
-  transition:.2s;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:linear-gradient(90deg,rgba(139,61,255,.17),rgba(236,63,167,.07));
-  border-color:rgba(139,61,255,.2);
-  color:#fff;
-}
-
-.nav-btn span{
-  margin-right:8px;
-}
-
-/* MAIN */
-.main{
-  flex:1;
-  min-width:0;
-  padding:22px;
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.page-title h2{
-  margin:0;
-  font-size:25px;
-}
-
-.page-title p{
-  margin:4px 0 0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.admin-pill{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 12px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.035);
-  border-radius:15px;
-}
-
-.avatar{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--purple),var(--pink));
-  font-size:15px;
-}
-
-/* HERO */
-.hero{
-  position:relative;
-  overflow:hidden;
-  padding:25px;
-  border-radius:23px;
-  border:1px solid var(--border);
-  background:
-    radial-gradient(circle at 80% 20%,rgba(236,63,167,.18),transparent 30%),
-    radial-gradient(circle at 10% 100%,rgba(139,61,255,.18),transparent 30%),
-    var(--card);
-  box-shadow:var(--shadow);
-  margin-bottom:22px;
-}
-
-.hero h3{
-  margin:0;
-  font-size:21px;
-}
-
-.hero p{
-  color:#c7cbea;
-  line-height:1.8;
-  max-width:720px;
-  margin:10px 0 0;
-  font-size:13px;
-}
-
-/* STATS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:22px;
-}
-
-.stat{
-  background:linear-gradient(145deg,var(--card),var(--card2));
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-
-.stat-icon{
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:12px;
-  background:rgba(139,61,255,.12);
-  margin-bottom:12px;
-}
-
-.stat b{
-  display:block;
-  font-size:25px;
-}
-
-.stat span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:14px;
-}
-
-.section-head h3{
-  margin:0;
-  font-size:19px;
-}
-
-.section-head p{
-  color:var(--muted);
-  font-size:12px;
-  margin:4px 0 0;
-}
-
-/* MODULES */
-.modules{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.module{
-  position:relative;
-  padding:20px;
-  background:linear-gradient(145deg,var(--card),var(--card2));
-  border:1px solid var(--border);
-  border-radius:20px;
-  min-height:150px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  transition:.2s;
-}
-
-.module:hover{
-  transform:translateY(-3px);
-  border-color:rgba(139,61,255,.35);
-}
-
-.module::after{
-  content:"";
-  position:absolute;
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  right:-35px;
-  bottom:-35px;
-  background:rgba(139,61,255,.09);
-}
-
-.module-icon{
-  font-size:27px;
-  margin-bottom:11px;
-}
-
-.module h4{
-  margin:0 0 6px;
-  font-size:16px;
-}
-
-.module p{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-  margin:0 0 13px;
-}
-
-.module button{
-  background:rgba(255,255,255,.055);
-  color:#fff;
-  border:1px solid var(--border);
-  padding:8px 11px;
-  border-radius:10px;
-}
-
-/* CARD */
-.card{
-  background:linear-gradient(145deg,var(--card),var(--card2));
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:var(--shadow);
-  margin-bottom:17px;
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-/* PAYMENT */
-.payment-card{
-  border:1px solid var(--border);
-  background:#0b0f25;
-  padding:17px;
-  border-radius:16px;
-}
-
-.payment-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:13px;
-}
-
-.payment-name{
-  font-weight:800;
-}
-
-.badge{
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:700;
-}
-
-.badge.active{
-  background:rgba(47,214,138,.12);
-  color:#69e7aa;
-}
-
-.badge.off{
-  background:rgba(255,85,119,.12);
-  color:#ff9eb2;
-}
-
-/* TABLE */
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:720px;
-}
-
-th,td{
-  padding:12px 10px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  font-size:12px;
-}
-
-th{
-  color:#9da5cf;
-  font-weight:600;
-}
-
-td{
-  color:#e7e9ff;
-}
-
-.action{
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  padding:7px 10px;
-  border-radius:9px;
-  font-size:11px;
-}
-
-.action.green{
-  color:#68e7a9;
-}
-
-.action.red{
-  color:#ff9caf;
-}
-
-/* INSPIRATION */
-.inspiration{
-  padding:26px;
-  border-radius:22px;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(236,63,167,.17),transparent 30%),
-    radial-gradient(circle at 0% 100%,rgba(47,214,138,.1),transparent 30%),
-    #10142b;
-  border:1px solid var(--border);
-}
-
-.quote{
-  padding:20px;
-  border-radius:17px;
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--border);
-  margin-bottom:18px;
-}
-
-.quote strong{
-  color:#ffd98a;
-}
-
-/* BUTTON ROW */
-.btn-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:15px;
-}
-
-.secondary{
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  padding:11px 15px;
-  border-radius:11px;
-}
-
-.danger{
-  border:1px solid rgba(255,85,119,.2);
-  background:rgba(255,85,119,.08);
-  color:#ff9caf;
-  padding:11px 15px;
-  border-radius:11px;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  z-index:100;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:560px;
-  max-height:90vh;
-  overflow:auto;
-  background:#10142b;
-  border:1px solid var(--border);
-  border-radius:23px;
-  padding:22px;
-  box-shadow:0 25px 80px rgba(0,0,0,.55);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.close{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#151a36;
-  border:1px solid var(--border);
-  padding:12px 16px;
-  border-radius:13px;
-  box-shadow:var(--shadow);
-  display:none;
-  z-index:200;
-  font-size:12px;
-}
-
-.toast.show{
-  display:block;
-}
-
-/* MOBILE */
-.mobile-menu{
-  display:none;
-}
-
-@media(max-width:1050px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .modules{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:760px){
-  .sidebar{
-    display:none;
-  }
-
-  .main{
-    padding:14px;
-    padding-bottom:85px;
-  }
-
-  .mobile-menu{
-    display:flex;
-    position:fixed;
-    z-index:90;
-    left:10px;
-    right:10px;
-    bottom:10px;
-    background:rgba(12,15,38,.96);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:7px;
-    backdrop-filter:blur(18px);
-  }
-
-  .mobile-menu button{
-    flex:1;
-    border:0;
-    background:transparent;
-    color:#aeb5d6;
-    padding:8px 3px;
-    font-size:10px;
-    border-radius:11px;
-  }
-
-  .mobile-menu button.active{
-    color:#fff;
-    background:rgba(139,61,255,.18);
-  }
-
-  .topbar{
-    align-items:flex-start;
-  }
-
-  .admin-pill span{
-    display:none;
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .stat{
-    padding:14px;
-  }
-
-  .stat b{
-    font-size:21px;
-  }
-
-  .modules{
-    grid-template-columns:1fr;
-  }
-
-  .grid2,
-  .grid3{
-    grid-template-columns:1fr;
-  }
-
-  .hero{
-    padding:20px;
-  }
-
-  .section-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <title>জ্ঞানতরঙ্গ | Admin Panel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#060817;
+      --bg2:#090b20;
+      --card:#10142b;
+      --card2:#151a36;
+
+      --purple:#8b3dff;
+      --purple2:#6d2cff;
+      --pink:#ec3fa7;
+      --green:#2fd68a;
+      --gold:#ffb21c;
+      --red:#ff5470;
+      --cyan:#35d9ff;
+
+      --text:#fff;
+      --muted:#aeb5d6;
+
+      --border:rgba(255,255,255,.09);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+
+      --radius:20px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:"Noto Sans Bengali",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 5% 0%,rgba(139,61,255,.18),transparent 28%),
+        radial-gradient(circle at 95% 5%,rgba(236,63,167,.12),transparent 25%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font-family:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .hidden{
+      display:none!important;
+    }
+
+    /* LOGIN */
+
+    .login-screen{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:20px;
+    }
+
+    .login-card{
+      width:min(430px,100%);
+      background:rgba(16,20,43,.95);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .logo{
+      width:70px;
+      height:70px;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 15px;
+      border-radius:20px;
+    }
+
+    .login-title{
+      text-align:center;
+      font-size:27px;
+      font-weight:800;
+    }
+
+    .login-sub{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:5px;
+      margin-bottom:24px;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      color:#dce0f5;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:7px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width:100%;
+      color:#fff;
+      background:#0a0e24;
+      border:1px solid var(--border);
+      border-radius:13px;
+      padding:12px 13px;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:130px;
+      resize:vertical;
+      line-height:1.7;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus{
+      border-color:rgba(139,61,255,.7);
+      box-shadow:0 0 0 3px rgba(139,61,255,.08);
+    }
+
+    .login-error{
+      color:#ff9cab;
+      background:rgba(255,84,112,.07);
+      border:1px solid rgba(255,84,112,.18);
+      border-radius:12px;
+      padding:10px;
+      font-size:12px;
+      margin-bottom:12px;
+    }
+
+    /* APP */
+
+    .app{
+      min-height:100vh;
+      display:none;
+    }
+
+    .app.active{
+      display:block;
+    }
+
+    .topbar{
+      position:fixed;
+      left:270px;
+      right:0;
+      top:0;
+      height:70px;
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 22px;
+      background:rgba(6,8,23,.82);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .top-title{
+      font-size:17px;
+      font-weight:800;
+    }
+
+    .top-sub{
+      color:var(--muted);
+      font-size:10px;
+      margin-top:2px;
+    }
+
+    .admin-chip{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:8px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+    }
+
+    .admin-avatar{
+      width:32px;
+      height:32px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--purple),var(--pink));
+      font-size:14px;
+    }
+
+    .admin-name{
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .admin-role{
+      color:var(--muted);
+      font-size:9px;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      bottom:0;
+      width:270px;
+      z-index:200;
+      padding:18px 13px;
+      background:rgba(8,10,28,.97);
+      border-right:1px solid var(--border);
+      overflow-y:auto;
+    }
+
+    .side-brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:7px 8px 20px;
+    }
+
+    .side-brand img{
+      width:43px;
+      height:43px;
+      object-fit:contain;
+      border-radius:12px;
+    }
+
+    .side-brand-name{
+      font-size:17px;
+      font-weight:800;
+    }
+
+    .side-brand-sub{
+      font-size:9px;
+      color:var(--muted);
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+
+    .menu-btn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px;
+      border:1px solid transparent;
+      border-radius:13px;
+      color:#cbd0e7;
+      background:transparent;
+      text-align:left;
+      font-size:12px;
+      transition:.2s;
+    }
+
+    .menu-btn:hover{
+      background:rgba(255,255,255,.04);
+      color:#fff;
+    }
+
+    .menu-btn.active{
+      color:#fff;
+      background:linear-gradient(135deg,rgba(139,61,255,.2),rgba(236,63,167,.08));
+      border-color:rgba(139,61,255,.22);
+    }
+
+    .menu-icon{
+      width:25px;
+      text-align:center;
+      font-size:15px;
+    }
+
+    .logout-btn{
+      margin-top:15px;
+      color:#ff9baa;
+    }
+
+    /* MAIN */
+
+    .main{
+      margin-left:270px;
+      padding:94px 22px 40px;
+      max-width:1600px;
+    }
+
+    .page{
+      display:none;
+    }
+
+    .page.active{
+      display:block;
+    }
+
+    .page-head{
+      margin-bottom:20px;
+    }
+
+    .page-title{
+      font-size:25px;
+      font-weight:800;
+    }
+
+    .page-desc{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    /* CARDS */
+
+    .card{
+      background:rgba(16,20,43,.88);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .card-title{
+      font-size:16px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    /* BUTTONS */
+
+    .btn{
+      border:0;
+      border-radius:13px;
+      padding:11px 16px;
+      font-size:12px;
+      font-weight:800;
+      color:#fff;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--purple),var(--pink));
+    }
+
+    .btn-green{
+      color:#05130d;
+      background:linear-gradient(135deg,#46e8a2,#20c97f);
+    }
+
+    .btn-gold{
+      color:#171000;
+      background:linear-gradient(135deg,#ffd267,#ffb21c);
+    }
+
+    .btn-red{
+      background:linear-gradient(135deg,#ff5570,#c91f4d);
+    }
+
+    .btn-secondary{
+      color:#dce0f6;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+    }
+
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* DASHBOARD */
+
+    .hero{
+      padding:25px;
+      border-radius:25px;
+      background:
+        linear-gradient(135deg,rgba(139,61,255,.14),rgba(236,63,167,.05)),
+        var(--card);
+      border:1px solid var(--border);
+      margin-bottom:18px;
+    }
+
+    .hero-tag{
+      display:inline-block;
+      color:#d9caff;
+      background:rgba(139,61,255,.12);
+      border:1px solid rgba(139,61,255,.2);
+      border-radius:999px;
+      padding:6px 11px;
+      font-size:10px;
+      margin-bottom:11px;
+    }
+
+    .hero h1{
+      font-size:27px;
+      margin-bottom:7px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:13px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:13px;
+      margin-bottom:18px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+    }
+
+    .stat-icon{
+      font-size:21px;
+      margin-bottom:8px;
+    }
+
+    .stat-num{
+      font-size:26px;
+      font-weight:800;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .module-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:13px;
+    }
+
+    .module{
+      padding:18px;
+      border-radius:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .module:hover{
+      transform:translateY(-2px);
+      border-color:rgba(139,61,255,.35);
+    }
+
+    .module-icon{
+      font-size:25px;
+      margin-bottom:8px;
+    }
+
+    .module-name{
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .module-desc{
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.6;
+      margin-top:4px;
+    }
+
+    /* GRID */
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:17px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:13px;
+    }
+
+    /* TOOLBAR */
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:9px;
+      margin-bottom:15px;
+    }
+
+    .toolbar select,
+    .toolbar input{
+      min-width:180px;
+      color:#fff;
+      background:#0a0e24;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+
+    /* TABLE */
+
+    .table-wrap{
+      overflow-x:auto;
+      border:1px solid var(--border);
+      border-radius:16px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:800px;
+    }
+
+    th,
+    td{
+      padding:12px 11px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      font-size:11px;
+      white-space:nowrap;
+    }
+
+    th{
+      color:#cfd4ec;
+      background:rgba(255,255,255,.035);
+      font-weight:800;
+    }
+
+    td{
+      color:#e8eaf6;
+    }
+
+    tr:last-child td{
+      border-bottom:0;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .status-green{
+      color:#75efb8;
+      background:rgba(47,214,138,.1);
+      border:1px solid rgba(47,214,138,.15);
+    }
+
+    .status-gold{
+      color:#ffd574;
+      background:rgba(255,178,28,.1);
+      border:1px solid rgba(255,178,28,.15);
+    }
+
+    .status-red{
+      color:#ff9aaa;
+      background:rgba(255,84,112,.1);
+      border:1px solid rgba(255,84,112,.15);
+    }
+
+    /* SETTINGS */
+
+    .setting-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      padding:14px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .setting-row:last-child{
+      border-bottom:0;
+    }
+
+    .setting-name{
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .setting-help{
+      color:var(--muted);
+      font-size:10px;
+      margin-top:3px;
+      line-height:1.6;
+    }
+
+    .switch{
+      position:relative;
+      width:48px;
+      height:26px;
+      flex:0 0 48px;
+    }
+
+    .switch input{
+      display:none;
+    }
+
+    .slider{
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background:#292d47;
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .slider:before{
+      content:"";
+      position:absolute;
+      width:20px;
+      height:20px;
+      left:3px;
+      top:3px;
+      border-radius:50%;
+      background:#fff;
+      transition:.2s;
+    }
+
+    .switch input:checked + .slider{
+      background:linear-gradient(90deg,var(--purple),var(--pink));
+    }
+
+    .switch input:checked + .slider:before{
+      transform:translateX(22px);
+    }
+
+    /* PAYMENT */
+
+    .payment-card{
+      padding:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+    }
+
+    .payment-title{
+      font-weight:800;
+      margin-bottom:12px;
+    }
+
+    .payment-number{
+      direction:ltr;
+      text-align:left;
+    }
+
+    /* TOAST */
+
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:1000;
+      max-width:360px;
+      padding:13px 16px;
+      border-radius:14px;
+      background:#151a36;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      color:#fff;
+      font-size:12px;
+      transform:translateY(120px);
+      opacity:0;
+      transition:.25s;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    /* MODAL */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:800;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(7px);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-card{
+      width:min(650px,100%);
+      max-height:90vh;
+      overflow:auto;
+      background:#10142b;
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 30px 100px rgba(0,0,0,.5);
+    }
+
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .modal-title{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .close{
+      width:34px;
+      height:34px;
+      border:0;
+      border-radius:10px;
+      color:#fff;
+      background:rgba(255,255,255,.06);
+    }
+
+    /* EMPTY */
+
+    .empty{
+      text-align:center;
+      padding:35px 15px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* MOBILE */
+
+    .mobile-menu{
+      display:none;
+    }
+
+    @media(max-width:1100px){
+
+      .module-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:850px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .topbar{
+        left:0;
+      }
+
+      .main{
+        margin-left:0;
+        padding:85px 12px 80px;
+      }
+
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .module-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .mobile-menu{
+        position:fixed;
+        display:flex;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:300;
+        padding:7px;
+        border-radius:18px;
+        background:rgba(10,13,32,.94);
+        backdrop-filter:blur(18px);
+        border:1px solid var(--border);
+      }
+
+      .mobile-menu button{
+        flex:1;
+        border:0;
+        color:#bfc5df;
+        background:transparent;
+        border-radius:12px;
+        padding:9px 3px;
+        font-size:9px;
+      }
+
+      .mobile-menu button.active{
+        color:#fff;
+        background:linear-gradient(135deg,rgba(139,61,255,.25),rgba(236,63,167,.1));
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .top-title{
+        font-size:14px;
+      }
+
+      .top-sub{
+        display:none;
+      }
+
+      .admin-chip{
+        padding:6px 8px;
+      }
+
+      .admin-name{
+        display:none;
+      }
+
+      .stats{
+        gap:8px;
+      }
+
+      .stat{
+        padding:13px;
+      }
+
+      .stat-num{
+        font-size:21px;
+      }
+
+      .module-grid{
+        gap:8px;
+      }
+
+      .module{
+        padding:14px;
+      }
+
+      .hero{
+        padding:18px;
+      }
+
+      .hero h1{
+        font-size:22px;
+      }
+
+      .setting-row{
+        align-items:flex-start;
+      }
+
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
+<!-- =========================
+     LOGIN
+========================= -->
 
-    <div class="brand">
-      <img class="logo"
-           src="file_0000000031b8821193be8a110779a350.png"
-           alt="জ্ঞানতরঙ্গ">
+<section id="loginScreen" class="login-screen">
 
-      <h1>জ্ঞানতরঙ্গ</h1>
-      <p>প্রশাসনিক নিয়ন্ত্রণ কেন্দ্র</p>
+  <div class="login-card">
+
+    <img
+      class="logo"
+      src="file_0000000031b8821193be8a110779a350.png"
+      alt="জ্ঞানতরঙ্গ"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="login-title">
+      জ্ঞানতরঙ্গ
     </div>
 
-    <label>এডমিন ইমেইল</label>
-    <input id="loginEmail" type="email" placeholder="আপনার ইমেইল">
+    <div class="login-sub">
+      Admin Management Panel
+    </div>
 
-    <label>পাসওয়ার্ড</label>
-    <input id="loginPassword" type="password" placeholder="পাসওয়ার্ড">
+    <div id="loginError" class="login-error hidden"></div>
 
-    <button class="primary full" id="loginBtn">
-      🔐 নিরাপদে প্রবেশ করুন
+    <div class="field">
+      <label>Admin ইমেইল</label>
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="admin@example.com"
+        autocomplete="email"
+      >
+    </div>
+
+    <div class="field">
+      <label>পাসওয়ার্ড</label>
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="পাসওয়ার্ড লিখুন"
+        autocomplete="current-password"
+      >
+    </div>
+
+    <button
+      id="loginBtn"
+      class="btn btn-primary"
+      style="width:100%;padding:13px;"
+      onclick="adminLogin()"
+    >
+      🔐 Admin Login
     </button>
 
-    <div id="loginMessage" class="message"></div>
   </div>
-</div>
+
+</section>
 
 
-<!-- APP -->
-<div id="app">
+<!-- =========================
+     APP
+========================= -->
 
-<div class="layout">
+<div id="app" class="app">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
+  <!-- SIDEBAR -->
 
-  <div class="side-brand">
-    <img src="file_0000000031b8821193be8a110779a350.png"
-         alt="জ্ঞানতরঙ্গ">
+  <aside class="sidebar">
+
+    <div class="side-brand">
+
+      <img
+        src="file_0000000031b8821193be8a110779a350.png"
+        alt="জ্ঞানতরঙ্গ"
+        onerror="this.style.display='none'"
+      >
+
+      <div>
+        <div class="side-brand-name">জ্ঞানতরঙ্গ</div>
+        <div class="side-brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+      </div>
+
+    </div>
+
+
+    <nav class="menu">
+
+      <button class="menu-btn active" data-page="dashboard">
+        <span class="menu-icon">🏠</span>
+        <span>ড্যাশবোর্ড</span>
+      </button>
+
+      <button class="menu-btn" data-page="quiz">
+        <span class="menu-icon">📝</span>
+        <span>কুইজ ব্যবস্থাপনা</span>
+      </button>
+
+      <button class="menu-btn" data-page="question">
+        <span class="menu-icon">❓</span>
+        <span>প্রশ্ন ব্যবস্থাপনা</span>
+      </button>
+
+      <button class="menu-btn" data-page="registration">
+        <span class="menu-icon">🧾</span>
+        <span>রেজিস্ট্রেশন</span>
+      </button>
+
+      <button class="menu-btn" data-page="payment">
+        <span class="menu-icon">💳</span>
+        <span>পেমেন্ট</span>
+      </button>
+
+      <button class="menu-btn" data-page="result">
+        <span class="menu-icon">🏆</span>
+        <span>রেজাল্ট</span>
+      </button>
+
+      <button class="menu-btn" data-page="library">
+        <span class="menu-icon">📚</span>
+        <span>লাইব্রেরি</span>
+      </button>
+
+      <button class="menu-btn" data-page="notice">
+        <span class="menu-icon">📢</span>
+        <span>নোটিশ</span>
+      </button>
+
+      <button class="menu-btn" data-page="inspiration">
+        <span class="menu-icon">🌙</span>
+        <span>এক মিনিটের অনুপ্রেরণা</span>
+      </button>
+
+      <button class="menu-btn" data-page="rules">
+        <span class="menu-icon">📋</span>
+        <span>পরীক্ষার নিয়ম</span>
+      </button>
+
+      <button class="menu-btn" data-page="admins">
+        <span class="menu-icon">👑</span>
+        <span>Admin Management</span>
+      </button>
+
+      <button class="menu-btn" data-page="complaint">
+        <span class="menu-icon">💬</span>
+        <span>অভিযোগ</span>
+      </button>
+
+      <button class="menu-btn" data-page="settings">
+        <span class="menu-icon">⚙️</span>
+        <span>ওয়েবসাইট সেটিংস</span>
+      </button>
+
+      <button
+        class="menu-btn logout-btn"
+        onclick="adminLogout()"
+      >
+        <span class="menu-icon">🚪</span>
+        <span>লগআউট</span>
+      </button>
+
+    </nav>
+
+  </aside>
+
+
+  <!-- TOPBAR -->
+
+  <header class="topbar">
+
     <div>
-      <strong>জ্ঞানতরঙ্গ</strong>
-      <small>Admin Panel</small>
-    </div>
-  </div>
-
-  <div class="nav-title">প্রধান</div>
-
-  <button class="nav-btn active" data-section="dashboard">
-    <span>🏠</span> ড্যাশবোর্ড
-  </button>
-
-  <div class="nav-title">ব্যবস্থাপনা</div>
-
-  <button class="nav-btn" data-section="quiz">
-    <span>📝</span> কুইজ ব্যবস্থাপনা
-  </button>
-
-  <button class="nav-btn" data-section="questions">
-    <span>❓</span> প্রশ্ন ব্যবস্থাপনা
-  </button>
-
-  <button class="nav-btn" data-section="registration">
-    <span>🧾</span> রেজিস্ট্রেশন
-  </button>
-
-  <button class="nav-btn" data-section="payment">
-    <span>💳</span> পেমেন্ট
-  </button>
-
-  <button class="nav-btn" data-section="results">
-    <span>🏆</span> রেজাল্ট
-  </button>
-
-  <div class="nav-title">কনটেন্ট</div>
-
-  <button class="nav-btn" data-section="library">
-    <span>📚</span> লাইব্রেরি
-  </button>
-
-  <button class="nav-btn" data-section="notice">
-    <span>📢</span> নোটিশ
-  </button>
-
-  <button class="nav-btn" data-section="inspiration">
-    <span>🌙</span> এক মিনিটের অনুপ্রেরণা
-  </button>
-
-  <div class="nav-title">ব্যবহারকারী</div>
-
-  <button class="nav-btn" data-section="admins">
-    <span>👑</span> Admin Management
-  </button>
-
-  <button class="nav-btn" data-section="complaints">
-    <span>💬</span> অভিযোগ
-  </button>
-
-  <div class="nav-title">সিস্টেম</div>
-
-  <button class="nav-btn" data-section="settings">
-    <span>⚙️</span> ওয়েবসাইট সেটিংস
-  </button>
-
-  <button class="nav-btn" id="logoutBtn">
-    <span>🚪</span> লগআউট
-  </button>
-
-</aside>
-
-
-<!-- MAIN -->
-<main class="main">
-
-  <div class="topbar">
-
-    <div class="page-title">
-      <h2 id="pageTitle">ড্যাশবোর্ড</h2>
-      <p>জ্ঞানতরঙ্গ পরিচালনার জন্য আপনার নিয়ন্ত্রণ কেন্দ্র</p>
-    </div>
-
-    <div class="admin-pill">
-      <div class="avatar">👑</div>
-      <span id="adminName">Admin</span>
-    </div>
-
-  </div>
-
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="section active">
-
-    <div class="hero">
-      <h3>🌙 আসসালামু আলাইকুম, Admin</h3>
-
-      <p>
-        <b>“জ্ঞান একটি আমানত, আর দায়িত্ব একটি পরীক্ষা।”</b><br>
-        আল্লাহ আমাদের জ্ঞানকে কল্যাণের পথে ব্যবহার করার তাওফিক দিন।
-        সততা, ন্যায় ও ইখলাসের সঙ্গে প্রতিটি দায়িত্ব পালন করার চেষ্টা করি।
-        আমাদের ছোট্ট প্রচেষ্টাও যেন মানুষের উপকারে আসে এবং আল্লাহর সন্তুষ্টির কারণ হয়।
-      </p>
-    </div>
-
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="stat-icon">👨‍🎓</div>
-        <b id="studentCount">—</b>
-        <span>মোট শিক্ষার্থী</span>
+      <div id="topTitle" class="top-title">
+        ড্যাশবোর্ড
       </div>
 
-      <div class="stat">
-        <div class="stat-icon">📝</div>
-        <b id="quizCount">—</b>
-        <span>মোট কুইজ</span>
+      <div class="top-sub">
+        জ্ঞানতরঙ্গ প্রশাসনিক ব্যবস্থাপনা
       </div>
-
-      <div class="stat">
-        <div class="stat-icon">🧾</div>
-        <b id="pendingCount">—</b>
-        <span>Pending Registration</span>
-      </div>
-
-      <div class="stat">
-        <div class="stat-icon">🏆</div>
-        <b id="resultCount">—</b>
-        <span>প্রকাশিত Result</span>
-      </div>
-
     </div>
 
 
-    <div class="section-head">
+    <div class="admin-chip">
+
+      <div class="admin-avatar">
+        👑
+      </div>
+
       <div>
-        <h3>⚡ দ্রুত ব্যবস্থাপনা</h3>
-        <p>প্রয়োজনীয় কাজগুলো এক জায়গা থেকে পরিচালনা করুন</p>
-      </div>
-    </div>
-
-
-    <div class="modules">
-
-      <div class="module">
-        <div class="module-icon">📝</div>
-        <h4>কুইজ ব্যবস্থাপনা</h4>
-        <p>কুইজ তৈরি, সময়, প্রশ্ন সংখ্যা ও পরীক্ষার সময় নিয়ন্ত্রণ করুন।</p>
-        <button onclick="showSection('quiz')">খুলুন →</button>
-      </div>
-
-      <div class="module">
-        <div class="module-icon">❓</div>
-        <h4>প্রশ্ন ব্যবস্থাপনা</h4>
-        <p>প্রশ্ন, অপশন, সঠিক উত্তর, নম্বর ও Negative Mark পরিচালনা করুন।</p>
-        <button onclick="showSection('questions')">খুলুন →</button>
-      </div>
-
-      <div class="module">
-        <div class="module-icon">🧾</div>
-        <h4>রেজিস্ট্রেশন</h4>
-        <p>শিক্ষার্থীদের Registration যাচাই ও অনুমোদন করুন।</p>
-        <button onclick="showSection('registration')">খুলুন →</button>
-      </div>
-
-      <div class="module">
-        <div class="module-icon">💳</div>
-        <h4>পেমেন্ট</h4>
-        <p>বিকাশ, রকেট ও নগদের নম্বর Admin Panel থেকেই পরিবর্তন করুন।</p>
-        <button onclick="showSection('payment')">খুলুন →</button>
-      </div>
-
-      <div class="module">
-        <div class="module-icon">🏆</div>
-        <h4>রেজাল্ট</h4>
-        <p>একটি Quiz-এর সব শিক্ষার্থীর ফলাফল একসাথে দেখুন ও প্রকাশ করুন।</p>
-        <button onclick="showSection('results')">খুলুন →</button>
-      </div>
-
-      <div class="module">
-        <div class="module-icon">👑</div>
-        <h4>Admin Management</h4>
-        <p>অনুমোদিত Admin-দের তালিকা ও Admin access পরিচালনা করুন।</p>
-        <button onclick="showSection('admins')">খুলুন →</button>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- QUIZ -->
-  <section id="quiz" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>📝 কুইজ ব্যবস্থাপনা</h3>
-        <p>কুইজ তৈরি ও পরীক্ষার নিয়ম নিয়ন্ত্রণ করুন</p>
-      </div>
-
-      <button class="primary" onclick="openQuizPage()">
-        ➕ কুইজ ব্যবস্থাপনা খুলুন
-      </button>
-    </div>
-
-    <div class="card">
-
-      <div class="grid2">
-
-        <div>
-          <label>কুইজ নির্বাচন</label>
-          <select id="quizSelect">
-            <option value="">কুইজ লোড হচ্ছে...</option>
-          </select>
+        <div id="adminName" class="admin-name">
+          Admin
         </div>
 
-        <div>
-          <label>বর্তমান অবস্থা</label>
-          <input id="quizStatus" readonly placeholder="—">
+        <div class="admin-role">
+          Administrator
         </div>
-
       </div>
 
-      <div class="quote">
-        <strong>💡 মনে রাখবেন</strong>
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+
+    <!-- DASHBOARD -->
+
+    <section id="page-dashboard" class="page active">
+
+      <div class="page-head">
+        <div class="page-title">ড্যাশবোর্ড</div>
+        <div class="page-desc">
+          জ্ঞানতরঙ্গের সম্পূর্ণ ব্যবস্থাপনা এক জায়গা থেকে
+        </div>
+      </div>
+
+
+      <div class="hero">
+
+        <div class="hero-tag">
+          🌙 দায়িত্ব · সততা · ইখলাস
+        </div>
+
+        <h1>
+          আসসালামু আলাইকুম, Admin 👋
+        </h1>
+
         <p>
-          Registration অনুমোদন Admin করবেন। কিন্তু নির্ধারিত সময়ের আগে
-          Exam শুরু করা যাবে না—Exam Start/End সময় সিস্টেম নিজে যাচাই করবে।
+          জ্ঞান একটি আমানত, আর দায়িত্ব একটি পরীক্ষা।
+          জ্ঞানতরঙ্গের প্রতিটি কাজ যেন সততা, ন্যায় ও মানুষের উপকারের মাধ্যমে পরিচালিত হয়।
         </p>
+
       </div>
 
-    </div>
 
-  </section>
+      <div class="stats">
 
-
-  <!-- QUESTIONS -->
-  <section id="questions" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>❓ প্রশ্ন ব্যবস্থাপনা</h3>
-        <p>প্রশ্ন ও পরীক্ষার মূল্যায়ন ব্যবস্থা পরিচালনা করুন</p>
-      </div>
-
-      <button class="primary" onclick="openQuestionPage()">
-        ➕ প্রশ্ন ব্যবস্থাপনা খুলুন
-      </button>
-    </div>
-
-    <div class="card">
-
-      <div class="grid3">
-
-        <div>
-          <b>🎯 Random Question</b>
-          <p>বেশি প্রশ্নের মধ্য থেকে নির্দিষ্ট সংখ্যক প্রশ্ন নির্বাচন করা যাবে।</p>
+        <div class="stat">
+          <div class="stat-icon">👨‍🎓</div>
+          <div id="statStudents" class="stat-num">০</div>
+          <div class="stat-label">শিক্ষার্থী</div>
         </div>
 
-        <div>
-          <b>⏱️ প্রশ্নের সময়</b>
-          <p>প্রতি প্রশ্নের জন্য Admin নির্দিষ্ট সময় সেট করতে পারবেন।</p>
+        <div class="stat">
+          <div class="stat-icon">📝</div>
+          <div id="statQuizzes" class="stat-num">০</div>
+          <div class="stat-label">কুইজ</div>
         </div>
 
-        <div>
-          <b>➖ Negative Mark</b>
-          <p>প্রতিটি প্রশ্নে প্রয়োজন অনুযায়ী Negative Mark রাখা যাবে।</p>
+        <div class="stat">
+          <div class="stat-icon">⏳</div>
+          <div id="statPending" class="stat-num">০</div>
+          <div class="stat-label">অপেক্ষমাণ রেজিস্ট্রেশন</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">🏆</div>
+          <div id="statPublished" class="stat-num">০</div>
+          <div class="stat-label">প্রকাশিত রেজাল্ট</div>
         </div>
 
       </div>
 
-    </div>
 
-  </section>
+      <div class="module-grid">
 
-
-  <!-- REGISTRATION -->
-  <section id="registration" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>🧾 Registration Management</h3>
-        <p>শিক্ষার্থীদের Quiz Registration যাচাই করুন</p>
-      </div>
-    </div>
-
-    <div class="card">
-
-      <div class="grid2">
-
-        <div>
-          <label>Search</label>
-          <input id="registrationSearch"
-                 placeholder="Roll / নাম / Quiz দিয়ে খুঁজুন">
+        <div class="module" onclick="openPage('quiz')">
+          <div class="module-icon">📝</div>
+          <div class="module-name">কুইজ</div>
+          <div class="module-desc">কুইজ তৈরি ও ব্যবস্থাপনা</div>
         </div>
 
-        <div>
-          <label>Status</label>
-          <select id="registrationFilter">
-            <option value="all">সব</option>
+        <div class="module" onclick="openPage('question')">
+          <div class="module-icon">❓</div>
+          <div class="module-name">প্রশ্ন</div>
+          <div class="module-desc">প্রশ্ন, নম্বর ও Timer</div>
+        </div>
+
+        <div class="module" onclick="openPage('registration')">
+          <div class="module-icon">🧾</div>
+          <div class="module-name">রেজিস্ট্রেশন</div>
+          <div class="module-desc">অনুমোদন ও বাতিল</div>
+        </div>
+
+        <div class="module" onclick="openPage('result')">
+          <div class="module-icon">🏆</div>
+          <div class="module-name">রেজাল্ট</div>
+          <div class="module-desc">এক কুইজের সব ফলাফল</div>
+        </div>
+
+        <div class="module" onclick="openPage('payment')">
+          <div class="module-icon">💳</div>
+          <div class="module-name">পেমেন্ট</div>
+          <div class="module-desc">বিকাশ · রকেট · নগদ</div>
+        </div>
+
+        <div class="module" onclick="openPage('rules')">
+          <div class="module-icon">📋</div>
+          <div class="module-name">পরীক্ষার নিয়ম</div>
+          <div class="module-desc">Admin থেকেই পরিবর্তন</div>
+        </div>
+
+        <div class="module" onclick="openPage('inspiration')">
+          <div class="module-icon">🌙</div>
+          <div class="module-name">অনুপ্রেরণা</div>
+          <div class="module-desc">এক মিনিটের বার্তা</div>
+        </div>
+
+        <div class="module" onclick="openPage('admins')">
+          <div class="module-icon">👑</div>
+          <div class="module-name">Admin</div>
+          <div class="module-desc">Admin management</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section id="page-quiz" class="page">
+
+      <div class="page-head">
+        <div class="page-title">কুইজ ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          কুইজ তৈরি ও সম্পাদনার জন্য আলাদা মডিউল
+        </div>
+      </div>
+
+      <div class="card">
+
+        <div class="toolbar">
+
+          <button
+            class="btn btn-primary"
+            onclick="openExternal('quiz-management.html')"
+          >
+            ➕ কুইজ ব্যবস্থাপনা খুলুন
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="loadQuizzes()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+        <div id="quizList">
+          <div class="empty">কুইজ লোড হচ্ছে...</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUESTION -->
+
+    <section id="page-question" class="page">
+
+      <div class="page-head">
+        <div class="page-title">প্রশ্ন ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          প্রশ্ন, অপশন, সঠিক উত্তর, নম্বর ও প্রতি প্রশ্নের সময়
+        </div>
+      </div>
+
+      <div class="card">
+
+        <div class="toolbar">
+
+          <button
+            class="btn btn-primary"
+            onclick="openExternal('question-management.html')"
+          >
+            ❓ প্রশ্ন ব্যবস্থাপনা খুলুন
+          </button>
+
+        </div>
+
+        <div class="empty">
+          এখানে গিয়ে Admin সরাসরি প্রশ্ন যোগ, Edit ও Delete করতে পারবেন।
+          <br>
+          প্রতি প্রশ্নের Timer ২০/৩০/৪০/৫০/৬০/৯০/১২০ সেকেন্ড বা Custom দেওয়া যাবে।
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- REGISTRATION -->
+
+    <section id="page-registration" class="page">
+
+      <div class="page-head">
+        <div class="page-title">রেজিস্ট্রেশন ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          শিক্ষার্থীদের কুইজ রেজিস্ট্রেশন অনুমোদন বা বাতিল করুন
+        </div>
+      </div>
+
+      <div class="card">
+
+        <div class="toolbar">
+
+          <input
+            id="registrationSearch"
+            placeholder="রোল / নাম / কুইজ খুঁজুন"
+            oninput="renderRegistrations()"
+          >
+
+          <select
+            id="registrationStatus"
+            onchange="renderRegistrations()"
+          >
+            <option value="">সব Status</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
           </select>
+
+          <button
+            class="btn btn-secondary"
+            onclick="loadRegistrations()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>রোল</th>
+                <th>শিক্ষার্থী</th>
+                <th>কুইজ</th>
+                <th>Status</th>
+                <th>তারিখ</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="registrationTable"></tbody>
+
+          </table>
+
         </div>
 
       </div>
 
-      <div class="table-wrap" style="margin-top:18px">
-        <table>
-          <thead>
-            <tr>
-              <th>Roll</th>
-              <th>নাম</th>
-              <th>Quiz</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+    </section>
 
-          <tbody id="registrationTable">
-            <tr>
-              <td colspan="5">ডাটা লোড হচ্ছে...</td>
-            </tr>
-          </tbody>
 
-        </table>
+    <!-- PAYMENT -->
+
+    <section id="page-payment" class="page">
+
+      <div class="page-head">
+        <div class="page-title">পেমেন্ট ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          শিক্ষার্থীরা শুধু Active payment number দেখতে পাবে
+        </div>
       </div>
 
-    </div>
 
-  </section>
-
-
-  <!-- PAYMENT -->
-  <section id="payment" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>💳 Payment Management</h3>
-        <p>শিক্ষার্থীদের জন্য প্রদর্শিত পেমেন্ট নম্বর পরিচালনা করুন</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-
-      <div class="grid3">
+      <div class="grid-3">
 
         <div class="payment-card">
 
-          <div class="payment-top">
-            <div class="payment-name">🟣 বিকাশ</div>
-            <span id="bkashBadge" class="badge active">Active</span>
+          <div class="payment-title">
+            🟣 বিকাশ
           </div>
 
-          <label>বিকাশ নম্বর</label>
-          <input id="bkashNumber" placeholder="01XXXXXXXXX">
+          <div class="field">
+            <label>বিকাশ নম্বর</label>
 
-          <button class="primary full" onclick="savePayment('bkash')">
-            💾 সংরক্ষণ
-          </button>
+            <input
+              id="bkashNumber"
+              class="payment-number"
+              placeholder="01XXXXXXXXX"
+            >
+          </div>
 
-          <button class="secondary full" onclick="togglePayment('bkash')">
-            Active / Inactive
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">Active</div>
+              <div class="setting-help">
+                শিক্ষার্থীদের দেখানো হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input id="bkashActive" type="checkbox">
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            style="margin-top:15px;"
+            onclick="savePayment('bkash')"
+          >
+            💾 Save
           </button>
 
         </div>
@@ -1156,20 +1414,42 @@ td{
 
         <div class="payment-card">
 
-          <div class="payment-top">
-            <div class="payment-name">🔵 রকেট</div>
-            <span id="rocketBadge" class="badge active">Active</span>
+          <div class="payment-title">
+            🔵 রকেট
           </div>
 
-          <label>রকেট নম্বর</label>
-          <input id="rocketNumber" placeholder="01XXXXXXXXX">
+          <div class="field">
+            <label>রকেট নম্বর</label>
 
-          <button class="primary full" onclick="savePayment('rocket')">
-            💾 সংরক্ষণ
-          </button>
+            <input
+              id="rocketNumber"
+              class="payment-number"
+              placeholder="01XXXXXXXXX"
+            >
+          </div>
 
-          <button class="secondary full" onclick="togglePayment('rocket')">
-            Active / Inactive
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">Active</div>
+              <div class="setting-help">
+                শিক্ষার্থীদের দেখানো হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input id="rocketActive" type="checkbox">
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            style="margin-top:15px;"
+            onclick="savePayment('rocket')"
+          >
+            💾 Save
           </button>
 
         </div>
@@ -1177,1767 +1457,3185 @@ td{
 
         <div class="payment-card">
 
-          <div class="payment-top">
-            <div class="payment-name">🟢 নগদ</div>
-            <span id="nagadBadge" class="badge active">Active</span>
+          <div class="payment-title">
+            🟠 নগদ
           </div>
 
-          <label>নগদ নম্বর</label>
-          <input id="nagadNumber" placeholder="01XXXXXXXXX">
+          <div class="field">
+            <label>নগদ নম্বর</label>
 
-          <button class="primary full" onclick="savePayment('nagad')">
-            💾 সংরক্ষণ
-          </button>
+            <input
+              id="nagadNumber"
+              class="payment-number"
+              placeholder="01XXXXXXXXX"
+            >
+          </div>
 
-          <button class="secondary full" onclick="togglePayment('nagad')">
-            Active / Inactive
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">Active</div>
+              <div class="setting-help">
+                শিক্ষার্থীদের দেখানো হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input id="nagadActive" type="checkbox">
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            style="margin-top:15px;"
+            onclick="savePayment('nagad')"
+          >
+            💾 Save
           </button>
 
         </div>
 
       </div>
 
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- RESULTS -->
-  <section id="results" class="section">
+    <!-- RESULT -->
 
-    <div class="section-head">
-      <div>
-        <h3>🏆 Result Management</h3>
-        <p>একটি Quiz নির্বাচন করে সব Result একসাথে পরিচালনা করুন</p>
-      </div>
-    </div>
+    <section id="page-result" class="page">
 
-    <div class="card">
-
-      <label>Quiz নির্বাচন করুন</label>
-
-      <select id="resultQuizSelect">
-        <option value="">Quiz নির্বাচন করুন</option>
-      </select>
-
-      <div class="btn-row">
-
-        <button class="primary" id="loadResultsBtn">
-          📊 সব Result দেখুন
-        </button>
-
-        <button class="secondary" id="publishAllBtn">
-          🟢 সব Result প্রকাশ
-        </button>
-
-        <button class="danger" id="unpublishAllBtn">
-          🔴 সব Result গোপন
-        </button>
-
+      <div class="page-head">
+        <div class="page-title">রেজাল্ট ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          একটি কুইজ নির্বাচন করলে সেই কুইজের সব ফলাফল একসাথে দেখা যাবে
+        </div>
       </div>
 
-    </div>
+
+      <div class="card">
+
+        <div class="toolbar">
+
+          <select
+            id="resultQuizSelect"
+            onchange="loadResults()"
+          >
+            <option value="">কুইজ নির্বাচন করুন</option>
+          </select>
+
+          <button
+            class="btn btn-green"
+            onclick="publishAllResults()"
+          >
+            ✓ সব Result Publish
+          </button>
+
+          <button
+            class="btn btn-red"
+            onclick="unpublishAllResults()"
+          >
+            ✕ সব Hide
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="loadResults()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
 
 
-    <div class="card">
+        <div class="table-wrap">
 
-      <div class="table-wrap">
+          <table>
 
-        <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Roll</th>
+                <th>নাম</th>
+                <th>Score</th>
+                <th>সঠিক</th>
+                <th>ভুল</th>
+                <th>বাদ</th>
+                <th>সময়</th>
+                <th>Submit</th>
+                <th>Publish</th>
+              </tr>
+            </thead>
 
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Roll</th>
-              <th>নাম</th>
-              <th>Score</th>
-              <th>সঠিক</th>
-              <th>ভুল</th>
-              <th>বাদ</th>
-              <th>সময়</th>
-              <th>Status</th>
-              <th>Detail</th>
-            </tr>
-          </thead>
+            <tbody id="resultTable"></tbody>
 
-          <tbody id="resultTable">
-            <tr>
-              <td colspan="10">
-                একটি Quiz নির্বাচন করুন।
-              </td>
-            </tr>
-          </tbody>
+          </table>
 
-        </table>
+        </div>
 
       </div>
 
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- LIBRARY -->
-  <section id="library" class="section">
+    <!-- LIBRARY -->
 
-    <div class="section-head">
-      <div>
-        <h3>📚 Library Management</h3>
-        <p>শিক্ষার্থীদের জন্য বই ও PDF পরিচালনা করুন</p>
+    <section id="page-library" class="page">
+
+      <div class="page-head">
+        <div class="page-title">লাইব্রেরি</div>
+        <div class="page-desc">
+          Quiz books ও PDF ব্যবস্থাপনা
+        </div>
       </div>
 
-      <button class="primary" onclick="openLibraryPage()">
-        📚 Library খুলুন
-      </button>
-    </div>
+      <div class="card">
 
-    <div class="card">
-      <p>
-        এখানে Admin বই, PDF এবং Library Category পরিচালনা করতে পারবেন।
-      </p>
-    </div>
-
-  </section>
-
-
-  <!-- NOTICE -->
-  <section id="notice" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>📢 Notice Management</h3>
-        <p>শিক্ষার্থীদের জন্য গুরুত্বপূর্ণ ঘোষণা প্রকাশ করুন</p>
-      </div>
-
-      <button class="primary" onclick="openNoticePage()">
-        ➕ Notice Management
-      </button>
-    </div>
-
-  </section>
-
-
-  <!-- INSPIRATION -->
-  <section id="inspiration" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>🌙 এক মিনিটের অনুপ্রেরণা</h3>
-        <p>ওয়েবসাইটের অনুপ্রেরণামূলক বার্তা এখান থেকে পরিবর্তন করুন</p>
-      </div>
-    </div>
-
-    <div class="inspiration">
-
-      <div class="quote">
-        <strong>বর্তমান বার্তা</strong>
-        <p id="currentInspiration">
-          বার্তা লোড হচ্ছে...
-        </p>
-      </div>
-
-      <label>নতুন অনুপ্রেরণামূলক কথা</label>
-
-      <textarea id="inspirationText"
-        placeholder="এখানে অনুপ্রেরণামূলক কথা লিখুন..."></textarea>
-
-      <div class="btn-row">
-
-        <button class="primary" onclick="saveInspiration()">
-          💾 প্রকাশ ও সংরক্ষণ
-        </button>
-
-        <button class="secondary" onclick="previewInspiration()">
-          👁️ Preview
+        <button
+          class="btn btn-primary"
+          onclick="openExternal('library-management.html')"
+        >
+          📚 Library Management খুলুন
         </button>
 
       </div>
 
-    </div>
-
-  </section>
+    </section>
 
 
-  <!-- ADMINS -->
-  <section id="admins" class="section">
+    <!-- NOTICE -->
 
-    <div class="section-head">
-      <div>
-        <h3>👑 Admin Management</h3>
-        <p>ওয়েবসাইট পরিচালনার জন্য অনুমোদিত Admin নিয়ন্ত্রণ করুন</p>
+    <section id="page-notice" class="page">
+
+      <div class="page-head">
+        <div class="page-title">নোটিশ</div>
+        <div class="page-desc">
+          শিক্ষার্থীদের জন্য গুরুত্বপূর্ণ ঘোষণা
+        </div>
       </div>
 
-      <button class="primary" onclick="openAdminModal()">
-        ➕ নতুন Admin
-      </button>
-    </div>
+      <div class="card">
 
-
-    <div class="card">
-
-      <div class="quote">
-        <strong>🔐 নিরাপত্তা</strong>
-        <p>
-          Admin account তৈরি ও Authentication নিরাপদ server-side ব্যবস্থার
-          মাধ্যমে করা হবে। কোনো গোপন Firebase credential এই ওয়েবসাইটে রাখা হবে না।
-        </p>
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>নাম</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>যোগদানের সময়</th>
-            </tr>
-          </thead>
-
-          <tbody id="adminTable">
-            <tr>
-              <td colspan="5">Admin তালিকা লোড হচ্ছে...</td>
-            </tr>
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- COMPLAINTS -->
-  <section id="complaints" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>💬 অভিযোগ ব্যবস্থাপনা</h3>
-        <p>শিক্ষার্থীদের অভিযোগ দেখুন ও সমাধানের অবস্থা পরিচালনা করুন</p>
-      </div>
-
-      <button class="primary" onclick="openComplaintPage()">
-        💬 অভিযোগ খুলুন
-      </button>
-    </div>
-
-  </section>
-
-
-  <!-- SETTINGS -->
-  <section id="settings" class="section">
-
-    <div class="section-head">
-      <div>
-        <h3>⚙️ Website Settings</h3>
-        <p>জ্ঞানতরঙ্গের গুরুত্বপূর্ণ সাইট সেটিংস</p>
-      </div>
-    </div>
-
-    <div class="card">
-
-      <label>Website Name</label>
-      <input value="জ্ঞানতরঙ্গ">
-
-      <label>Tagline</label>
-      <input value="শিখি · জানি · এগিয়ে যাই">
-
-      <div class="btn-row">
-        <button class="primary" onclick="toast('সেটিংস অংশ পরবর্তী ধাপে সম্পূর্ণ করা হবে।')">
-          💾 সংরক্ষণ
+        <button
+          class="btn btn-primary"
+          onclick="openExternal('notice-management.html')"
+        >
+          📢 Notice Management খুলুন
         </button>
+
       </div>
 
-    </div>
-
-  </section>
+    </section>
 
 
-</main>
-</div>
+    <!-- INSPIRATION -->
+
+    <section id="page-inspiration" class="page">
+
+      <div class="page-head">
+        <div class="page-title">এক মিনিটের অনুপ্রেরণা</div>
+        <div class="page-desc">
+          Admin এখান থেকে অনুপ্রেরণামূলক / ইসলামী বার্তা পরিবর্তন করতে পারবেন
+        </div>
+      </div>
 
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu">
+      <div class="grid-2">
 
-  <button class="active" onclick="showSection('dashboard',this)">
-    🏠<br>হোম
-  </button>
+        <div class="card">
 
-  <button onclick="showSection('quiz',this)">
-    📝<br>কুইজ
-  </button>
+          <div class="card-title">
+            🌙 বার্তা সম্পাদনা
+          </div>
 
-  <button onclick="showSection('registration',this)">
-    🧾<br>রেজিস্ট্রেশন
-  </button>
+          <div class="field">
+            <label>বার্তা</label>
 
-  <button onclick="showSection('results',this)">
-    🏆<br>রেজাল্ট
-  </button>
+            <textarea
+              id="inspirationMessage"
+              placeholder="আপনার অনুপ্রেরণামূলক বার্তা লিখুন..."
+            ></textarea>
 
-  <button onclick="showSection('admins',this)">
-    👑<br>Admin
-  </button>
+          </div>
 
-</div>
+          <div class="setting-row">
 
-</div>
+            <div>
+              <div class="setting-name">
+                প্রকাশিত / Active
+              </div>
+
+              <div class="setting-help">
+                Active থাকলে শিক্ষার্থীরা দেখতে পাবে
+              </div>
+
+            </div>
+
+            <label class="switch">
+              <input
+                id="inspirationActive"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            style="margin-top:15px;"
+            onclick="saveInspiration()"
+          >
+            💾 Save & Publish
+          </button>
+
+        </div>
 
 
-<!-- ADMIN MODAL -->
-<div class="modal" id="adminModal">
+        <div class="card">
 
-  <div class="modal-box">
+          <div class="card-title">
+            👁️ Preview
+          </div>
 
-    <div class="modal-head">
-      <h3>👑 নতুন Admin যোগ করুন</h3>
-      <button class="close" onclick="closeAdminModal()">×</button>
-    </div>
+          <div
+            id="inspirationPreview"
+            style="
+              color:#dce8e3;
+              line-height:1.9;
+              white-space:pre-line;
+              background:rgba(47,214,138,.05);
+              border:1px solid rgba(47,214,138,.12);
+              border-radius:16px;
+              padding:16px;
+              min-height:180px;
+            "
+          >
+            Preview এখানে দেখা যাবে।
+          </div>
 
-    <p style="color:var(--muted);font-size:12px;line-height:1.7">
-      Admin-এর নাম ও ইমেইল এখানে নেওয়া হবে। নিরাপদভাবে Firebase Authentication
-      account তৈরির জন্য secure backend সংযুক্ত করা হবে।
-    </p>
+        </div>
 
-    <label>Admin-এর নাম</label>
-    <input id="newAdminName" placeholder="পূর্ণ নাম">
+      </div>
 
-    <label>Admin Email</label>
-    <input id="newAdminEmail" type="email" placeholder="admin@example.com">
+    </section>
 
-    <label>পাসওয়ার্ড</label>
-    <input id="newAdminPassword" type="password" placeholder="কমপক্ষে ৬ অক্ষর">
 
-    <div class="btn-row">
+    <!-- EXAM RULES -->
 
-      <button class="primary" onclick="requestAdminCreation()">
-        👑 Admin তৈরি করুন
-      </button>
+    <section id="page-rules" class="page">
 
-      <button class="secondary" onclick="closeAdminModal()">
-        বাতিল
-      </button>
+      <div class="page-head">
+        <div class="page-title">পরীক্ষার নিয়ম ও সেটিংস</div>
+        <div class="page-desc">
+          এখানকার নিয়মগুলো সরাসরি শিক্ষার্থীর পরীক্ষার আগে দেখানো হবে
+        </div>
+      </div>
+
+
+      <div class="grid-2">
+
+        <div class="card">
+
+          <div class="card-title">
+            📋 পরীক্ষার নিয়ম
+          </div>
+
+          <div class="field">
+            <label>নিয়মের শিরোনাম</label>
+
+            <input
+              id="rulesTitleInput"
+              value="পরীক্ষার নিয়মাবলি"
+            >
+          </div>
+
+
+          <div class="field">
+            <label>
+              প্রতিটি নিয়ম আলাদা লাইনে লিখুন
+            </label>
+
+            <textarea
+              id="rulesTextInput"
+              style="min-height:320px;"
+              placeholder="প্রতিটি নিয়ম নতুন লাইনে লিখুন"
+            ></textarea>
+
+          </div>
+
+
+          <button
+            class="btn btn-primary"
+            onclick="saveExamRules()"
+          >
+            💾 নিয়ম Save & Publish
+          </button>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-title">
+            ⚙️ পরীক্ষার আচরণ
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Random Question
+              </div>
+
+              <div class="setting-help">
+                প্রশ্নের ক্রম random হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="randomQuestion"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Random Option
+              </div>
+
+              <div class="setting-help">
+                অপশনের ক্রম random হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="randomOption"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Back Button
+              </div>
+
+              <div class="setting-help">
+                শিক্ষার্থী আগের প্রশ্নে ফিরতে পারবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="allowBack"
+                type="checkbox"
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Anti-Cheat Warning
+              </div>
+
+              <div class="setting-help">
+                Tab change / fullscreen change warning
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="antiCheat"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Fullscreen Recommendation
+              </div>
+
+              <div class="setting-help">
+                পরীক্ষা শুরুতে fullscreen নেওয়ার চেষ্টা
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="fullscreenRecommended"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="setting-row">
+
+            <div>
+              <div class="setting-name">
+                Negative Marking
+              </div>
+
+              <div class="setting-help">
+                প্রশ্নে দেওয়া negative_mark ব্যবহার হবে
+              </div>
+            </div>
+
+            <label class="switch">
+              <input
+                id="negativeMarking"
+                type="checkbox"
+                checked
+              >
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+
+          <div class="field" style="margin-top:17px;">
+
+            <label>
+              Default Question Timer
+            </label>
+
+            <select id="defaultQuestionTimer">
+
+              <option value="20">২০ সেকেন্ড</option>
+              <option value="30" selected>৩০ সেকেন্ড</option>
+              <option value="40">৪০ সেকেন্ড</option>
+              <option value="50">৫০ সেকেন্ড</option>
+              <option value="60">৬০ সেকেন্ড</option>
+              <option value="90">৯০ সেকেন্ড</option>
+              <option value="120">১২০ সেকেন্ড</option>
+
+            </select>
+
+          </div>
+
+
+          <button
+            class="btn btn-primary"
+            onclick="saveExamBehavior()"
+          >
+            💾 আচরণ Save
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADMINS -->
+
+    <section id="page-admins" class="page">
+
+      <div class="page-head">
+        <div class="page-title">Admin Management</div>
+
+        <div class="page-desc">
+          অনুমোদিত Admin-দের ব্যবস্থাপনা
+        </div>
+      </div>
+
+
+      <div class="card">
+
+        <div class="toolbar">
+
+          <button
+            class="btn btn-primary"
+            onclick="showAdminCreateInfo()"
+          >
+            ➕ নতুন Admin
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="loadAdmins()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>নাম</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Active</th>
+              </tr>
+            </thead>
+
+            <tbody id="adminTable"></tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          style="
+            margin-top:15px;
+            padding:13px;
+            border-radius:14px;
+            background:rgba(255,178,28,.06);
+            border:1px solid rgba(255,178,28,.14);
+            color:#f1dca9;
+            font-size:11px;
+            line-height:1.8;
+          "
+        >
+          🔐 নিরাপত্তা: নতুন Firebase Auth Admin সরাসরি এই frontend থেকে তৈরি করা হচ্ছে না।
+          এর জন্য নিরাপদ server-side Firebase Admin SDK / Cloud Function প্রয়োজন।
+          Service Account key কখনো এই HTML ফাইলে রাখা যাবে না।
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- COMPLAINT -->
+
+    <section id="page-complaint" class="page">
+
+      <div class="page-head">
+        <div class="page-title">অভিযোগ ব্যবস্থাপনা</div>
+        <div class="page-desc">
+          শিক্ষার্থীদের অভিযোগ ও যোগাযোগ
+        </div>
+      </div>
+
+      <div class="card">
+
+        <button
+          class="btn btn-primary"
+          onclick="openExternal('complaint-management.html')"
+        >
+          💬 Complaint Management খুলুন
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section id="page-settings" class="page">
+
+      <div class="page-head">
+        <div class="page-title">ওয়েবসাইট সেটিংস</div>
+        <div class="page-desc">
+          জ্ঞানতরঙ্গের সাধারণ ওয়েবসাইট সেটিংস
+        </div>
+      </div>
+
+
+      <div class="card">
+
+        <div class="field">
+          <label>Website Name</label>
+
+          <input
+            id="siteName"
+            value="জ্ঞানতরঙ্গ"
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Tagline</label>
+
+          <input
+            id="siteTagline"
+            value="শিখি · জানি · এগিয়ে যাই"
+          >
+        </div>
+
+
+        <div class="field">
+          <label>Footer</label>
+
+          <input
+            id="siteFooter"
+            value="© ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।"
+          >
+        </div>
+
+
+        <button
+          class="btn btn-primary"
+          onclick="saveWebsiteSettings()"
+        >
+          💾 Settings Save
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- MOBILE MENU -->
+
+  <div class="mobile-menu">
+
+    <button
+      class="active"
+      data-mobile-page="dashboard"
+    >
+      🏠<br>হোম
+    </button>
+
+    <button data-mobile-page="quiz">
+      📝<br>কুইজ
+    </button>
+
+    <button data-mobile-page="registration">
+      🧾<br>রেজি
+    </button>
+
+    <button data-mobile-page="result">
+      🏆<br>রেজাল্ট
+    </button>
+
+    <button data-mobile-page="rules">
+      ⚙️<br>সেটিং
+    </button>
+
+  </div>
+
+
+  <!-- TOAST -->
+
+  <div id="toast" class="toast"></div>
+
+
+  <!-- MODAL -->
+
+  <div id="modal" class="modal">
+
+    <div class="modal-card">
+
+      <div class="modal-head">
+
+        <div id="modalTitle" class="modal-title">
+          তথ্য
+        </div>
+
+        <button
+          class="close"
+          onclick="closeModal()"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <div id="modalBody"></div>
 
     </div>
 
   </div>
 
 </div>
-
-
-<!-- RESULT MODAL -->
-<div class="modal" id="resultModal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h3>🏆 Result বিস্তারিত</h3>
-      <button class="close" onclick="closeResultModal()">×</button>
-    </div>
-
-    <div id="resultDetail"></div>
-
-  </div>
-
-</div>
-
-
-<div class="toast" id="toastBox"></div>
 
 
 <script type="module">
 
-import { auth, db } from "./firebase-config.js";
+  import {
+    auth,
+    db
+  } from "./firebase-config.js";
 
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-  setDoc,
-  updateDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+  import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    where,
+    setDoc,
+    updateDoc,
+    serverTimestamp,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* -------------------------
-   GLOBAL
-------------------------- */
+  /* =========================================================
+     GLOBAL
+  ========================================================= */
 
-let currentAdmin = null;
-let selectedQuizId = "";
-let allResults = [];
-let paymentState = {
-  bkash:true,
-  rocket:true,
-  nagad:true
-};
+  let currentUser = null;
+  let currentAdminProfile = null;
 
+  let quizzes = [];
+  let registrations = [];
+  let results = [];
+  let admins = [];
 
-/* -------------------------
-   LOGIN
-------------------------- */
 
-const loginBtn = document.getElementById("loginBtn");
+  const $ = id =>
+    document.getElementById(id);
 
-loginBtn.addEventListener("click", async ()=>{
 
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
+  /* =========================================================
+     AUTH
+  ========================================================= */
 
-  if(!email || !password){
-    showLoginError("ইমেইল ও পাসওয়ার্ড দিন।");
-    return;
-  }
+  onAuthStateChanged(
+    auth,
+    async user => {
 
-  loginBtn.disabled = true;
-  loginBtn.textContent = "প্রবেশ করা হচ্ছে...";
+      if(!user){
 
-  try{
+        showLogin();
 
-    await signInWithEmailAndPassword(auth,email,password);
-
-  }catch(error){
-
-    showLoginError("লগইন করা যায়নি। ইমেইল বা পাসওয়ার্ড যাচাই করুন।");
-
-  }finally{
-
-    loginBtn.disabled = false;
-    loginBtn.textContent = "🔐 নিরাপদে প্রবেশ করুন";
-
-  }
-
-});
-
-
-function showLoginError(text){
-
-  const box = document.getElementById("loginMessage");
-
-  box.textContent = text;
-  box.className = "message error";
-
-}
-
-
-/* -------------------------
-   AUTH CHECK
-------------------------- */
-
-onAuthStateChanged(auth, async(user)=>{
-
-  if(!user){
-
-    document.getElementById("loginScreen").style.display = "flex";
-    document.getElementById("app").style.display = "none";
-    return;
-
-  }
-
-  try{
-
-    const snap = await getDoc(doc(db,"profiles",user.uid));
-
-    if(!snap.exists()){
-
-      await signOut(auth);
-      showLoginError("Admin Profile পাওয়া যায়নি।");
-      return;
-
-    }
-
-    const data = snap.data();
-
-    if(data.role !== "admin" || data.is_active !== true){
-
-      await signOut(auth);
-      showLoginError("আপনার Admin অনুমতি নেই।");
-      return;
-
-    }
-
-    currentAdmin = {
-      uid:user.uid,
-      ...data
-    };
-
-    document.getElementById("adminName").textContent =
-      data.full_name || "Admin";
-
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    await loadDashboard();
-    await loadPayments();
-    await loadInspiration();
-    await loadAdmins();
-    await loadQuizzes();
-
-  }catch(error){
-
-    console.error(error);
-
-    await signOut(auth);
-
-    showLoginError("Admin তথ্য যাচাই করা যায়নি।");
-
-  }
-
-});
-
-
-/* -------------------------
-   LOGOUT
-------------------------- */
-
-document.getElementById("logoutBtn").addEventListener("click",async()=>{
-
-  await signOut(auth);
-
-});
-
-
-/* -------------------------
-   NAVIGATION
-------------------------- */
-
-document.querySelectorAll(".nav-btn[data-section]").forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-
-    showSection(btn.dataset.section);
-
-  });
-
-});
-
-
-window.showSection = function(id, mobileButton=null){
-
-  document.querySelectorAll(".section").forEach(section=>{
-    section.classList.remove("active");
-  });
-
-  const target = document.getElementById(id);
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.classList.remove("active");
-
-    if(btn.dataset.section === id){
-      btn.classList.add("active");
-    }
-  });
-
-  document.querySelectorAll(".mobile-menu button").forEach(btn=>{
-    btn.classList.remove("active");
-  });
-
-  if(mobileButton){
-    mobileButton.classList.add("active");
-  }
-
-  const titles = {
-    dashboard:"ড্যাশবোর্ড",
-    quiz:"কুইজ ব্যবস্থাপনা",
-    questions:"প্রশ্ন ব্যবস্থাপনা",
-    registration:"রেজিস্ট্রেশন",
-    payment:"পেমেন্ট",
-    results:"রেজাল্ট",
-    library:"লাইব্রেরি",
-    notice:"নোটিশ",
-    inspiration:"এক মিনিটের অনুপ্রেরণা",
-    admins:"Admin Management",
-    complaints:"অভিযোগ",
-    settings:"ওয়েবসাইট সেটিংস"
-  };
-
-  document.getElementById("pageTitle").textContent =
-    titles[id] || "Admin Panel";
-
-};
-
-
-/* -------------------------
-   DASHBOARD
-------------------------- */
-
-async function loadDashboard(){
-
-  try{
-
-    const profiles = await getDocs(collection(db,"profiles"));
-    const quizzes = await getDocs(collection(db,"quizzes"));
-    const registrations = await getDocs(collection(db,"quiz_registrations"));
-    const results = await getDocs(collection(db,"results"));
-
-    let pending = 0;
-    let published = 0;
-
-    registrations.forEach(s=>{
-      if((s.data().status || "").toLowerCase() === "pending"){
-        pending++;
-      }
-    });
-
-    results.forEach(s=>{
-      if(s.data().published === true){
-        published++;
-      }
-    });
-
-    document.getElementById("studentCount").textContent =
-      profiles.size;
-
-    document.getElementById("quizCount").textContent =
-      quizzes.size;
-
-    document.getElementById("pendingCount").textContent =
-      pending;
-
-    document.getElementById("resultCount").textContent =
-      published;
-
-  }catch(error){
-
-    console.error("Dashboard:",error);
-
-  }
-
-}
-
-
-/* -------------------------
-   QUIZZES
-------------------------- */
-
-async function loadQuizzes(){
-
-  try{
-
-    const snap = await getDocs(collection(db,"quizzes"));
-
-    const selects = [
-      document.getElementById("quizSelect"),
-      document.getElementById("resultQuizSelect")
-    ];
-
-    selects.forEach(select=>{
-
-      select.innerHTML =
-        '<option value="">Quiz নির্বাচন করুন</option>';
-
-      snap.forEach(item=>{
-
-        const data = item.data();
-
-        const option = document.createElement("option");
-
-        option.value = item.id;
-        option.textContent =
-          data.title || data.name || "নামহীন Quiz";
-
-        select.appendChild(option);
-
-      });
-
-    });
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-}
-
-
-document.getElementById("quizSelect")
-.addEventListener("change",async(e)=>{
-
-  const id = e.target.value;
-
-  if(!id){
-    document.getElementById("quizStatus").value = "—";
-    return;
-  }
-
-  const snap = await getDoc(doc(db,"quizzes",id));
-
-  if(snap.exists()){
-
-    const q = snap.data();
-
-    document.getElementById("quizStatus").value =
-      q.is_active === false ? "Inactive" : "Active";
-
-  }
-
-});
-
-
-window.openQuizPage = function(){
-
-  window.location.href = "quiz-management.html";
-
-};
-
-
-window.openQuestionPage = function(){
-
-  window.location.href = "question-management.html";
-
-};
-
-
-window.openLibraryPage = function(){
-
-  window.location.href = "library-management.html";
-
-};
-
-
-window.openNoticePage = function(){
-
-  window.location.href = "notice-management.html";
-
-};
-
-
-window.openComplaintPage = function(){
-
-  window.location.href = "complaint-management.html";
-
-};
-
-
-/* -------------------------
-   PAYMENT
-------------------------- */
-
-async function loadPayments(){
-
-  try{
-
-    const snap = await getDocs(collection(db,"payment_methods"));
-
-    snap.forEach(item=>{
-
-      const d = item.data();
-
-      const type = String(
-        d.type || d.method || item.id
-      ).toLowerCase();
-
-      if(type.includes("bkash")){
-
-        document.getElementById("bkashNumber").value =
-          d.number || d.account_number || "";
-
-        paymentState.bkash =
-          d.is_active !== false;
-
-      }
-
-      if(type.includes("rocket")){
-
-        document.getElementById("rocketNumber").value =
-          d.number || d.account_number || "";
-
-        paymentState.rocket =
-          d.is_active !== false;
-
-      }
-
-      if(type.includes("nagad")){
-
-        document.getElementById("nagadNumber").value =
-          d.number || d.account_number || "";
-
-        paymentState.nagad =
-          d.is_active !== false;
-
-      }
-
-    });
-
-    updatePaymentBadges();
-
-  }catch(error){
-
-    console.error("Payment:",error);
-
-  }
-
-}
-
-
-window.savePayment = async function(type){
-
-  const ids = {
-    bkash:"bkashNumber",
-    rocket:"rocketNumber",
-    nagad:"nagadNumber"
-  };
-
-  const number =
-    document.getElementById(ids[type]).value.trim();
-
-  if(!number){
-
-    toast("পেমেন্ট নম্বর দিন।");
-    return;
-
-  }
-
-  try{
-
-    await setDoc(
-      doc(db,"payment_methods",type),
-      {
-        type,
-        number,
-        is_active:paymentState[type],
-        updated_at:serverTimestamp(),
-        updated_by:auth.currentUser.uid
-      },
-      {merge:true}
-    );
-
-    toast("পেমেন্ট নম্বর সংরক্ষণ হয়েছে।");
-
-  }catch(error){
-
-    console.error(error);
-    toast("সংরক্ষণ করা যায়নি।");
-
-  }
-
-};
-
-
-window.togglePayment = async function(type){
-
-  paymentState[type] = !paymentState[type];
-
-  try{
-
-    await setDoc(
-      doc(db,"payment_methods",type),
-      {
-        type,
-        is_active:paymentState[type],
-        updated_at:serverTimestamp(),
-        updated_by:auth.currentUser.uid
-      },
-      {merge:true}
-    );
-
-    updatePaymentBadges();
-
-    toast(
-      paymentState[type]
-      ? "পেমেন্ট মাধ্যম চালু হয়েছে।"
-      : "পেমেন্ট মাধ্যম বন্ধ হয়েছে।"
-    );
-
-  }catch(error){
-
-    paymentState[type] = !paymentState[type];
-    console.error(error);
-    toast("পরিবর্তন করা যায়নি।");
-
-  }
-
-};
-
-
-function updatePaymentBadges(){
-
-  setBadge("bkashBadge",paymentState.bkash);
-  setBadge("rocketBadge",paymentState.rocket);
-  setBadge("nagadBadge",paymentState.nagad);
-
-}
-
-
-function setBadge(id,active){
-
-  const el = document.getElementById(id);
-
-  el.textContent = active ? "Active" : "Inactive";
-
-  el.className =
-    "badge " + (active ? "active" : "off");
-
-}
-
-
-/* -------------------------
-   INSPIRATION
-------------------------- */
-
-async function loadInspiration(){
-
-  try{
-
-    const snap =
-      await getDoc(doc(db,"website_settings","inspiration"));
-
-    if(snap.exists()){
-
-      const text =
-        snap.data().text || "";
-
-      document.getElementById("currentInspiration")
-        .textContent = text || "কোনো বার্তা সেট করা হয়নি।";
-
-      document.getElementById("inspirationText")
-        .value = text;
-
-    }else{
-
-      document.getElementById("currentInspiration")
-        .textContent = "কোনো বার্তা সেট করা হয়নি।";
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-}
-
-
-window.saveInspiration = async function(){
-
-  const text =
-    document.getElementById("inspirationText")
-      .value.trim();
-
-  if(!text){
-
-    toast("অনুপ্রেরণামূলক কথা লিখুন।");
-    return;
-
-  }
-
-  try{
-
-    await setDoc(
-      doc(db,"website_settings","inspiration"),
-      {
-        text,
-        is_active:true,
-        updated_at:serverTimestamp(),
-        updated_by:auth.currentUser.uid
-      },
-      {merge:true}
-    );
-
-    document.getElementById("currentInspiration")
-      .textContent = text;
-
-    toast("অনুপ্রেরণামূলক কথা প্রকাশ হয়েছে।");
-
-  }catch(error){
-
-    console.error(error);
-    toast("বার্তা সংরক্ষণ করা যায়নি।");
-
-  }
-
-};
-
-
-window.previewInspiration = function(){
-
-  const text =
-    document.getElementById("inspirationText").value.trim();
-
-  if(!text){
-
-    toast("আগে কিছু লিখুন।");
-    return;
-
-  }
-
-  document.getElementById("currentInspiration")
-    .textContent = text;
-
-  toast("Preview দেখানো হয়েছে।");
-
-};
-
-
-/* -------------------------
-   ADMINS
-------------------------- */
-
-async function loadAdmins(){
-
-  try{
-
-    const snap =
-      await getDocs(
-        query(
-          collection(db,"profiles"),
-          where("role","==","admin")
-        )
-      );
-
-    const tbody =
-      document.getElementById("adminTable");
-
-    tbody.innerHTML = "";
-
-    if(snap.empty){
-
-      tbody.innerHTML =
-        '<tr><td colspan="5">কোনো Admin পাওয়া যায়নি।</td></tr>';
-
-      return;
-
-    }
-
-    snap.forEach(item=>{
-
-      const d = item.data();
-
-      const tr = document.createElement("tr");
-
-      let date = "—";
-
-      if(d.created_at?.toDate){
-
-        date =
-          d.created_at.toDate().toLocaleDateString(
-            "bn-BD"
-          );
-
-      }
-
-      tr.innerHTML = `
-        <td>${escapeHtml(d.full_name || "—")}</td>
-        <td>${escapeHtml(d.email || "—")}</td>
-        <td>👑 Admin</td>
-        <td>
-          <span class="badge ${d.is_active === false ? "off":"active"}">
-            ${d.is_active === false ? "Inactive":"Active"}
-          </span>
-        </td>
-        <td>${date}</td>
-      `;
-
-      tbody.appendChild(tr);
-
-    });
-
-  }catch(error){
-
-    console.error("Admins:",error);
-
-    document.getElementById("adminTable").innerHTML =
-      '<tr><td colspan="5">Admin তালিকা পড়া যায়নি।</td></tr>';
-
-  }
-
-}
-
-
-window.openAdminModal = function(){
-
-  document.getElementById("adminModal")
-    .classList.add("show");
-
-};
-
-
-window.closeAdminModal = function(){
-
-  document.getElementById("adminModal")
-    .classList.remove("show");
-
-};
-
-
-window.requestAdminCreation = function(){
-
-  const name =
-    document.getElementById("newAdminName").value.trim();
-
-  const email =
-    document.getElementById("newAdminEmail").value.trim();
-
-  const password =
-    document.getElementById("newAdminPassword").value;
-
-  if(!name || !email || !password){
-
-    toast("সব তথ্য পূরণ করুন।");
-    return;
-
-  }
-
-  if(password.length < 6){
-
-    toast("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।");
-    return;
-
-  }
-
-  toast(
-    "Admin Management UI প্রস্তুত। নিরাপদ Firebase Admin creation backend পরের ধাপে যুক্ত হবে।"
-  );
-
-};
-
-
-/* -------------------------
-   RESULTS
-------------------------- */
-
-document.getElementById("loadResultsBtn")
-.addEventListener("click",loadResults);
-
-
-async function loadResults(){
-
-  selectedQuizId =
-    document.getElementById("resultQuizSelect").value;
-
-  if(!selectedQuizId){
-
-    toast("আগে একটি Quiz নির্বাচন করুন।");
-    return;
-
-  }
-
-  const tbody =
-    document.getElementById("resultTable");
-
-  tbody.innerHTML =
-    '<tr><td colspan="10">Result তৈরি করা হচ্ছে...</td></tr>';
-
-  try{
-
-    const attemptsSnap =
-      await getDocs(
-        query(
-          collection(db,"attempts"),
-          where("quiz_id","==",selectedQuizId)
-        )
-      );
-
-    const existingSnap =
-      await getDocs(
-        query(
-          collection(db,"results"),
-          where("quiz_id","==",selectedQuizId)
-        )
-      );
-
-    const resultMap = new Map();
-
-    existingSnap.forEach(item=>{
-      resultMap.set(
-        item.data().attempt_id || item.id,
-        item.data()
-      );
-    });
-
-    const rows = [];
-
-    attemptsSnap.forEach(item=>{
-
-      const a = item.data();
-
-      if(
-        a.status !== "submitted" &&
-        a.submitted_at == null
-      ){
         return;
       }
 
-      const saved =
-        resultMap.get(a.attempt_id || item.id) || {};
 
-      rows.push({
-        id:item.id,
-        ...saved,
-        ...a
-      });
+      try{
 
-    });
+        const profileSnap =
+          await getDoc(
+            doc(db,"profiles",user.uid)
+          );
 
-    rows.sort((a,b)=>{
 
-      const scoreA =
-        Number(a.score ?? a.final_score ?? 0);
+        if(!profileSnap.exists()){
 
-      const scoreB =
-        Number(b.score ?? b.final_score ?? 0);
+          await signOut(auth);
 
-      if(scoreB !== scoreA){
-        return scoreB-scoreA;
+          showLoginError(
+            "Admin profile পাওয়া যায়নি।"
+          );
+
+          return;
+        }
+
+
+        const profile =
+          profileSnap.data();
+
+
+        if(
+          profile.role !== "admin" ||
+          profile.is_active !== true
+        ){
+
+          await signOut(auth);
+
+          showLoginError(
+            "আপনার Admin অনুমতি নেই।"
+          );
+
+          return;
+        }
+
+
+        currentUser = user;
+
+        currentAdminProfile = profile;
+
+
+        $("adminName").textContent =
+          profile.full_name ||
+          user.email ||
+          "Admin";
+
+
+        $("loginScreen").style.display =
+          "none";
+
+        $("app").classList.add("active");
+
+
+        await initializeAdmin();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        showLoginError(
+          "Admin যাচাই করতে সমস্যা হয়েছে।"
+        );
+
       }
 
-      const timeA =
-        Number(a.total_time_seconds ?? 999999999);
-
-      const timeB =
-        Number(b.total_time_seconds ?? 999999999);
-
-      if(timeA !== timeB){
-        return timeA-timeB;
-      }
-
-      return getTimestamp(a.submitted_at)
-           - getTimestamp(b.submitted_at);
-
-    });
-
-    rows.forEach((row,index)=>{
-      row.rank = index+1;
-    });
-
-    allResults = rows;
-
-    renderResults(rows);
-
-  }catch(error){
-
-    console.error(error);
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="10">
-          Result লোড করা যায়নি: ${escapeHtml(error.message)}
-        </td>
-      </tr>`;
-
-  }
-
-}
-
-
-function renderResults(rows){
-
-  const tbody =
-    document.getElementById("resultTable");
-
-  tbody.innerHTML = "";
-
-  if(!rows.length){
-
-    tbody.innerHTML =
-      '<tr><td colspan="10">এই Quiz-এর কোনো submitted Result নেই।</td></tr>';
-
-    return;
-
-  }
-
-  rows.forEach(row=>{
-
-    const score =
-      Number(row.score ?? row.final_score ?? 0);
-
-    const correct =
-      Number(row.correct ?? 0);
-
-    const wrong =
-      Number(row.wrong ?? 0);
-
-    const unanswered =
-      Number(row.unanswered ?? 0);
-
-    const time =
-      formatSeconds(
-        Number(row.total_time_seconds ?? 0)
-      );
-
-    const published =
-      row.published === true;
-
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td><b>#${row.rank}</b></td>
-      <td>${escapeHtml(row.roll_number || row.quiz_roll || "—")}</td>
-      <td>${escapeHtml(row.student_name || "—")}</td>
-      <td><b>${score}</b></td>
-      <td>${correct}</td>
-      <td>${wrong}</td>
-      <td>${unanswered}</td>
-      <td>${time}</td>
-      <td>
-        <span class="badge ${published ? "active":"off"}">
-          ${published ? "প্রকাশিত":"গোপন"}
-        </span>
-      </td>
-      <td>
-        <button class="action"
-          onclick="showResultDetail('${row.id}')">
-          বিস্তারিত
-        </button>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
-
-  });
-
-}
-
-
-document.getElementById("publishAllBtn")
-.addEventListener("click",publishAllResults);
-
-
-async function publishAllResults(){
-
-  if(!selectedQuizId){
-
-    toast("আগে একটি Quiz নির্বাচন করুন।");
-    return;
-
-  }
-
-  if(!allResults.length){
-
-    await loadResults();
-
-  }
-
-  if(!allResults.length){
-
-    toast("প্রকাশ করার মতো Result নেই।");
-    return;
-
-  }
-
-  try{
-
-    const now = serverTimestamp();
-
-    for(const row of allResults){
-
-      await setDoc(
-        doc(db,"results",row.id),
-        {
-          attempt_id:row.id,
-          quiz_id:selectedQuizId,
-          student_uid:row.student_uid || null,
-          student_name:row.student_name || "",
-          roll_number:row.roll_number || "",
-          student_id:row.student_id || "",
-          rank:row.rank,
-          total_questions:Number(row.total_questions ?? 0),
-          correct:Number(row.correct ?? 0),
-          wrong:Number(row.wrong ?? 0),
-          unanswered:Number(row.unanswered ?? 0),
-          total_marks:Number(row.total_marks ?? 0),
-          negative_mark:Number(row.negative_mark ?? 0),
-          score:Number(row.score ?? row.final_score ?? 0),
-          total_time_seconds:Number(row.total_time_seconds ?? 0),
-          started_at:row.started_at || null,
-          submitted_at:row.submitted_at || null,
-          published:true,
-          published_at:now,
-          updated_at:now
-        },
-        {merge:true}
-      );
-
-    }
-
-    toast("এই Quiz-এর সব Result প্রকাশ হয়েছে।");
-
-    await loadResults();
-    await loadDashboard();
-
-  }catch(error){
-
-    console.error(error);
-    toast("Result প্রকাশ করা যায়নি।");
-
-  }
-
-}
-
-
-document.getElementById("unpublishAllBtn")
-.addEventListener("click",unpublishAllResults);
-
-
-async function unpublishAllResults(){
-
-  if(!selectedQuizId){
-
-    toast("আগে একটি Quiz নির্বাচন করুন।");
-    return;
-
-  }
-
-  if(!allResults.length){
-
-    await loadResults();
-
-  }
-
-  try{
-
-    for(const row of allResults){
-
-      await setDoc(
-        doc(db,"results",row.id),
-        {
-          published:false,
-          updated_at:serverTimestamp()
-        },
-        {merge:true}
-      );
-
-    }
-
-    toast("এই Quiz-এর সব Result গোপন করা হয়েছে।");
-
-    await loadResults();
-    await loadDashboard();
-
-  }catch(error){
-
-    console.error(error);
-    toast("Result গোপন করা যায়নি।");
-
-  }
-
-}
-
-
-window.showResultDetail = function(id){
-
-  const row =
-    allResults.find(item=>item.id === id);
-
-  if(!row) return;
-
-  document.getElementById("resultDetail").innerHTML = `
-
-    <div class="quote">
-
-      <strong>${escapeHtml(row.student_name || "শিক্ষার্থী")}</strong>
-
-      <p>
-        Quiz Roll: ${escapeHtml(row.roll_number || "—")}<br>
-        Rank: #${row.rank || "—"}<br>
-        Score: ${Number(row.score ?? 0)}<br>
-        সঠিক: ${Number(row.correct ?? 0)}<br>
-        ভুল: ${Number(row.wrong ?? 0)}<br>
-        উত্তর দেওয়া হয়নি: ${Number(row.unanswered ?? 0)}<br>
-        মোট সময়: ${formatSeconds(Number(row.total_time_seconds ?? 0))}<br>
-        পরীক্ষা শুরু: ${formatDate(row.started_at)}<br>
-        পরীক্ষা শেষ: ${formatDate(row.submitted_at)}<br>
-        Result প্রকাশ: ${formatDate(row.published_at)}
-      </p>
-
-    </div>
-
-  `;
-
-  document.getElementById("resultModal")
-    .classList.add("show");
-
-};
-
-
-window.closeResultModal = function(){
-
-  document.getElementById("resultModal")
-    .classList.remove("show");
-
-};
-
-
-/* -------------------------
-   REGISTRATION
-------------------------- */
-
-async function loadRegistrations(){
-
-  const tbody =
-    document.getElementById("registrationTable");
-
-  try{
-
-    const snap =
-      await getDocs(
-        collection(db,"quiz_registrations")
-      );
-
-    tbody.innerHTML = "";
-
-    if(snap.empty){
-
-      tbody.innerHTML =
-        '<tr><td colspan="5">কোনো Registration নেই।</td></tr>';
-
-      return;
-
-    }
-
-    snap.forEach(item=>{
-
-      const d = item.data();
-
-      const status =
-        String(d.status || "pending").toLowerCase();
-
-      const tr =
-        document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>${escapeHtml(d.roll_number || "—")}</td>
-        <td>${escapeHtml(d.student_name || "—")}</td>
-        <td>${escapeHtml(d.quiz_title || d.quiz_id || "—")}</td>
-        <td>
-          <span class="badge ${
-            status==="approved" ? "active":
-            status==="rejected" ? "off":""
-          }">
-            ${escapeHtml(status)}
-          </span>
-        </td>
-        <td>
-
-          ${
-            status==="pending"
-            ? `
-              <button class="action green"
-                onclick="updateRegistration('${item.id}','approved')">
-                Approve
-              </button>
-
-              <button class="action red"
-                onclick="updateRegistration('${item.id}','rejected')">
-                Reject
-              </button>
-            `
-            : "—"
-          }
-
-        </td>
-      `;
-
-      tbody.appendChild(tr);
-
-    });
-
-  }catch(error){
-
-    console.error(error);
-
-    tbody.innerHTML =
-      '<tr><td colspan="5">Registration লোড করা যায়নি।</td></tr>';
-
-  }
-
-}
-
-
-window.updateRegistration = async function(id,status){
-
-  try{
-
-    await updateDoc(
-      doc(db,"quiz_registrations",id),
-      {
-        status,
-        updated_at:serverTimestamp(),
-        updated_by:auth.currentUser.uid
-      }
-    );
-
-    toast(
-      status==="approved"
-      ? "Registration অনুমোদন করা হয়েছে।"
-      : "Registration বাতিল করা হয়েছে।"
-    );
-
-    await loadRegistrations();
-    await loadDashboard();
-
-  }catch(error){
-
-    console.error(error);
-    toast("পরিবর্তন করা যায়নি।");
-
-  }
-
-};
-
-
-document.getElementById("registrationSearch")
-.addEventListener("input",filterRegistration);
-
-
-document.getElementById("registrationFilter")
-.addEventListener("change",filterRegistration);
-
-
-async function filterRegistration(){
-
-  /*
-    Registration filtering is intentionally kept lightweight here.
-    Full search/pagination can be expanded without changing the Firestore structure.
-  */
-
-  await loadRegistrations();
-
-}
-
-
-/* -------------------------
-   HELPERS
-------------------------- */
-
-function getTimestamp(value){
-
-  if(!value) return 9999999999999;
-
-  if(value.toMillis){
-    return value.toMillis();
-  }
-
-  if(value.seconds){
-    return value.seconds*1000;
-  }
-
-  const t =
-    new Date(value).getTime();
-
-  return Number.isNaN(t)
-    ? 9999999999999
-    : t;
-
-}
-
-
-function formatDate(value){
-
-  if(!value) return "—";
-
-  let date;
-
-  if(value.toDate){
-    date = value.toDate();
-  }else if(value.seconds){
-    date = new Date(value.seconds*1000);
-  }else{
-    date = new Date(value);
-  }
-
-  if(Number.isNaN(date.getTime())){
-    return "—";
-  }
-
-  return date.toLocaleString(
-    "bn-BD",
-    {
-      timeZone:"Asia/Dhaka",
-      year:"numeric",
-      month:"short",
-      day:"numeric",
-      hour:"numeric",
-      minute:"2-digit"
     }
   );
 
-}
+
+  /* =========================================================
+     LOGIN
+  ========================================================= */
+
+  window.adminLogin = async function(){
+
+    const email =
+      $("loginEmail").value.trim();
+
+    const password =
+      $("loginPassword").value;
 
 
-function formatSeconds(seconds){
+    if(!email || !password){
 
-  if(!seconds || seconds < 0){
-    return "০ সেকেন্ড";
+      showLoginError(
+        "ইমেইল ও পাসওয়ার্ড দিন।"
+      );
+
+      return;
+    }
+
+
+    $("loginBtn").disabled = true;
+
+    $("loginBtn").textContent =
+      "⏳ যাচাই হচ্ছে...";
+
+
+    try{
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showLoginError(
+        getAuthError(error)
+      );
+
+      $("loginBtn").disabled = false;
+
+      $("loginBtn").textContent =
+        "🔐 Admin Login";
+
+    }
+
+  };
+
+
+  function showLogin(){
+
+    $("loginScreen").style.display =
+      "grid";
+
+    $("app").classList.remove("active");
+
   }
 
-  const min =
-    Math.floor(seconds/60);
 
-  const sec =
-    Math.floor(seconds%60);
+  function showLoginError(message){
 
-  return `${min} মিনিট ${sec} সেকেন্ড`;
+    $("loginError").textContent =
+      message;
 
-}
+    $("loginError").classList.remove(
+      "hidden"
+    );
 
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
+  }
 
 
-window.toast = function(text){
+  function getAuthError(error){
 
-  const box =
-    document.getElementById("toastBox");
-
-  box.textContent = text;
-  box.classList.add("show");
-
-  setTimeout(()=>{
-    box.classList.remove("show");
-  },3500);
-
-};
+    const code =
+      error?.code || "";
 
 
-/* -------------------------
-   INITIAL
-------------------------- */
-
-document.querySelectorAll(".nav-btn[data-section]")
-.forEach(btn=>{
-
-  btn.addEventListener("click",()=>{
-
-    const id = btn.dataset.section;
-
-    if(id === "registration"){
-      loadRegistrations();
+    if(code.includes("invalid-credential")){
+      return "ইমেইল বা পাসওয়ার্ড সঠিক নয়।";
     }
+
+    if(code.includes("user-not-found")){
+      return "এই Admin account পাওয়া যায়নি।";
+    }
+
+    if(code.includes("wrong-password")){
+      return "পাসওয়ার্ড সঠিক নয়।";
+    }
+
+    if(code.includes("too-many-requests")){
+      return "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।";
+    }
+
+    return (
+      error?.message ||
+      "Login ব্যর্থ হয়েছে।"
+    );
+
+  }
+
+
+  /* =========================================================
+     INITIALIZE
+  ========================================================= */
+
+  async function initializeAdmin(){
+
+    await Promise.all([
+      loadDashboard(),
+      loadQuizzes(),
+      loadRegistrations(),
+      loadPayments(),
+      loadInspiration(),
+      loadExamRules(),
+      loadAdmins(),
+      loadWebsiteSettings()
+    ]);
+
+  }
+
+
+  /* =========================================================
+     NAVIGATION
+  ========================================================= */
+
+  document.querySelectorAll(
+    ".menu-btn[data-page]"
+  ).forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => {
+
+        openPage(
+          btn.dataset.page
+        );
+
+      }
+    );
 
   });
 
-});
+
+  document.querySelectorAll(
+    ".mobile-menu button[data-mobile-page]"
+  ).forEach(btn => {
+
+    btn.addEventListener(
+      "click",
+      () => {
+
+        openPage(
+          btn.dataset.mobilePage
+        );
+
+      }
+    );
+
+  });
+
+
+  window.openPage = function(page){
+
+    document.querySelectorAll(
+      ".page"
+    ).forEach(p =>
+      p.classList.remove("active")
+    );
+
+
+    const target =
+      $(`page-${page}`);
+
+
+    if(target){
+
+      target.classList.add("active");
+
+    }
+
+
+    document.querySelectorAll(
+      ".menu-btn[data-page]"
+    ).forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
+
+
+    document.querySelectorAll(
+      ".mobile-menu button[data-mobile-page]"
+    ).forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.mobilePage === page
+      );
+
+    });
+
+
+    const titles = {
+
+      dashboard:"ড্যাশবোর্ড",
+      quiz:"কুইজ ব্যবস্থাপনা",
+      question:"প্রশ্ন ব্যবস্থাপনা",
+      registration:"রেজিস্ট্রেশন",
+      payment:"পেমেন্ট",
+      result:"রেজাল্ট",
+      library:"লাইব্রেরি",
+      notice:"নোটিশ",
+      inspiration:"এক মিনিটের অনুপ্রেরণা",
+      rules:"পরীক্ষার নিয়ম",
+      admins:"Admin Management",
+      complaint:"অভিযোগ",
+      settings:"ওয়েবসাইট সেটিংস"
+
+    };
+
+
+    $("topTitle").textContent =
+      titles[page] ||
+      "জ্ঞানতরঙ্গ Admin";
+
+  };
+
+
+  /* =========================================================
+     DASHBOARD
+  ========================================================= */
+
+  async function loadDashboard(){
+
+    try{
+
+      const profilesSnap =
+        await getDocs(
+          collection(db,"profiles")
+        );
+
+
+      let studentCount = 0;
+
+      profilesSnap.forEach(d => {
+
+        const data = d.data();
+
+        if(
+          String(data.role || "").toLowerCase()
+          !==
+          "admin"
+        ){
+
+          studentCount++;
+
+        }
+
+      });
+
+
+      $("statStudents").textContent =
+        toBnNumber(studentCount);
+
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+
+    try{
+
+      const quizSnap =
+        await getDocs(
+          collection(db,"quizzes")
+        );
+
+      $("statQuizzes").textContent =
+        toBnNumber(
+          quizSnap.size
+        );
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+
+    try{
+
+      const regSnap =
+        await getDocs(
+          collection(db,"quiz_registrations")
+        );
+
+
+      let pending = 0;
+
+      regSnap.forEach(d => {
+
+        if(
+          String(
+            d.data().status || ""
+          ).toLowerCase()
+          ===
+          "pending"
+        ){
+
+          pending++;
+
+        }
+
+      });
+
+
+      $("statPending").textContent =
+        toBnNumber(pending);
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+
+    try{
+
+      const resultSnap =
+        await getDocs(
+          collection(db,"results")
+        );
+
+
+      let published = 0;
+
+      resultSnap.forEach(d => {
+
+        if(
+          d.data().published === true
+        ){
+
+          published++;
+
+        }
+
+      });
+
+
+      $("statPublished").textContent =
+        toBnNumber(published);
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+  }
+
+
+  /* =========================================================
+     QUIZZES
+  ========================================================= */
+
+  window.loadQuizzes = async function(){
+
+    try{
+
+      const snap =
+        await getDocs(
+          collection(db,"quizzes")
+        );
+
+
+      quizzes =
+        snap.docs.map(d => ({
+          id:d.id,
+          ...d.data()
+        }));
+
+
+      renderQuizList();
+
+      fillQuizSelects();
+
+    }catch(error){
+
+      console.error(error);
+
+      $("quizList").innerHTML =
+        `<div class="empty">
+          কুইজ লোড করা যায়নি।
+        </div>`;
+
+    }
+
+  };
+
+
+  function renderQuizList(){
+
+    if(!quizzes.length){
+
+      $("quizList").innerHTML =
+        `<div class="empty">
+          এখনো কোনো কুইজ পাওয়া যায়নি।
+        </div>`;
+
+      return;
+    }
+
+
+    $("quizList").innerHTML =
+      `
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>কুইজ</th>
+              <th>সময়</th>
+              <th>প্রশ্ন</th>
+              <th>Start</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            ${quizzes.map(q => {
+
+              const duration =
+                Number(
+                  q.duration_minutes ??
+                  q.duration ??
+                  0
+                );
+
+
+              const active =
+                q.is_active !== false;
+
+
+              return `
+                <tr>
+
+                  <td>
+                    ${escapeHtml(
+                      q.title ||
+                      q.name ||
+                      "Untitled"
+                    )}
+                  </td>
+
+                  <td>
+                    ${duration} মিনিট
+                  </td>
+
+                  <td>
+                    ${Number(q.question_count || 0)}
+                  </td>
+
+                  <td>
+                    ${formatDateTime(
+                      q.start_at
+                    )}
+                  </td>
+
+                  <td>
+                    <span class="status ${
+                      active
+                        ? "status-green"
+                        : "status-red"
+                    }">
+                      ${active ? "Active" : "Inactive"}
+                    </span>
+                  </td>
+
+                </tr>
+              `;
+
+            }).join("")}
+
+          </tbody>
+
+        </table>
+
+      </div>
+      `;
+
+  }
+
+
+  function fillQuizSelects(){
+
+    const options =
+      `
+      <option value="">
+        কুইজ নির্বাচন করুন
+      </option>
+      ` +
+      quizzes.map(q => `
+        <option value="${escapeHtml(q.id)}">
+          ${escapeHtml(
+            q.title ||
+            q.name ||
+            "Untitled"
+          )}
+        </option>
+      `).join("");
+
+
+    if($("resultQuizSelect")){
+
+      $("resultQuizSelect").innerHTML =
+        options;
+
+    }
+
+  }
+
+
+  /* =========================================================
+     REGISTRATIONS
+  ========================================================= */
+
+  window.loadRegistrations = async function(){
+
+    try{
+
+      const snap =
+        await getDocs(
+          collection(db,"quiz_registrations")
+        );
+
+
+      registrations =
+        snap.docs.map(d => ({
+          id:d.id,
+          ...d.data()
+        }));
+
+
+      renderRegistrations();
+
+    }catch(error){
+
+      console.error(error);
+
+      $("registrationTable").innerHTML =
+        `<tr>
+          <td colspan="6">
+            রেজিস্ট্রেশন লোড করা যায়নি।
+          </td>
+        </tr>`;
+
+    }
+
+  };
+
+
+  window.renderRegistrations = function(){
+
+    const search =
+      (
+        $("registrationSearch")?.value ||
+        ""
+      ).trim().toLowerCase();
+
+
+    const status =
+      (
+        $("registrationStatus")?.value ||
+        ""
+      ).toLowerCase();
+
+
+    const filtered =
+      registrations.filter(r => {
+
+        const text =
+          `
+          ${r.roll_number || ""}
+          ${r.quiz_roll_number || ""}
+          ${r.student_name || ""}
+          ${r.full_name || ""}
+          ${r.quiz_title || ""}
+          `.toLowerCase();
+
+
+        const rowStatus =
+          String(
+            r.status || ""
+          ).toLowerCase();
+
+
+        return (
+          (!search || text.includes(search)) &&
+          (!status || rowStatus === status)
+        );
+
+      });
+
+
+    if(!filtered.length){
+
+      $("registrationTable").innerHTML =
+        `<tr>
+          <td colspan="6">
+            কোনো রেজিস্ট্রেশন পাওয়া যায়নি।
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    $("registrationTable").innerHTML =
+      filtered.map(r => {
+
+        const rowStatus =
+          String(
+            r.status || "pending"
+          ).toLowerCase();
+
+
+        let badge =
+          "status-gold";
+
+
+        if(rowStatus === "approved"){
+          badge = "status-green";
+        }
+
+        if(rowStatus === "rejected"){
+          badge = "status-red";
+        }
+
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                r.roll_number ||
+                r.quiz_roll_number ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                r.student_name ||
+                r.full_name ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                getQuizTitle(r.quiz_id) ||
+                r.quiz_title ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              <span class="status ${badge}">
+                ${escapeHtml(rowStatus)}
+              </span>
+            </td>
+
+            <td>
+              ${formatDateTime(
+                r.created_at
+              )}
+            </td>
+
+            <td>
+
+              ${
+                rowStatus === "pending"
+                ? `
+                  <button
+                    class="btn btn-green"
+                    onclick="updateRegistration('${r.id}','approved')"
+                  >
+                    ✓
+                  </button>
+
+                  <button
+                    class="btn btn-red"
+                    onclick="updateRegistration('${r.id}','rejected')"
+                  >
+                    ✕
+                  </button>
+                `
+                :
+                `
+                  <span style="color:var(--muted);font-size:10px;">
+                    সম্পন্ন
+                  </span>
+                `
+              }
+
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+
+  };
+
+
+  window.updateRegistration =
+    async function(id,status){
+
+      try{
+
+        await updateDoc(
+          doc(
+            db,
+            "quiz_registrations",
+            id
+          ),
+          {
+            status,
+            reviewed_at:
+              serverTimestamp(),
+            reviewed_by:
+              currentUser.uid
+          }
+        );
+
+
+        toast(
+          status === "approved"
+            ? "রেজিস্ট্রেশন অনুমোদন করা হয়েছে।"
+            : "রেজিস্ট্রেশন বাতিল করা হয়েছে।"
+        );
+
+
+        await loadRegistrations();
+        await loadDashboard();
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "রেজিস্ট্রেশন আপডেট করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     PAYMENT
+  ========================================================= */
+
+  async function loadPayments(){
+
+    const methods =
+      ["bkash","rocket","nagad"];
+
+
+    for(const type of methods){
+
+      try{
+
+        const snap =
+          await getDoc(
+            doc(
+              db,
+              "payment_methods",
+              type
+            )
+          );
+
+
+        if(!snap.exists()) continue;
+
+
+        const data =
+          snap.data();
+
+
+        const numberInput =
+          $(`${type}Number`);
+
+
+        const activeInput =
+          $(`${type}Active`);
+
+
+        if(numberInput){
+
+          numberInput.value =
+            data.number || "";
+
+        }
+
+
+        if(activeInput){
+
+          activeInput.checked =
+            data.is_active === true;
+
+        }
+
+      }catch(error){
+
+        console.warn(
+          `Payment ${type} load failed`,
+          error
+        );
+
+      }
+
+    }
+
+  }
+
+
+  window.savePayment =
+    async function(type){
+
+      const number =
+        $(`${type}Number`).value.trim();
+
+
+      const isActive =
+        $(`${type}Active`).checked;
+
+
+      if(!number){
+
+        toast(
+          `${type.toUpperCase()} নম্বর লিখুন।`
+        );
+
+        return;
+      }
+
+
+      try{
+
+        await setDoc(
+          doc(
+            db,
+            "payment_methods",
+            type
+          ),
+          {
+
+            type,
+
+            number,
+
+            is_active:isActive,
+
+            updated_at:
+              serverTimestamp(),
+
+            updated_by:
+              currentUser.uid
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        toast(
+          `${type.toUpperCase()} payment number Save হয়েছে।`
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "Payment information Save করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     RESULTS
+  ========================================================= */
+
+  window.loadResults = async function(){
+
+    const quizId =
+      $("resultQuizSelect").value;
+
+
+    if(!quizId){
+
+      $("resultTable").innerHTML =
+        `<tr>
+          <td colspan="10">
+            একটি কুইজ নির্বাচন করুন।
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    try{
+
+      const attemptQuery =
+        query(
+          collection(db,"attempts"),
+          where("quiz_id","==",quizId)
+        );
+
+
+      const attemptSnap =
+        await getDocs(
+          attemptQuery
+        );
+
+
+      const resultSnap =
+        await getDocs(
+          collection(db,"results")
+        );
+
+
+      const publishedMap =
+        new Map();
+
+
+      resultSnap.forEach(d => {
+
+        const data =
+          d.data();
+
+
+        if(data.quiz_id === quizId){
+
+          publishedMap.set(
+            d.id,
+            {
+              id:d.id,
+              ...data
+            }
+          );
+
+        }
+
+      });
+
+
+      results =
+        attemptSnap.docs
+          .map(d => ({
+            id:d.id,
+            ...d.data()
+          }))
+          .filter(a =>
+            String(a.status || "")
+              .toLowerCase()
+            ===
+            "submitted"
+          )
+          .map(a => {
+
+            const published =
+              publishedMap.get(a.id);
+
+
+            return {
+
+              ...a,
+
+              published:
+                published?.published === true,
+
+              published_at:
+                published?.published_at ||
+                null
+
+            };
+
+          });
+
+
+      /*
+        Ranking:
+        1. score DESC
+        2. total time ASC
+        3. submitted_at ASC
+      */
+
+      results.sort(
+        (a,b) => {
+
+          const scoreA =
+            Number(a.score || 0);
+
+          const scoreB =
+            Number(b.score || 0);
+
+
+          if(scoreB !== scoreA){
+
+            return scoreB - scoreA;
+
+          }
+
+
+          const timeA =
+            Number(
+              a.total_time_seconds ??
+              999999999
+            );
+
+          const timeB =
+            Number(
+              b.total_time_seconds ??
+              999999999
+            );
+
+
+          if(timeA !== timeB){
+
+            return timeA - timeB;
+
+          }
+
+
+          const submittedA =
+            timestampToMs(
+              a.submitted_at
+            ) || 9999999999999;
+
+
+          const submittedB =
+            timestampToMs(
+              b.submitted_at
+            ) || 9999999999999;
+
+
+          return submittedA - submittedB;
+
+        }
+      );
+
+
+      renderResults();
+
+
+    }catch(error){
+
+      console.error(error);
+
+      $("resultTable").innerHTML =
+        `<tr>
+          <td colspan="10">
+            Result লোড করা যায়নি।
+          </td>
+        </tr>`;
+
+    }
+
+  };
+
+
+  function renderResults(){
+
+    if(!results.length){
+
+      $("resultTable").innerHTML =
+        `<tr>
+          <td colspan="10">
+            এই কুইজে এখনো কোনো submitted result পাওয়া যায়নি।
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    $("resultTable").innerHTML =
+      results.map((r,index) => {
+
+        const rank =
+          index + 1;
+
+
+        const publishBadge =
+          r.published
+            ? `<span class="status status-green">Published</span>`
+            : `<span class="status status-gold">Hidden</span>`;
+
+
+        return `
+          <tr>
+
+            <td>
+              <b>#${rank}</b>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                r.roll_number || "—"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                r.student_name || "—"
+              )}
+            </td>
+
+            <td>
+              <b>
+                ${Number(r.score || 0)}
+              </b>
+            </td>
+
+            <td>
+              ${Number(r.correct || 0)}
+            </td>
+
+            <td>
+              ${Number(r.wrong || 0)}
+            </td>
+
+            <td>
+              ${Number(r.unanswered || 0)}
+            </td>
+
+            <td>
+              ${formatDuration(
+                r.total_time_seconds
+              )}
+            </td>
+
+            <td>
+              ${formatDateTime(
+                r.submitted_at
+              )}
+            </td>
+
+            <td>
+              ${publishBadge}
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+
+  }
+
+
+  /* =========================================================
+     PUBLISH ALL
+  ========================================================= */
+
+  window.publishAllResults =
+    async function(){
+
+      const quizId =
+        $("resultQuizSelect").value;
+
+
+      if(!quizId){
+
+        toast(
+          "আগে একটি কুইজ নির্বাচন করুন।"
+        );
+
+        return;
+      }
+
+
+      if(!results.length){
+
+        toast(
+          "Publish করার মতো result নেই।"
+        );
+
+        return;
+      }
+
+
+      if(
+        !confirm(
+          "এই কুইজের সব submitted result Publish করতে চান?"
+        )
+      ){
+
+        return;
+      }
+
+
+      try{
+
+        const publishTime =
+          serverTimestamp();
+
+
+        for(let index=0; index<results.length; index++){
+
+          const r =
+            results[index];
+
+
+          await setDoc(
+            doc(
+              db,
+              "results",
+              r.id
+            ),
+            {
+
+              attempt_id:r.id,
+
+              quiz_id:quizId,
+
+              student_uid:
+                r.student_uid || null,
+
+              student_name:
+                r.student_name || "",
+
+              roll_number:
+                r.roll_number || "",
+
+              student_id:
+                r.student_id || null,
+
+              rank:index + 1,
+
+              total_questions:
+                r.total_questions ||
+                results.length,
+
+              correct:
+                Number(r.correct || 0),
+
+              wrong:
+                Number(r.wrong || 0),
+
+              unanswered:
+                Number(r.unanswered || 0),
+
+              total_marks:
+                Number(r.total_marks || 0),
+
+              negative_mark:
+                Number(r.negative_mark || 0),
+
+              score:
+                Number(r.score || 0),
+
+              total_time_seconds:
+                Number(
+                  r.total_time_seconds || 0
+                ),
+
+              started_at:
+                r.started_at || null,
+
+              submitted_at:
+                r.submitted_at || null,
+
+              published:true,
+
+              published_at:
+                publishTime,
+
+              updated_at:
+                serverTimestamp(),
+
+              updated_by:
+                currentUser.uid
+
+            },
+            {
+              merge:true
+            }
+          );
+
+        }
+
+
+        toast(
+          "এই কুইজের সব Result Publish হয়েছে।"
+        );
+
+
+        await loadResults();
+        await loadDashboard();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "Result Publish করতে সমস্যা হয়েছে।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     UNPUBLISH ALL
+  ========================================================= */
+
+  window.unpublishAllResults =
+    async function(){
+
+      const quizId =
+        $("resultQuizSelect").value;
+
+
+      if(!quizId){
+
+        toast(
+          "আগে একটি কুইজ নির্বাচন করুন।"
+        );
+
+        return;
+      }
+
+
+      if(!results.length){
+
+        toast(
+          "কোনো result নেই।"
+        );
+
+        return;
+      }
+
+
+      if(
+        !confirm(
+          "এই কুইজের সব Result Hide করতে চান?"
+        )
+      ){
+
+        return;
+      }
+
+
+      try{
+
+        for(const r of results){
+
+          await setDoc(
+            doc(
+              db,
+              "results",
+              r.id
+            ),
+            {
+
+              published:false,
+
+              updated_at:
+                serverTimestamp(),
+
+              updated_by:
+                currentUser.uid
+
+            },
+            {
+              merge:true
+            }
+          );
+
+        }
+
+
+        toast(
+          "সব Result Hide করা হয়েছে।"
+        );
+
+
+        await loadResults();
+        await loadDashboard();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "Result Hide করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     INSPIRATION
+  ========================================================= */
+
+  async function loadInspiration(){
+
+    try{
+
+      const snap =
+        await getDoc(
+          doc(
+            db,
+            "website_settings",
+            "inspiration"
+          )
+        );
+
+
+      if(!snap.exists()){
+
+        return;
+      }
+
+
+      const data =
+        snap.data();
+
+
+      $("inspirationMessage").value =
+        data.message ||
+        data.text ||
+        "";
+
+
+      $("inspirationActive").checked =
+        data.is_active !== false;
+
+
+      updateInspirationPreview();
+
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+  }
+
+
+  $("inspirationMessage")
+    ?.addEventListener(
+      "input",
+      updateInspirationPreview
+    );
+
+
+  function updateInspirationPreview(){
+
+    const value =
+      $("inspirationMessage")?.value ||
+      "";
+
+
+    $("inspirationPreview").textContent =
+      value ||
+      "Preview এখানে দেখা যাবে।";
+
+  }
+
+
+  window.saveInspiration =
+    async function(){
+
+      const message =
+        $("inspirationMessage").value.trim();
+
+
+      if(!message){
+
+        toast(
+          "অনুপ্রেরণার বার্তা লিখুন।"
+        );
+
+        return;
+      }
+
+
+      try{
+
+        await setDoc(
+          doc(
+            db,
+            "website_settings",
+            "inspiration"
+          ),
+          {
+
+            message,
+
+            is_active:
+              $("inspirationActive").checked,
+
+            published:true,
+
+            updated_at:
+              serverTimestamp(),
+
+            updated_by:
+              currentUser.uid
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        toast(
+          "অনুপ্রেরণার বার্তা Save & Publish হয়েছে।"
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "বার্তা Save করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     EXAM RULES
+  ========================================================= */
+
+  async function loadExamRules(){
+
+    try{
+
+      const snap =
+        await getDoc(
+          doc(
+            db,
+            "website_settings",
+            "exam_rules"
+          )
+        );
+
+
+      if(!snap.exists()){
+
+        const defaults = [
+          "প্রতিটি প্রশ্ন নির্ধারিত সময়ের মধ্যে উত্তর দিতে হবে।",
+          "প্রশ্নের সময় শেষ হলে স্বয়ংক্রিয়ভাবে পরের প্রশ্নে চলে যাবে।",
+          "পরীক্ষার মোট সময় শেষ হলে পরীক্ষা স্বয়ংক্রিয়ভাবে জমা হবে।",
+          "প্রশ্ন ও অপশনের ক্রম পরিবর্তিত হতে পারে।",
+          "ভুল উত্তরের জন্য নির্ধারিত Negative Marking প্রযোজ্য হবে।",
+          "পরীক্ষার সময় অন্য ট্যাব বা উইন্ডোতে গেলে নিরাপত্তা সতর্কতা গণনা হতে পারে।",
+          "পূর্ণস্ক্রিন ব্যবহার করার পরামর্শ দেওয়া হচ্ছে।",
+          "পরীক্ষা জমা দেওয়ার পর উত্তর পরিবর্তন করা যাবে না।",
+          "Admin ফলাফল প্রকাশ করার পর শিক্ষার্থী ফলাফল দেখতে পারবে।"
+        ];
+
+
+        $("rulesTitleInput").value =
+          "পরীক্ষার নিয়মাবলি";
+
+
+        $("rulesTextInput").value =
+          defaults.join("\n");
+
+
+        return;
+      }
+
+
+      const data =
+        snap.data();
+
+
+      $("rulesTitleInput").value =
+        data.title ||
+        "পরীক্ষার নিয়মাবলি";
+
+
+      $("rulesTextInput").value =
+        Array.isArray(data.rules)
+          ? data.rules.join("\n")
+          : "";
+
+
+      $("randomQuestion").checked =
+        data.random_question !== false;
+
+
+      $("randomOption").checked =
+        data.random_option !== false;
+
+
+      $("allowBack").checked =
+        data.allow_back === true;
+
+
+      $("antiCheat").checked =
+        data.anti_cheat !== false;
+
+
+      $("fullscreenRecommended").checked =
+        data.fullscreen_recommended !== false;
+
+
+      $("negativeMarking").checked =
+        data.negative_marking !== false;
+
+
+      $("defaultQuestionTimer").value =
+        String(
+          data.default_question_timer ||
+          30
+        );
+
+
+    }catch(error){
+
+      console.warn(
+        "Rules load failed:",
+        error
+      );
+
+    }
+
+  }
+
+
+  window.saveExamRules =
+    async function(){
+
+      const title =
+        $("rulesTitleInput")
+          .value
+          .trim() ||
+        "পরীক্ষার নিয়মাবলি";
+
+
+      const rules =
+        $("rulesTextInput")
+          .value
+          .split("\n")
+          .map(x => x.trim())
+          .filter(Boolean);
+
+
+      if(!rules.length){
+
+        toast(
+          "কমপক্ষে একটি নিয়ম লিখুন।"
+        );
+
+        return;
+      }
+
+
+      try{
+
+        await setDoc(
+          doc(
+            db,
+            "website_settings",
+            "exam_rules"
+          ),
+          {
+
+            title,
+
+            rules,
+
+            random_question:
+              $("randomQuestion").checked,
+
+            random_option:
+              $("randomOption").checked,
+
+            allow_back:
+              $("allowBack").checked,
+
+            anti_cheat:
+              $("antiCheat").checked,
+
+            fullscreen_recommended:
+              $("fullscreenRecommended").checked,
+
+            negative_marking:
+              $("negativeMarking").checked,
+
+            default_question_timer:
+              Number(
+                $("defaultQuestionTimer").value
+              ),
+
+            updated_at:
+              serverTimestamp(),
+
+            updated_by:
+              currentUser.uid
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        toast(
+          "পরীক্ষার নিয়ম Save & Publish হয়েছে।"
+        );
+
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "পরীক্ষার নিয়ম Save করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  window.saveExamBehavior =
+    async function(){
+
+      try{
+
+        await setDoc(
+          doc(
+            db,
+            "website_settings",
+            "exam_rules"
+          ),
+          {
+
+            random_question:
+              $("randomQuestion").checked,
+
+            random_option:
+              $("randomOption").checked,
+
+            allow_back:
+              $("allowBack").checked,
+
+            anti_cheat:
+              $("antiCheat").checked,
+
+            fullscreen_recommended:
+              $("fullscreenRecommended").checked,
+
+            negative_marking:
+              $("negativeMarking").checked,
+
+            default_question_timer:
+              Number(
+                $("defaultQuestionTimer").value
+              ),
+
+            updated_at:
+              serverTimestamp(),
+
+            updated_by:
+              currentUser.uid
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        toast(
+          "পরীক্ষার আচরণ Save হয়েছে।"
+        );
+
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "সেটিংস Save করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     ADMINS
+  ========================================================= */
+
+  window.loadAdmins =
+    async function(){
+
+      try{
+
+        const q =
+          query(
+            collection(db,"profiles"),
+            where("role","==","admin")
+          );
+
+
+        const snap =
+          await getDocs(q);
+
+
+        admins =
+          snap.docs.map(d => ({
+            id:d.id,
+            ...d.data()
+          }));
+
+
+        renderAdmins();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        $("adminTable").innerHTML =
+          `<tr>
+            <td colspan="4">
+              Admin list লোড করা যায়নি।
+            </td>
+          </tr>`;
+
+      }
+
+    };
+
+
+  function renderAdmins(){
+
+    if(!admins.length){
+
+      $("adminTable").innerHTML =
+        `<tr>
+          <td colspan="4">
+            কোনো Admin পাওয়া যায়নি।
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    $("adminTable").innerHTML =
+      admins.map(a => {
+
+        const active =
+          a.is_active === true;
+
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                a.full_name ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                a.email ||
+                "—"
+              )}
+            </td>
+
+            <td>
+              <span class="status status-green">
+                Admin
+              </span>
+            </td>
+
+            <td>
+              <span class="status ${
+                active
+                  ? "status-green"
+                  : "status-red"
+              }">
+                ${active ? "Active" : "Inactive"}
+              </span>
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+
+  }
+
+
+  window.showAdminCreateInfo =
+    function(){
+
+      openModal(
+        "নতুন Admin তৈরির নিরাপদ পদ্ধতি",
+        `
+          <div style="
+            color:#dce0f5;
+            line-height:1.9;
+            font-size:12px;
+          ">
+
+            <p>
+              নতুন Firebase Authentication Admin তৈরি করার জন্য
+              frontend HTML-এ সরাসরি অন্য user তৈরি করা নিরাপদ নয়।
+            </p>
+
+            <br>
+
+            <p>
+              নিরাপদ পদ্ধতি হলো:
+            </p>
+
+            <ul style="padding-left:20px;">
+              <li>Firebase Admin SDK</li>
+              <li>Cloud Function / secure backend</li>
+              <li>বর্তমান Admin-এর role যাচাই</li>
+              <li>নতুন Auth user তৈরি</li>
+              <li>তারপর profiles collection-এ Admin profile তৈরি</li>
+            </ul>
+
+            <br>
+
+            <p style="color:#ffcf68;">
+              ⚠️ Service Account key কখনো এই HTML ফাইলে দেওয়া যাবে না।
+            </p>
+
+          </div>
+        `
+      );
+
+    };
+
+
+  /* =========================================================
+     WEBSITE SETTINGS
+  ========================================================= */
+
+  async function loadWebsiteSettings(){
+
+    try{
+
+      const snap =
+        await getDoc(
+          doc(
+            db,
+            "website_settings",
+            "general"
+          )
+        );
+
+
+      if(!snap.exists()){
+
+        return;
+      }
+
+
+      const data =
+        snap.data();
+
+
+      $("siteName").value =
+        data.site_name ||
+        "জ্ঞানতরঙ্গ";
+
+
+      $("siteTagline").value =
+        data.tagline ||
+        "শিখি · জানি · এগিয়ে যাই";
+
+
+      $("siteFooter").value =
+        data.footer ||
+        "© ২০২৬ জ্ঞানতরঙ্গ। সর্বস্বত্ব সংরক্ষিত।";
+
+
+    }catch(error){
+
+      console.warn(error);
+
+    }
+
+  }
+
+
+  window.saveWebsiteSettings =
+    async function(){
+
+      try{
+
+        await setDoc(
+          doc(
+            db,
+            "website_settings",
+            "general"
+          ),
+          {
+
+            site_name:
+              $("siteName").value.trim(),
+
+            tagline:
+              $("siteTagline").value.trim(),
+
+            footer:
+              $("siteFooter").value.trim(),
+
+            updated_at:
+              serverTimestamp(),
+
+            updated_by:
+              currentUser.uid
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        toast(
+          "Website settings Save হয়েছে।"
+        );
+
+
+      }catch(error){
+
+        console.error(error);
+
+        toast(
+          "Website settings Save করা যায়নি।"
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+
+  function getQuizTitle(id){
+
+    if(!id) return "";
+
+    const q =
+      quizzes.find(
+        item => item.id === id
+      );
+
+    return (
+      q?.title ||
+      q?.name ||
+      ""
+    );
+
+  }
+
+
+  function timestampToMs(value){
+
+    if(!value) return null;
+
+    if(typeof value === "number"){
+
+      return value;
+
+    }
+
+
+    if(typeof value === "string"){
+
+      const ms =
+        new Date(value).getTime();
+
+      return Number.isNaN(ms)
+        ? null
+        : ms;
+
+    }
+
+
+    if(value.toMillis){
+
+      return value.toMillis();
+
+    }
+
+
+    if(value.seconds){
+
+      return value.seconds * 1000;
+
+    }
+
+
+    return null;
+
+  }
+
+
+  function formatDateTime(value){
+
+    const ms =
+      timestampToMs(value);
+
+
+    if(!ms) return "—";
+
+
+    return new Intl.DateTimeFormat(
+      "bn-BD",
+      {
+        timeZone:"Asia/Dhaka",
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    ).format(
+      new Date(ms)
+    );
+
+  }
+
+
+  function formatDuration(seconds){
+
+    const s =
+      Number(seconds || 0);
+
+
+    const minutes =
+      Math.floor(s / 60);
+
+
+    const secs =
+      s % 60;
+
+
+    return `${minutes}মি ${secs}সে`;
+
+  }
+
+
+  function toBnNumber(value){
+
+    return String(value)
+      .replace(
+        /\d/g,
+        d => "০১২৩৪৫৬৭৮৯"[d]
+      );
+
+  }
+
+
+  function escapeHtml(value){
+
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  }
+
+
+  /* =========================================================
+     EXTERNAL MODULE
+  ========================================================= */
+
+  window.openExternal =
+    function(url){
+
+      location.href = url;
+
+    };
+
+
+  /* =========================================================
+     MODAL
+  ========================================================= */
+
+  window.openModal =
+    function(title,body){
+
+      $("modalTitle").textContent =
+        title;
+
+      $("modalBody").innerHTML =
+        body;
+
+      $("modal").classList.add(
+        "show"
+      );
+
+    };
+
+
+  window.closeModal =
+    function(){
+
+      $("modal").classList.remove(
+        "show"
+      );
+
+    };
+
+
+  /* =========================================================
+     TOAST
+  ========================================================= */
+
+  let toastTimer = null;
+
+
+  window.toast =
+    function(message){
+
+      const el =
+        $("toast");
+
+
+      el.textContent =
+        message;
+
+
+      el.classList.add("show");
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          () => {
+            el.classList.remove(
+              "show"
+            );
+          },
+          2800
+        );
+
+    };
+
+
+  /* =========================================================
+     LOGOUT
+  ========================================================= */
+
+  window.adminLogout =
+    async function(){
+
+      try{
+
+        await signOut(auth);
+
+        location.reload();
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    };
 
 </script>
 
