@@ -534,1324 +534,413 @@
     serverTimestamp
   } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-
-  /* =========================
-     VARIABLES
-  ========================= */
-
   let currentUser = null;
-
   let registration = null;
   let quizData = null;
-
   let questions = [];
-
   let currentIndex = 0;
-
   let selectedAnswer = null;
-
   let answers = [];
-
   let timerInterval = null;
-
   let remainingSeconds = 0;
-
   let examDeadlineMs = 0;
-
   let attemptId = null;
-
   let submitted = false;
 
+  const loginSection = document.getElementById("loginSection");
+  const examSection = document.getElementById("examSection");
+  const finishSection = document.getElementById("finishSection");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const rollInput = document.getElementById("rollInput");
+  const enterBtn = document.getElementById("enterBtn");
+  const loginMessage = document.getElementById("loginMessage");
+  const quizTitle = document.getElementById("quizTitle");
+  const studentRoll = document.getElementById("studentRoll");
+  const timer = document.getElementById("timer");
+  const progressText = document.getElementById("progressText");
+  const progressBar = document.getElementById("progressBar");
+  const questionNumber = document.getElementById("questionNumber");
+  const questionText = document.getElementById("questionText");
+  const optionsBox = document.getElementById("options");
+  const nextBtn = document.getElementById("nextBtn");
+  const finishMessage = document.getElementById("finishMessage");
+  const homeBtn = document.getElementById("homeBtn");
 
-  /* =========================
-     ELEMENTS
-  ========================= */
+  function showLoginMessage(message) {
+    if (loginMessage) loginMessage.textContent = message;
+  }
 
-  const loginSection =
-    document.getElementById("loginSection");
+  function toMillis(value) {
+    if (!value) return NaN;
+    if (typeof value?.toDate === "function") return value.toDate().getTime();
+    if (typeof value === "number") return value;
+    const ms = new Date(value).getTime();
+    return Number.isNaN(ms) ? NaN : ms;
+  }
 
-  const examSection =
-    document.getElementById("examSection");
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user || null;
 
-  const finishSection =
-    document.getElementById("finishSection");
-
-  const logoutBtn =
-    document.getElementById("logoutBtn");
-
-  const rollInput =
-    document.getElementById("rollInput");
-
-  const enterBtn =
-    document.getElementById("enterBtn");
-
-  const loginMessage =
-    document.getElementById("loginMessage");
-
-  const quizTitle =
-    document.getElementById("quizTitle");
-
-  const studentRoll =
-    document.getElementById("studentRoll");
-
-  const timer =
-    document.getElementById("timer");
-
-  const progressText =
-    document.getElementById("progressText");
-
-  const progressBar =
-    document.getElementById("progressBar");
-
-  const questionNumber =
-    document.getElementById("questionNumber");
-
-  const questionText =
-    document.getElementById("questionText");
-
-  const optionsBox =
-    document.getElementById("options");
-
-  const nextBtn =
-    document.getElementById("nextBtn");
-
-  const finishMessage =
-    document.getElementById("finishMessage");
-
-  const homeBtn =
-    document.getElementById("homeBtn");
-
-
-  /* =========================
-     AUTH CHECK
-  ========================= */
-
-  onAuthStateChanged(
-    auth,
-    async (user) => {
-
-      if (!user) {
-
-        currentUser = null;
-
-        enterBtn.disabled = true;
-
-        logoutBtn.classList.add(
-          "hidden"
-        );
-
-        loginMessage.textContent =
-          "⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।";
-
-        return;
-      }
-
-
-      currentUser = user;
-
-      enterBtn.disabled = false;
-
-      logoutBtn.classList.remove(
-        "hidden"
-      );
-
-      loginMessage.textContent =
-        "✅ অ্যাকাউন্ট সক্রিয় আছে। Roll Number দিয়ে প্রবেশ করুন।";
-
+    if (!user) {
+      if (enterBtn) enterBtn.disabled = true;
+      if (logoutBtn) logoutBtn.classList.add("hidden");
+      showLoginMessage("⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।");
+      return;
     }
-  );
 
+    if (enterBtn) enterBtn.disabled = false;
+    if (logoutBtn) logoutBtn.classList.remove("hidden");
+    showLoginMessage("✅ অ্যাকাউন্ট সক্রিয় আছে। Roll Number দিয়ে প্রবেশ করুন।");
+  });
 
-  /* =========================
-     LOGOUT
-  ========================= */
-
-  logoutBtn.addEventListener(
-    "click",
-    async () => {
-
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
       try {
-
         await signOut(auth);
-
-        window.location.href =
-          "index.html";
-
+        window.location.href = "index.html";
       } catch (error) {
-
-        console.error(
-          "Logout error:",
-          error
-        );
-
+        console.error("Logout error:", error);
       }
-
-    }
-  );
-
-
-  /* =========================
-     ENTER EXAM
-  ========================= */
-
-  enterBtn.addEventListener(
-    "click",
-    async () => {
-
-      if (!currentUser) {
-
-        loginMessage.textContent =
-          "⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।";
-
-        return;
-      }
-
-
-      const rollNumber =
-        rollInput.value.trim();
-
-
-      if (!rollNumber) {
-
-        loginMessage.textContent =
-          "⚠️ আপনার Quiz Roll Number লিখুন।";
-
-        return;
-      }
-
-
-      enterBtn.disabled = true;
-
-      loginMessage.textContent =
-        "⏳ রেজিস্ট্রেশন যাচাই করা হচ্ছে...";
-
-
-      try {
-
-        /* =========================
-           FIND REGISTRATION
-        ========================= */
-
-        const registrationsRef =
-          collection(
-            db,
-            "quiz_registrations"
-          );
-
-
-        const registrationQuery =
-          query(
-            registrationsRef,
-
-            where(
-              "student_uid",
-              "==",
-              currentUser.uid
-            ),
-
-            where(
-              "roll_number",
-              "==",
-              rollNumber
-            )
-          );
-
-
-        const registrationSnapshot =
-          await getDocs(
-            registrationQuery
-          );
-
-
-        if (
-          registrationSnapshot.empty
-        ) {
-
-          throw new Error(
-            "এই Roll Number আপনার অ্যাকাউন্টের সাথে মিলছে না।"
-          );
-
-        }
-
-
-        registrationSnapshot.forEach(
-          (item) => {
-
-            registration = {
-              id: item.id,
-              ...item.data()
-            };
-
-          }
-        );
-
-
-        /* =========================
-           APPROVAL CHECK
-        ========================= */
-
-        if (
-          registration.status !==
-          "approved"
-        ) {
-
-          throw new Error(
-            "আপনার রেজিস্ট্রেশন এখনো অনুমোদিত হয়নি।"
-          );
-
-        }
-
-
-        const quizId =
-          registration.quiz_id;
-
-
-        if (!quizId) {
-
-          throw new Error(
-            "এই রেজিস্ট্রেশনের সাথে কোনো Quiz ID পাওয়া যায়নি।"
-          );
-
-        }
-
-
-        /* =========================
-           LOAD QUIZ
-        ========================= */
-
-        loginMessage.textContent =
-          "⏳ কুইজের তথ্য লোড হচ্ছে...";
-
-
-        const quizRef =
-          doc(
-            db,
-            "quizzes",
-            quizId
-          );
-
-
-        const quizSnapshot =
-          await getDoc(
-            quizRef
-          );
-
-
-        if (
-          !quizSnapshot.exists()
-        ) {
-
-          throw new Error(
-            "কুইজটি পাওয়া যায়নি।"
-          );
-
-        }
-
-
-        quizData = {
-          id: quizSnapshot.id,
-          ...quizSnapshot.data()
-        };
-
-
-        /* =========================
-           CHECK QUIZ TIME
-        ========================= */
-
-        const now =
-          Date.now();
-
-
-        const startTime =
-          quizData.start_at?.toDate
-            ? quizData.start_at
-                .toDate()
-                .getTime()
-            : new Date(
-                quizData.start_at
-              ).getTime();
-
-
-        const endTime =
-          quizData.end_at?.toDate
-            ? quizData.end_at
-                .toDate()
-                .getTime()
-            : new Date(
-                quizData.end_at
-              ).getTime();
-
-
-        if (
-          !Number.isNaN(startTime) &&
-          now < startTime
-        ) {
-
-          throw new Error(
-            "পরীক্ষা এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার আসুন।"
-          );
-
-        }
-
-
-        if (
-          !Number.isNaN(endTime) &&
-          now >= endTime
-        ) {
-
-          throw new Error(
-            "এই পরীক্ষার সময় শেষ হয়ে গেছে।"
-          );
-
-        }
-
-
-        /* =========================
-           LOAD QUESTIONS
-        ========================= */
-
-        loginMessage.textContent =
-          "⏳ প্রশ্ন লোড হচ্ছে...";
-
-
-        const questionsRef =
-          collection(
-            db,
-            "exam_questions"
-          );
-
-
-        const questionQuery =
-          query(
-            questionsRef,
-            where(
-              "quiz_id",
-              "==",
-              quizId
-            )
-          );
-
-
-        const questionSnapshot =
-          await getDocs(
-            questionQuery
-          );
-
-
-        if (
-          questionSnapshot.empty
-        ) {
-
-          throw new Error(
-            "এই কুইজের কোনো প্রশ্ন পাওয়া যায়নি।"
-          );
-
-        }
-
-
-        questions = [];
-
-
-        questionSnapshot.forEach(
-          (item) => {
-
-            questions.push({
-              id: item.id,
-              ...item.data()
-            });
-
-          }
-        );
-
-
-        /* =========================
-           SORT QUESTIONS
-        ========================= */
-
-        questions.sort(
-          (a, b) => {
-
-            const aOrder =
-              Number(
-                a.question_number ??
-                a.order ??
-                a.serial ??
-                999999
-              );
-
-
-            const bOrder =
-              Number(
-                b.question_number ??
-                b.order ??
-                b.serial ??
-                999999
-              );
-
-
-            return aOrder - bOrder;
-
-          }
-        );
-
-
-        /* =========================
-           ATTEMPT ID
-        ========================= */
-
-        attemptId =
-          quizId +
-          "_" +
-          currentUser.uid;
-
-
-        const existingAttemptRef =
-          doc(
-            db,
-            "attempts",
-            attemptId
-          );
-
-
-        const existingAttempt =
-          await getDoc(
-            existingAttemptRef
-          );
-
-
-        /* =========================
-           DUPLICATE ATTEMPT CHECK
-        ========================= */
-
-        if (
-          existingAttempt.exists()
-        ) {
-
-          const oldAttempt =
-            existingAttempt.data();
-
-
-          if (
-            oldAttempt.status ===
-            "submitted"
-          ) {
-
-            throw new Error(
-              "আপনি এই কুইজে ইতোমধ্যে পরীক্ষা দিয়েছেন।"
-            );
-
-          }
-
-
-          if (
-            oldAttempt.status ===
-            "started"
-          ) {
-
-            throw new Error(
-              "এই কুইজের একটি পরীক্ষা ইতোমধ্যে শুরু করা হয়েছে।"
-            );
-
-          }
-
-        }
-
-
-        /* =========================
-           CREATE NEW ATTEMPT
-        ========================= */
-
-        const durationMinutes =
-          Number(
-            quizData.duration_minutes ??
-            5
-          );
-
-
-        const durationSeconds =
-          durationMinutes * 60;
-
-
-        const quizEndMs =
-          !Number.isNaN(endTime)
-            ? endTime
-            : Number.POSITIVE_INFINITY;
-
-
-        /*
-          ব্যক্তিগত পরীক্ষার সময়
-          = duration
-          কিন্তু Quiz-এর global end-এর
-          পরে যাবে না।
-        */
-
-        examDeadlineMs =
-          Math.min(
-            Date.now() +
-              durationSeconds * 1000,
-            quizEndMs
-          );
-
-
-        remainingSeconds =
-          Math.max(
-            0,
-            Math.ceil(
-              (
-                examDeadlineMs -
-                Date.now()
-              ) / 1000
-            )
-          );
-
-
-        answers =
-          new Array(
-            questions.length
-          ).fill(null);
-
-
-        await setDoc(
-          existingAttemptRef,
-          {
-
-            student_uid:
-              currentUser.uid,
-
-            quiz_id:
-              quizId,
-
-            registration_id:
-              registration.id,
-
-            roll_number:
-              rollNumber,
-
-            status:
-              "started",
-
-            started_at:
-              serverTimestamp(),
-
-            duration_minutes:
-              durationMinutes,
-
-            deadline_at:
-              new Date(
-                examDeadlineMs
-              ),
-
-            total_questions:
-              questions.length,
-
-            answers:
-              answers,
-
-            current_question:
-              0
-
-          }
-        );
-
-
-        /* =========================
-           SHOW EXAM
-        ========================= */
-
-        loginSection.classList.add(
-          "hidden"
-        );
-
-        finishSection.classList.add(
-          "hidden"
-        );
-
-        examSection.classList.remove(
-          "hidden"
-        );
-
-
-        quizTitle.textContent =
-          quizData.title ||
-          quizData.quiz_name ||
-          "কুইজ পরীক্ষা";
-
-
-        studentRoll.textContent =
-          "Quiz Roll Number: " +
-          rollNumber;
-
-
-        currentIndex = 0;
-
-        submitted = false;
-
-
-        renderQuestion();
-
-        startTimer();
-
-
-      } catch (error) {
-
-        console.error(
-          "Exam entry error:",
-          error
-        );
-
-
-        loginMessage.textContent =
-          "❌ " +
-          (
-            error.message ||
-            "পরীক্ষায় প্রবেশ করতে সমস্যা হয়েছে।"
-          );
-
-
-      } finally {
-
-        enterBtn.disabled =
-          false;
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     RENDER QUESTION
-  ========================= */
-
-  function renderQuestion() {
-
-    if (
-      currentIndex >=
-      questions.length
-    ) {
-
-      submitExam();
-
-      return;
-
-    }
-
-
-    const question =
-      questions[currentIndex];
-
-
-    selectedAnswer =
-      answers[currentIndex];
-
-
-    questionNumber.textContent =
-      "প্রশ্ন " +
-      (currentIndex + 1);
-
-
-    progressText.textContent =
-      "প্রশ্ন " +
-      (currentIndex + 1) +
-      " / " +
-      questions.length;
-
-
-    const percent =
-      (
-        (
-          currentIndex + 1
-        ) /
-        questions.length
-      ) * 100;
-
-
-    progressBar.style.width =
-      percent + "%";
-
-
-    questionText.textContent =
-      question.question ||
-      question.question_text ||
-      "প্রশ্ন পাওয়া যায়নি।";
-
-
-    optionsBox.innerHTML =
-      "";
-
-
-    const optionList = [
-
-      {
-        key: "A",
-        text:
-          question.option_a ??
-          question.a ??
-          ""
-      },
-
-      {
-        key: "B",
-        text:
-          question.option_b ??
-          question.b ??
-          ""
-      },
-
-      {
-        key: "C",
-        text:
-          question.option_c ??
-          question.c ??
-          ""
-      },
-
-      {
-        key: "D",
-        text:
-          question.option_d ??
-          question.d ??
-          ""
-      }
-
-    ];
-
-
-    optionList.forEach(
-      (option) => {
-
-        const button =
-          document.createElement(
-            "button"
-          );
-
-
-        button.className =
-          "option";
-
-
-        button.type =
-          "button";
-
-
-        button.textContent =
-          option.key +
-          ". " +
-          option.text;
-
-
-        if (
-          selectedAnswer ===
-          option.key
-        ) {
-
-          button.classList.add(
-            "selected"
-          );
-
-          button.classList.add(
-            "locked"
-          );
-
-        }
-
-
-        if (
-          selectedAnswer
-        ) {
-
-          button.disabled =
-            true;
-
-        }
-
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            selectAnswer(
-              option.key
-            );
-
-          }
-        );
-
-
-        optionsBox.appendChild(
-          button
-        );
-
-      }
-    );
-
-
-    nextBtn.disabled =
-      !selectedAnswer;
-
-
-    if (
-      currentIndex ===
-      questions.length - 1
-    ) {
-
-      nextBtn.textContent =
-        "পরীক্ষা জমা দিন ✓";
-
-    } else {
-
-      nextBtn.textContent =
-        "পরবর্তী →";
-
-    }
-
+    });
   }
 
-
-  /* =========================
-     SELECT ANSWER
-  ========================= */
-
-  function selectAnswer(answer) {
-
-    if (
-      selectedAnswer
-    ) {
-
-      return;
-
-    }
-
-
-    selectedAnswer =
-      answer;
-
-
-    answers[currentIndex] =
-      answer;
-
-
-    const buttons =
-      optionsBox.querySelectorAll(
-        ".option"
-      );
-
-
-    buttons.forEach(
-      (button) => {
-
-        button.disabled =
-          true;
-
-
-        button.classList.add(
-          "locked"
-        );
-
-
-        if (
-          button.textContent
-            .startsWith(
-              answer + "."
-            )
-        ) {
-
-          button.classList.add(
-            "selected"
-          );
-
-        }
-
-      }
-    );
-
-
-    nextBtn.disabled =
-      false;
-
-
-    saveProgress();
-
+  if (enterBtn) {
+    enterBtn.addEventListener("click", enterExam);
   }
 
-
-  /* =========================
-     SAVE PROGRESS
-  ========================= */
-
-  async function saveProgress() {
-
-    if (!attemptId) {
-
+  async function enterExam() {
+    if (!currentUser) {
+      showLoginMessage("⚠️ আগে শিক্ষার্থী অ্যাকাউন্টে লগইন করুন।");
       return;
-
     }
 
+    const rollNumber = rollInput?.value.trim() || "";
+
+    if (!rollNumber) {
+      showLoginMessage("⚠️ আপনার Quiz Roll Number লিখুন।");
+      return;
+    }
+
+    enterBtn.disabled = true;
+    showLoginMessage("⏳ রেজিস্ট্রেশন যাচাই করা হচ্ছে...");
 
     try {
+      registration = null;
 
-      const attemptRef =
-        doc(
-          db,
-          "attempts",
-          attemptId
-        );
-
-
-      await updateDoc(
-        attemptRef,
-        {
-
-          answers:
-            answers,
-
-          current_question:
-            currentIndex
-
-        }
+      const registrationQuery = query(
+        collection(db, "quiz_registrations"),
+        where("student_uid", "==", currentUser.uid),
+        where("roll_number", "==", rollNumber)
       );
 
+      const registrationSnapshot = await getDocs(registrationQuery);
 
-    } catch (error) {
-
-      console.error(
-        "Progress save error:",
-        error
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-     NEXT BUTTON
-  ========================= */
-
-  nextBtn.addEventListener(
-    "click",
-    async () => {
-
-      if (
-        !selectedAnswer
-      ) {
-
-        return;
-
+      if (registrationSnapshot.empty) {
+        throw new Error("এই Roll Number আপনার অ্যাকাউন্টের সাথে মিলছে না।");
       }
 
-
-      if (
-        currentIndex ===
-        questions.length - 1
-      ) {
-
-        await submitExam();
-
-        return;
-
-      }
-
-
-      currentIndex++;
-
-      renderQuestion();
-
-    }
-  );
-
-
-  /* =========================
-     TIMER
-  ========================= */
-
-  function startTimer() {
-
-    clearInterval(
-      timerInterval
-    );
-
-
-    const deadline =
-      Number(
-        examDeadlineMs || 0
-      );
-
-
-    if (!deadline) {
-
-      return;
-
-    }
-
-
-    const tick =
-      () => {
-
-        remainingSeconds =
-          Math.max(
-            0,
-            Math.ceil(
-              (
-                deadline -
-                Date.now()
-              ) / 1000
-            )
-          );
-
-
-        updateTimer();
-
-
-        if (
-          remainingSeconds <= 0
-        ) {
-
-          clearInterval(
-            timerInterval
-          );
-
-
-          submitExam();
-
-        }
-
+      const registrationDoc = registrationSnapshot.docs[0];
+      registration = {
+        id: registrationDoc.id,
+        ...registrationDoc.data()
       };
 
-
-    tick();
-
-
-    timerInterval =
-      setInterval(
-        tick,
-        250
-      );
-
-  }
-
-
-  /* =========================
-     UPDATE TIMER
-  ========================= */
-
-  function updateTimer() {
-
-    const minutes =
-      Math.floor(
-        remainingSeconds / 60
-      );
-
-
-    const seconds =
-      remainingSeconds % 60;
-
-
-    timer.textContent =
-      String(
-        minutes
-      ).padStart(
-        2,
-        "0"
-      ) +
-      ":" +
-      String(
-        seconds
-      ).padStart(
-        2,
-        "0"
-      );
-
-
-    timer.classList.remove(
-      "warning",
-      "danger"
-    );
-
-
-    if (
-      remainingSeconds <= 60
-    ) {
-
-      timer.classList.add(
-        "danger"
-      );
-
-    } else if (
-      remainingSeconds <= 180
-    ) {
-
-      timer.classList.add(
-        "warning"
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-     SUBMIT EXAM
-  ========================= */
-
-  async function submitExam() {
-
-    if (
-      submitted
-    ) {
-
-      return;
-
-    }
-
-
-    submitted = true;
-
-
-    clearInterval(
-      timerInterval
-    );
-
-
-    nextBtn.disabled =
-      true;
-
-
-    try {
-
-      if (!attemptId) {
-
-        throw new Error(
-          "পরীক্ষার Attempt ID পাওয়া যায়নি।"
-        );
-
+      if (registration.status !== "approved") {
+        throw new Error("আপনার রেজিস্ট্রেশন এখনো অনুমোদিত হয়নি।");
       }
 
+      const quizId = registration.quiz_id;
+      if (!quizId) {
+        throw new Error("এই রেজিস্ট্রেশনের সাথে কোনো Quiz ID পাওয়া যায়নি।");
+      }
 
-      const attemptRef =
-        doc(
-          db,
-          "attempts",
-          attemptId
-        );
+      showLoginMessage("⏳ কুইজের তথ্য লোড হচ্ছে...");
 
+      const quizSnapshot = await getDoc(doc(db, "quizzes", quizId));
 
-      const unanswered =
-        answers.filter(
-          answer =>
-            !answer
-        ).length;
+      if (!quizSnapshot.exists()) {
+        throw new Error("কুইজটি পাওয়া যায়নি।");
+      }
 
+      quizData = {
+        id: quizSnapshot.id,
+        ...quizSnapshot.data()
+      };
 
-      const durationSeconds =
-        Number(
-          quizData.duration_minutes ??
-          5
-        ) * 60;
+      const now = Date.now();
+      const startTime = toMillis(quizData.start_at);
+      const endTime = toMillis(quizData.end_at);
 
+      if (!Number.isNaN(startTime) && now < startTime) {
+        throw new Error("পরীক্ষা এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার আসুন।");
+      }
 
-      /*
-        Global end-এর কারণে
-        পরীক্ষার সময় duration-এর চেয়ে
-        কম হতে পারে।
-      */
+      if (!Number.isNaN(endTime) && now >= endTime) {
+        throw new Error("এই পরীক্ষার সময় শেষ হয়ে গেছে।");
+      }
 
-      const timeTaken =
-        Math.min(
-          durationSeconds,
+      showLoginMessage("⏳ প্রশ্ন লোড হচ্ছে...");
 
-          Math.max(
-            0,
+      const questionQuery = query(
+        collection(db, "exam_questions"),
+        where("quiz_id", "==", quizId)
+      );
 
-            durationSeconds -
-            remainingSeconds
-          )
-        );
+      const questionSnapshot = await getDocs(questionQuery);
 
+      if (questionSnapshot.empty) {
+        throw new Error("এই কুইজের কোনো প্রশ্ন পাওয়া যায়নি।");
+      }
 
-      await updateDoc(
-        attemptRef,
-        {
+      questions = questionSnapshot.docs.map((item) => ({
+        id: item.id,
+        ...item.data()
+      }));
 
-          status:
-            "submitted",
+      questions.sort((a, b) => {
+        const ao = Number(a.question_number ?? a.order ?? a.serial ?? 999999);
+        const bo = Number(b.question_number ?? b.order ?? b.serial ?? 999999);
+        return ao - bo;
+      });
 
-          submitted_at:
-            serverTimestamp(),
+      attemptId = `${quizId}_${currentUser.uid}`;
 
-          answers:
-            answers,
+      const attemptRef = doc(db, "attempts", attemptId);
+      const existingAttempt = await getDoc(attemptRef);
 
-          unanswered:
-            unanswered,
+      if (existingAttempt.exists()) {
+        const oldAttempt = existingAttempt.data();
 
-          time_taken_seconds:
-            Math.max(
-              0,
-              timeTaken
-            )
-
+        if (oldAttempt.status === "submitted") {
+          throw new Error("আপনি এই কুইজে ইতোমধ্যে পরীক্ষা দিয়েছেন।");
         }
+
+        if (oldAttempt.status === "started") {
+          throw new Error("এই কুইজের একটি পরীক্ষা ইতোমধ্যে শুরু করা হয়েছে।");
+        }
+      }
+
+      const durationMinutes = Number(quizData.duration_minutes ?? 5);
+      const durationSeconds = Math.max(1, durationMinutes * 60);
+      const quizEnd = Number.isNaN(endTime) ? Infinity : endTime;
+
+      examDeadlineMs = Math.min(
+        Date.now() + durationSeconds * 1000,
+        quizEnd
       );
 
-
-      /* =========================
-         HIDE EXAM
-      ========================= */
-
-      examSection.classList.add(
-        "hidden"
+      remainingSeconds = Math.max(
+        0,
+        Math.ceil((examDeadlineMs - Date.now()) / 1000)
       );
 
+      answers = new Array(questions.length).fill(null);
+      currentIndex = 0;
+      selectedAnswer = null;
+      submitted = false;
 
-      finishSection.classList.remove(
-        "hidden"
+      await setDoc(attemptRef, {
+        student_uid: currentUser.uid,
+        quiz_id: quizId,
+        registration_id: registration.id,
+        roll_number: rollNumber,
+        status: "started",
+        started_at: serverTimestamp(),
+        duration_minutes: durationMinutes,
+        deadline_at: new Date(examDeadlineMs),
+        total_questions: questions.length,
+        answers,
+        current_question: 0
+      });
+
+      loginSection.classList.add("hidden");
+      finishSection.classList.add("hidden");
+      examSection.classList.remove("hidden");
+
+      quizTitle.textContent = quizData.title || quizData.quiz_name || "কুইজ পরীক্ষা";
+      studentRoll.textContent = "Quiz Roll Number: " + rollNumber;
+
+      renderQuestion();
+      startTimer();
+
+    } catch (error) {
+      console.error("Exam entry error:", error);
+      showLoginMessage("❌ " + (error.message || "পরীক্ষায় প্রবেশ করতে সমস্যা হয়েছে।"));
+    } finally {
+      enterBtn.disabled = false;
+    }
+  }
+
+  function renderQuestion() {
+    if (currentIndex >= questions.length) {
+      submitExam();
+      return;
+    }
+
+    const question = questions[currentIndex];
+    selectedAnswer = answers[currentIndex];
+
+    questionNumber.textContent = "প্রশ্ন " + (currentIndex + 1);
+    progressText.textContent = "প্রশ্ন " + (currentIndex + 1) + " / " + questions.length;
+    progressBar.style.width = (((currentIndex + 1) / questions.length) * 100) + "%";
+    questionText.textContent = question.question || question.question_text || "প্রশ্ন পাওয়া যায়নি।";
+    optionsBox.innerHTML = "";
+
+    const optionList = [
+      { key: "A", text: question.option_a ?? question.a ?? "" },
+      { key: "B", text: question.option_b ?? question.b ?? "" },
+      { key: "C", text: question.option_c ?? question.c ?? "" },
+      { key: "D", text: question.option_d ?? question.d ?? "" }
+    ];
+
+    optionList.forEach((option) => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.type = "button";
+      button.textContent = option.key + ". " + option.text;
+
+      if (selectedAnswer === option.key) {
+        button.classList.add("selected", "locked");
+      }
+
+      if (selectedAnswer) {
+        button.disabled = true;
+      }
+
+      button.addEventListener("click", () => selectAnswer(option.key));
+      optionsBox.appendChild(button);
+    });
+
+    nextBtn.disabled = !selectedAnswer;
+    nextBtn.textContent = currentIndex === questions.length - 1
+      ? "পরীক্ষা জমা দিন ✓"
+      : "পরবর্তী →";
+  }
+
+  function selectAnswer(answer) {
+    if (selectedAnswer || submitted) return;
+
+    selectedAnswer = answer;
+    answers[currentIndex] = answer;
+
+    optionsBox.querySelectorAll(".option").forEach((button) => {
+      button.disabled = true;
+      button.classList.add("locked");
+
+      if (button.textContent.startsWith(answer + ".")) {
+        button.classList.add("selected");
+      }
+    });
+
+    nextBtn.disabled = false;
+    saveProgress();
+  }
+
+  async function saveProgress() {
+    if (!attemptId || submitted) return;
+
+    try {
+      await updateDoc(doc(db, "attempts", attemptId), {
+        answers,
+        current_question: currentIndex
+      });
+    } catch (error) {
+      console.error("Progress save error:", error);
+    }
+  }
+
+  nextBtn.addEventListener("click", async () => {
+    if (!selectedAnswer || submitted) return;
+
+    if (currentIndex === questions.length - 1) {
+      await submitExam();
+      return;
+    }
+
+    currentIndex++;
+    renderQuestion();
+  });
+
+  function startTimer() {
+    clearInterval(timerInterval);
+
+    const tick = () => {
+      remainingSeconds = Math.max(
+        0,
+        Math.ceil((examDeadlineMs - Date.now()) / 1000)
       );
 
+      updateTimer();
+
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        submitExam();
+      }
+    };
+
+    tick();
+    timerInterval = setInterval(tick, 250);
+  }
+
+  function updateTimer() {
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+
+    timer.textContent =
+      String(minutes).padStart(2, "0") + ":" +
+      String(seconds).padStart(2, "0");
+
+    timer.classList.remove("warning", "danger");
+
+    if (remainingSeconds <= 60) {
+      timer.classList.add("danger");
+    } else if (remainingSeconds <= 180) {
+      timer.classList.add("warning");
+    }
+  }
+
+  async function submitExam() {
+    if (submitted || !attemptId) return;
+
+    submitted = true;
+    clearInterval(timerInterval);
+    nextBtn.disabled = true;
+
+    try {
+      const unanswered = answers.filter((answer) => !answer).length;
+      const durationSeconds = Number(quizData.duration_minutes ?? 5) * 60;
+      const timeTaken = Math.min(
+        durationSeconds,
+        Math.max(0, durationSeconds - remainingSeconds)
+      );
+
+      await updateDoc(doc(db, "attempts", attemptId), {
+        status: "submitted",
+        submitted_at: serverTimestamp(),
+        answers,
+        unanswered,
+        time_taken_seconds: Math.max(0, timeTaken)
+      });
+
+      examSection.classList.add("hidden");
+      finishSection.classList.remove("hidden");
 
       finishMessage.textContent =
         "আপনার পরীক্ষা সফলভাবে জমা হয়েছে। ফলাফল প্রকাশিত হলে Roll Number দিয়ে ফলাফল দেখা যাবে।";
 
-
     } catch (error) {
-
-      console.error(
-        "Submit error:",
-        error
-      );
-
-
+      console.error("Submit error:", error);
       submitted = false;
-
-
-      nextBtn.disabled =
-        false;
-
-
-      alert(
-        "❌ পরীক্ষা জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।"
-      );
-
+      nextBtn.disabled = false;
+      alert("❌ পরীক্ষা জমা দিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
     }
-
   }
 
-
-  /* =========================
-     HOME BUTTON
-  ========================= */
-
-  homeBtn.addEventListener(
-    "click",
-    () => {
-
-      window.location.href =
-        "index.html";
-
-    }
-  );
+  homeBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 
 </script>
-  
+
 </body>
 </html>
