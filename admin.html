@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <title>জ্ঞানতরঙ্গ | Admin Panel</title>
+  <title>জ্ঞানতরঙ্গ | এডমিন প্যানেল</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,6 +81,16 @@
       border-radius:28px;
       padding:30px;
       box-shadow:var(--shadow);
+    }
+
+    .logo{
+      width:86px;
+      height:86px;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 15px;
+      border-radius:22px;
+      filter:drop-shadow(0 10px 24px rgba(139,61,255,.22));
     }
 
     .logo{
@@ -888,6 +898,31 @@
       }
 
     }
+
+    /* PREMIUM ADMIN POLISH */
+    ::selection{background:rgba(139,61,255,.35);color:#fff;}
+    ::-webkit-scrollbar{width:8px;height:8px;}
+    ::-webkit-scrollbar-track{background:#07091a;}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--purple),var(--pink));border-radius:20px;}
+    .card,.hero,.stat,.module,.login-card{
+      box-shadow:0 16px 50px rgba(0,0,0,.22);
+    }
+    .card:hover,.module:hover{
+      border-color:rgba(139,61,255,.22);
+    }
+    .btn{
+      transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+    }
+    .btn:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.06);
+    }
+    table th{
+      white-space:nowrap;
+    }
+    .table-wrap{
+      scrollbar-color:var(--purple) #080a1b;
+    }
   </style>
 </head>
 
@@ -903,7 +938,7 @@
 
     <img
       class="logo"
-      src="file_0000000031b8821193be8a110779a350.png"
+      src="gyantarongo-logo-transparent-1.png"
       alt="জ্ঞানতরঙ্গ"
       onerror="this.style.display='none'"
     >
@@ -913,7 +948,7 @@
     </div>
 
     <div class="login-sub">
-      Admin Management Panel
+      এডমিন ব্যবস্থাপনা প্যানেল
     </div>
 
     <div id="loginError" class="login-error hidden"></div>
@@ -965,7 +1000,7 @@
     <div class="side-brand">
 
       <img
-        src="file_0000000031b8821193be8a110779a350.png"
+        src="gyantarongo-logo-transparent-1.png"
         alt="জ্ঞানতরঙ্গ"
         onerror="this.style.display='none'"
       >
@@ -988,15 +1023,6 @@
       <button class="menu-btn" data-page="quiz">
         <span class="menu-icon">📝</span>
         <span>কুইজ ব্যবস্থাপনা</span>
-      </button>
-
-      <button
-        class="menu-btn"
-        type="button"
-        onclick="openExternal('category-management.html')"
-      >
-        <span class="menu-icon">📚</span>
-        <span>ক্যাটাগরি ব্যবস্থাপনা</span>
       </button>
 
       <button class="menu-btn" data-page="question">
@@ -1041,7 +1067,7 @@
 
       <button class="menu-btn" data-page="admins">
         <span class="menu-icon">👑</span>
-        <span>Admin Management</span>
+        <span>এডমিন ব্যবস্থাপনা</span>
       </button>
 
       <button class="menu-btn" data-page="complaint">
@@ -1052,15 +1078,6 @@
       <button class="menu-btn" data-page="settings">
         <span class="menu-icon">⚙️</span>
         <span>ওয়েবসাইট সেটিংস</span>
-      </button>
-
-      <button
-        class="menu-btn"
-        type="button"
-        onclick="openExternal('answer-review.html')"
-      >
-        <span class="menu-icon">🗂️</span>
-        <span>উত্তরপত্র যাচাই</span>
       </button>
 
       <button
@@ -1080,7 +1097,10 @@
 
   <header class="topbar">
 
-    <div>
+    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+      <button type="button" class="btn btn-secondary" onclick="adminGoBack()" style="padding:8px 11px;border-radius:11px;flex:0 0 auto;">↩</button>
+
+      <div>
       <div id="topTitle" class="top-title">
         ড্যাশবোর্ড
       </div>
@@ -1103,7 +1123,7 @@
         </div>
 
         <div class="admin-role">
-          Administrator
+          প্রশাসক
         </div>
       </div>
 
@@ -1200,12 +1220,6 @@
           <div class="module-icon">🏆</div>
           <div class="module-name">রেজাল্ট</div>
           <div class="module-desc">এক কুইজের সব ফলাফল</div>
-        </div>
-
-        <div class="module" onclick="openExternal('answer-review.html')">
-          <div class="module-icon">🗂️</div>
-          <div class="module-name">উত্তরপত্র যাচাই</div>
-          <div class="module-desc">রোল দিয়ে শিক্ষার্থীর উত্তর দেখুন</div>
         </div>
 
         <div class="module" onclick="openPage('payment')">
@@ -1362,7 +1376,7 @@
                 <th>রোল</th>
                 <th>শিক্ষার্থী</th>
                 <th>কুইজ</th>
-                <th>Status</th>
+                <th>অবস্থা</th>
                 <th>তারিখ</th>
                 <th>Action</th>
               </tr>
@@ -1386,7 +1400,7 @@
       <div class="page-head">
         <div class="page-title">পেমেন্ট ব্যবস্থাপনা</div>
         <div class="page-desc">
-          শিক্ষার্থীরা শুধু Active payment number দেখতে পাবে
+          শিক্ষার্থীরা শুধু সক্রিয় পেমেন্ট নম্বর দেখতে পাবে
         </div>
       </div>
 
@@ -1412,7 +1426,7 @@
           <div class="setting-row">
 
             <div>
-              <div class="setting-name">Active</div>
+              <div class="setting-name">সক্রিয়</div>
               <div class="setting-help">
                 শিক্ষার্থীদের দেখানো হবে
               </div>
@@ -1455,7 +1469,7 @@
           <div class="setting-row">
 
             <div>
-              <div class="setting-name">Active</div>
+              <div class="setting-name">সক্রিয়</div>
               <div class="setting-help">
                 শিক্ষার্থীদের দেখানো হবে
               </div>
@@ -1498,7 +1512,7 @@
           <div class="setting-row">
 
             <div>
-              <div class="setting-name">Active</div>
+              <div class="setting-name">সক্রিয়</div>
               <div class="setting-help">
                 শিক্ষার্থীদের দেখানো হবে
               </div>
@@ -1691,7 +1705,7 @@
               </div>
 
               <div class="setting-help">
-                Active থাকলে শিক্ষার্থীরা দেখতে পাবে
+                সক্রিয় থাকলে শিক্ষার্থীরা দেখতে পাবে
               </div>
 
             </div>
@@ -1991,7 +2005,7 @@
     <section id="page-admins" class="page">
 
       <div class="page-head">
-        <div class="page-title">Admin Management</div>
+        <div class="page-title">এডমিন ব্যবস্থাপনা</div>
 
         <div class="page-desc">
           অনুমোদিত Admin-দের ব্যবস্থাপনা
@@ -2007,7 +2021,7 @@
             class="btn btn-primary"
             onclick="showAdminCreateInfo()"
           >
-            ➕ নতুন Admin
+            ➕ নতুন এডমিন
           </button>
 
           <button
@@ -2028,8 +2042,8 @@
               <tr>
                 <th>নাম</th>
                 <th>Email</th>
-                <th>Role</th>
-                <th>Active</th>
+                <th>ভূমিকা</th>
+                <th>সক্রিয়</th>
               </tr>
             </thead>
 
@@ -2052,7 +2066,7 @@
             line-height:1.8;
           "
         >
-          🔐 নিরাপত্তা: নতুন Firebase Auth Admin সরাসরি এই frontend থেকে তৈরি করা হচ্ছে না।
+          🔐 নিরাপত্তা: নতুন Firebase Auth এডমিন সরাসরি এই frontend থেকে তৈরি করা হচ্ছে না।
           এর জন্য নিরাপদ server-side Firebase Admin SDK / Cloud Function প্রয়োজন।
           Service Account key কখনো এই HTML ফাইলে রাখা যাবে না।
         </div>
@@ -2079,7 +2093,7 @@
           class="btn btn-primary"
           onclick="openExternal('complaint-management.html')"
         >
-          💬 Complaint Management খুলুন
+          💬 অভিযোগ ব্যবস্থাপনা খুলুন
         </button>
 
       </div>
@@ -2135,7 +2149,7 @@
           class="btn btn-primary"
           onclick="saveWebsiteSettings()"
         >
-          💾 Settings Save
+          💾 সেটিংস সংরক্ষণ
         </button>
 
       </div>
@@ -2284,7 +2298,7 @@
           await signOut(auth);
 
           showLoginError(
-            "Admin profile পাওয়া যায়নি।"
+            "এডমিন প্রোফাইল পাওয়া যায়নি।"
           );
 
           return;
@@ -2303,7 +2317,7 @@
           await signOut(auth);
 
           showLoginError(
-            "আপনার Admin অনুমতি নেই।"
+            "আপনার এডমিন অনুমতি নেই।"
           );
 
           return;
@@ -2568,7 +2582,7 @@
       notice:"নোটিশ",
       inspiration:"এক মিনিটের অনুপ্রেরণা",
       rules:"পরীক্ষার নিয়ম",
-      admins:"Admin Management",
+      admins:"এডমিন ব্যবস্থাপনা",
       complaint:"অভিযোগ",
       settings:"ওয়েবসাইট সেটিংস"
 
@@ -2780,8 +2794,8 @@
               <th>কুইজ</th>
               <th>সময়</th>
               <th>প্রশ্ন</th>
-              <th>Start</th>
-              <th>Status</th>
+              <th>শুরু</th>
+              <th>অবস্থা</th>
             </tr>
           </thead>
 
@@ -2832,7 +2846,7 @@
                         ? "status-green"
                         : "status-red"
                     }">
-                      ${active ? "Active" : "Inactive"}
+                      ${active ? "সক্রিয়" : "নিষ্ক্রিয়"}
                     </span>
                   </td>
 
@@ -4269,7 +4283,7 @@
                   ? "status-green"
                   : "status-red"
               }">
-                ${active ? "Active" : "Inactive"}
+                ${active ? "সক্রিয়" : "নিষ্ক্রিয়"}
               </span>
             </td>
 
@@ -4285,7 +4299,7 @@
     function(){
 
       openModal(
-        "নতুন Admin তৈরির নিরাপদ পদ্ধতি",
+        "নতুন এডমিন তৈরির নিরাপদ পদ্ধতি",
         `
           <div style="
             color:#dce0f5;
@@ -4294,8 +4308,8 @@
           ">
 
             <p>
-              নতুন Firebase Authentication Admin তৈরি করার জন্য
-              frontend HTML-এ সরাসরি অন্য user তৈরি করা নিরাপদ নয়।
+              নতুন Firebase Authentication এডমিন তৈরি করার জন্য
+              frontend HTML-এ সরাসরি অন্য ব্যবহারকারী তৈরি করা নিরাপদ নয়।
             </p>
 
             <br>
@@ -4307,9 +4321,9 @@
             <ul style="padding-left:20px;">
               <li>Firebase Admin SDK</li>
               <li>Cloud Function / secure backend</li>
-              <li>বর্তমান Admin-এর role যাচাই</li>
-              <li>নতুন Auth user তৈরি</li>
-              <li>তারপর profiles collection-এ Admin profile তৈরি</li>
+              <li>বর্তমান এডমিনের ভূমিকা যাচাই</li>
+              <li>নতুন Auth ব্যবহারকারী তৈরি</li>
+              <li>তারপর profiles collection-এ এডমিন প্রোফাইল তৈরি</li>
             </ul>
 
             <br>
@@ -4557,6 +4571,19 @@
       .replace(/'/g,"&#039;");
 
   }
+
+
+  /* =========================================================
+     NAVIGATION BACK — navigation only, never logout
+  ========================================================= */
+
+  window.adminGoBack = function(){
+    if(window.history.length > 1){
+      window.history.back();
+    }else{
+      location.href = "admin.html";
+    }
+  };
 
 
   /* =========================================================
