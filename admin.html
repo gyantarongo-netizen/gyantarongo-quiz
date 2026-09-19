@@ -1584,6 +1584,13 @@
             🔄 Refresh
           </button>
 
+          <button
+            class="btn btn-secondary"
+            onclick="openAnswerReview()"
+          >
+            🔎 রোল দিয়ে উত্তর দেখুন
+          </button>
+
         </div>
 
 
@@ -1603,6 +1610,7 @@
                 <th>সময়</th>
                 <th>Submit</th>
                 <th>Publish</th>
+                <th>অ্যাকশন</th>
               </tr>
             </thead>
 
@@ -2247,6 +2255,7 @@
     where,
     setDoc,
     updateDoc,
+    deleteDoc,
     serverTimestamp,
     orderBy
   } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
@@ -2796,6 +2805,7 @@
               <th>প্রশ্ন</th>
               <th>শুরু</th>
               <th>অবস্থা</th>
+                <th>অ্যাকশন</th>
             </tr>
           </thead>
 
@@ -2848,6 +2858,26 @@
                     }">
                       ${active ? "সক্রিয়" : "নিষ্ক্রিয়"}
                     </span>
+                  </td>
+
+                  <td>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <button
+                        class="btn btn-secondary"
+                        style="padding:7px 9px;font-size:10px;"
+                        onclick="openExternal('quiz-management.html')"
+                      >
+                        ✏️ এডিট
+                      </button>
+
+                      <button
+                        class="btn btn-red"
+                        style="padding:7px 9px;font-size:10px;"
+                        onclick="deleteQuizFromDashboard('${q.id}')"
+                      >
+                        🗑️ ডিলেট
+                      </button>
+                    </div>
                   </td>
 
                 </tr>
@@ -3280,7 +3310,7 @@
 
       $("resultTable").innerHTML =
         `<tr>
-          <td colspan="10">
+          <td colspan="11">
             একটি কুইজ নির্বাচন করুন।
           </td>
         </tr>`;
@@ -3440,7 +3470,7 @@
 
       $("resultTable").innerHTML =
         `<tr>
-          <td colspan="10">
+          <td colspan="11">
             Result লোড করা যায়নি।
           </td>
         </tr>`;
@@ -3456,7 +3486,7 @@
 
       $("resultTable").innerHTML =
         `<tr>
-          <td colspan="10">
+          <td colspan="11">
             এই কুইজে এখনো কোনো submitted result পাওয়া যায়নি।
           </td>
         </tr>`;
@@ -3531,12 +3561,111 @@
               ${publishBadge}
             </td>
 
+            <td>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button
+                  class="btn btn-secondary"
+                  style="padding:7px 9px;font-size:10px;"
+                  onclick="openAnswerReview('${escapeHtml(r.roll_number || "")}')"
+                >
+                  🔎 উত্তর
+                </button>
+
+                <button
+                  class="btn btn-red"
+                  style="padding:7px 9px;font-size:10px;"
+                  onclick="deleteResult('${r.id}')"
+                >
+                  🗑️ ডিলেট
+                </button>
+              </div>
+            </td>
+
           </tr>
         `;
 
       }).join("");
 
   }
+
+
+  /* =========================================================
+     QUIZ DELETE FROM DASHBOARD
+  ========================================================= */
+
+  window.deleteQuizFromDashboard = async function(id){
+
+    const quiz = quizzes.find(q => q.id === id);
+
+    if(!quiz) return;
+
+    const title = quiz.title || quiz.name || "এই কুইজ";
+
+    if(!confirm(`"${title}" কুইজটি ডিলেট করতে চান?`)){
+      return;
+    }
+
+    try{
+      const [regSnap, attemptSnap, questionSnap, examQuestionSnap] = await Promise.all([
+        getDocs(query(collection(db,"quiz_registrations"),where("quiz_id","==",id))),
+        getDocs(query(collection(db,"attempts"),where("quiz_id","==",id))),
+        getDocs(query(collection(db,"questions"),where("quiz_id","==",id))),
+        getDocs(query(collection(db,"exam_questions"),where("quiz_id","==",id)))
+      ]);
+
+      if(regSnap.size || attemptSnap.size || questionSnap.size || examQuestionSnap.size){
+        toast("এই কুইজের সাথে রেজিস্ট্রেশন/পরীক্ষা/প্রশ্ন যুক্ত আছে। ডেটা নষ্ট না করতে সরাসরি ডিলেট বন্ধ রাখা হয়েছে। আগে কুইজটি নিষ্ক্রিয় করুন।");
+        return;
+      }
+
+      await deleteDoc(doc(db,"quizzes",id));
+      toast("কুইজটি ডিলেট করা হয়েছে।");
+      await loadQuizzes();
+      await loadDashboard();
+    }catch(error){
+      console.error(error);
+      toast("কুইজ ডিলেট করা যায়নি।");
+    }
+  };
+
+
+  /* =========================================================
+     RESULT DELETE
+  ========================================================= */
+
+  window.deleteResult = async function(attemptId){
+
+    const row = results.find(r => r.id === attemptId);
+    if(!row) return;
+
+    if(!confirm("এই শিক্ষার্থীর ফলাফল ডিলেট করবেন?\n\nএতে ফলাফল এবং জমা দেওয়া উত্তরপত্র—দুটিই মুছে যাবে। এই কাজটি ফিরিয়ে আনা যাবে না।")){
+      return;
+    }
+
+    try{
+      await deleteDoc(doc(db,"results",attemptId));
+      await deleteDoc(doc(db,"attempts",attemptId));
+      toast("ফলাফল ও উত্তরপত্র ডিলেট করা হয়েছে।");
+      await loadResults();
+      await loadDashboard();
+    }catch(error){
+      console.error(error);
+      toast("ফলাফল ডিলেট করা যায়নি। Firestore Rules-এ admin delete অনুমতি প্রয়োজন হতে পারে।");
+    }
+  };
+
+
+  /* =========================================================
+     ROLL-BASED ANSWER REVIEW
+  ========================================================= */
+
+  window.openAnswerReview = function(roll){
+    const value = roll || "";
+    const url = value
+      ? `answer-review.html?roll=${encodeURIComponent(value)}`
+      : "answer-review.html";
+    window.location.href = url;
+  };
 
 
   /* =========================================================
