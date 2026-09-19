@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Category Management | জ্ঞানতরঙ্গ</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>ক্যাটাগরি ব্যবস্থাপনা | জ্ঞানতরঙ্গ</title>
 
 <style>
 *{
@@ -15,50 +13,71 @@
   padding:0;
 }
 
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#0c1024;
+  --purple:#8b3dff;
+  --purple2:#6d28d9;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f7f7ff;
+  --muted:#8f96b3;
+  --border:rgba(255,255,255,.08);
+}
+
 body{
   font-family:
+    "Noto Sans Bengali",
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
-    "Noto Sans Bengali",
-    "Noto Sans",
     sans-serif;
+
+  min-height:100vh;
+  color:var(--text);
 
   background:
     radial-gradient(
-      circle at top left,
-      rgba(124,58,237,.16),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(236,72,153,.10),
+      circle at 5% 0%,
+      rgba(139,61,255,.20),
       transparent 30%
     ),
-    #060817;
-
-  color:#fff;
-  min-height:100vh;
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(236,63,167,.14),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(47,214,138,.06),
+      transparent 28%
+    ),
+    var(--bg);
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
   position:sticky;
   top:0;
   z-index:100;
 
-  height:70px;
+  height:72px;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
 
-  padding:0 18px;
+  padding:0 20px;
 
-  background:rgba(8,11,28,.92);
-  backdrop-filter:blur(18px);
+  background:rgba(6,8,23,.88);
+  backdrop-filter:blur(20px);
 
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid var(--border);
 }
 
 .brand{
@@ -67,39 +86,93 @@ body{
   gap:12px;
 }
 
-.logo-box{
-  width:45px;
-  height:45px;
-
-  border-radius:13px;
+/* নতুন premium CSS logo */
+.logo{
+  width:46px;
+  height:46px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  background:#10142b;
+  position:relative;
 
-  border:
-    1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139,61,255,.25),
+      rgba(236,63,167,.18)
+    );
+
+  border:1px solid rgba(255,255,255,.10);
+
+  box-shadow:
+    0 0 25px rgba(139,61,255,.18);
 
   overflow:hidden;
 }
 
-.logo-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
+.logo::before,
+.logo::after{
+  content:"";
+  position:absolute;
+
+  width:25px;
+  height:17px;
+
+  border:2px solid #b98aff;
+
+  background:rgba(139,61,255,.10);
+}
+
+.logo::before{
+  left:7px;
+  top:15px;
+
+  transform:
+    skewY(-12deg)
+    rotate(-2deg);
+
+  border-radius:4px 2px 8px 4px;
+}
+
+.logo::after{
+  right:7px;
+  top:15px;
+
+  transform:
+    skewY(12deg)
+    rotate(2deg);
+
+  border-radius:2px 4px 4px 8px;
+}
+
+.logo-wave{
+  position:absolute;
+
+  bottom:8px;
+
+  width:30px;
+  height:7px;
+
+  border-bottom:
+    2px solid #ec3fa7;
+
+  border-radius:50%;
 }
 
 .brand-title{
   font-size:17px;
-  font-weight:800;
+  font-weight:900;
+  letter-spacing:-.3px;
 }
 
 .brand-subtitle{
-  font-size:11px;
-  color:#8f96b3;
-  margin-top:3px;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:10px;
 }
 
 .back-btn{
@@ -112,18 +185,27 @@ body{
 
   background:#11152d;
 
-  border:
-    1px solid rgba(255,255,255,.09);
+  border:1px solid var(--border);
 
-  font-size:13px;
-  font-weight:700;
+  font-size:12px;
+  font-weight:800;
+
+  transition:.2s;
 }
 
-.container{
-  width:min(1050px,100%);
-  margin:auto;
+.back-btn:hover{
+  border-color:rgba(139,61,255,.55);
+  transform:translateY(-1px);
+}
 
-  padding:25px 16px 45px;
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  width:min(1120px,100%);
+  margin:auto;
+  padding:28px 16px 55px;
 }
 
 .page-heading{
@@ -131,157 +213,16 @@ body{
 }
 
 .page-heading h1{
-  font-size:27px;
+  font-size:28px;
+  font-weight:900;
 }
 
 .page-heading p{
+  color:var(--muted);
   margin-top:7px;
-  color:#8f96b3;
-  font-size:14px;
-}
-
-
-/* =========================
-   FORM CARD
-========================= */
-
-.form-card{
-  background:
-    linear-gradient(
-      145deg,
-      #11152d,
-      #0c1024
-    );
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  border-radius:21px;
-
-  padding:21px;
-
-  margin-bottom:25px;
-}
-
-.form-title{
-  font-size:18px;
-  font-weight:800;
-
-  margin-bottom:17px;
-}
-
-.form-grid{
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:15px;
-}
-
-.form-group{
-  margin-bottom:2px;
-}
-
-.form-group.full{
-  grid-column:1 / -1;
-}
-
-.form-group label{
-  display:block;
-
-  margin-bottom:7px;
-
-  color:#d9dced;
-
   font-size:13px;
-  font-weight:700;
+  line-height:1.6;
 }
-
-.form-group input,
-.form-group textarea{
-  width:100%;
-
-  color:#fff;
-
-  background:#090d20;
-
-  border:
-    1px solid rgba(255,255,255,.10);
-
-  border-radius:13px;
-
-  outline:none;
-
-  font-size:14px;
-
-  padding:12px 14px;
-}
-
-.form-group input{
-  height:48px;
-}
-
-.form-group textarea{
-  min-height:95px;
-  resize:vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus{
-  border-color:#8b3dff;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(124,58,237,.12);
-}
-
-.form-actions{
-  display:flex;
-  gap:10px;
-
-  margin-top:17px;
-}
-
-.primary-btn,
-.cancel-btn{
-  min-height:47px;
-
-  padding:0 19px;
-
-  border-radius:13px;
-
-  border:none;
-
-  color:#fff;
-
-  font-weight:800;
-
-  cursor:pointer;
-}
-
-.primary-btn{
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #ec4899
-    );
-
-  box-shadow:
-    0 8px 22px
-    rgba(124,58,237,.22);
-}
-
-.cancel-btn{
-  background:#191d38;
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  display:none;
-}
-
 
 /* =========================
    MESSAGE
@@ -290,14 +231,13 @@ body{
 .message{
   display:none;
 
-  padding:12px 14px;
-
-  border-radius:12px;
+  padding:12px 15px;
 
   margin-bottom:17px;
 
-  font-size:13px;
+  border-radius:13px;
 
+  font-size:13px;
   line-height:1.5;
 }
 
@@ -306,35 +246,219 @@ body{
 }
 
 .message.success{
-  background:rgba(34,197,94,.10);
-  border:
-    1px solid rgba(34,197,94,.22);
-  color:#80f0a6;
+  color:#7ff0a5;
+  background:rgba(47,214,138,.09);
+  border:1px solid rgba(47,214,138,.22);
 }
 
 .message.error{
-  background:rgba(239,68,68,.10);
-  border:
-    1px solid rgba(239,68,68,.22);
   color:#ff9b9b;
+  background:rgba(239,68,68,.09);
+  border:1px solid rgba(239,68,68,.22);
 }
 
+/* =========================
+   FORM
+========================= */
+
+.form-card{
+  padding:22px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,21,45,.96),
+      rgba(12,16,36,.96)
+    );
+
+  border:1px solid var(--border);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.18);
+
+  margin-bottom:25px;
+}
+
+.form-title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+
+  color:#d9dced;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+
+  border:none;
+  outline:none;
+
+  color:#fff;
+  background:#080c1e;
+
+  border:1px solid rgba(255,255,255,.10);
+
+  border-radius:13px;
+
+  font-size:14px;
+
+  padding:12px 13px;
+}
+
+.form-group input,
+.form-group select{
+  height:47px;
+}
+
+.form-group textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-group select option{
+  background:#10142b;
+  color:#fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--purple);
+
+  box-shadow:
+    0 0 0 3px rgba(139,61,255,.12);
+}
+
+.form-hint{
+  color:#707895;
+  font-size:10px;
+  margin-top:5px;
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  margin-top:17px;
+}
+
+.primary-btn,
+.cancel-btn{
+  min-height:46px;
+
+  padding:0 18px;
+
+  border-radius:13px;
+
+  border:none;
+
+  color:#fff;
+
+  font-size:13px;
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+.primary-btn{
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--pink)
+    );
+
+  box-shadow:
+    0 10px 28px rgba(139,61,255,.20);
+}
+
+.primary-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.cancel-btn{
+  display:none;
+  background:#191d38;
+  border:1px solid var(--border);
+}
 
 /* =========================
-   LIST
+   TOOLBAR
+========================= */
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.search-box{
+  flex:1;
+}
+
+.search-box input,
+.filter-box select{
+  width:100%;
+  height:45px;
+
+  padding:0 13px;
+
+  color:#fff;
+  background:#0d1127;
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  outline:none;
+}
+
+.filter-box{
+  width:210px;
+}
+
+.search-box input:focus,
+.filter-box select:focus{
+  border-color:var(--purple);
+}
+
+/* =========================
+   LIST HEADER
 ========================= */
 
 .list-heading{
   display:flex;
-
   align-items:center;
   justify-content:space-between;
 
-  margin-bottom:13px;
+  margin-bottom:14px;
 }
 
 .list-heading h2{
   font-size:19px;
+  font-weight:900;
 }
 
 .total-badge{
@@ -342,30 +466,56 @@ body{
 
   border-radius:9px;
 
-  background:
-    rgba(124,58,237,.12);
+  background:rgba(139,61,255,.12);
 
-  border:
-    1px solid rgba(124,58,237,.20);
+  border:1px solid rgba(139,61,255,.22);
 
-  color:#c6a8ff;
+  color:#c9adff;
 
-  font-size:12px;
-  font-weight:800;
+  font-size:11px;
+  font-weight:900;
 }
+
+/* =========================
+   GROUP
+========================= */
+
+.group-section{
+  margin-bottom:20px;
+}
+
+.group-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+
+  margin-bottom:10px;
+
+  font-size:15px;
+  font-weight:900;
+}
+
+.group-line{
+  flex:1;
+  height:1px;
+  background:rgba(255,255,255,.07);
+}
+
+/* =========================
+   CATEGORY CARD
+========================= */
 
 .category-list{
   display:grid;
-  gap:12px;
+  gap:10px;
 }
 
 .category-card{
   display:flex;
   align-items:center;
+  gap:14px;
 
-  gap:15px;
-
-  padding:16px;
+  padding:14px;
 
   border-radius:17px;
 
@@ -376,108 +526,111 @@ body{
       #0c1024
     );
 
-  border:
-    1px solid rgba(255,255,255,.08);
+  border:1px solid var(--border);
+
+  transition:
+    transform .2s,
+    border-color .2s;
+}
+
+.category-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(139,61,255,.30);
 }
 
 .category-icon{
-  flex:0 0 52px;
+  width:50px;
+  height:50px;
 
-  width:52px;
-  height:52px;
+  flex:0 0 50px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  border-radius:15px;
+  border-radius:14px;
 
-  font-size:24px;
+  font-size:22px;
 
   background:
-    rgba(124,58,237,.12);
+    linear-gradient(
+      135deg,
+      rgba(139,61,255,.14),
+      rgba(236,63,167,.09)
+    );
 
-  border:
-    1px solid rgba(124,58,237,.18);
+  border:1px solid rgba(139,61,255,.20);
 }
 
 .category-info{
-  min-width:0;
   flex:1;
+  min-width:0;
 }
 
 .category-name{
-  font-size:16px;
-  font-weight:800;
-
+  font-size:15px;
+  font-weight:900;
   word-break:break-word;
 }
 
 .category-description{
-  margin-top:4px;
-
   color:#858ca8;
-
-  font-size:12px;
-
+  font-size:11px;
   line-height:1.5;
-
-  word-break:break-word;
+  margin-top:3px;
 }
 
 .category-meta{
   display:flex;
-  align-items:center;
   flex-wrap:wrap;
-
-  gap:6px;
-
+  gap:5px;
   margin-top:7px;
 }
 
 .badge{
   display:inline-flex;
 
-  padding:4px 8px;
+  padding:4px 7px;
 
   border-radius:7px;
 
-  font-size:10px;
-
-  font-weight:800;
+  font-size:9px;
+  font-weight:900;
 }
 
 .badge.active{
   color:#7ff0a5;
-  background:rgba(34,197,94,.10);
+  background:rgba(47,214,138,.09);
 }
 
 .badge.inactive{
-  color:#ffb1b1;
-  background:rgba(239,68,68,.10);
+  color:#ff9b9b;
+  background:rgba(239,68,68,.09);
+}
+
+.badge.group{
+  color:#d0b7ff;
+  background:rgba(139,61,255,.10);
 }
 
 .badge.order{
-  color:#c7b0ff;
-  background:rgba(124,58,237,.10);
+  color:#ffd67a;
+  background:rgba(255,178,28,.08);
 }
 
 .category-actions{
   display:flex;
-
-  gap:7px;
-
+  gap:6px;
   flex-shrink:0;
 }
 
 .action-btn{
-  width:39px;
-  height:39px;
+  width:38px;
+  height:38px;
 
-  border-radius:11px;
+  border-radius:10px;
 
-  border:
-    1px solid rgba(255,255,255,.08);
+  border:1px solid var(--border);
 
   background:#181c37;
 
@@ -485,69 +638,58 @@ body{
 
   cursor:pointer;
 
-  font-size:16px;
+  font-size:15px;
 }
 
 .action-btn:hover{
-  border-color:
-    rgba(139,61,255,.45);
+  border-color:rgba(139,61,255,.50);
 }
 
 .action-btn.delete:hover{
-  border-color:
-    rgba(239,68,68,.45);
+  border-color:rgba(239,68,68,.50);
 }
 
-.empty{
+/* =========================
+   EMPTY / LOADING
+========================= */
+
+.empty,
+.loading{
   text-align:center;
 
-  padding:45px 20px;
+  padding:40px 20px;
 
   border-radius:18px;
 
   background:#10142b;
 
-  border:
-    1px solid rgba(255,255,255,.07);
+  border:1px solid var(--border);
 
   color:#858ca8;
+
+  font-size:13px;
 }
 
 .empty-icon{
-  font-size:38px;
-  margin-bottom:10px;
+  font-size:35px;
+  margin-bottom:9px;
 }
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-  text-align:center;
-
-  padding:35px;
-
-  color:#858ca8;
-
-  font-size:14px;
-}
-
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:650px){
+@media(max-width:700px){
 
   .header{
     height:64px;
-    padding:0 12px;
+    padding:0 11px;
   }
 
-  .logo-box{
+  .logo{
     width:40px;
     height:40px;
+    border-radius:12px;
   }
 
   .brand-title{
@@ -555,17 +697,16 @@ body{
   }
 
   .brand-subtitle{
-    font-size:10px;
+    display:none;
   }
 
   .back-btn{
     padding:8px 10px;
-    font-size:11px;
+    font-size:10px;
   }
 
   .container{
-    padding:
-      20px 12px 35px;
+    padding:20px 12px 40px;
   }
 
   .page-heading h1{
@@ -593,16 +734,24 @@ body{
     width:100%;
   }
 
+  .toolbar{
+    flex-direction:column;
+  }
+
+  .filter-box{
+    width:100%;
+  }
+
   .category-card{
     align-items:flex-start;
-    padding:14px;
+    padding:12px;
   }
 
   .category-icon{
-    flex-basis:46px;
-    width:46px;
-    height:46px;
-    font-size:21px;
+    width:44px;
+    height:44px;
+    flex-basis:44px;
+    font-size:19px;
   }
 
   .category-actions{
@@ -610,150 +759,127 @@ body{
   }
 
   .action-btn{
-    width:36px;
-    height:36px;
+    width:34px;
+    height:34px;
+    font-size:13px;
   }
 }
 </style>
 </head>
 
-
 <body>
-
 
 <header class="header">
 
   <div class="brand">
 
-    <div class="logo-box">
-
-      <img
-        src="file_0000000031b8821193be8a110779a350.png"
-        alt="জ্ঞানতরঙ্গ">
-
+    <div class="logo">
+      <div class="logo-wave"></div>
     </div>
 
     <div>
-
-      <div class="brand-title">
-        জ্ঞানতরঙ্গ
-      </div>
-
+      <div class="brand-title">জ্ঞানতরঙ্গ</div>
       <div class="brand-subtitle">
-        Category Management
+        শিখি · জানি · এগিয়ে যাই
       </div>
-
     </div>
 
   </div>
 
-
-  <a
-    href="admin.html"
-    class="back-btn">
-
-    ← Admin Panel
-
+  <a href="admin.html" class="back-btn">
+    ← অ্যাডমিন প্যানেল
   </a>
 
 </header>
 
 
-
 <main class="container">
-
 
   <div class="page-heading">
 
-    <h1>
-      📚 Category Management
-    </h1>
+    <h1>📚 ক্যাটাগরি ব্যবস্থাপনা</h1>
 
     <p>
-      কুইজের ক্যাটাগরি যোগ করুন এবং পরিচালনা করুন।
+      কুইজের ক্যাটাগরি তৈরি, সম্পাদনা ও নিয়ন্ত্রণ করুন।
     </p>
 
   </div>
 
 
-
-  <div
-    id="message"
-    class="message">
-  </div>
+  <div id="message" class="message"></div>
 
 
-
-  <!-- =========================
-       CATEGORY FORM
-  ========================== -->
+  <!-- FORM -->
 
   <section class="form-card">
 
-    <div
-      id="formTitle"
-      class="form-title">
-
-      ➕ নতুন Category যোগ করুন
-
+    <div id="formTitle" class="form-title">
+      ➕ নতুন ক্যাটাগরি যোগ করুন
     </div>
 
 
     <div class="form-grid">
 
-
       <div class="form-group">
 
-        <label>
-          Category Name *
-        </label>
+        <label>ক্যাটাগরির নাম *</label>
 
         <input
           id="categoryName"
           type="text"
-          placeholder="যেমন: সাধারণ জ্ঞান"
-          maxlength="100">
+          maxlength="100"
+          placeholder="যেমন: বাংলাদেশ বিষয়াবলি">
 
       </div>
 
 
-
       <div class="form-group">
 
-        <label>
-          Icon
-        </label>
+        <label>আইকন</label>
 
         <input
           id="categoryIcon"
           type="text"
-          placeholder="📚"
-          maxlength="10">
+          maxlength="10"
+          placeholder="🇧🇩">
 
       </div>
-
-
-
-      <div class="form-group full">
-
-        <label>
-          Description
-        </label>
-
-        <textarea
-          id="categoryDescription"
-          placeholder="এই ক্যাটাগরি সম্পর্কে সংক্ষিপ্ত বিবরণ লিখুন..."
-          maxlength="500"></textarea>
-
-      </div>
-
 
 
       <div class="form-group">
 
-        <label>
-          Display Order
-        </label>
+        <label>ক্যাটাগরি গ্রুপ *</label>
+
+        <select id="groupName">
+
+          <option value="🌙 ইসলামিক জ্ঞান">
+            🌙 ইসলামিক জ্ঞান
+          </option>
+
+          <option value="🇧🇩 বাংলাদেশ">
+            🇧🇩 বাংলাদেশ
+          </option>
+
+          <option value="🌍 বিশ্ব ও সাধারণ জ্ঞান">
+            🌍 বিশ্ব ও সাধারণ জ্ঞান
+          </option>
+
+          <option value="🎓 একাডেমিক">
+            🎓 একাডেমিক
+          </option>
+
+          <option value="🏆 বিশেষ প্রতিযোগিতা">
+            🏆 বিশেষ প্রতিযোগিতা
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>ক্রম নম্বর</label>
 
         <input
           id="displayOrder"
@@ -762,8 +888,23 @@ body{
           value="0"
           placeholder="0">
 
+        <div class="form-hint">
+          ছোট সংখ্যা আগে দেখাবে।
+        </div>
+
       </div>
 
+
+      <div class="form-group full">
+
+        <label>সংক্ষিপ্ত বিবরণ</label>
+
+        <textarea
+          id="categoryDescription"
+          maxlength="500"
+          placeholder="এই ক্যাটাগরিতে কী ধরনের কুইজ থাকবে..."></textarea>
+
+      </div>
 
     </div>
 
@@ -775,7 +916,7 @@ body{
         class="primary-btn"
         type="button">
 
-        ➕ Category যোগ করুন
+        ➕ ক্যাটাগরি যোগ করুন
 
       </button>
 
@@ -794,382 +935,499 @@ body{
   </section>
 
 
+  <!-- SEARCH -->
 
-  <!-- =========================
-       CATEGORY LIST
-  ========================== -->
+  <div class="toolbar">
 
-  <div class="list-heading">
+    <div class="search-box">
 
-    <h2>
-      📋 সব Category
-    </h2>
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="🔎 ক্যাটাগরি খুঁজুন...">
 
-    <span
-      id="totalBadge"
-      class="total-badge">
-
-      0 টি
-
-    </span>
-
-  </div>
+    </div>
 
 
-  <div
-    id="categoryList"
-    class="category-list">
+    <div class="filter-box">
 
-    <div class="loading">
-      ⏳ Category লোড হচ্ছে...
+      <select id="statusFilter">
+
+        <option value="all">
+          সব ক্যাটাগরি
+        </option>
+
+        <option value="active">
+          🟢 Active
+        </option>
+
+        <option value="inactive">
+          🔴 Inactive
+        </option>
+
+      </select>
+
     </div>
 
   </div>
 
 
+  <div class="list-heading">
+
+    <h2>📋 ক্যাটাগরির তালিকা</h2>
+
+    <span id="totalBadge" class="total-badge">
+      0 টি
+    </span>
+
+  </div>
+
+
+  <div id="categoryList">
+
+    <div class="loading">
+      ⏳ ক্যাটাগরি লোড হচ্ছে...
+    </div>
+
+  </div>
+
 </main>
 
 
+<script type="module">
 
-<script>
+/* =========================================
+   FIREBASE
+========================================= */
 
-/* ==========================================
-   SUPABASE
-========================================== */
+import { auth, db }
+  from "./firebase-config.js";
 
-const SUPABASE_URL =
-  "https://oycecrzerykrqkoivdwg.supabase.co";
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  serverTimestamp,
+  where,
+  limit
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Y2VjcnplcnlrcnFrb2l2ZHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMjk4NDYsImV4cCI6MjEwNDgwNTg0Nn0.9D2KxE_HzwUxoxoDFsiYL26KzD7SATN_NRmUymeVxTA";
-
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-
-/* ==========================================
+/* =========================================
    VARIABLES
-========================================== */
+========================================= */
 
 let currentAdmin = null;
-
 let editingCategoryId = null;
+let allCategories = [];
 
 
-/* ==========================================
+/* =========================================
    ELEMENTS
-========================================== */
+========================================= */
 
 const messageBox =
-  document.getElementById(
-    "message"
-  );
+  document.getElementById("message");
 
 const categoryList =
-  document.getElementById(
-    "categoryList"
-  );
+  document.getElementById("categoryList");
 
 const totalBadge =
-  document.getElementById(
-    "totalBadge"
-  );
+  document.getElementById("totalBadge");
 
 const saveBtn =
-  document.getElementById(
-    "saveBtn"
-  );
+  document.getElementById("saveBtn");
 
 const cancelBtn =
-  document.getElementById(
-    "cancelBtn"
-  );
+  document.getElementById("cancelBtn");
 
 const formTitle =
-  document.getElementById(
-    "formTitle"
-  );
+  document.getElementById("formTitle");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const statusFilter =
+  document.getElementById("statusFilter");
 
 
-/* ==========================================
+/* =========================================
    MESSAGE
-========================================== */
+========================================= */
 
-function showMessage(
-  text,
-  type = "success"
-){
+function showMessage(text,type="success"){
 
-  messageBox.textContent =
-    text;
+  messageBox.textContent = text;
 
   messageBox.className =
     "message show " + type;
 
-
-  setTimeout(
-    function(){
-
-      messageBox.className =
-        "message";
-
-    },
-    4000
-  );
-
+  setTimeout(()=>{
+    messageBox.className="message";
+  },4000);
 }
 
 
-/* ==========================================
+/* =========================================
    ADMIN CHECK
-========================================== */
+========================================= */
 
-async function checkAdmin(){
+async function checkAdmin(user){
+
+  if(!user){
+    window.location.href="admin.html";
+    return false;
+  }
 
   try{
 
-    const {
-      data:{
-        session
-      }
-    } =
-      await supabaseClient
-      .auth
-      .getSession();
+    const profileRef =
+      doc(db,"profiles",user.uid);
 
+    const profileSnap =
+      await getDoc(profileRef);
+
+    if(!profileSnap.exists()){
+
+      await signOut(auth);
+
+      window.location.href="admin.html";
+
+      return false;
+    }
+
+    const profile =
+      profileSnap.data();
 
     if(
-      !session ||
-      !session.user
+      String(profile.role || "").toLowerCase()
+      !== "admin"
+      ||
+      profile.is_active === false
     ){
 
-      window.location.href =
-        "admin.html";
+      await signOut(auth);
+
+      window.location.href="admin.html";
 
       return false;
     }
 
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-      .from("profiles")
-      .select(`
-        id,
-        full_name,
-        email,
-        role,
-        is_active
-      `)
-      .eq(
-        "id",
-        session.user.id
-      )
-      .maybeSingle();
-
-
-    if(error){
-
-      console.error(error);
-
-      window.location.href =
-        "admin.html";
-
-      return false;
-    }
-
-
-    if(
-      !data ||
-      String(data.role)
-        .toLowerCase()
-        !== "admin" ||
-      data.is_active === false
-    ){
-
-      await supabaseClient.auth
-        .signOut();
-
-      window.location.href =
-        "admin.html";
-
-      return false;
-    }
-
-
-    currentAdmin =
-      data;
+    currentAdmin = {
+      uid:user.uid,
+      ...profile
+    };
 
     return true;
 
-
   }catch(error){
 
     console.error(error);
 
-    window.location.href =
-      "admin.html";
+    window.location.href="admin.html";
 
     return false;
-
   }
-
 }
 
 
-/* ==========================================
+/* =========================================
    LOAD CATEGORIES
-========================================== */
+========================================= */
 
 async function loadCategories(){
 
-  categoryList.innerHTML =
-    `
-      <div class="loading">
-        ⏳ Category লোড হচ্ছে...
-      </div>
-    `;
-
+  categoryList.innerHTML = `
+    <div class="loading">
+      ⏳ ক্যাটাগরি লোড হচ্ছে...
+    </div>
+  `;
 
   try{
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-      .from("quiz_categories")
-      .select(`
-        id,
-        name,
-        description,
-        icon,
-        display_order,
-        is_active
-      `)
-      .order(
-        "display_order",
-        {
-          ascending:true
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending:true
-        }
-      );
+    const q = query(
+      collection(db,"quiz_categories"),
+      orderBy("group_order","asc"),
+      orderBy("sort_order","asc")
+    );
 
+    const snap = await getDocs(q);
 
-    if(error){
+    allCategories =
+      snap.docs.map(item => ({
+        id:item.id,
+        ...item.data()
+      }));
 
-      console.error(error);
-
-      categoryList.innerHTML =
-        `
-          <div class="empty">
-
-            <div class="empty-icon">
-              ⚠️
-            </div>
-
-            Category লোড করা যায়নি।
-
-          </div>
-        `;
-
-      showMessage(
-        "❌ Category লোড করতে সমস্যা হয়েছে।",
-        "error"
-      );
-
-      return;
-    }
-
-
-    totalBadge.textContent =
-      `${data.length} টি`;
-
-
-    if(!data.length){
-
-      categoryList.innerHTML =
-        `
-          <div class="empty">
-
-            <div class="empty-icon">
-              📚
-            </div>
-
-            এখনো কোনো Category যোগ করা হয়নি।
-
-          </div>
-        `;
-
-      return;
-    }
-
-
-    categoryList.innerHTML =
-      data
-      .map(
-        category =>
-          createCategoryCard(
-            category
-          )
-      )
-      .join("");
-
+    renderCategories();
 
   }catch(error){
 
     console.error(error);
 
-    categoryList.innerHTML =
-      `
+    /*
+      যদি নতুন compound index না থাকে,
+      fallback হিসেবে সাধারণ collection query।
+    */
+
+    try{
+
+      const snap =
+        await getDocs(
+          collection(db,"quiz_categories")
+        );
+
+      allCategories =
+        snap.docs.map(item=>({
+          id:item.id,
+          ...item.data()
+        }));
+
+      allCategories.sort((a,b)=>{
+
+        const ga =
+          Number(a.group_order ?? 99);
+
+        const gb =
+          Number(b.group_order ?? 99);
+
+        if(ga !== gb)
+          return ga-gb;
+
+        return Number(a.sort_order ?? 0)
+          - Number(b.sort_order ?? 0);
+
+      });
+
+      renderCategories();
+
+    }catch(secondError){
+
+      console.error(secondError);
+
+      categoryList.innerHTML=`
         <div class="empty">
-          ❌ একটি সমস্যা হয়েছে।
+          <div class="empty-icon">⚠️</div>
+          ক্যাটাগরি লোড করা যায়নি।
         </div>
       `;
 
+      showMessage(
+        "❌ ক্যাটাগরি লোড করতে সমস্যা হয়েছে।",
+        "error"
+      );
+    }
   }
-
 }
 
 
-/* ==========================================
-   CREATE CARD
-========================================== */
+/* =========================================
+   RENDER
+========================================= */
 
-function createCategoryCard(
-  category
-){
+function renderCategories(){
 
-  const safeName =
-    escapeHtml(
-      category.name || ""
-    );
+  const search =
+    searchInput.value
+      .trim()
+      .toLowerCase();
 
-  const safeDescription =
-    escapeHtml(
-      category.description || ""
-    );
+  const filter =
+    statusFilter.value;
 
-  const safeIcon =
+
+  let filtered =
+    allCategories.filter(category=>{
+
+      const name =
+        String(category.name || "")
+          .toLowerCase();
+
+      const group =
+        String(category.group_name || "")
+          .toLowerCase();
+
+      const matchesSearch =
+        !search ||
+        name.includes(search) ||
+        group.includes(search);
+
+      const active =
+        category.is_active !== false;
+
+      const matchesStatus =
+        filter === "all"
+        ||
+        (filter === "active" && active)
+        ||
+        (filter === "inactive" && !active);
+
+      return matchesSearch && matchesStatus;
+    });
+
+
+  totalBadge.textContent =
+    `${filtered.length} টি`;
+
+
+  if(!filtered.length){
+
+    categoryList.innerHTML=`
+      <div class="empty">
+
+        <div class="empty-icon">
+          📚
+        </div>
+
+        কোনো ক্যাটাগরি পাওয়া যায়নি।
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const groups = {};
+
+  filtered.forEach(category=>{
+
+    const group =
+      category.group_name ||
+      "অন্যান্য";
+
+    if(!groups[group]){
+      groups[group]=[];
+    }
+
+    groups[group].push(category);
+
+  });
+
+
+  const groupOrder = [
+    "🌙 ইসলামিক জ্ঞান",
+    "🇧🇩 বাংলাদেশ",
+    "🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    "🎓 একাডেমিক",
+    "🏆 বিশেষ প্রতিযোগিতা",
+    "অন্যান্য"
+  ];
+
+
+  const sortedGroupNames =
+    Object.keys(groups).sort((a,b)=>{
+
+      const ia =
+        groupOrder.indexOf(a);
+
+      const ib =
+        groupOrder.indexOf(b);
+
+      return
+        (ia===-1?999:ia)
+        -
+        (ib===-1?999:ib);
+    });
+
+
+  categoryList.innerHTML =
+    sortedGroupNames.map(group=>{
+
+      const items =
+        groups[group];
+
+      items.sort(
+        (a,b)=>
+          Number(a.sort_order ?? 0)
+          -
+          Number(b.sort_order ?? 0)
+      );
+
+      return `
+
+        <section class="group-section">
+
+          <div class="group-title">
+
+            <span>
+              ${escapeHtml(group)}
+            </span>
+
+            <div class="group-line"></div>
+
+            <span
+              style="
+                color:#727995;
+                font-size:10px;
+              ">
+
+              ${items.length}
+
+            </span>
+
+          </div>
+
+          <div class="category-list">
+
+            ${items
+              .map(createCategoryCard)
+              .join("")}
+
+          </div>
+
+        </section>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+function createCategoryCard(category){
+
+  const active =
+    category.is_active !== false;
+
+  const icon =
     escapeHtml(
       category.icon || "📚"
     );
 
+  const name =
+    escapeHtml(
+      category.name || ""
+    );
 
-  const status =
-    category.is_active !== false;
+  const description =
+    escapeHtml(
+      category.description || ""
+    );
+
+  const group =
+    escapeHtml(
+      category.group_name || "অন্যান্য"
+    );
+
+  const order =
+    Number(
+      category.sort_order ?? 0
+    );
 
 
   return `
@@ -1177,53 +1435,43 @@ function createCategoryCard(
     <div class="category-card">
 
       <div class="category-icon">
-        ${safeIcon}
+        ${icon}
       </div>
 
 
       <div class="category-info">
 
         <div class="category-name">
-          ${safeName}
+          ${name}
         </div>
 
-
         <div class="category-description">
-
           ${
-            safeDescription ||
-            "কোনো Description নেই।"
+            description ||
+            "কোনো বিবরণ দেওয়া হয়নি।"
           }
-
         </div>
 
 
         <div class="category-meta">
 
-          <span
-            class="badge ${
-              status
-                ? "active"
-                : "inactive"
-            }">
-
-            ${
-              status
-                ? "✅ Active"
-                : "❌ Inactive"
-            }
-
+          <span class="badge group">
+            ${group}
           </span>
 
-
-          <span
-            class="badge order">
-
-            🔢 Order:
+          <span class="
+            badge
+            ${active ? "active" : "inactive"}
+          ">
             ${
-              category.display_order ?? 0
+              active
+              ? "● Active"
+              : "● Inactive"
             }
+          </span>
 
+          <span class="badge order">
+            ক্রম ${order}
           </span>
 
         </div>
@@ -1233,13 +1481,10 @@ function createCategoryCard(
 
       <div class="category-actions">
 
-
         <button
           class="action-btn"
-          title="Edit"
-          onclick="editCategory(
-            '${category.id}'
-          )">
+          title="সম্পাদনা"
+          onclick="editCategory('${category.id}')">
 
           ✏️
 
@@ -1249,136 +1494,76 @@ function createCategoryCard(
         <button
           class="action-btn"
           title="${
-            status
-              ? "Inactive করুন"
-              : "Active করুন"
+            active
+            ? "Inactive করুন"
+            : "Active করুন"
           }"
-          onclick="toggleCategory(
-            '${category.id}',
-            ${status}
-          )">
+          onclick="
+            toggleCategory(
+              '${category.id}',
+              ${active}
+            )
+          ">
 
-          ${
-            status
-              ? "⏸️"
-              : "▶️"
-          }
+          ${active ? "⏸️" : "▶️"}
 
         </button>
 
 
         <button
           class="action-btn delete"
-          title="Delete"
-          onclick="deleteCategory(
-            '${category.id}',
-            '${escapeJs(
-              category.name || ""
-            )}'
-          )">
+          title="মুছে ফেলুন"
+          onclick="
+            deleteCategory(
+              '${category.id}',
+              '${escapeJs(category.name || "")}'
+            )
+          ">
 
           🗑️
 
         </button>
-
 
       </div>
 
     </div>
 
   `;
-
 }
 
 
-/* ==========================================
-   ESCAPE HTML
-========================================== */
-
-function escapeHtml(
-  value
-){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* ==========================================
-   ESCAPE JS
-========================================== */
-
-function escapeJs(
-  value
-){
-
-  return String(value)
-    .replaceAll(
-      "\\",
-      "\\\\"
-    )
-    .replaceAll(
-      "'",
-      "\\'"
-    )
-    .replaceAll(
-      "\n",
-      "\\n"
-    )
-    .replaceAll(
-      "\r",
-      "\\r"
-    );
-
-}
-
-
-/* ==========================================
-   SAVE CATEGORY
-========================================== */
+/* =========================================
+   SAVE
+========================================= */
 
 saveBtn.addEventListener(
   "click",
-  async function(){
+  async ()=>{
 
     const name =
       document
-      .getElementById(
-        "categoryName"
-      )
-      .value
-      .trim();
-
+      .getElementById("categoryName")
+      .value.trim();
 
     const icon =
       document
-      .getElementById(
-        "categoryIcon"
-      )
-      .value
-      .trim();
+      .getElementById("categoryIcon")
+      .value.trim();
 
+    const groupName =
+      document
+      .getElementById("groupName")
+      .value;
 
     const description =
       document
-      .getElementById(
-        "categoryDescription"
-      )
-      .value
-      .trim();
-
+      .getElementById("categoryDescription")
+      .value.trim();
 
     const displayOrder =
       Number(
         document
-        .getElementById(
-          "displayOrder"
-        )
+        .getElementById("displayOrder")
         .value
       ) || 0;
 
@@ -1386,7 +1571,7 @@ saveBtn.addEventListener(
     if(!name){
 
       showMessage(
-        "⚠️ Category Name লিখুন।",
+        "⚠️ ক্যাটাগরির নাম লিখুন।",
         "error"
       );
 
@@ -1394,8 +1579,18 @@ saveBtn.addEventListener(
     }
 
 
-    saveBtn.disabled =
-      true;
+    if(!groupName){
+
+      showMessage(
+        "⚠️ ক্যাটাগরি গ্রুপ নির্বাচন করুন।",
+        "error"
+      );
+
+      return;
+    }
+
+
+    saveBtn.disabled=true;
 
     saveBtn.textContent =
       "⏳ সংরক্ষণ হচ্ছে...";
@@ -1403,41 +1598,75 @@ saveBtn.addEventListener(
 
     try{
 
+      const groupOrder =
+        getGroupOrder(groupName);
+
+
       if(editingCategoryId){
 
-        const {
-          error
-        } =
-          await supabaseClient
-          .from(
-            "quiz_categories"
-          )
-          .update({
+        await updateDoc(
+          doc(
+            db,
+            "quiz_categories",
+            editingCategoryId
+          ),
+          {
 
             name:name,
 
             icon:
               icon || "📚",
 
+            group_name:
+              groupName,
+
+            group_order:
+              groupOrder,
+
+            sort_order:
+              displayOrder,
+
             description:
-              description || null,
+              description,
 
-            display_order:
-              displayOrder
+            updated_at:
+              serverTimestamp(),
 
-          })
-          .eq(
-            "id",
-            editingCategoryId
+            updated_by:
+              currentAdmin.uid
+
+          }
+        );
+
+
+        showMessage(
+          "✅ ক্যাটাগরি সফলভাবে আপডেট হয়েছে।"
+        );
+
+      }else{
+
+        /*
+          একই নাম + একই গ্রুপ আছে কি না যাচাই
+        */
+
+        const existing =
+          allCategories.find(category=>
+            String(category.name || "")
+              .trim()
+              .toLowerCase()
+            ===
+            name.toLowerCase()
+            &&
+            String(category.group_name || "")
+            ===
+            groupName
           );
 
 
-        if(error){
-
-          console.error(error);
+        if(existing){
 
           showMessage(
-            "❌ Category আপডেট করা যায়নি।",
+            "⚠️ এই গ্রুপে একই নামে ক্যাটাগরি আগে থেকেই আছে।",
             "error"
           );
 
@@ -1445,68 +1674,48 @@ saveBtn.addEventListener(
         }
 
 
-        showMessage(
-          "✅ Category সফলভাবে আপডেট হয়েছে।"
-        );
-
-
-      }else{
-
-        const {
-          error
-        } =
-          await supabaseClient
-          .from(
-            "quiz_categories"
-          )
-          .insert({
+        await addDoc(
+          collection(db,"quiz_categories"),
+          {
 
             name:name,
 
             icon:
               icon || "📚",
 
-            description:
-              description || null,
+            group_name:
+              groupName,
 
-            display_order:
+            group_order:
+              groupOrder,
+
+            sort_order:
               displayOrder,
 
-            is_active:true
+            description:
+              description,
 
-          });
+            is_active:true,
 
+            created_at:
+              serverTimestamp(),
 
-        if(error){
+            updated_at:
+              serverTimestamp(),
 
-          console.error(error);
+            created_by:
+              currentAdmin.uid,
 
-          if(
-            error.code === "23505"
-          ){
-
-            showMessage(
-              "❌ এই Category আগে থেকেই আছে।",
-              "error"
-            );
-
-          }else{
-
-            showMessage(
-              "❌ Category যোগ করা যায়নি।",
-              "error"
-            );
+            updated_by:
+              currentAdmin.uid
 
           }
-
-          return;
-        }
+        );
 
 
         showMessage(
-          "✅ নতুন Category সফলভাবে যোগ হয়েছে।"
+          "✅ নতুন ক্যাটাগরি সফলভাবে যোগ হয়েছে।"
         );
-
       }
 
 
@@ -1514,19 +1723,745 @@ saveBtn.addEventListener(
 
       await loadCategories();
 
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        "❌ ক্যাটাগরি সংরক্ষণ করা যায়নি। Firestore Rules পরীক্ষা করুন।",
+        "error"
+      );
+
+    }finally{
+
+      saveBtn.disabled=false;
+
+      saveBtn.textContent =
+        editingCategoryId
+        ? "💾 পরিবর্তন সংরক্ষণ করুন"
+        : "➕ ক্যাটাগরি যোগ করুন";
+    }
+
+  }
+);
+
+
+/* =========================================
+   EDIT
+========================================= */
+
+window.editCategory =
+  function(id){
+
+    const category =
+      allCategories.find(
+        item=>item.id===id
+      );
+
+    if(!category) return;
+
+
+    editingCategoryId=id;
+
+
+    document
+      .getElementById("categoryName")
+      .value =
+        category.name || "";
+
+
+    document
+      .getElementById("categoryIcon")
+      .value =
+        category.icon || "📚";
+
+
+    document
+      .getElementById("groupName")
+      .value =
+        category.group_name ||
+        "🌙 ইসলামিক জ্ঞান";
+
+
+    document
+      .getElementById("categoryDescription")
+      .value =
+        category.description || "";
+
+
+    document
+      .getElementById("displayOrder")
+      .value =
+        category.sort_order ?? 0;
+
+
+    formTitle.textContent =
+      "✏️ ক্যাটাগরি সম্পাদনা";
+
+
+    saveBtn.textContent =
+      "💾 পরিবর্তন সংরক্ষণ করুন";
+
+
+    cancelBtn.style.display =
+      "block";
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  };
+
+
+/* =========================================
+   CANCEL
+========================================= */
+
+cancelBtn.addEventListener(
+  "click",
+  resetForm
+);
+
+
+function resetForm(){
+
+  editingCategoryId=null;
+
+  document
+    .getElementById("categoryName")
+    .value="";
+
+  document
+    .getElementById("categoryIcon")
+    .value="";
+
+  document
+    .getElementById("groupName")
+    .value="🌙 ইসলামিক জ্ঞান";
+
+  document
+    .getElementById("categoryDescription")
+    .value="";
+
+  document
+    .getElementById("displayOrder")
+    .value="0";
+
+  formTitle.textContent =
+    "➕ নতুন ক্যাটাগরি যোগ করুন";
+
+  saveBtn.textContent =
+    "➕ ক্যাটাগরি যোগ করুন";
+
+  cancelBtn.style.display =
+    "none";
+}
+
+
+/* =========================================
+   ACTIVE / INACTIVE
+========================================= */
+
+window.toggleCategory =
+  async function(id,currentStatus){
+
+    try{
+
+      await updateDoc(
+        doc(
+          db,
+          "quiz_categories",
+          id
+        ),
+        {
+
+          is_active:
+            !currentStatus,
+
+          updated_at:
+            serverTimestamp(),
+
+          updated_by:
+            currentAdmin.uid
+
+        }
+      );
+
+
+      showMessage(
+        !currentStatus
+        ? "✅ ক্যাটাগরি Active করা হয়েছে।"
+        : "⏸️ ক্যাটাগরি Inactive করা হয়েছে।"
+      );
+
+
+      await loadCategories();
 
     }catch(error){
 
       console.error(error);
 
       showMessage(
-        "❌ একটি অপ্রত্যাশিত সমস্যা হয়েছে।",
+        "❌ ক্যাটাগরির status পরিবর্তন করা যায়নি।",
         "error"
       );
+    }
 
-    }finally{
+  };
 
-      saveBtn.disabled =
-        false;
 
-    
+/* =========================================
+   DELETE
+========================================= */
+
+window.deleteCategory =
+  async function(id,name){
+
+    const confirmed =
+      confirm(
+        `“${name}” ক্যাটাগরিটি মুছে ফেলতে চান?\n\nক্যাটাগরিটির সঙ্গে কোনো কুইজ যুক্ত থাকলে মুছে ফেলা হবে না।`
+      );
+
+    if(!confirmed) return;
+
+
+    try{
+
+      /*
+        প্রথমে quiz আছে কি না পরীক্ষা
+      */
+
+      const quizQuery =
+        query(
+          collection(db,"quizzes"),
+          where("category_id","==",id),
+          limit(1)
+        );
+
+      const quizSnap =
+        await getDocs(quizQuery);
+
+
+      if(!quizSnap.empty){
+
+        showMessage(
+          "⚠️ এই ক্যাটাগরির সঙ্গে কুইজ যুক্ত আছে। আগে কুইজের ক্যাটাগরি পরিবর্তন করুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      await deleteDoc(
+        doc(
+          db,
+          "quiz_categories",
+          id
+        )
+      );
+
+
+      showMessage(
+        "🗑️ ক্যাটাগরি মুছে ফেলা হয়েছে।"
+      );
+
+
+      await loadCategories();
+
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        "❌ ক্যাটাগরি মুছে ফেলা যায়নি।",
+        "error"
+      );
+    }
+
+  };
+
+
+/* =========================================
+   GROUP ORDER
+========================================= */
+
+function getGroupOrder(group){
+
+  const orders = {
+
+    "🌙 ইসলামিক জ্ঞান":1,
+
+    "🇧🇩 বাংলাদেশ":2,
+
+    "🌍 বিশ্ব ও সাধারণ জ্ঞান":3,
+
+    "🎓 একাডেমিক":4,
+
+    "🏆 বিশেষ প্রতিযোগিতা":5
+
+  };
+
+  return orders[group] || 99;
+}
+
+
+/* =========================================
+   SEARCH / FILTER
+========================================= */
+
+searchInput.addEventListener(
+  "input",
+  renderCategories
+);
+
+statusFilter.addEventListener(
+  "change",
+  renderCategories
+);
+
+
+/* =========================================
+   ESCAPE
+========================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+function escapeJs(value){
+
+  return String(value)
+    .replaceAll("\\","\\\\")
+    .replaceAll("'","\\'")
+    .replaceAll("\n","\\n")
+    .replaceAll("\r","\\r");
+}
+
+
+/* =========================================
+   INITIAL SEED
+========================================= */
+
+const INITIAL_CATEGORIES = [
+
+  {
+    name:"সীরাত ও নবীজীবন",
+    icon:"🌙",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:1,
+    description:"রাসূলুল্লাহ ﷺ-এর জীবন, চরিত্র ও শিক্ষা।"
+  },
+
+  {
+    name:"আল-কুরআন",
+    icon:"📖",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:2,
+    description:"কুরআনুল কারীম সম্পর্কিত জ্ঞান ও বিষয়।"
+  },
+
+  {
+    name:"হাদিস ও সুন্নাহ",
+    icon:"📜",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:3,
+    description:"হাদিস, সুন্নাহ ও নবীজির শিক্ষা।"
+  },
+
+  {
+    name:"ইসলামী সাধারণ জ্ঞান",
+    icon:"☪️",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:4,
+    description:"ইসলাম সম্পর্কিত সাধারণ জ্ঞান।"
+  },
+
+  {
+    name:"ইসলামী ইতিহাস ও ঐতিহ্য",
+    icon:"🏛️",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:5,
+    description:"ইসলামের ইতিহাস ও ঐতিহ্য।"
+  },
+
+  {
+    name:"সাহাবায়ে কেরাম",
+    icon:"🌟",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:6,
+    description:"সাহাবায়ে কেরামের জীবন ও অবদান।"
+  },
+
+  {
+    name:"ইসলামী আদব ও আমল",
+    icon:"🤲",
+    group_name:"🌙 ইসলামিক জ্ঞান",
+    group_order:1,
+    sort_order:7,
+    description:"ইসলামী আদব, আমল ও দৈনন্দিন জীবন।"
+  },
+
+
+  {
+    name:"বাংলাদেশ বিষয়াবলি",
+    icon:"🇧🇩",
+    group_name:"🇧🇩 বাংলাদেশ",
+    group_order:2,
+    sort_order:1,
+    description:"বাংলাদেশ সম্পর্কিত গুরুত্বপূর্ণ বিষয়।"
+  },
+
+  {
+    name:"মুক্তিযুদ্ধ ও স্বাধীনতা",
+    icon:"🇧🇩",
+    group_name:"🇧🇩 বাংলাদেশ",
+    group_order:2,
+    sort_order:2,
+    description:"মুক্তিযুদ্ধ, স্বাধীনতা ও ঐতিহাসিক ঘটনাবলি।"
+  },
+
+  {
+    name:"ইতিহাস ও ঐতিহ্য",
+    icon:"🏛️",
+    group_name:"🇧🇩 বাংলাদেশ",
+    group_order:2,
+    sort_order:3,
+    description:"বাংলাদেশের ইতিহাস ও ঐতিহ্য।"
+  },
+
+  {
+    name:"ভূগোল ও পরিবেশ",
+    icon:"🌳",
+    group_name:"🇧🇩 বাংলাদেশ",
+    group_order:2,
+    sort_order:4,
+    description:"বাংলাদেশের ভূগোল, প্রকৃতি ও পরিবেশ।"
+  },
+
+  {
+    name:"সংবিধান ও নাগরিক জ্ঞান",
+    icon:"⚖️",
+    group_name:"🇧🇩 বাংলাদেশ",
+    group_order:2,
+    sort_order:5,
+    description:"সংবিধান ও নাগরিক বিষয়ক জ্ঞান।"
+  },
+
+
+  {
+    name:"বিশ্ব বিষয়াবলি",
+    icon:"🌍",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:1,
+    description:"বিশ্বের গুরুত্বপূর্ণ বিষয়াবলি।"
+  },
+
+  {
+    name:"আন্তর্জাতিক সাধারণ জ্ঞান",
+    icon:"🌐",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:2,
+    description:"আন্তর্জাতিক বিষয় ও সাধারণ জ্ঞান।"
+  },
+
+  {
+    name:"বিজ্ঞান ও প্রযুক্তি",
+    icon:"🔬",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:3,
+    description:"বিজ্ঞান, প্রযুক্তি ও আবিষ্কার।"
+  },
+
+  {
+    name:"ইতিহাস ও সভ্যতা",
+    icon:"🏺",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:4,
+    description:"বিশ্ব ইতিহাস ও সভ্যতা।"
+  },
+
+  {
+    name:"সাহিত্য ও সংস্কৃতি",
+    icon:"📚",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:5,
+    description:"সাহিত্য, শিল্প ও সংস্কৃতি।"
+  },
+
+  {
+    name:"খেলাধুলা ও ক্রীড়া",
+    icon:"🏆",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:6,
+    description:"দেশ-বিদেশের খেলাধুলা ও ক্রীড়া।"
+  },
+
+  {
+    name:"চলতি বিষয়াবলি",
+    icon:"📰",
+    group_name:"🌍 বিশ্ব ও সাধারণ জ্ঞান",
+    group_order:3,
+    sort_order:7,
+    description:"সাম্প্রতিক ও গুরুত্বপূর্ণ ঘটনাবলি।"
+  },
+
+
+  {
+    name:"প্রাথমিক শিক্ষা",
+    icon:"🎒",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:1,
+    description:"প্রাথমিক স্তরের শিক্ষার্থীদের জন্য।"
+  },
+
+  {
+    name:"মাধ্যমিক শিক্ষা",
+    icon:"📘",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:2,
+    description:"মাধ্যমিক স্তরের শিক্ষার্থীদের জন্য।"
+  },
+
+  {
+    name:"উচ্চমাধ্যমিক শিক্ষা",
+    icon:"🎓",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:3,
+    description:"উচ্চমাধ্যমিক স্তরের শিক্ষার্থীদের জন্য।"
+  },
+
+  {
+    name:"বাংলা",
+    icon:"🔤",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:4,
+    description:"বাংলা ভাষা ও সাহিত্য।"
+  },
+
+  {
+    name:"ইংরেজি",
+    icon:"🔤",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:5,
+    description:"ইংরেজি ভাষা ও সাহিত্য।"
+  },
+
+  {
+    name:"গণিত",
+    icon:"➗",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:6,
+    description:"গণিত বিষয়ক কুইজ।"
+  },
+
+  {
+    name:"পদার্থবিজ্ঞান",
+    icon:"⚛️",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:7,
+    description:"পদার্থবিজ্ঞানের বিভিন্ন বিষয়।"
+  },
+
+  {
+    name:"রসায়ন",
+    icon:"🧪",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:8,
+    description:"রসায়ন বিষয়ক কুইজ।"
+  },
+
+  {
+    name:"জীববিজ্ঞান",
+    icon:"🧬",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:9,
+    description:"জীববিজ্ঞান ও জীবজগত।"
+  },
+
+  {
+    name:"আইসিটি ও কম্পিউটার",
+    icon:"💻",
+    group_name:"🎓 একাডেমিক",
+    group_order:4,
+    sort_order:10,
+    description:"আইসিটি, কম্পিউটার ও ডিজিটাল প্রযুক্তি।"
+  },
+
+
+  {
+    name:"জ্ঞানতরঙ্গ মেগা কুইজ",
+    icon:"🏆",
+    group_name:"🏆 বিশেষ প্রতিযোগিতা",
+    group_order:5,
+    sort_order:1,
+    description:"জ্ঞানতরঙ্গের বিশেষ আয়োজন।"
+  },
+
+  {
+    name:"জাতীয় কুইজ চ্যাম্পিয়নশিপ",
+    icon:"🥇",
+    group_name:"🏆 বিশেষ প্রতিযোগিতা",
+    group_order:5,
+    sort_order:2,
+    description:"জাতীয় পর্যায়ের বিশেষ কুইজ।"
+  },
+
+  {
+    name:"মেধা অন্বেষণ কুইজ",
+    icon:"💡",
+    group_name:"🏆 বিশেষ প্রতিযোগিতা",
+    group_order:5,
+    sort_order:3,
+    description:"মেধাবী শিক্ষার্থী খুঁজে বের করার বিশেষ কুইজ।"
+  },
+
+  {
+    name:"বিশেষ দিবস কুইজ",
+    icon:"🎯",
+    group_name:"🏆 বিশেষ প্রতিযোগিতা",
+    group_order:5,
+    sort_order:4,
+    description:"বিভিন্ন গুরুত্বপূর্ণ দিবস উপলক্ষে বিশেষ কুইজ।"
+  }
+
+];
+
+
+/* =========================================
+   SEED INITIAL CATEGORIES
+========================================= */
+
+async function seedInitialCategories(){
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"quiz_categories")
+      );
+
+    /*
+      যদি আগে থেকেই category থাকে,
+      তাহলে নতুন করে seed করবে না।
+    */
+
+    if(!snap.empty){
+      return;
+    }
+
+
+    for(
+      const category
+      of INITIAL_CATEGORIES
+    ){
+
+      await addDoc(
+        collection(db,"quiz_categories"),
+        {
+
+          ...category,
+
+          is_active:true,
+
+          created_at:
+            serverTimestamp(),
+
+          updated_at:
+            serverTimestamp(),
+
+          created_by:
+            currentAdmin.uid,
+
+          updated_by:
+            currentAdmin.uid
+
+        }
+      );
+    }
+
+
+    showMessage(
+      "🎉 প্রাথমিক ক্যাটাগরিগুলো সফলভাবে তৈরি হয়েছে।"
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Seed error:",
+      error
+    );
+
+  }
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+onAuthStateChanged(
+  auth,
+  async user=>{
+
+    if(!user){
+      window.location.href="admin.html";
+      return;
+    }
+
+
+    const allowed =
+      await checkAdmin(user);
+
+
+    if(!allowed) return;
+
+
+    /*
+      প্রথমবার হলে initial categories
+      তৈরি হবে।
+    */
+
+    await seedInitialCategories();
+
+
+    await loadCategories();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
