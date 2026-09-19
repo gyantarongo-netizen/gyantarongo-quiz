@@ -11,9 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
   --bg:#060817;
@@ -29,9 +27,7 @@
   --border:rgba(255,255,255,.09);
 }
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -44,24 +40,9 @@ body{
   min-height:100vh;
 }
 
-button,
-input,
-select,
-textarea{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* =========================
-   LOGIN
-========================= */
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
 .login{
   min-height:100vh;
@@ -108,10 +89,6 @@ button{
   font-size:13px;
   margin:0 0 25px;
 }
-
-/* =========================
-   TOPBAR
-========================= */
 
 .topbar{
   position:sticky;
@@ -162,19 +139,13 @@ button{
   font-size:11px;
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .wrap{
   max-width:1150px;
   margin:auto;
   padding:28px 16px 60px;
 }
 
-.page-heading{
-  margin-bottom:20px;
-}
+.page-heading{margin-bottom:20px}
 
 .page-heading h2{
   margin:0 0 5px;
@@ -201,13 +172,8 @@ button{
   gap:15px;
 }
 
-.field{
-  margin-bottom:16px;
-}
-
-.field:last-child{
-  margin-bottom:0;
-}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
 
 label{
   display:block;
@@ -217,9 +183,7 @@ label{
   margin-bottom:7px;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
   width:100%;
   padding:13px 14px;
   color:#fff;
@@ -230,9 +194,7 @@ textarea{
   font-size:13px;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+input:focus,select:focus,textarea:focus{
   border-color:var(--purple);
   box-shadow:0 0 0 3px rgba(139,61,255,.12);
 }
@@ -248,13 +210,7 @@ select option{
   color:#fff;
 }
 
-.full{
-  grid-column:1/-1;
-}
-
-/* =========================
-   SECTION
-========================= */
+.full{grid-column:1/-1}
 
 .section{
   margin:25px 0 17px;
@@ -291,10 +247,6 @@ select option{
   line-height:1.7;
 }
 
-/* =========================
-   PREMIUM MESSAGE
-========================= */
-
 .preview-box{
   margin-top:10px;
   padding:18px;
@@ -316,10 +268,6 @@ select option{
   font-size:14px;
   line-height:1.8;
 }
-
-/* =========================
-   TOGGLE
-========================= */
 
 .setting-grid{
   display:grid;
@@ -347,10 +295,6 @@ select option{
   margin-bottom:10px;
 }
 
-/* =========================
-   BUTTON
-========================= */
-
 .btn{
   border:0;
   border-radius:11px;
@@ -361,8 +305,12 @@ select option{
   transition:.2s;
 }
 
-.btn:hover{
-  transform:translateY(-1px);
+.btn:hover{transform:translateY(-1px)}
+
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
 }
 
 .primary{
@@ -394,13 +342,33 @@ select option{
   margin-top:22px;
 }
 
-/* =========================
-   QUIZ LIST
-========================= */
-
-.quiz-list{
-  margin-top:18px;
+.category-tools{
+  display:flex;
+  gap:8px;
+  margin-top:8px;
+  flex-wrap:wrap;
 }
+
+.category-tools .btn{
+  padding:9px 12px;
+  font-size:11px;
+}
+
+.category-status{
+  margin-top:7px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.category-status.ready{
+  color:#5ce6a3;
+}
+
+.category-status.empty{
+  color:#ffc44c;
+}
+
+.quiz-list{margin-top:18px}
 
 .quiz-item{
   padding:15px;
@@ -449,10 +417,6 @@ select option{
   color:#ff8da4;
 }
 
-/* =========================
-   TOAST
-========================= */
-
 .toast{
   position:fixed;
   right:16px;
@@ -480,10 +444,6 @@ select option{
   border-color:rgba(255,85,119,.35);
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:750px){
 
   .form-grid,
@@ -491,26 +451,18 @@ select option{
     grid-template-columns:1fr;
   }
 
-  .topbar{
-    padding:10px 12px;
-  }
+  .topbar{padding:10px 12px}
 
-  .badge{
-    display:none;
-  }
+  .badge{display:none}
 
-  .wrap{
-    padding:20px 12px 45px;
-  }
+  .wrap{padding:20px 12px 45px}
 
   .card{
     padding:15px;
     border-radius:18px;
   }
 
-  .page-heading h2{
-    font-size:22px;
-  }
+  .page-heading h2{font-size:22px}
 
   .quiz-item{
     align-items:flex-start;
@@ -530,10 +482,6 @@ select option{
 
 <body>
 
-<!-- =========================
-     LOGIN
-========================= -->
-
 <div id="loginScreen" class="login">
 
   <div class="login-card">
@@ -542,11 +490,10 @@ select option{
 
     <h1>জ্ঞানতরঙ্গ</h1>
 
-    <p>
-      কুইজ ব্যবস্থাপনা প্যানেল
-    </p>
+    <p>কুইজ ব্যবস্থাপনা প্যানেল</p>
 
     <div class="field">
+
       <label>এডমিন ইমেইল</label>
 
       <input
@@ -554,9 +501,11 @@ select option{
         type="email"
         placeholder="এডমিন ইমেইল লিখুন"
       >
+
     </div>
 
     <div class="field">
+
       <label>পাসওয়ার্ড</label>
 
       <input
@@ -564,6 +513,7 @@ select option{
         type="password"
         placeholder="পাসওয়ার্ড লিখুন"
       >
+
     </div>
 
     <button
@@ -579,23 +529,15 @@ select option{
 </div>
 
 
-<!-- =========================
-     APP
-========================= -->
-
 <div id="app" class="hidden">
 
   <header class="topbar">
 
     <div class="brand">
 
-      <div class="brand-icon">
-        📚
-      </div>
+      <div class="brand-icon">📚</div>
 
-      <span>
-        জ্ঞানতরঙ্গ
-      </span>
+      <span>জ্ঞানতরঙ্গ</span>
 
     </div>
 
@@ -621,9 +563,7 @@ select option{
 
     <div class="page-heading">
 
-      <h2>
-        📝 কুইজ তৈরি ও ব্যবস্থাপনা
-      </h2>
+      <h2>📝 কুইজ তৈরি ও ব্যবস্থাপনা</h2>
 
       <p>
         একটি Quiz-এর সময়, নিয়ম, অনুপ্রেরণা এবং পরীক্ষার আচরণ এখান থেকেই নিয়ন্ত্রণ করুন।
@@ -634,22 +574,23 @@ select option{
 
     <section class="card">
 
-      <!-- BASIC -->
-
-      <div class="section" style="margin-top:0;padding-top:0;border-top:0">
+      <div
+        class="section"
+        style="margin-top:0;padding-top:0;border-top:0"
+      >
 
         <div class="section-head">
 
-          <div class="section-icon">
-            📝
-          </div>
+          <div class="section-icon">📝</div>
 
           <div>
+
             <h3>Quiz-এর মূল তথ্য</h3>
 
             <div class="muted">
               শিক্ষার্থীরা যে তথ্যগুলো দেখতে পাবে।
             </div>
+
           </div>
 
         </div>
@@ -661,9 +602,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Quiz-এর নাম *
-          </label>
+          <label>Quiz-এর নাম *</label>
 
           <input
             id="title"
@@ -675,9 +614,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Category *
-          </label>
+          <label>Category *</label>
 
           <select id="category">
 
@@ -687,14 +624,42 @@ select option{
 
           </select>
 
+          <div
+            id="categoryStatus"
+            class="category-status"
+          >
+            Category লোড হচ্ছে...
+          </div>
+
+          <div
+            id="categoryTools"
+            class="category-tools hidden"
+          >
+
+            <button
+              type="button"
+              id="categoryManageBtn"
+              class="btn secondary"
+            >
+              📚 ক্যাটাগরি ব্যবস্থাপনা
+            </button>
+
+            <button
+              type="button"
+              id="reloadCategoryBtn"
+              class="btn green"
+            >
+              🔄 আবার লোড
+            </button>
+
+          </div>
+
         </div>
 
 
         <div class="field">
 
-          <label>
-            Quiz Image URL
-          </label>
+          <label>Quiz Image URL</label>
 
           <input
             id="image"
@@ -706,9 +671,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Registration Fee
-          </label>
+          <label>Registration Fee</label>
 
           <input
             id="fee"
@@ -722,9 +685,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Registration Start
-          </label>
+          <label>Registration Start</label>
 
           <input
             id="regStart"
@@ -736,9 +697,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Registration End
-          </label>
+          <label>Registration End</label>
 
           <input
             id="regEnd"
@@ -750,9 +709,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Exam Start
-          </label>
+          <label>Exam Start</label>
 
           <input
             id="examStart"
@@ -764,9 +721,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Exam End
-          </label>
+          <label>Exam End</label>
 
           <input
             id="examEnd"
@@ -778,9 +733,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            পুরো পরীক্ষার সময় *
-          </label>
+          <label>পুরো পরীক্ষার সময় *</label>
 
           <input
             id="duration"
@@ -798,39 +751,17 @@ select option{
 
         <div class="field">
 
-          <label>
-            প্রতি প্রশ্নের Default সময়
-          </label>
+          <label>প্রতি প্রশ্নের Default সময়</label>
 
           <select id="defaultTimer">
 
-            <option value="20">
-              ২০ সেকেন্ড
-            </option>
-
-            <option value="30" selected>
-              ৩০ সেকেন্ড
-            </option>
-
-            <option value="40">
-              ৪০ সেকেন্ড
-            </option>
-
-            <option value="50">
-              ৫০ সেকেন্ড
-            </option>
-
-            <option value="60">
-              ৬০ সেকেন্ড
-            </option>
-
-            <option value="90">
-              ৯০ সেকেন্ড
-            </option>
-
-            <option value="120">
-              ১২০ সেকেন্ড
-            </option>
+            <option value="20">২০ সেকেন্ড</option>
+            <option value="30" selected>৩০ সেকেন্ড</option>
+            <option value="40">৪০ সেকেন্ড</option>
+            <option value="50">৫০ সেকেন্ড</option>
+            <option value="60">৬০ সেকেন্ড</option>
+            <option value="90">৯০ সেকেন্ড</option>
+            <option value="120">১২০ সেকেন্ড</option>
 
           </select>
 
@@ -843,9 +774,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            মোট প্রশ্ন
-          </label>
+          <label>মোট প্রশ্ন</label>
 
           <input
             id="questionCount"
@@ -859,9 +788,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Total Marks
-          </label>
+          <label>Total Marks</label>
 
           <input
             id="totalMarks"
@@ -876,9 +803,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Passing Marks
-          </label>
+          <label>Passing Marks</label>
 
           <input
             id="passing"
@@ -893,9 +818,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Negative Marking
-          </label>
+          <label>Negative Marking</label>
 
           <input
             id="negative"
@@ -910,9 +833,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Prize
-          </label>
+          <label>Prize</label>
 
           <input
             id="prize"
@@ -924,9 +845,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Maximum Participants
-          </label>
+          <label>Maximum Participants</label>
 
           <input
             id="maxParticipants"
@@ -940,9 +859,7 @@ select option{
 
         <div class="field full">
 
-          <label>
-            Quiz-এর সংক্ষিপ্ত বিবরণ
-          </label>
+          <label>Quiz-এর সংক্ষিপ্ত বিবরণ</label>
 
           <textarea
             id="description"
@@ -954,21 +871,15 @@ select option{
       </div>
 
 
-      <!-- RULES -->
-
       <div class="section">
 
         <div class="section-head">
 
-          <div class="section-icon">
-            📜
-          </div>
+          <div class="section-icon">📜</div>
 
           <div>
 
-            <h3>
-              পরীক্ষার নিয়মাবলি
-            </h3>
+            <h3>পরীক্ষার নিয়মাবলি</h3>
 
             <div class="muted">
               পরীক্ষা শুরু করার আগে শিক্ষার্থী এই নিয়মগুলো পড়বে।
@@ -985,30 +896,21 @@ select option{
 
         <textarea
           id="rules"
-          placeholder="১. পরীক্ষার সময় অন্য Tab বা Window-এ যাওয়া থেকে বিরত থাকুন।
-২. প্রতিটি প্রশ্নের নির্ধারিত সময় শেষে স্বয়ংক্রিয়ভাবে পরবর্তী প্রশ্ন আসবে।
-৩. ভুল উত্তরের জন্য নির্ধারিত Negative Marking প্রযোজ্য হবে।
-৪. পরীক্ষা শুরু করার পর নির্ধারিত সময়ের মধ্যে পরীক্ষা শেষ করতে হবে।"
+          placeholder="পরীক্ষার নিয়ম লিখুন..."
         ></textarea>
 
       </div>
 
 
-      <!-- INSPIRATION -->
-
       <div class="section">
 
         <div class="section-head">
 
-          <div class="section-icon">
-            🌙
-          </div>
+          <div class="section-icon">🌙</div>
 
           <div>
 
-            <h3>
-              ছোট অনুপ্রেরণামূলক কথা
-            </h3>
+            <h3>ছোট অনুপ্রেরণামূলক কথা</h3>
 
             <div class="muted">
               পরীক্ষার নিয়মের উপরে Premium card হিসেবে দেখানো হবে।
@@ -1025,9 +927,7 @@ select option{
 
         <textarea
           id="inspiration"
-          placeholder="🌙 জ্ঞান অর্জনের প্রতিটি মুহূর্তই একটি সুন্দর আমানত।
-মনোযোগ দিয়ে পরীক্ষা দিন এবং সততার সঙ্গে নিজের জ্ঞান যাচাই করুন।
-জ্ঞানতরঙ্গ — শিখি · জানি · এগিয়ে যাই।"
+          placeholder="অনুপ্রেরণামূলক কথা লিখুন..."
         ></textarea>
 
 
@@ -1049,21 +949,15 @@ select option{
       </div>
 
 
-      <!-- EXTRA INSTRUCTIONS -->
-
       <div class="section">
 
         <div class="section-head">
 
-          <div class="section-icon">
-            ℹ️
-          </div>
+          <div class="section-icon">ℹ️</div>
 
           <div>
 
-            <h3>
-              অতিরিক্ত নির্দেশনা
-            </h3>
+            <h3>অতিরিক্ত নির্দেশনা</h3>
 
             <div class="muted">
               প্রয়োজনে পরীক্ষার বিশেষ নির্দেশনা লিখুন।
@@ -1086,21 +980,15 @@ select option{
       </div>
 
 
-      <!-- EXAM BEHAVIOR -->
-
       <div class="section">
 
         <div class="section-head">
 
-          <div class="section-icon">
-            🛡️
-          </div>
+          <div class="section-icon">🛡️</div>
 
           <div>
 
-            <h3>
-              পরীক্ষা নিরাপত্তা ও আচরণ
-            </h3>
+            <h3>পরীক্ষা নিরাপত্তা ও আচরণ</h3>
 
             <div class="muted">
               Browser activity পর্যবেক্ষণ ও প্রশ্নের আচরণ নিয়ন্ত্রণ।
@@ -1115,7 +1003,6 @@ select option{
 
       <div class="setting-grid">
 
-
         <div class="setting">
 
           <div class="setting-title">
@@ -1127,15 +1014,8 @@ select option{
           </div>
 
           <select id="randomQuestions">
-
-            <option value="true">
-              চালু
-            </option>
-
-            <option value="false">
-              বন্ধ
-            </option>
-
+            <option value="true">চালু</option>
+            <option value="false">বন্ধ</option>
           </select>
 
         </div>
@@ -1152,15 +1032,8 @@ select option{
           </div>
 
           <select id="randomOptions">
-
-            <option value="true">
-              চালু
-            </option>
-
-            <option value="false">
-              বন্ধ
-            </option>
-
+            <option value="true">চালু</option>
+            <option value="false">বন্ধ</option>
           </select>
 
         </div>
@@ -1177,15 +1050,8 @@ select option{
           </div>
 
           <select id="trackTab">
-
-            <option value="true">
-              চালু
-            </option>
-
-            <option value="false">
-              বন্ধ
-            </option>
-
+            <option value="true">চালু</option>
+            <option value="false">বন্ধ</option>
           </select>
 
         </div>
@@ -1202,15 +1068,8 @@ select option{
           </div>
 
           <select id="trackCopy">
-
-            <option value="true">
-              চালু
-            </option>
-
-            <option value="false">
-              বন্ধ
-            </option>
-
+            <option value="true">চালু</option>
+            <option value="false">বন্ধ</option>
           </select>
 
         </div>
@@ -1227,15 +1086,8 @@ select option{
           </div>
 
           <select id="requireFullscreen">
-
-            <option value="false">
-              বাধ্যতামূলক নয়
-            </option>
-
-            <option value="true">
-              বাধ্যতামূলক
-            </option>
-
+            <option value="false">বাধ্যতামূলক নয়</option>
+            <option value="true">বাধ্যতামূলক</option>
           </select>
 
         </div>
@@ -1260,25 +1112,18 @@ select option{
 
         </div>
 
-
       </div>
 
-
-      <!-- STATUS -->
 
       <div class="section">
 
         <div class="section-head">
 
-          <div class="section-icon">
-            ⚙️
-          </div>
+          <div class="section-icon">⚙️</div>
 
           <div>
 
-            <h3>
-              Quiz Status
-            </h3>
+            <h3>Quiz Status</h3>
 
             <div class="muted">
               Quiz প্রকাশ ও Registration নিয়ন্ত্রণ করুন।
@@ -1295,20 +1140,11 @@ select option{
 
         <div class="field">
 
-          <label>
-            Registration Status
-          </label>
+          <label>Registration Status</label>
 
           <select id="registrationOpen">
-
-            <option value="true">
-              Open
-            </option>
-
-            <option value="false">
-              Closed
-            </option>
-
+            <option value="true">Open</option>
+            <option value="false">Closed</option>
           </select>
 
         </div>
@@ -1316,9 +1152,7 @@ select option{
 
         <div class="field">
 
-          <label>
-            Quiz Status
-          </label>
+          <label>Quiz Status</label>
 
           <select id="status">
 
@@ -1341,8 +1175,6 @@ select option{
       </div>
 
 
-      <!-- BUTTON -->
-
       <div class="button-row">
 
         <button
@@ -1364,8 +1196,6 @@ select option{
     </section>
 
 
-    <!-- LIST -->
-
     <section
       class="card"
       style="margin-top:20px"
@@ -1373,15 +1203,11 @@ select option{
 
       <div class="section-head">
 
-        <div class="section-icon">
-          📋
-        </div>
+        <div class="section-icon">📋</div>
 
         <div>
 
-          <h3>
-            Quiz তালিকা
-          </h3>
+          <h3>Quiz তালিকা</h3>
 
           <div class="muted">
             তৈরি করা সব Quiz এখান থেকে Edit করতে পারবেন।
@@ -1416,13 +1242,11 @@ import {
   db
 } from "./firebase-config.js";
 
-
 import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
 
 import {
   collection,
@@ -1435,57 +1259,31 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================
-   ELEMENT HELPER
-========================= */
-
 const $ = id =>
   document.getElementById(id);
 
-
-/* =========================
-   STATE
-========================= */
 
 let currentUser = null;
 let editingQuizId = null;
 let categories = [];
 
 
-/* =========================
-   TOAST
-========================= */
+function toast(message,type="success"){
 
-function toast(
-  message,
-  type = "success"
-){
+  const box = $("toast");
 
-  const box =
-    $("toast");
-
-  box.textContent =
-    message;
+  box.textContent = message;
 
   box.className =
     "toast show " +
-    (type === "error"
-      ? "error"
-      : "");
+    (type === "error" ? "error" : "");
 
   setTimeout(() => {
-
-    box.className =
-      "toast";
-
+    box.className = "toast";
   },3000);
 
 }
 
-
-/* =========================
-   ADMIN CHECK
-========================= */
 
 async function isAdmin(user){
 
@@ -1495,30 +1293,22 @@ async function isAdmin(user){
 
   const snap =
     await getDoc(
-      doc(
-        db,
-        "profiles",
-        user.uid
-      )
+      doc(db,"profiles",user.uid)
     );
 
   if(!snap.exists()){
     return false;
   }
 
-  const profile =
-    snap.data();
+  const profile = snap.data();
 
   return (
     profile.role === "admin" &&
     profile.is_active === true
   );
+
 }
 
-
-/* =========================
-   LOGIN
-========================= */
 
 $("loginBtn").addEventListener(
   "click",
@@ -1540,13 +1330,8 @@ $("loginBtn").addEventListener(
       return;
     }
 
-
-    $("loginBtn").disabled =
-      true;
-
-    $("loginBtn").textContent =
-      "লগইন হচ্ছে...";
-
+    $("loginBtn").disabled = true;
+    $("loginBtn").textContent = "লগইন হচ্ছে...";
 
     try{
 
@@ -1557,12 +1342,8 @@ $("loginBtn").addEventListener(
           password
         );
 
-
       const admin =
-        await isAdmin(
-          result.user
-        );
-
+        await isAdmin(result.user);
 
       if(!admin){
 
@@ -1574,11 +1355,7 @@ $("loginBtn").addEventListener(
 
       }
 
-
-      toast(
-        "এডমিন লগইন সফল হয়েছে।"
-      );
-
+      toast("এডমিন লগইন সফল হয়েছে।");
 
     }catch(error){
 
@@ -1592,11 +1369,8 @@ $("loginBtn").addEventListener(
 
     }finally{
 
-      $("loginBtn").disabled =
-        false;
-
-      $("loginBtn").textContent =
-        "🔐 এডমিন লগইন";
+      $("loginBtn").disabled = false;
+      $("loginBtn").textContent = "🔐 এডমিন লগইন";
 
     }
 
@@ -1604,19 +1378,11 @@ $("loginBtn").addEventListener(
 );
 
 
-/* =========================
-   LOGOUT
-========================= */
-
 $("logoutBtn").addEventListener(
   "click",
   () => signOut(auth)
 );
 
-
-/* =========================
-   AUTH STATE
-========================= */
 
 onAuthStateChanged(
   auth,
@@ -1637,24 +1403,18 @@ onAuthStateChanged(
       return;
     }
 
-
     try{
 
       const admin =
         await isAdmin(user);
 
-
       if(!admin){
 
         await signOut(auth);
-
         return;
       }
 
-
-      currentUser =
-        user;
-
+      currentUser = user;
 
       $("loginScreen")
         .classList
@@ -1664,11 +1424,8 @@ onAuthStateChanged(
         .classList
         .remove("hidden");
 
-
       await loadCategories();
-
       await loadQuizzes();
-
 
     }catch(error){
 
@@ -1686,76 +1443,215 @@ onAuthStateChanged(
 
 
 /* =========================
+   CATEGORY MANAGEMENT LINK
+========================= */
+
+$("categoryManageBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    window.location.href =
+      "category-management.html";
+
+  }
+);
+
+
+$("reloadCategoryBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    await loadCategories();
+
+  }
+);
+
+
+/* =========================
    LOAD CATEGORIES
 ========================= */
 
 async function loadCategories(){
 
-  const snap =
-    await getDocs(
-      collection(
-        db,
-        "quiz_categories"
-      )
-    );
+  const status =
+    $("categoryStatus");
 
+  const tools =
+    $("categoryTools");
 
-  categories =
-    snap.docs.map(
-      item => ({
+  status.textContent =
+    "Category লোড হচ্ছে...";
+
+  status.className =
+    "category-status";
+
+  tools.classList.add("hidden");
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "quiz_categories"
+        )
+      );
+
+    categories =
+      snap.docs
+      .map(item => ({
         id:item.id,
         ...item.data()
-      })
+      }))
+      .filter(category =>
+        category.is_active !== false
+      );
+
+
+    categories.sort(
+      (a,b) => {
+
+        const groupA =
+          Number(
+            a.group_order ??
+            999
+          );
+
+        const groupB =
+          Number(
+            b.group_order ??
+            999
+          );
+
+        if(groupA !== groupB){
+          return groupA - groupB;
+        }
+
+        const orderA =
+          Number(
+            a.sort_order ??
+            a.display_order ??
+            999
+          );
+
+        const orderB =
+          Number(
+            b.sort_order ??
+            b.display_order ??
+            999
+          );
+
+        if(orderA !== orderB){
+          return orderA - orderB;
+        }
+
+        return String(
+          a.name ||
+          a.title ||
+          ""
+        ).localeCompare(
+          String(
+            b.name ||
+            b.title ||
+            ""
+          ),
+          "bn"
+        );
+
+      }
     );
 
 
-  categories.sort(
-    (a,b) =>
-      String(
-        a.name ||
-        a.title ||
-        ""
-      ).localeCompare(
-        String(
-          b.name ||
-          b.title ||
-          ""
-        ),
-        "bn"
-      )
-  );
+    const select =
+      $("category");
+
+    select.innerHTML =
+      `
+      <option value="">
+        Category নির্বাচন করুন
+      </option>
+      `;
 
 
-  $("category").innerHTML =
-    `
-    <option value="">
-      Category নির্বাচন করুন
-    </option>
-    `;
+    categories.forEach(
+      category => {
+
+        const name =
+          category.name ||
+          category.title ||
+          category.category_name ||
+          "Category";
 
 
-  categories.forEach(
-    category => {
+        const option =
+          document.createElement("option");
 
-      const option =
-        document.createElement(
-          "option"
-        );
+        option.value =
+          category.id;
 
-      option.value =
-        category.id;
+        option.textContent =
+          category.icon
+            ? `${category.icon} ${name}`
+            : name;
 
-      option.textContent =
-        category.name ||
-        category.title ||
-        "Category";
+        select.appendChild(option);
+
+      }
+    );
 
 
-      $("category")
-        .appendChild(option);
+    if(categories.length){
+
+      status.textContent =
+        `${categories.length}টি Active Category পাওয়া গেছে।`;
+
+      status.className =
+        "category-status ready";
+
+      tools.classList.remove("hidden");
+
+    }else{
+
+      status.textContent =
+        "কোনো Active Category পাওয়া যায়নি। আগে Category তৈরি করুন।";
+
+      status.className =
+        "category-status empty";
+
+      tools.classList.remove("hidden");
 
     }
-  );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    categories = [];
+
+    $("category").innerHTML =
+      `
+      <option value="">
+        Category লোড করা যায়নি
+      </option>
+      `;
+
+    status.textContent =
+      "Category লোড করা যায়নি। Firebase Rules বা Collection পরীক্ষা করুন।";
+
+    status.className =
+      "category-status empty";
+
+    tools.classList.remove("hidden");
+
+    toast(
+      "Category লোড করতে সমস্যা হয়েছে।",
+      "error"
+    );
+
+  }
 
 }
 
@@ -1792,25 +1688,20 @@ function toLocalDateTime(value){
     return "";
   }
 
-
   let date;
-
 
   if(
     typeof value === "object" &&
     typeof value.toDate === "function"
   ){
 
-    date =
-      value.toDate();
+    date = value.toDate();
 
   }else{
 
-    date =
-      new Date(value);
+    date = new Date(value);
 
   }
-
 
   if(
     Number.isNaN(
@@ -1820,12 +1711,10 @@ function toLocalDateTime(value){
     return "";
   }
 
-
   const pad =
     number =>
       String(number)
       .padStart(2,"0");
-
 
   return (
     date.getFullYear() +
@@ -1848,29 +1737,12 @@ function toLocalDateTime(value){
 
 function escapeHTML(value){
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
@@ -1889,7 +1761,6 @@ $("inspiration")
       .value
       .trim();
 
-
     $("inspirationPreview")
       .textContent =
       value ||
@@ -1905,61 +1776,41 @@ $("inspiration")
 
 function resetForm(){
 
-  editingQuizId =
-    null;
+  editingQuizId = null;
 
+  $("title").value = "";
 
-  $("title").value =
-    "";
+  $("category").value = "";
 
-  $("category").value =
-    "";
+  $("image").value = "";
 
-  $("image").value =
-    "";
+  $("fee").value = "0";
 
-  $("fee").value =
-    "0";
+  $("regStart").value = "";
 
-  $("regStart").value =
-    "";
+  $("regEnd").value = "";
 
-  $("regEnd").value =
-    "";
+  $("examStart").value = "";
 
-  $("examStart").value =
-    "";
+  $("examEnd").value = "";
 
-  $("examEnd").value =
-    "";
+  $("duration").value = "20";
 
-  $("duration").value =
-    "20";
+  $("defaultTimer").value = "30";
 
-  $("defaultTimer").value =
-    "30";
+  $("questionCount").value = "20";
 
-  $("questionCount").value =
-    "20";
+  $("totalMarks").value = "20";
 
-  $("totalMarks").value =
-    "20";
+  $("passing").value = "8";
 
-  $("passing").value =
-    "8";
+  $("negative").value = "0.25";
 
-  $("negative").value =
-    "0.25";
+  $("prize").value = "";
 
-  $("prize").value =
-    "";
+  $("maxParticipants").value = "";
 
-  $("maxParticipants").value =
-    "";
-
-  $("description").value =
-    "";
-
+  $("description").value = "";
 
   $("rules").value =
 `১. পরীক্ষার আগে সকল নিয়ম ভালোভাবে পড়ে নিন।
@@ -1968,53 +1819,34 @@ function resetForm(){
 ৪. পরীক্ষা চলাকালে অন্য Tab বা Window-এ যাওয়া থেকে বিরত থাকুন।
 ৫. পরীক্ষা শেষ হলে ফলাফল নির্ধারিত নিয়ম অনুযায়ী প্রকাশ করা হবে।`;
 
-
   $("inspiration").value =
 `🌙 জ্ঞান অর্জনের প্রতিটি মুহূর্তই একটি সুন্দর আমানত।
 মনোযোগ দিয়ে পরীক্ষা দিন এবং সততার সঙ্গে নিজের জ্ঞান যাচাই করুন।
 জ্ঞানতরঙ্গ — শিখি · জানি · এগিয়ে যাই।`;
 
-
-  $("inspirationPreview")
-    .textContent =
+  $("inspirationPreview").textContent =
     $("inspiration").value;
 
+  $("instructions").value = "";
 
-  $("instructions").value =
-    "";
+  $("randomQuestions").value = "true";
 
+  $("randomOptions").value = "true";
 
-  $("randomQuestions").value =
-    "true";
+  $("trackTab").value = "true";
 
-  $("randomOptions").value =
-    "true";
+  $("trackCopy").value = "true";
 
-  $("trackTab").value =
-    "true";
+  $("requireFullscreen").value = "false";
 
-  $("trackCopy").value =
-    "true";
+  $("warningLimit").value = "5";
 
-  $("requireFullscreen").value =
-    "false";
+  $("registrationOpen").value = "true";
 
-  $("warningLimit").value =
-    "5";
-
-
-  $("registrationOpen").value =
-    "true";
-
-  $("status").value =
-    "published";
+  $("status").value = "published";
 
 }
 
-
-/* =========================
-   NEW BUTTON
-========================= */
 
 $("newBtn").addEventListener(
   "click",
@@ -2046,11 +1878,9 @@ $("saveBtn").addEventListener(
         .value
         .trim();
 
-
       const categoryId =
         $("category")
         .value;
-
 
       if(!title){
 
@@ -2061,7 +1891,6 @@ $("saveBtn").addEventListener(
 
         return;
       }
-
 
       if(!categoryId){
 
@@ -2074,24 +1903,44 @@ $("saveBtn").addEventListener(
       }
 
 
-      const questionCount =
-        Number(
-          $("questionCount")
-          .value || 20
+      const selectedCategory =
+        categories.find(
+          category =>
+            category.id === categoryId
         );
 
+
+      if(!selectedCategory){
+
+        toast(
+          "নির্বাচিত Category পাওয়া যায়নি। আবার Category লোড করুন।",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const categoryName =
+        selectedCategory.name ||
+        selectedCategory.title ||
+        selectedCategory.category_name ||
+        "Category";
+
+
+      const questionCount =
+        Number(
+          $("questionCount").value || 20
+        );
 
       const duration =
         Number(
-          $("duration")
-          .value || 20
+          $("duration").value || 20
         );
-
 
       const defaultTimer =
         Number(
-          $("defaultTimer")
-          .value || 30
+          $("defaultTimer").value || 30
         );
 
 
@@ -2124,6 +1973,9 @@ $("saveBtn").addEventListener(
         category_id:
           categoryId,
 
+        category_name:
+          categoryName,
+
         image_url:
           $("image")
           .value
@@ -2133,7 +1985,6 @@ $("saveBtn").addEventListener(
           Number(
             $("fee").value || 0
           ),
-
 
         registration_start:
           toISO(
@@ -2145,7 +1996,6 @@ $("saveBtn").addEventListener(
             $("regEnd").value
           ),
 
-
         start_at:
           toISO(
             $("examStart").value
@@ -2156,97 +2006,69 @@ $("saveBtn").addEventListener(
             $("examEnd").value
           ),
 
-
         duration_minutes:
           duration,
 
-
         question_count:
           questionCount,
-
 
         total_marks:
           Number(
             $("totalMarks").value || 0
           ),
 
-
         passing_marks:
           Number(
             $("passing").value || 0
           ),
-
 
         negative_marking:
           Number(
             $("negative").value || 0
           ),
 
-
         prize:
           $("prize")
           .value
           .trim(),
 
-
         maximum_participants:
-          $("maxParticipants")
-          .value
-          ? Number(
-              $("maxParticipants").value
-            )
-          : null,
-
+          $("maxParticipants").value
+            ? Number(
+                $("maxParticipants").value
+              )
+            : null,
 
         description:
           $("description")
           .value
           .trim(),
 
-
-        /* পরীক্ষার নিয়ম */
-
         exam_rules:
           $("rules")
           .value
           .trim(),
-
-
-        /* অনুপ্রেরণামূলক কথা */
 
         inspiration:
           $("inspiration")
           .value
           .trim(),
 
-
-        /* অতিরিক্ত নির্দেশনা */
-
         instructions:
           $("instructions")
           .value
           .trim(),
 
-
-        /* Default question timer */
-
         default_question_time_seconds:
           defaultTimer,
-
-
-        /* Randomization */
 
         random_questions:
           $("randomQuestions")
           .value === "true",
 
-
         random_options:
           $("randomOptions")
           .value === "true",
-
-
-        /* Anti-cheat */
 
         anti_cheat:{
 
@@ -2264,26 +2086,21 @@ $("saveBtn").addEventListener(
 
           warning_limit:
             Number(
-              $("warningLimit")
-              .value || 5
+              $("warningLimit").value || 5
             )
 
         },
-
 
         registration_open:
           $("registrationOpen")
           .value === "true",
 
-
         status:
           $("status")
           .value,
 
-
         updated_at:
           serverTimestamp(),
-
 
         updated_by:
           currentUser.uid
@@ -2291,13 +2108,9 @@ $("saveBtn").addEventListener(
       };
 
 
-      $("saveBtn")
-        .disabled =
-        true;
+      $("saveBtn").disabled = true;
 
-
-      $("saveBtn")
-        .textContent =
+      $("saveBtn").textContent =
         "Save হচ্ছে...";
 
 
@@ -2315,7 +2128,6 @@ $("saveBtn").addEventListener(
           }
         );
 
-
         toast(
           "Quiz সফলভাবে আপডেট হয়েছে।"
         );
@@ -2328,7 +2140,6 @@ $("saveBtn").addEventListener(
         data.created_by =
           currentUser.uid;
 
-
         await addDoc(
           collection(
             db,
@@ -2336,7 +2147,6 @@ $("saveBtn").addEventListener(
           ),
           data
         );
-
 
         toast(
           "নতুন Quiz সফলভাবে তৈরি হয়েছে।"
@@ -2348,7 +2158,6 @@ $("saveBtn").addEventListener(
       resetForm();
 
       await loadQuizzes();
-
 
     }catch(error){
 
@@ -2362,12 +2171,9 @@ $("saveBtn").addEventListener(
 
     }finally{
 
-      $("saveBtn")
-        .disabled =
-        false;
+      $("saveBtn").disabled = false;
 
-      $("saveBtn")
-        .textContent =
+      $("saveBtn").textContent =
         "💾 Quiz Save করুন";
 
     }
@@ -2385,12 +2191,12 @@ async function loadQuizzes(){
   const list =
     $("quizList");
 
-
   list.innerHTML =
-    `<div class="muted">
+    `
+    <div class="muted">
       Quiz লোড হচ্ছে...
-    </div>`;
-
+    </div>
+    `;
 
   try{
 
@@ -2401,7 +2207,6 @@ async function loadQuizzes(){
           "quizzes"
         )
       );
-
 
     const quizzes =
       snap.docs.map(
@@ -2428,9 +2233,11 @@ async function loadQuizzes(){
     if(!quizzes.length){
 
       list.innerHTML =
-        `<div class="muted">
+        `
+        <div class="muted">
           এখনো কোনো Quiz তৈরি করা হয়নি।
-        </div>`;
+        </div>
+        `;
 
       return;
     }
@@ -2451,6 +2258,7 @@ async function loadQuizzes(){
           const categoryName =
             category?.name ||
             category?.title ||
+            quiz.category_name ||
             "Category";
 
 
@@ -2538,9 +2346,7 @@ async function loadQuizzes(){
 
 
     document
-      .querySelectorAll(
-        ".editQuizBtn"
-      )
+      .querySelectorAll(".editQuizBtn")
       .forEach(
         button => {
 
@@ -2561,9 +2367,11 @@ async function loadQuizzes(){
     console.error(error);
 
     list.innerHTML =
-      `<div class="muted">
+      `
+      <div class="muted">
         Quiz লোড করা যায়নি।
-      </div>`;
+      </div>
+      `;
 
   }
 
@@ -2611,8 +2419,62 @@ async function editQuiz(id){
       quiz.title || "";
 
 
+    /*
+      Category:
+      নতুন schema:
+      category_id
+      পুরোনো fallback:
+      category
+      categoryId
+    */
+
+    const oldCategoryId =
+      quiz.category_id ||
+      quiz.category ||
+      quiz.categoryId ||
+      "";
+
+
     $("category").value =
-      quiz.category_id || "";
+      oldCategoryId;
+
+
+    /*
+      যদি category_id পুরোনো Quiz-এ থাকে
+      কিন্তু বর্তমানে active list-এ না থাকে,
+      তাহলে সাময়িকভাবে option যোগ করা হবে।
+    */
+
+    if(
+      oldCategoryId &&
+      !$("category").querySelector(
+        `option[value="${CSS.escape(oldCategoryId)}"]`
+      )
+    ){
+
+      const oldCategoryName =
+        quiz.category_name ||
+        quiz.categoryName ||
+        "আগের Category";
+
+
+      const oldOption =
+        document.createElement("option");
+
+      oldOption.value =
+        oldCategoryId;
+
+      oldOption.textContent =
+        oldCategoryName +
+        " (আগের Category)";
+
+      $("category")
+        .appendChild(oldOption);
+
+      $("category").value =
+        oldCategoryId;
+
+    }
 
 
     $("image").value =
@@ -2620,8 +2482,7 @@ async function editQuiz(id){
 
 
     $("fee").value =
-      quiz.registration_fee ??
-      0;
+      quiz.registration_fee ?? 0;
 
 
     $("regStart").value =
@@ -2649,8 +2510,7 @@ async function editQuiz(id){
 
 
     $("duration").value =
-      quiz.duration_minutes ??
-      20;
+      quiz.duration_minutes ?? 20;
 
 
     $("defaultTimer").value =
@@ -2661,23 +2521,19 @@ async function editQuiz(id){
 
 
     $("questionCount").value =
-      quiz.question_count ??
-      20;
+      quiz.question_count ?? 20;
 
 
     $("totalMarks").value =
-      quiz.total_marks ??
-      20;
+      quiz.total_marks ?? 20;
 
 
     $("passing").value =
-      quiz.passing_marks ??
-      8;
+      quiz.passing_marks ?? 8;
 
 
     $("negative").value =
-      quiz.negative_marking ??
-      0.25;
+      quiz.negative_marking ?? 0.25;
 
 
     $("prize").value =
@@ -2685,13 +2541,11 @@ async function editQuiz(id){
 
 
     $("maxParticipants").value =
-      quiz.maximum_participants ??
-      "";
+      quiz.maximum_participants ?? "";
 
 
     $("description").value =
-      quiz.description ||
-      "";
+      quiz.description || "";
 
 
     $("rules").value =
@@ -2709,8 +2563,7 @@ async function editQuiz(id){
 
 
     $("instructions").value =
-      quiz.instructions ||
-      "";
+      quiz.instructions || "";
 
 
     $("randomQuestions").value =
@@ -2726,8 +2579,7 @@ async function editQuiz(id){
 
 
     const anti =
-      quiz.anti_cheat ||
-      {};
+      quiz.anti_cheat || {};
 
 
     $("trackTab").value =
@@ -2749,8 +2601,7 @@ async function editQuiz(id){
 
 
     $("warningLimit").value =
-      anti.warning_limit ||
-      5;
+      anti.warning_limit || 5;
 
 
     $("registrationOpen").value =
@@ -2760,8 +2611,7 @@ async function editQuiz(id){
 
 
     $("status").value =
-      quiz.status ||
-      "published";
+      quiz.status || "published";
 
 
     $("inspirationPreview")
