@@ -29,7 +29,7 @@ body{font-family:"Noto Sans Bengali","Noto Sans",Arial,sans-serif;background:rad
 <div class="container">
   <div class="topbar">
     <div class="brand">
-      <img src="file_0000000031b8821193be8a110779a350.png" alt="জ্ঞানতরঙ্গ" onerror="this.style.display='none'">
+      <img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ" onerror="this.style.display='none'">
       <div><h1>জ্ঞানতরঙ্গ</h1><p>শিখি · জানি · এগিয়ে যাই</p></div>
     </div>
     <a class="back" href="admin.html">← Admin Panel</a>
@@ -73,11 +73,15 @@ async function isAdmin(user){
   return String(p.role||"").toLowerCase()==="admin" && p.is_active===true;
 }
 
+const initialRoll=new URLSearchParams(location.search).get("roll")?.trim()||"";
+if(initialRoll){$("rollInput").value=initialRoll}
+
 onAuthStateChanged(auth,async user=>{
   if(!user){showMessage("⚠️ Admin হিসেবে আগে লগইন করুন।");$("searchBtn").disabled=true;return;}
   try{
     if(!(await isAdmin(user))){showMessage("⚠️ আপনার Admin অনুমতি নেই।");$("searchBtn").disabled=true;return;}
     currentUser=user;
+    if(initialRoll){await searchAnswers()}
   }catch(e){console.error(e);showMessage("Admin যাচাই করা যায়নি। আবার চেষ্টা করুন।");$("searchBtn").disabled=true;}
 });
 
@@ -141,7 +145,7 @@ async function searchAnswers(){
       const qs=questionsMap.get(a.quiz_id)||[];
       const ans=Array.isArray(a.answers)?a.answers:[];
       html+=`<div class="attempt">
-        <div class="attempt-head"><div><h3>${esc(quiz.title||quiz.quiz_name||"কুইজ")}</h3><div class="meta">জমা: ${esc(dateText(a.submitted_at))} · সময়: ${esc(duration(a.time_taken_seconds))} · প্রশ্ন: ${qs.length||a.total_questions||ans.length}</div></div><span class="status">${esc(a.status||"submitted")}</span></div>
+        <div class="attempt-head"><div><h3>${esc(quiz.title||quiz.quiz_name||"কুইজ")}</h3><div class="meta">জমা: ${esc(dateText(a.submitted_at))} · সময়: ${esc(duration(a.time_taken_seconds))} · প্রশ্ন: ${qs.length||a.total_questions||ans.length} · স্কোর: ${esc(a.score ?? "—")} · সঠিক: ${esc(a.correct ?? 0)} · ভুল: ${esc(a.wrong ?? 0)} · উত্তরহীন: ${esc(a.unanswered ?? 0)}</div></div><span class="status">${esc(a.status||"submitted")}</span></div>
         <div class="table-wrap"><table class="answers"><thead><tr><th>#</th><th>প্রশ্ন</th><th>শিক্ষার্থী যে উত্তর দিয়েছে</th><th>সঠিক উত্তর</th><th>অবস্থা</th><th>নম্বর</th></tr></thead><tbody>`;
       if(!qs.length){html+='<tr><td colspan="6" class="empty">এই কুইজের প্রশ্নের রেকর্ড পাওয়া যায়নি।</td></tr>'}
       qs.forEach((q,i)=>{
