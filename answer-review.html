@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>উত্তরপত্র যাচাই | জ্ঞানতরঙ্গ</title>
+<style>
+:root{--bg:#060817;--card:#10142b;--card2:#151a36;--purple:#8b3dff;--pink:#ec3fa7;--green:#2fd68a;--gold:#ffb21c;--red:#ff4d6d;--text:#fff;--muted:#aeb5d6;--border:rgba(255,255,255,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans Bengali","Noto Sans",Arial,sans-serif;background:radial-gradient(circle at top right,rgba(139,61,255,.18),transparent 35%),radial-gradient(circle at bottom left,rgba(236,63,167,.10),transparent 35%),var(--bg);color:var(--text);min-height:100vh}
+.container{width:min(1180px,94%);margin:auto;padding:22px 0 60px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:11px}.brand img{width:45px;height:45px;object-fit:contain;border-radius:12px}.brand h1{font-size:21px}.brand p{font-size:11px;color:var(--muted)}
+.back{border:1px solid var(--border);background:#11162d;color:#fff;padding:10px 14px;border-radius:11px;text-decoration:none;font-weight:700}
+.hero,.card{background:linear-gradient(145deg,rgba(16,20,43,.98),rgba(11,15,34,.98));border:1px solid var(--border);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+.hero{padding:25px;margin-bottom:18px}.hero h2{font-size:25px;margin-bottom:7px}.hero p{color:var(--muted);line-height:1.7}
+.search{display:flex;gap:10px;margin-top:20px}.search input{flex:1;min-width:0;padding:14px;border:1px solid var(--border);background:#080c20;color:#fff;border-radius:13px;outline:none;font-size:15px}.search input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(139,61,255,.12)}
+.btn{border:0;border-radius:13px;padding:13px 18px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--purple),var(--pink))}.btn:disabled{opacity:.55;cursor:not-allowed}
+.message{display:none;margin-top:12px;padding:12px 14px;border-radius:12px;color:#ffd66b;background:rgba(255,178,28,.08);border:1px solid rgba(255,178,28,.2);line-height:1.6}.message.show{display:block}
+.card{padding:20px;margin-top:18px}.student-head{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.info{background:#0b0f24;border:1px solid var(--border);border-radius:15px;padding:14px}.info small{display:block;color:var(--muted);margin-bottom:4px}.info b{font-size:16px}
+.attempt{border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:18px;background:#0b0f24}.attempt-head{padding:16px;background:linear-gradient(135deg,rgba(139,61,255,.12),rgba(236,63,167,.06));border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.attempt-head h3{font-size:17px}.meta{color:var(--muted);font-size:12px;line-height:1.7}.status{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;background:rgba(47,214,138,.1);color:#75efb1;border:1px solid rgba(47,214,138,.2)}
+.table-wrap{overflow:auto}.answers{width:100%;border-collapse:collapse;min-width:900px}.answers th,.answers td{padding:12px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;font-size:13px}.answers th{color:#dfe3ff;background:#10142b;position:sticky;top:0;z-index:1}.qtext{min-width:250px;max-width:360px;line-height:1.6}.answer-box{padding:8px 10px;border-radius:9px;line-height:1.5}.selected{background:rgba(139,61,255,.13);border:1px solid rgba(139,61,255,.25)}.correct{background:rgba(47,214,138,.10);border:1px solid rgba(47,214,138,.23)}.wrong{background:rgba(255,77,109,.09);border:1px solid rgba(255,77,109,.22)}.unanswered{background:rgba(255,178,28,.08);border:1px solid rgba(255,178,28,.2);color:#ffd66b}.muted{color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:45px 15px}.loading{text-align:center;padding:25px;color:var(--muted)}
+@media(max-width:800px){.student-head{grid-template-columns:repeat(2,1fr)}.search{flex-direction:column}.btn{width:100%}.hero h2{font-size:21px}}
+@media(max-width:500px){.container{width:92%;padding-top:14px}.brand h1{font-size:18px}.brand p{display:none}.hero{padding:18px}.card{padding:14px}.student-head{gap:8px}.info{padding:11px}.info b{font-size:14px}.back{padding:8px 10px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="brand">
+      <img src="file_0000000031b8821193be8a110779a350.png" alt="জ্ঞানতরঙ্গ" onerror="this.style.display='none'">
+      <div><h1>জ্ঞানতরঙ্গ</h1><p>শিখি · জানি · এগিয়ে যাই</p></div>
+    </div>
+    <a class="back" href="admin.html">← Admin Panel</a>
+  </div>
+
+  <section class="hero">
+    <h2>🗂️ উত্তরপত্র যাচাই</h2>
+    <p>অভিযোগ বা যাচাইয়ের প্রয়োজন হলে শুধু Quiz Roll Number দিয়ে শিক্ষার্থীর জমা দেওয়া উত্তরগুলো দেখুন। এই অংশটি রেজাল্ট থেকে আলাদা রাখা হয়েছে।</p>
+    <div class="search">
+      <input id="rollInput" type="search" placeholder="Quiz Roll Number লিখুন" autocomplete="off">
+      <button id="searchBtn" class="btn">🔎 উত্তর খুঁজুন</button>
+    </div>
+    <div id="message" class="message"></div>
+  </section>
+
+  <section id="resultArea" class="card" style="display:none"></section>
+</div>
+
+<script type="module">
+import {auth,db} from "./firebase-config.js";
+import {onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import {collection,doc,getDoc,getDocs,query,where} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const $=id=>document.getElementById(id);
+let currentUser=null;
+const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function dateValue(v){if(!v)return null;if(v.toDate)return v.toDate();const d=new Date(v);return Number.isNaN(d.getTime())?null:d}
+function dateText(v){const d=dateValue(v);return d?d.toLocaleString("bn-BD",{timeZone:"Asia/Dhaka",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—"}
+function duration(v){const n=Math.max(0,Number(v||0));const m=Math.floor(n/60),s=n%60;return `${m} মিনিট ${String(s).padStart(2,"0")} সেকেন্ড`}
+function showMessage(t){$("message").textContent=t;$("message").classList.add("show")}
+function clearMessage(){$("message").textContent="";$("message").classList.remove("show")}
+function normalizeKey(v){return String(v??"").trim().toUpperCase()}
+function optionText(q,key){const k=normalizeKey(key);const map={A:q.option_a??q.a,B:q.option_b??q.b,C:q.option_c??q.c,D:q.option_d??q.d};return map[k]??(key||"")}
+function correctKey(q){return normalizeKey(q.correct_answer??q.correct_option??q.answer??q.correctAnswer??q.right_answer)}
+function answerState(selected,correct){if(!selected)return "unanswered";const sk=normalizeKey(selected),ck=correctKey({correct_answer:correct});if(sk===ck)return "correct";if(String(selected).trim()===String(correct).trim())return "correct";return "wrong"}
+
+async function isAdmin(user){
+  const snap=await getDoc(doc(db,"profiles",user.uid));
+  if(!snap.exists())return false;
+  const p=snap.data();
+  return String(p.role||"").toLowerCase()==="admin" && p.is_active===true;
+}
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){showMessage("⚠️ Admin হিসেবে আগে লগইন করুন।");$("searchBtn").disabled=true;return;}
+  try{
+    if(!(await isAdmin(user))){showMessage("⚠️ আপনার Admin অনুমতি নেই।");$("searchBtn").disabled=true;return;}
+    currentUser=user;
+  }catch(e){console.error(e);showMessage("Admin যাচাই করা যায়নি। আবার চেষ্টা করুন।");$("searchBtn").disabled=true;}
+});
+
+$("rollInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("searchBtn").click()});
+$("searchBtn").addEventListener("click",searchAnswers);
+
+async function searchAnswers(){
+  clearMessage();
+  const roll=$("rollInput").value.trim();
+  if(!roll){showMessage("Quiz Roll Number লিখুন।");return;}
+  if(!currentUser){showMessage("Admin লগইন যাচাই হচ্ছে। একটু পরে আবার চেষ্টা করুন।");return;}
+  $("searchBtn").disabled=true;
+  $("resultArea").style.display="block";
+  $("resultArea").innerHTML='<div class="loading">⏳ উত্তরপত্র খোঁজা হচ্ছে...</div>';
+  try{
+    let attempts=[];
+    const direct=await getDocs(query(collection(db,"attempts"),where("roll_number","==",roll)));
+    direct.forEach(d=>attempts.push({id:d.id,...d.data()}));
+
+    if(!attempts.length){
+      const regs=await getDocs(query(collection(db,"quiz_registrations"),where("roll_number","==",roll)));
+      for(const r of regs.docs){
+        const q1=await getDocs(query(collection(db,"attempts"),where("registration_id","==",r.id)));
+        q1.forEach(d=>attempts.push({id:d.id,...d.data()}));
+      }
+    }
+
+    if(!attempts.length){
+      $("resultArea").innerHTML='<div class="empty">এই Roll Number-এর কোনো জমা দেওয়া উত্তর পাওয়া যায়নি।</div>';
+      return;
+    }
+
+    attempts.sort((a,b)=>{const da=dateValue(a.submitted_at)?.getTime()||0;const dbb=dateValue(b.submitted_at)?.getTime()||0;return dbb-da});
+
+    const first=attempts[0];
+    let profile={};
+    if(first.student_uid){const ps=await getDoc(doc(db,"profiles",first.student_uid));if(ps.exists())profile=ps.data()}
+
+    const quizzesMap=new Map();
+    const questionsMap=new Map();
+    for(const a of attempts){
+      if(!quizzesMap.has(a.quiz_id)){
+        const qs=await getDoc(doc(db,"quizzes",a.quiz_id));
+        quizzesMap.set(a.quiz_id,qs.exists()?{id:qs.id,...qs.data()}:{id:a.quiz_id});
+      }
+      const qSnap=await getDocs(query(collection(db,"exam_questions"),where("quiz_id","==",a.quiz_id)));
+      const qs=[];qSnap.forEach(d=>qs.push({id:d.id,...d.data()}));
+      qs.sort((x,y)=>Number(x.question_number??x.order??x.serial??999999)-Number(y.question_number??y.order??y.serial??999999));
+      questionsMap.set(a.quiz_id,qs);
+    }
+
+    let html=`<div class="student-head">
+      <div class="info"><small>শিক্ষার্থীর নাম</small><b>${esc(first.student_name||profile.full_name||"—")}</b></div>
+      <div class="info"><small>Quiz Roll Number</small><b>${esc(roll)}</b></div>
+      <div class="info"><small>Student ID</small><b>${esc(first.student_id||profile.student_id||"—")}</b></div>
+      <div class="info"><small>মোট পরীক্ষা</small><b>${attempts.length}</b></div>
+    </div>`;
+
+    for(const a of attempts){
+      const quiz=quizzesMap.get(a.quiz_id)||{};
+      const qs=questionsMap.get(a.quiz_id)||[];
+      const ans=Array.isArray(a.answers)?a.answers:[];
+      html+=`<div class="attempt">
+        <div class="attempt-head"><div><h3>${esc(quiz.title||quiz.quiz_name||"কুইজ")}</h3><div class="meta">জমা: ${esc(dateText(a.submitted_at))} · সময়: ${esc(duration(a.time_taken_seconds))} · প্রশ্ন: ${qs.length||a.total_questions||ans.length}</div></div><span class="status">${esc(a.status||"submitted")}</span></div>
+        <div class="table-wrap"><table class="answers"><thead><tr><th>#</th><th>প্রশ্ন</th><th>শিক্ষার্থী যে উত্তর দিয়েছে</th><th>সঠিক উত্তর</th><th>অবস্থা</th><th>নম্বর</th></tr></thead><tbody>`;
+      if(!qs.length){html+='<tr><td colspan="6" class="empty">এই কুইজের প্রশ্নের রেকর্ড পাওয়া যায়নি।</td></tr>'}
+      qs.forEach((q,i)=>{
+        const selected=ans[i]??null;const ck=correctKey(q);const state=answerState(selected,ck);const selectedLabel=selected?`${esc(normalizeKey(selected))}. ${esc(optionText(q,selected))}`:"উত্তর দেওয়া হয়নি";const correctLabel=ck?`${esc(ck)}. ${esc(optionText(q,ck))}`:"—";
+        const cls=state==="correct"?"correct":state==="wrong"?"wrong":"unanswered";
+        const stateText=state==="correct"?"সঠিক":state==="wrong"?"ভুল":"উত্তর নেই";
+        html+=`<tr><td>${i+1}</td><td class="qtext">${esc(q.question||q.question_text||"—")}</td><td><div class="answer-box ${state==="unanswered"?"unanswered":"selected"}">${selectedLabel}</div></td><td><div class="answer-box correct">${correctLabel}</div></td><td><span class="answer-box ${cls}">${stateText}</span></td><td>${Number(q.marks??quiz.marks_per_question??1)}</td></tr>`;
+      });
+      html+=`</tbody></table></div></div>`;
+    }
+    $("resultArea").innerHTML=html;
+  }catch(error){
+    console.error(error);
+    $("resultArea").innerHTML="";
+    showMessage("উত্তরপত্র লোড করতে সমস্যা হয়েছে। Firestore Rules ও ডেটা যাচাই করুন।");
+  }finally{$("searchBtn").disabled=false}
+}
+</script>
+</body>
+</html>
