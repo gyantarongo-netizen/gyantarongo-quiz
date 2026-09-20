@@ -98,26 +98,14 @@ select{
 }
 
 .logo-box{
-  width:42px;
-  height:42px;
-
-  border-radius:12px;
+  width:46px;
+  height:46px;
 
   overflow:hidden;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--pink)
-    );
 
   display:flex;
   align-items:center;
   justify-content:center;
-
-  box-shadow:
-    0 0 20px rgba(139,61,255,.30);
 }
 
 .logo-box img{
@@ -909,10 +897,82 @@ select{
     .primary-btn:disabled{opacity:.48;cursor:not-allowed;filter:grayscale(.25);}
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<style id="premium-ui">
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;vertical-align:-.2em}
+.ic-xl{width:56px;height:56px;stroke-width:1.4}
+.ic-av{width:28px;height:28px;stroke-width:1.7}
+.ic-spin{animation:icspin .9s linear infinite}
+@keyframes icspin{to{transform:rotate(360deg)}}
+
+.header{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(139,61,255,.18)}
+.back-btn{display:inline-flex;align-items:center;gap:7px}
+.page-title h1{letter-spacing:.2px}
+
+.auth-card,.profile-card,.quiz-card,.modal-box{
+  border:1px solid rgba(139,61,255,.22);
+  box-shadow:0 18px 50px rgba(0,0,0,.38),0 0 44px rgba(139,61,255,.08),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.quiz-card{transition:transform .25s,box-shadow .25s,border-color .25s}
+.quiz-card:hover{transform:translateY(-4px);border-color:rgba(236,63,167,.45);box-shadow:0 22px 55px rgba(0,0,0,.45),0 0 46px rgba(236,63,167,.16)}
+
+.tab-btn{display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.tab-btn.active{box-shadow:0 0 22px rgba(139,61,255,.25)}
+.primary-btn,.secondary-btn{display:flex;align-items:center;justify-content:center;gap:9px}
+.primary-btn{box-shadow:0 10px 32px rgba(236,63,167,.28),inset 0 1px 0 rgba(255,255,255,.22)}
+.primary-btn:hover:not(:disabled){box-shadow:0 14px 40px rgba(236,63,167,.4),inset 0 1px 0 rgba(255,255,255,.28)}
+.field input:focus,.field select:focus{border-color:rgba(236,63,167,.6);box-shadow:0 0 0 3px rgba(139,61,255,.18),0 0 22px rgba(139,61,255,.18)}
+.field input[readonly]{color:#cfd3e8}
+
+.avatar{box-shadow:0 0 26px rgba(139,61,255,.45)}
+.pi-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.pi-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
+.pi-k{display:flex;align-items:center;gap:9px;color:#b9a3ff;font-size:12.5px;white-space:nowrap}
+.pi-k .ic{width:17px;height:17px;color:#ec6fbf}
+.pi-v{color:#fff;font-weight:700;font-size:13px;text-align:right;word-break:break-word}
+@media(min-width:720px){.pi-grid{grid-template-columns:1fr 1fr}}
+.user-info{padding:12px;line-height:1.5}
+
+.section-heading h2{display:flex;align-items:center;gap:10px}
+.section-heading h2 .ic{color:#ec6fbf;width:24px;height:24px}
+.loading .ic{margin-right:8px;color:#b78bff}
+.empty .ic-xl{color:#8b7cc8;margin-bottom:8px}
+.quiz-image-placeholder{color:#b78bff}
+.info-label{display:flex;align-items:center;gap:6px}
+.info-label .ic{width:14px;height:14px;color:#b78bff}
+.payment-title,.modal-head h2{display:flex;align-items:center;gap:10px}
+.payment-title .ic,.modal-head h2 .ic{color:#ec6fbf}
+.modal-box .two-col{margin-bottom:0}
+
+.registration-status::before{content:"";width:8px;height:8px;border-radius:50%;margin-right:7px;background:currentColor;box-shadow:0 0 10px currentColor}
+.registration-status.ended{color:#aeb3c9;background:rgba(255,255,255,.05)}
+.registration-status.ended::before{background:#5b607a;box-shadow:none}
+.registration-status.unpublished::before{background:#fff;box-shadow:0 0 8px rgba(255,255,255,.6)}
+
+.message.show{display:flex;align-items:flex-start;gap:10px}
+.message.show::before{content:"";flex:0 0 20px;width:20px;height:20px;margin-top:1px;background:currentColor;
+  -webkit-mask:var(--msg-ic) center/contain no-repeat;mask:var(--msg-ic) center/contain no-repeat}
+.message.success{--msg-ic:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='m8.5 12.5 2.5 2.5 4.5-5'/></svg>")}
+.message.error{--msg-ic:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z'/><path d='M12 9v4M12 17h.01'/></svg>")}
+.message.info{--msg-ic:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5M12 8h.01'/></svg>")}
+
+.bottom-nav{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.bottom-link{transition:color .2s}
+.bottom-link span{display:flex;justify-content:center}
+.bottom-link span .ic{width:22px;height:22px;stroke-width:1.7}
+.bottom-link:hover,.bottom-link.active{color:#ff8dcc}
+
+@media(prefers-reduced-motion:reduce){.ic-spin{animation:none}.quiz-card{transition:none}}
+</style>
 </head>
 
 
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol><symbol id="ic-login" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></symbol><symbol id="ic-user-plus" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/></symbol><symbol id="ic-rocket" viewBox="0 0 24 24"><path d="M5 15c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9s-2.1-.8-2.9-.1z"/><path d="m12 15-3-3a22 22 0 0 1 2-4 12.9 12.9 0 0 1 11-6c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0"/><path d="M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></symbol><symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="ic-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol><symbol id="ic-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.7 4H7.3a2 2 0 0 0-1.8 1.1z"/></symbol><symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12h6M9 16h4"/></symbol><symbol id="ic-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol><symbol id="ic-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol><symbol id="ic-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol><symbol id="ic-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol><symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol><symbol id="ic-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="ic-trophy" viewBox="0 0 24 24"><path d="M6 4h12v5a6 6 0 0 1-12 0z"/><path d="M6 6H3v1a4 4 0 0 0 4 4M18 6h3v1a4 4 0 0 1-4 4"/><path d="M12 15v3M8 21h8M9 18h6"/></symbol><symbol id="ic-loader" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/></symbol><symbol id="ic-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol><symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="ic-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.2M12 17h.01"/></symbol><symbol id="ic-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol><symbol id="ic-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v3"/><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3"/><path d="M21 10v5h-5a2.5 2.5 0 0 1 0-5z"/></symbol><symbol id="ic-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol><symbol id="ic-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol><symbol id="ic-building" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h2a2 2 0 0 1 2 2v10M2 21h20M8 7h4M8 11h4M8 15h4"/></symbol><symbol id="ic-cap" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5M22 9v6"/></symbol><symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="ic-map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol><symbol id="ic-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h3"/></symbol></svg>
+
 
 
 <!-- HEADER -->
@@ -926,7 +986,7 @@ select{
       <div class="logo-box">
 
         <img
-          src="file_0000000031b8821193be8a110779a350.png"
+          src="gyantarongo-logo-transparent-1.png"
           alt="জ্ঞানতরঙ্গ">
 
       </div>
@@ -950,7 +1010,7 @@ select{
       href="index.html"
       class="back-btn">
 
-      ← হোম
+      <svg class="ic " aria-hidden="true"><use href="#ic-arrow-left"></use></svg> হোম
 
     </a>
 
@@ -997,7 +1057,7 @@ select{
         class="tab-btn active"
         onclick="showAuthTab('login')">
 
-        🔐 লগইন
+        <svg class="ic " aria-hidden="true"><use href="#ic-login"></use></svg>  লগইন
 
       </button>
 
@@ -1007,7 +1067,7 @@ select{
         class="tab-btn"
         onclick="showAuthTab('signup')">
 
-        📝 নতুন অ্যাকাউন্ট
+        <svg class="ic " aria-hidden="true"><use href="#ic-user-plus"></use></svg>  নতুন অ্যাকাউন্ট
 
       </button>
 
@@ -1057,7 +1117,7 @@ select{
         class="primary-btn"
         onclick="loginStudent()">
 
-        🔐 লগইন করুন
+        <svg class="ic " aria-hidden="true"><use href="#ic-login"></use></svg>  লগইন করুন
 
       </button>
 
@@ -1251,7 +1311,7 @@ select{
         class="primary-btn"
         onclick="signupStudent()">
 
-        🚀 অ্যাকাউন্ট তৈরি করুন
+        <svg class="ic " aria-hidden="true"><use href="#ic-rocket"></use></svg>  অ্যাকাউন্ট তৈরি করুন
 
       </button>
 
@@ -1273,7 +1333,7 @@ select{
       <div class="profile-head">
 
         <div class="avatar">
-          👤
+          <svg class="ic ic-av" aria-hidden="true"><use href="#ic-user"></use></svg>
         </div>
 
         <div>
@@ -1303,7 +1363,7 @@ select{
     <div class="section-heading">
 
       <h2>
-        📚 রেজিস্ট্রেশনের জন্য কুইজ
+        <svg class="ic " aria-hidden="true"><use href="#ic-book"></use></svg>  রেজিস্ট্রেশনের জন্য কুইজ
       </h2>
 
       <span>
@@ -1318,7 +1378,7 @@ select{
       id="quizLoading"
       class="loading">
 
-      ⏳ কুইজ লোড হচ্ছে...
+      <svg class="ic ic-spin" aria-hidden="true"><use href="#ic-loader"></use></svg>  কুইজ লোড হচ্ছে...
 
     </div>
 
@@ -1338,7 +1398,7 @@ select{
       <div
         style="font-size:42px;margin-bottom:10px;">
 
-        📭
+        <svg class="ic ic-xl" aria-hidden="true"><use href="#ic-inbox"></use></svg>
 
       </div>
 
@@ -1378,7 +1438,7 @@ select{
       <div>
 
         <h2>
-          📝 কুইজ রেজিস্ট্রেশন
+          <svg class="ic " aria-hidden="true"><use href="#ic-clipboard"></use></svg>  কুইজ রেজিস্ট্রেশন
         </h2>
 
         <p id="modalSubtitle">
@@ -1450,6 +1510,16 @@ select{
 
     </div>
 
+<div class="two-col">
+<div class="field"><label>Student ID</label><input id="regStudentId" type="text" readonly></div>
+<div class="field"><label>শ্রেণি</label><input id="regClass" type="text" readonly></div>
+</div>
+<div class="two-col">
+<div class="field"><label>জেলা</label><input id="regDistrict" type="text" readonly></div>
+<div class="field"><label>বিভাগ</label><input id="regDivision" type="text" readonly></div>
+</div>
+
+
 
 
     <!-- PAYMENT -->
@@ -1460,7 +1530,7 @@ select{
 
 
       <div class="payment-title">
-        💳 পেমেন্ট তথ্য
+        <svg class="ic " aria-hidden="true"><use href="#ic-card"></use></svg>  পেমেন্ট তথ্য
       </div>
 
 
@@ -1545,7 +1615,7 @@ select{
       class="primary-btn"
       onclick="confirmRegistration()">
 
-      ✅ রেজিস্ট্রেশন নিশ্চিত করুন
+      <svg class="ic " aria-hidden="true"><use href="#ic-check"></use></svg>  রেজিস্ট্রেশন নিশ্চিত করুন
 
     </button>
 
@@ -1576,7 +1646,7 @@ select{
       class="bottom-link">
 
       <span>
-        🏠
+        <svg class="ic " aria-hidden="true"><use href="#ic-home"></use></svg>
       </span>
 
       হোম
@@ -1589,7 +1659,7 @@ select{
       class="bottom-link">
 
       <span>
-        🚀
+        <svg class="ic " aria-hidden="true"><use href="#ic-target"></use></svg>
       </span>
 
       কুইজ
@@ -1602,7 +1672,7 @@ select{
       class="bottom-link">
 
       <span>
-        📚
+        <svg class="ic " aria-hidden="true"><use href="#ic-grid"></use></svg>
       </span>
 
       ক্যাটাগরি
@@ -1615,7 +1685,7 @@ select{
       class="bottom-link">
 
       <span>
-        🏆
+        <svg class="ic " aria-hidden="true"><use href="#ic-trophy"></use></svg>
       </span>
 
       ফলাফল
@@ -1628,7 +1698,7 @@ select{
       class="bottom-link">
 
       <span>
-        👤
+        <svg class="ic " aria-hidden="true"><use href="#ic-user"></use></svg>
       </span>
 
       প্রোফাইল
@@ -1686,6 +1756,14 @@ let selectedPaymentMethod = null;
    MESSAGE
 ========================= */
 
+
+const ICON = (n, c = "") => `<svg class="ic ${c}" aria-hidden="true"><use href="#ic-${n}"></use></svg>`;
+const plain = (t) => String(t).replace(/^(?:[\p{Extended_Pictographic}\uFE0F\u200D\s])+/u, "");
+function setBtn(btn, icon, text, state){
+  btn.innerHTML = ICON(icon, icon === "loader" ? "ic-spin" : "") + "<span>" + text + "</span>";
+  if(state){ btn.dataset.state = state; } else { delete btn.dataset.state; }
+}
+
 function showMessage(
   text,
   type = "info"
@@ -1696,8 +1774,7 @@ function showMessage(
       "message"
     );
 
-  box.textContent =
-    text;
+  box.textContent = plain(text);
 
   box.className =
     "message show " + type;
@@ -1715,8 +1792,7 @@ function showRegistrationMessage(
       "registrationMessage"
     );
 
-  box.textContent =
-    text;
+  box.textContent = plain(text);
 
   box.className =
     "message show " + type;
@@ -1843,8 +1919,7 @@ async function(){
   button.disabled =
     true;
 
-  button.textContent =
-    "⏳ লগইন হচ্ছে...";
+  setBtn(button, "loader", "লগইন হচ্ছে...");
 
 
   try{
@@ -1886,8 +1961,7 @@ async function(){
     button.disabled =
       false;
 
-    button.textContent =
-      "🔐 লগইন করুন";
+    setBtn(button, "login", "লগইন করুন");
 
   }
 
@@ -2027,8 +2101,7 @@ async function(){
   button.disabled =
     true;
 
-  button.textContent =
-    "⏳ অ্যাকাউন্ট তৈরি হচ্ছে...";
+  setBtn(button, "loader", "অ্যাকাউন্ট তৈরি হচ্ছে...");
 
 
   try{
@@ -2166,8 +2239,7 @@ async function(){
     button.disabled =
       false;
 
-    button.textContent =
-      "🚀 অ্যাকাউন্ট তৈরি করুন";
+    setBtn(button, "rocket", "অ্যাকাউন্ট তৈরি করুন");
 
   }
 
@@ -2354,60 +2426,22 @@ function showUserSection(){
     );
 
 
-  userInfo.innerHTML = `
-
-    <strong>নাম:</strong>
-    ${escapeHtml(
-      currentProfile.full_name || ""
-    )}
-    <br>
-
-    <strong>Student ID:</strong>
-    ${escapeHtml(
-      currentProfile.student_id || ""
-    )}
-    <br>
-
-    <strong>মোবাইল:</strong>
-    ${escapeHtml(
-      currentProfile.mobile || ""
-    )}
-    <br>
-
-    <strong>ইমেইল:</strong>
-    ${escapeHtml(
-      currentProfile.email || ""
-    )}
-    <br>
-
-    <strong>প্রতিষ্ঠান:</strong>
-    ${escapeHtml(
-      currentProfile.institution ||
-      "দেওয়া হয়নি"
-    )}
-    <br>
-
-    <strong>শ্রেণি:</strong>
-    ${escapeHtml(
-      currentProfile.class ||
-      "দেওয়া হয়নি"
-    )}
-    <br>
-
-    <strong>জেলা:</strong>
-    ${escapeHtml(
-      currentProfile.district ||
-      "দেওয়া হয়নি"
-    )}
-    <br>
-
-    <strong>বিভাগ:</strong>
-    ${escapeHtml(
-      currentProfile.division ||
-      "দেওয়া হয়নি"
-    )}
-
-  `;
+  userInfo.innerHTML = (() => {
+    const NA = "দেওয়া হয়নি";
+    const rows = [
+      ["user", "নাম", currentProfile.full_name || ""],
+      ["id", "Student ID", currentProfile.student_id || ""],
+      ["phone", "মোবাইল", currentProfile.mobile || ""],
+      ["mail", "ইমেইল", currentProfile.email || ""],
+      ["building", "প্রতিষ্ঠান", currentProfile.institution || NA],
+      ["cap", "শ্রেণি", currentProfile.class || currentProfile.class_name || NA],
+      ["pin", "জেলা", currentProfile.district || NA],
+      ["map", "বিভাগ", currentProfile.division || NA]
+    ];
+    return '<div class="pi-grid">' + rows.map(r =>
+      '<div class="pi-row"><span class="pi-k">' + ICON(r[0]) + r[1] + '</span><span class="pi-v">' + escapeHtml(r[2]) + '</span></div>'
+    ).join("") + '</div>';
+  })();
 
 }
 
@@ -2572,7 +2606,7 @@ function renderQuizzes(){
         : `
 
           <div class="quiz-image-placeholder">
-            📚
+            ${ICON("book", "ic-xl")}
           </div>
 
         `;
@@ -2580,8 +2614,8 @@ function renderQuizzes(){
 
       const fee =
         Number(
-          quiz.fee ??
           quiz.registration_fee ??
+          quiz.fee ??
           quiz.price ??
           0
         );
@@ -2604,29 +2638,31 @@ function renderQuizzes(){
       const regStart = toMillis(quiz.registration_start ?? quiz.registrationStart ?? quiz.reg_start);
       const regEnd = toMillis(quiz.registration_end ?? quiz.registrationEnd ?? quiz.reg_end);
       let registrationState = "open";
-      let registrationLabel = "🟢 রেজিস্ট্রেশন চলছে";
-      let registrationButton = "📝 রেজিস্ট্রেশন করুন";
+      let registrationLabel = "রেজিস্ট্রেশন চলছে";
+      let registrationButton = "রেজিস্ট্রেশন করুন";
       let registrationDisabled = false;
 
-      if(quiz.registration_open === false || quiz.is_active === false){
+      const quizStatus = String(quiz.status || "published").toLowerCase();
+
+      if(quizStatus !== "published" && quizStatus !== "closed"){
+        registrationState = "unpublished";
+        registrationLabel = "প্রকাশিত নয়";
+        registrationButton = "প্রকাশিত নয়";
+        registrationDisabled = true;
+      }else if(quizStatus === "closed" || quiz.registration_open === false || quiz.is_active === false){
         registrationState = "closed";
-        registrationLabel = "🔴 রেজিস্ট্রেশন বন্ধ";
+        registrationLabel = "রেজিস্ট্রেশন বন্ধ";
         registrationButton = "রেজিস্ট্রেশন বন্ধ";
         registrationDisabled = true;
       }else if(Number.isFinite(regStart) && now < regStart){
         registrationState = "upcoming";
-        registrationLabel = "🟡 এখনো শুরু হয়নি";
-        registrationButton = "⏳ এখনো শুরু হয়নি";
+        registrationLabel = "এখনো শুরু হয়নি";
+        registrationButton = "এখনো শুরু হয়নি";
         registrationDisabled = true;
       }else if(Number.isFinite(regEnd) && now >= regEnd){
         registrationState = "ended";
-        registrationLabel = "⚫ রেজিস্ট্রেশন শেষ";
+        registrationLabel = "রেজিস্ট্রেশন শেষ";
         registrationButton = "রেজিস্ট্রেশন শেষ";
-        registrationDisabled = true;
-      }else if(quiz.status && String(quiz.status).toLowerCase() !== "published"){
-        registrationState = "unpublished";
-        registrationLabel = "⚪ প্রকাশিত নয়";
-        registrationButton = "প্রকাশিত নয়";
         registrationDisabled = true;
       }
 
@@ -2676,9 +2712,7 @@ function renderQuizzes(){
 
             <div class="info-item">
 
-              <div class="info-label">
-                ফি
-              </div>
+              <div class="info-label">${ICON("wallet")}ফি</div>
 
               <div
                 class="info-value ${feeClass}">
@@ -2692,9 +2726,7 @@ function renderQuizzes(){
 
             <div class="info-item">
 
-              <div class="info-label">
-                প্রশ্ন
-              </div>
+              <div class="info-label">${ICON("help")}প্রশ্ন</div>
 
               <div class="info-value">
 
@@ -2711,9 +2743,7 @@ function renderQuizzes(){
 
             <div class="info-item">
 
-              <div class="info-label">
-                সময়
-              </div>
+              <div class="info-label">${ICON("clock")}সময়</div>
 
               <div class="info-value">
 
@@ -2731,9 +2761,7 @@ function renderQuizzes(){
 
             <div class="info-item">
 
-              <div class="info-label">
-                অংশগ্রহণ
-              </div>
+              <div class="info-label">${ICON("users")}অংশগ্রহণ</div>
 
               <div class="info-value">
 
@@ -2772,7 +2800,7 @@ function renderQuizzes(){
               quiz.id
             )}')">
 
-            ${registrationButton}
+            ${registrationDisabled ? ICON("lock") : ICON("clipboard")}<span>${registrationButton}</span>
 
           </button>
 
@@ -2819,20 +2847,21 @@ async function(quizId){
   const regStart = toMillis(selectedQuiz.registration_start ?? selectedQuiz.registrationStart ?? selectedQuiz.reg_start);
   const regEnd = toMillis(selectedQuiz.registration_end ?? selectedQuiz.registrationEnd ?? selectedQuiz.reg_end);
 
+  const quizStatus = String(selectedQuiz.status || "published").toLowerCase();
+  if(quizStatus !== "published" && quizStatus !== "closed"){
+    showMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error");
+    return;
+  }
+  if(quizStatus === "closed" || selectedQuiz.registration_open === false || selectedQuiz.is_active === false){
+    showMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error");
+    return;
+  }
   if(Number.isFinite(regStart) && now < regStart){
     showMessage("⏳ এই কুইজের রেজিস্ট্রেশন এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার চেষ্টা করুন।", "error");
     return;
   }
   if(Number.isFinite(regEnd) && now >= regEnd){
     showMessage("⛔ এই কুইজের রেজিস্ট্রেশন সময় শেষ হয়ে গেছে।", "error");
-    return;
-  }
-  if(selectedQuiz.registration_open === false || selectedQuiz.is_active === false){
-    showMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error");
-    return;
-  }
-  if(selectedQuiz.status && String(selectedQuiz.status).toLowerCase() !== "published"){
-    showMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error");
     return;
   }
 
@@ -2851,10 +2880,14 @@ async function(quizId){
   document.getElementById("regName").value = currentProfile.full_name || "";
   document.getElementById("regMobile").value = currentProfile.mobile || "";
   document.getElementById("regInstitution").value = currentProfile.institution || "";
+  document.getElementById("regStudentId").value = currentProfile.student_id || "";
+  document.getElementById("regClass").value = currentProfile.class || currentProfile.class_name || "";
+  document.getElementById("regDistrict").value = currentProfile.district || "";
+  document.getElementById("regDivision").value = currentProfile.division || "";
 
   const fee = Number(
-    selectedQuiz.fee ??
     selectedQuiz.registration_fee ??
+    selectedQuiz.fee ??
     selectedQuiz.price ??
     0
   );
@@ -3048,10 +3081,11 @@ async function(){
   };
   const regStart = toMillis(selectedQuiz.registration_start ?? selectedQuiz.registrationStart ?? selectedQuiz.reg_start);
   const regEnd = toMillis(selectedQuiz.registration_end ?? selectedQuiz.registrationEnd ?? selectedQuiz.reg_end);
+  const quizStatus = String(selectedQuiz.status || "published").toLowerCase();
+  if(quizStatus !== "published" && quizStatus !== "closed"){ showRegistrationMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error"); return; }
+  if(quizStatus === "closed" || selectedQuiz.registration_open === false || selectedQuiz.is_active === false){ showRegistrationMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error"); return; }
   if(Number.isFinite(regStart) && now < regStart){ showRegistrationMessage("⏳ এই কুইজের রেজিস্ট্রেশন এখনো শুরু হয়নি।", "error"); return; }
   if(Number.isFinite(regEnd) && now >= regEnd){ showRegistrationMessage("⛔ এই কুইজের রেজিস্ট্রেশন সময় শেষ হয়ে গেছে।", "error"); return; }
-  if(selectedQuiz.registration_open === false || selectedQuiz.is_active === false){ showRegistrationMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error"); return; }
-  if(selectedQuiz.status && String(selectedQuiz.status).toLowerCase() !== "published"){ showRegistrationMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error"); return; }
 
   /* একই Student + একই Quiz-এর registration document আবার পরীক্ষা। */
   const registrationId = currentUser.uid + "_" + selectedQuiz.id;
@@ -3067,15 +3101,14 @@ async function(){
     );
 
 
-  const fee = Number(selectedQuiz.fee ?? selectedQuiz.registration_fee ?? 0);
+  const fee = Number(selectedQuiz.registration_fee ?? selectedQuiz.fee ?? selectedQuiz.price ?? 0);
 
 
   button.disabled =
     true;
 
 
-  button.textContent =
-    "⏳ রেজিস্ট্রেশন হচ্ছে...";
+  setBtn(button, "loader", "রেজিস্ট্রেশন হচ্ছে...");
 
 
   try{
@@ -3308,6 +3341,7 @@ async function(){
 
         class:
           currentProfile.class ||
+      currentProfile.class_name ||
           "",
 
         district:
@@ -3355,8 +3389,7 @@ async function(){
     );
 
 
-    button.textContent =
-      "✅ রেজিস্ট্রেশন সম্পন্ন";
+    setBtn(button, "check", "রেজিস্ট্রেশন সম্পন্ন", "done");
 
 
   }catch(error){
@@ -3396,12 +3429,10 @@ async function(){
       false;
 
     if(
-      button.textContent !==
-      "✅ রেজিস্ট্রেশন সম্পন্ন"
+      button.dataset.state !== "done"
     ){
 
-      button.textContent =
-        "✅ রেজিস্ট্রেশন নিশ্চিত করুন";
+      setBtn(button, "check", "রেজিস্ট্রেশন নিশ্চিত করুন");
 
     }
 
