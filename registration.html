@@ -891,6 +891,22 @@ select{
 
 }
 
+
+    .registration-status{
+      display:inline-flex;
+      align-items:center;
+      margin:10px 0;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.1);
+    }
+    .registration-status.open{color:#72f2b5;background:rgba(47,214,138,.10);}
+    .registration-status.upcoming{color:#ffd86a;background:rgba(255,178,28,.10);}
+    .registration-status.closed,.registration-status.ended{color:#ff9baa;background:rgba(255,84,112,.09);}
+    .registration-status.unpublished{color:#c7cbe0;background:rgba(255,255,255,.06);}
+    .primary-btn:disabled{opacity:.48;cursor:not-allowed;filter:grayscale(.25);}
 </style>
 
 </head>
@@ -910,7 +926,7 @@ select{
       <div class="logo-box">
 
         <img
-          src="gyantarongo-logo-transparent-1.png"
+          src="file_0000000031b8821193be8a110779a350.png"
           alt="জ্ঞানতরঙ্গ">
 
       </div>
@@ -1435,21 +1451,6 @@ select{
     </div>
 
 
-    <div class="field">
-
-      <label>
-        শ্রেণি
-      </label>
-
-      <input
-        id="regClass"
-        type="text"
-        readonly
-        placeholder="দেওয়া হয়নি">
-
-    </div>
-
-
 
     <!-- PAYMENT -->
 
@@ -1479,11 +1480,10 @@ select{
 
       </div>
 
-
       <div class="field">
 
         <label>
-          পেমেন্ট গ্রহণের নম্বর
+          যে নম্বরে টাকা পাঠাবেন
         </label>
 
         <input
@@ -1678,6 +1678,7 @@ let currentProfile = null;
 let quizzes = [];
 
 let selectedQuiz = null;
+let selectedPaymentMethod = null;
 
 
 
@@ -2074,9 +2075,6 @@ async function(){
         class:
           studentClass,
 
-        class_name:
-          studentClass,
-
         district:
           district,
 
@@ -2084,9 +2082,6 @@ async function(){
           division,
 
         student_id:
-          studentId,
-
-        student_uid:
           studentId,
 
         role:
@@ -2369,7 +2364,7 @@ function showUserSection(){
 
     <strong>Student ID:</strong>
     ${escapeHtml(
-      currentProfile.student_uid || currentProfile.student_id || ""
+      currentProfile.student_id || ""
     )}
     <br>
 
@@ -2394,7 +2389,6 @@ function showUserSection(){
 
     <strong>শ্রেণি:</strong>
     ${escapeHtml(
-      currentProfile.class_name ||
       currentProfile.class ||
       "দেওয়া হয়নি"
     )}
@@ -2463,23 +2457,10 @@ async function loadQuizzes(){
 
   try{
 
-    const q =
-      query(
-        collection(
-          db,
-          "quizzes"
-        ),
-
-        where(
-          "registration_open",
-          "==",
-          true
-        )
-      );
-
-
     const snapshot =
-      await getDocs(q);
+      await getDocs(
+        collection(db, "quizzes")
+      );
 
 
     snapshot.forEach(
@@ -2599,7 +2580,10 @@ function renderQuizzes(){
 
       const fee =
         Number(
-          quiz.fee || 0
+          quiz.fee ??
+          quiz.registration_fee ??
+          quiz.price ??
+          0
         );
 
 
@@ -2607,6 +2591,44 @@ function renderQuizzes(){
         fee > 0
         ? "৳ " + fee
         : "ফ্রি";
+
+      const toMillis = (value) => {
+        if(!value) return NaN;
+        if(typeof value === "object" && typeof value.toDate === "function") return value.toDate().getTime();
+        if(typeof value === "object" && typeof value.toMillis === "function") return value.toMillis();
+        const ms = new Date(value).getTime();
+        return Number.isFinite(ms) ? ms : NaN;
+      };
+
+      const now = Date.now();
+      const regStart = toMillis(quiz.registration_start ?? quiz.registrationStart ?? quiz.reg_start);
+      const regEnd = toMillis(quiz.registration_end ?? quiz.registrationEnd ?? quiz.reg_end);
+      let registrationState = "open";
+      let registrationLabel = "🟢 রেজিস্ট্রেশন চলছে";
+      let registrationButton = "📝 রেজিস্ট্রেশন করুন";
+      let registrationDisabled = false;
+
+      if(quiz.registration_open === false || quiz.is_active === false){
+        registrationState = "closed";
+        registrationLabel = "🔴 রেজিস্ট্রেশন বন্ধ";
+        registrationButton = "রেজিস্ট্রেশন বন্ধ";
+        registrationDisabled = true;
+      }else if(Number.isFinite(regStart) && now < regStart){
+        registrationState = "upcoming";
+        registrationLabel = "🟡 এখনো শুরু হয়নি";
+        registrationButton = "⏳ এখনো শুরু হয়নি";
+        registrationDisabled = true;
+      }else if(Number.isFinite(regEnd) && now >= regEnd){
+        registrationState = "ended";
+        registrationLabel = "⚫ রেজিস্ট্রেশন শেষ";
+        registrationButton = "রেজিস্ট্রেশন শেষ";
+        registrationDisabled = true;
+      }else if(quiz.status && String(quiz.status).toLowerCase() !== "published"){
+        registrationState = "unpublished";
+        registrationLabel = "⚪ প্রকাশিত নয়";
+        registrationButton = "প্রকাশিত নয়";
+        registrationDisabled = true;
+      }
 
 
       const feeClass =
@@ -2741,13 +2763,16 @@ function renderQuizzes(){
           </div>
 
 
+          <div class="registration-status ${registrationState}">${registrationLabel}</div>
+
           <button
             class="primary-btn"
+            ${registrationDisabled ? "disabled" : ""}
             onclick="openRegistration('${escapeAttribute(
               quiz.id
             )}')">
 
-            📝 রেজিস্ট্রেশন করুন
+            ${registrationButton}
 
           </button>
 
@@ -2826,12 +2851,13 @@ async function(quizId){
   document.getElementById("regName").value = currentProfile.full_name || "";
   document.getElementById("regMobile").value = currentProfile.mobile || "";
   document.getElementById("regInstitution").value = currentProfile.institution || "";
-  if(document.getElementById("regClass")){ document.getElementById("regClass").value = currentProfile.class_name || currentProfile.class || ""; }
 
-  const receiverInput = document.getElementById("paymentReceiverNumber");
-  if(receiverInput) receiverInput.value = "";
-
-  const fee = Number(selectedQuiz.fee ?? selectedQuiz.registration_fee ?? 0);
+  const fee = Number(
+    selectedQuiz.fee ??
+    selectedQuiz.registration_fee ??
+    selectedQuiz.price ??
+    0
+  );
   const paymentBox = document.getElementById("paymentBox");
   if(fee > 0){ paymentBox.classList.remove("hidden"); await loadPaymentMethods(); }
   else { paymentBox.classList.add("hidden"); }
@@ -2844,45 +2870,127 @@ async function(quizId){
 
 async function loadPaymentMethods(){
 
-  const select = document.getElementById("paymentMethod");
-  const receiver = document.getElementById("paymentReceiverNumber");
+  const select =
+    document.getElementById("paymentMethod");
 
-  select.innerHTML = `<option value="">নির্বাচন করুন</option>`;
-  if(receiver) receiver.value = "";
+  const receiver =
+    document.getElementById("paymentReceiverNumber");
+
+  selectedPaymentMethod = null;
+
+  select.innerHTML = `
+    <option value="">নির্বাচন করুন</option>
+  `;
+
+  if(receiver){
+    receiver.value = "";
+    receiver.placeholder = "পেমেন্ট পদ্ধতি নির্বাচন করুন";
+  }
 
   try{
-    const snapshot = await getDocs(collection(db, "payment_methods"));
+
+    const snapshot =
+      await getDocs(
+        collection(db, "payment_methods")
+      );
+
+    let activeCount = 0;
 
     snapshot.forEach(item => {
+
       const data = item.data();
+
       if(data.is_active === false) return;
 
-      const methodName = data.name || data.method_name || data.type || item.id;
+      const methodName =
+        data.name ||
+        data.method_name ||
+        data.type ||
+        item.id;
+
       const receiverNumber =
-        data.receiver_number ||
         data.number ||
         data.phone ||
         data.account_number ||
         data.payment_number ||
         "";
 
-      const option = document.createElement("option");
+      const option =
+        document.createElement("option");
+
       option.value = item.id;
-      option.textContent = receiverNumber
-        ? `${methodName} — ${receiverNumber}`
-        : methodName;
-      option.dataset.receiver = receiverNumber;
+      option.textContent =
+        receiverNumber
+          ? `${methodName} — ${receiverNumber}`
+          : methodName;
+
+      option.dataset.name = methodName;
+      option.dataset.number = receiverNumber;
+
       select.appendChild(option);
+      activeCount++;
+
     });
 
     select.onchange = function(){
-      const option = select.options[select.selectedIndex];
-      if(receiver) receiver.value = option?.dataset?.receiver || "";
+
+      const option =
+        select.options[select.selectedIndex];
+
+      if(!option || !option.value){
+
+        selectedPaymentMethod = null;
+
+        if(receiver){
+          receiver.value = "";
+          receiver.placeholder =
+            "পেমেন্ট পদ্ধতি নির্বাচন করুন";
+        }
+
+        return;
+      }
+
+      const methodName =
+        option.dataset.name ||
+        option.textContent ||
+        "";
+
+      const receiverNumber =
+        option.dataset.number ||
+        "";
+
+      selectedPaymentMethod = {
+        id: option.value,
+        name: methodName,
+        receiver_number: receiverNumber
+      };
+
+      if(receiver){
+        receiver.value =
+          receiverNumber ||
+          "Admin এখনো এই পেমেন্ট নম্বর সেট করেনি।";
+      }
+
     };
+
+    if(activeCount === 0){
+      showRegistrationMessage(
+        "⚠️ কোনো Active পেমেন্ট নম্বর পাওয়া যায়নি। Admin Panel থেকে পেমেন্ট নম্বর Active করুন।",
+        "error"
+      );
+    }
+
   }catch(error){
-    console.error(error);
-    showRegistrationMessage("❌ পেমেন্ট পদ্ধতি লোড করা যায়নি।", "error");
+
+    console.error("PAYMENT METHOD ERROR:", error);
+
+    showRegistrationMessage(
+      "❌ পেমেন্ট পদ্ধতি ও নম্বর লোড করা যায়নি।",
+      "error"
+    );
+
   }
+
 }
 
 
@@ -3096,10 +3204,43 @@ async function(){
       }
 
 
+      const selectedOption =
+        document.getElementById("paymentMethod")
+          .options[
+            document.getElementById("paymentMethod").selectedIndex
+          ];
+
+      const methodName =
+        selectedOption?.dataset?.name ||
+        selectedOption?.textContent ||
+        paymentMethod;
+
+      const receiverNumber =
+        selectedOption?.dataset?.number ||
+        document.getElementById("paymentReceiverNumber")?.value?.trim() ||
+        "";
+
+      if(!receiverNumber){
+
+        showRegistrationMessage(
+          "⚠️ Admin-এর সেট করা পেমেন্ট নম্বর পাওয়া যায়নি।",
+          "error"
+        );
+
+        return;
+
+      }
+
       paymentData = {
 
         method_id:
           paymentMethod,
+
+        method_name:
+          methodName,
+
+        receiver_number:
+          receiverNumber,
 
         sender_number:
           paymentNumber,
@@ -3139,7 +3280,6 @@ async function(){
           currentUser.uid,
 
         student_id:
-          currentProfile.student_uid ||
           currentProfile.student_id ||
           "",
 
@@ -3167,12 +3307,6 @@ async function(){
           "",
 
         class:
-          currentProfile.class_name ||
-          currentProfile.class ||
-          "",
-
-        class_name:
-          currentProfile.class_name ||
           currentProfile.class ||
           "",
 
@@ -3338,6 +3472,17 @@ function(){
 
   selectedQuiz =
     null;
+
+  selectedPaymentMethod =
+    null;
+
+  const receiver =
+    document.getElementById("paymentReceiverNumber");
+
+  if(receiver){
+    receiver.value = "";
+    receiver.placeholder = "পেমেন্ট পদ্ধতি নির্বাচন করুন";
+  }
 
 };
 
