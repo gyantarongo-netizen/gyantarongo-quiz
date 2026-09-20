@@ -1039,6 +1039,12 @@
           total_questions:
             questions.length,
 
+          selected_question_ids:
+            questions.map(q => q.id),
+
+          question_order:
+            questions.map(q => q.id),
+
           answers:
             answers
 
