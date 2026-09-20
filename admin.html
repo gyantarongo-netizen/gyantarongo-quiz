@@ -2256,6 +2256,7 @@
     setDoc,
     updateDoc,
     deleteDoc,
+    writeBatch,
     serverTimestamp,
     orderBy
   } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
@@ -3601,30 +3602,96 @@
 
     const title = quiz.title || quiz.name || "এই কুইজ";
 
-    if(!confirm(`"${title}" কুইজটি ডিলেট করতে চান?`)){
-      return;
-    }
+    const firstConfirm = window.confirm(
+      `"${title}" কুইজটি সম্পূর্ণভাবে ডিলেট করতে চান?\n\n` +
+      `এর সঙ্গে যুক্ত রেজিস্ট্রেশন, পরীক্ষা, ফলাফল ও প্রশ্নও মুছে যাবে।\n` +
+      `এই কাজটি পরে ফিরিয়ে আনা যাবে না।`
+    );
+
+    if(!firstConfirm) return;
 
     try{
-      const [regSnap, attemptSnap, questionSnap, examQuestionSnap] = await Promise.all([
-        getDocs(query(collection(db,"quiz_registrations"),where("quiz_id","==",id))),
-        getDocs(query(collection(db,"attempts"),where("quiz_id","==",id))),
-        getDocs(query(collection(db,"questions"),where("quiz_id","==",id))),
-        getDocs(query(collection(db,"exam_questions"),where("quiz_id","==",id)))
-      ]);
+      /*
+        নিরাপদ Delete:
+        সক্রিয় Quiz হলে আগে বন্ধ করা হবে। তারপর সংশ্লিষ্ট
+        child documents মুছে Quiz document মুছে ফেলা হবে।
+      */
+      await updateDoc(
+        doc(db,"quizzes",id),
+        {
+          is_active:false,
+          registration_open:false,
+          status:"closed",
+          updated_at:serverTimestamp(),
+          updated_by:currentUser?.uid || null
+        }
+      );
 
-      if(regSnap.size || attemptSnap.size || questionSnap.size || examQuestionSnap.size){
-        toast("এই কুইজের সাথে রেজিস্ট্রেশন/পরীক্ষা/প্রশ্ন যুক্ত আছে। ডেটা নষ্ট না করতে সরাসরি ডিলেট বন্ধ রাখা হয়েছে। আগে কুইজটি নিষ্ক্রিয় করুন।");
-        return;
+      const linkedCollections = [
+        ["quiz_registrations","quiz_id"],
+        ["attempts","quiz_id"],
+        ["results","quiz_id"],
+        ["questions","quiz_id"],
+        ["exam_questions","quiz_id"]
+      ];
+
+      const docsToDelete = [];
+
+      for(const [collectionName, fieldName] of linkedCollections){
+        const snap = await getDocs(
+          query(
+            collection(db,collectionName),
+            where(fieldName,"==",id)
+          )
+        );
+
+        snap.forEach(item => {
+          docsToDelete.push({
+            collectionName,
+            id:item.id
+          });
+        });
       }
 
-      await deleteDoc(doc(db,"quizzes",id));
-      toast("কুইজটি ডিলেট করা হয়েছে।");
+      /*
+        Firestore batch একবারে সর্বোচ্চ 500 write নেয়।
+        তাই বড় Quiz হলেও 400 করে ভাগ করে Delete করা হচ্ছে।
+      */
+      const allDeletes = [
+        ...docsToDelete,
+        {collectionName:"quizzes",id}
+      ];
+
+      const chunkSize = 400;
+
+      for(let i=0; i<allDeletes.length; i += chunkSize){
+        const batch = writeBatch(db);
+        const chunk = allDeletes.slice(i,i + chunkSize);
+
+        chunk.forEach(item => {
+          batch.delete(
+            doc(db,item.collectionName,item.id)
+          );
+        });
+
+        await batch.commit();
+      }
+
+      toast(
+        `🗑️ "${title}" কুইজ এবং যুক্ত ${docsToDelete.length}টি ডেটা সফলভাবে ডিলেট হয়েছে।`
+      );
+
       await loadQuizzes();
       await loadDashboard();
+      await loadResults();
+
     }catch(error){
-      console.error(error);
-      toast("কুইজ ডিলেট করা যায়নি।");
+      console.error("Quiz delete error:",error);
+
+      toast(
+        error?.message ||
+        "কুইজ ডিলেট করা যায়নি। Firestore Rules-এ admin-এর delete অনুমতি প্রয়োজন হতে পারে।"
+      );
     }
   };
 
