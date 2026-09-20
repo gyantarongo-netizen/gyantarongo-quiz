@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>কুইজে রেজিস্ট্রেশন | জ্ঞানতরঙ্গ</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -27,23 +31,26 @@
 }
 
 body{
-  min-height:100vh;
-  padding-bottom:80px;
-  color:var(--text);
-  font-family:"Noto Sans Bengali","Noto Sans",Arial,sans-serif;
   background:
-    radial-gradient(circle at top left,rgba(139,61,255,.17),transparent 35%),
+    radial-gradient(circle at top left,rgba(139,61,255,.16),transparent 35%),
     radial-gradient(circle at top right,rgba(236,63,167,.10),transparent 30%),
     var(--bg);
-}
 
-*{
-  scrollbar-width:thin;
+  color:var(--text);
+
+  font-family:
+    "Noto Sans Bengali",
+    "Noto Sans",
+    Arial,
+    sans-serif;
+
+  min-height:100vh;
+  padding-bottom:80px;
 }
 
 a{
-  color:inherit;
   text-decoration:none;
+  color:inherit;
 }
 
 button,
@@ -53,8 +60,9 @@ select{
 }
 
 .hidden{
-  display:none!important;
+  display:none !important;
 }
+
 
 /* HEADER */
 
@@ -62,18 +70,24 @@ select{
   position:sticky;
   top:0;
   z-index:100;
-  background:rgba(6,8,23,.93);
+
+  background:rgba(6,8,23,.92);
+
   backdrop-filter:blur(18px);
+
   border-bottom:1px solid var(--border);
 }
 
 .header-inner{
   width:min(1050px,calc(100% - 24px));
-  min-height:68px;
   margin:auto;
+
+  min-height:68px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   gap:15px;
 }
 
@@ -86,13 +100,24 @@ select{
 .logo-box{
   width:42px;
   height:42px;
-  overflow:hidden;
+
   border-radius:12px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--pink)
+    );
+
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,var(--purple),var(--pink));
-  box-shadow:0 0 20px rgba(139,61,255,.30);
+
+  box-shadow:
+    0 0 20px rgba(139,61,255,.30);
 }
 
 .logo-box img{
@@ -107,55 +132,75 @@ select{
 }
 
 .brand-sub{
-  margin-top:2px;
-  color:var(--muted);
   font-size:9px;
+  color:var(--muted);
+  margin-top:2px;
 }
 
 .back-btn{
-  padding:8px 13px;
   border:1px solid var(--border);
-  border-radius:10px;
   background:rgba(255,255,255,.05);
+
+  padding:8px 13px;
+
+  border-radius:10px;
+
   font-size:13px;
+
+  color:#fff;
 }
+
 
 /* MAIN */
 
 .container{
   width:min(1050px,calc(100% - 24px));
-  margin:auto;
+  margin:0 auto;
 }
 
 .page-title{
-  padding:34px 10px 22px;
   text-align:center;
+  padding:34px 10px 22px;
 }
 
 .page-title h1{
   font-size:30px;
   font-weight:900;
-  background:linear-gradient(90deg,#fff,#d8c5ff,#ff9fd6);
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #d8c5ff,
+      #ff9fd6
+    );
+
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
 
 .page-title p{
-  margin-top:8px;
   color:var(--muted);
   font-size:14px;
+  margin-top:8px;
 }
+
 
 /* MESSAGE */
 
 .message{
   display:none;
-  margin-bottom:18px;
+
   padding:13px 15px;
+
   border-radius:13px;
-  white-space:pre-line;
+
+  margin-bottom:18px;
+
   font-size:14px;
+
+  white-space:pre-line;
 }
 
 .message.show{
@@ -163,15 +208,15 @@ select{
 }
 
 .message.success{
-  color:#7ff0b9;
   background:rgba(47,214,138,.10);
   border:1px solid rgba(47,214,138,.30);
+  color:#7ff0b9;
 }
 
 .message.error{
-  color:#ff9cac;
   background:rgba(255,70,100,.10);
   border:1px solid rgba(255,70,100,.28);
+  color:#ff9cac;
 }
 
 .message.info{
@@ -179,49 +224,73 @@ select{
   border:1px solid rgba(139,61,255,.30);
 }
 
+
 /* AUTH */
 
 .auth-card{
   max-width:650px;
   margin:0 auto 25px;
+
   padding:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(16,20,43,.98),
+      rgba(11,14,32,.98)
+    );
+
   border:1px solid var(--border);
+
   border-radius:22px;
-  background:linear-gradient(145deg,rgba(16,20,43,.98),rgba(11,14,32,.98));
-  box-shadow:0 20px 60px rgba(0,0,0,.30);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.30);
 }
 
 .tabs{
   display:grid;
   grid-template-columns:1fr 1fr;
+
   gap:8px;
+
   margin-bottom:22px;
 }
 
 .tab-btn{
-  padding:12px;
   border:1px solid var(--border);
-  border-radius:12px;
+
   background:rgba(255,255,255,.04);
+
   color:var(--muted);
+
+  padding:12px;
+
+  border-radius:12px;
+
   cursor:pointer;
+
   font-weight:800;
 }
 
 .tab-btn.active{
   color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139,61,255,.28),
+      rgba(236,63,167,.18)
+    );
+
   border-color:rgba(139,61,255,.45);
-  background:linear-gradient(
-    135deg,
-    rgba(139,61,255,.28),
-    rgba(236,63,167,.18)
-  );
 }
 
 .form-title{
-  margin-bottom:18px;
   font-size:20px;
   font-weight:900;
+
+  margin-bottom:18px;
 }
 
 .field{
@@ -230,28 +299,41 @@ select{
 
 .field label{
   display:block;
-  margin-bottom:7px;
+
   color:#dce0f0;
+
   font-size:13px;
+
+  margin-bottom:7px;
+
   font-weight:700;
 }
 
 .field input,
 .field select{
   width:100%;
-  padding:12px 13px;
-  outline:none;
+
   border:1px solid var(--border);
-  border-radius:11px;
+
   background:#0b0e20;
+
   color:#fff;
+
+  padding:12px 13px;
+
+  border-radius:11px;
+
+  outline:none;
+
   font-size:14px;
 }
 
 .field input:focus,
 .field select:focus{
   border-color:var(--purple);
-  box-shadow:0 0 0 3px rgba(139,61,255,.10);
+
+  box-shadow:
+    0 0 0 3px rgba(139,61,255,.10);
 }
 
 .field input::placeholder{
@@ -264,17 +346,41 @@ select{
   gap:12px;
 }
 
+
+/* BUTTONS */
+
 .primary-btn{
   width:100%;
-  padding:13px 15px;
+
   border:0;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--purple),var(--pink));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--pink)
+    );
+
   color:#fff;
+
+  padding:13px 15px;
+
+  border-radius:12px;
+
   font-size:14px;
+
   font-weight:900;
+
   cursor:pointer;
-  box-shadow:0 8px 25px rgba(139,61,255,.22);
+
+  box-shadow:
+    0 8px 25px rgba(139,61,255,.22);
+
+  transition:.2s;
+}
+
+.primary-btn:hover{
+  transform:translateY(-1px);
 }
 
 .primary-btn:disabled{
@@ -284,41 +390,66 @@ select{
 
 .secondary-btn{
   width:100%;
+
   margin-top:10px;
-  padding:12px;
+
   border:1px solid var(--border);
-  border-radius:12px;
+
   background:rgba(255,255,255,.05);
+
   color:#fff;
+
+  padding:12px;
+
+  border-radius:12px;
+
   font-weight:800;
+
   cursor:pointer;
 }
+
 
 /* PROFILE */
 
 .profile-card{
-  margin-bottom:28px;
-  padding:20px;
-  border:1px solid var(--border);
-  border-radius:20px;
   background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  padding:20px;
+
+  margin-bottom:28px;
 }
 
 .profile-head{
   display:flex;
+
   align-items:center;
+
   gap:13px;
+
   margin-bottom:17px;
 }
 
 .avatar{
   width:52px;
   height:52px;
+
   border-radius:16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--pink)
+    );
+
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,var(--purple),var(--pink));
+
   font-size:25px;
 }
 
@@ -327,32 +458,43 @@ select{
 }
 
 .profile-head p{
-  margin-top:3px;
   color:var(--muted);
   font-size:12px;
+  margin-top:3px;
 }
 
 .user-info{
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:13px;
   background:rgba(255,255,255,.035);
-  color:#dfe3f3;
-  font-size:13px;
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:14px;
+
   line-height:2;
+
+  color:#dfe3f3;
+
+  font-size:13px;
 }
 
 .user-info strong{
   color:#fff;
 }
 
+
 /* SECTION */
 
 .section-heading{
   display:flex;
-  align-items:center;
+
   justify-content:space-between;
+
+  align-items:center;
+
   gap:10px;
+
   margin-bottom:15px;
 }
 
@@ -361,44 +503,71 @@ select{
 }
 
 .section-heading span{
-  padding:5px 9px;
-  border:1px solid rgba(47,214,138,.18);
-  border-radius:20px;
-  background:rgba(47,214,138,.08);
-  color:#72e9ae;
   font-size:11px;
+
+  color:#72e9ae;
+
+  background:rgba(47,214,138,.08);
+
+  border:1px solid rgba(47,214,138,.18);
+
+  padding:5px 9px;
+
+  border-radius:20px;
 }
 
-/* QUIZ */
+
+/* LOADING */
 
 .loading{
-  padding:35px;
   text-align:center;
+
   color:var(--muted);
+
+  padding:35px;
 }
+
+
+/* QUIZ GRID */
 
 .quiz-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
   gap:16px;
 }
 
 .quiz-card{
-  overflow:hidden;
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      var(--card2)
+    );
+
   border:1px solid var(--border);
+
   border-radius:20px;
-  background:linear-gradient(145deg,var(--card),var(--card2));
-  box-shadow:0 12px 35px rgba(0,0,0,.22);
+
+  overflow:hidden;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.22);
 }
 
 .quiz-image{
   height:175px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139,61,255,.20),
+      rgba(236,63,167,.15)
+    );
+
   overflow:hidden;
-  background:linear-gradient(
-    135deg,
-    rgba(139,61,255,.20),
-    rgba(236,63,167,.15)
-  );
 }
 
 .quiz-image img{
@@ -407,11 +576,13 @@ select{
   object-fit:cover;
 }
 
-.quiz-placeholder{
+.quiz-image-placeholder{
   height:100%;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   font-size:55px;
 }
 
@@ -420,31 +591,43 @@ select{
 }
 
 .quiz-title{
-  margin-bottom:6px;
   font-size:19px;
   font-weight:900;
+
   line-height:1.45;
+
+  margin-bottom:6px;
 }
 
 .category{
-  margin-bottom:15px;
   color:#c59cff;
+
   font-size:12px;
+
   font-weight:800;
+
+  margin-bottom:15px;
 }
 
 .quiz-info{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+
+  grid-template-columns:
+    repeat(2,1fr);
+
   gap:8px;
+
   margin-bottom:15px;
 }
 
 .info-item{
-  padding:9px;
-  border:1px solid var(--border);
-  border-radius:10px;
   background:rgba(255,255,255,.035);
+
+  border:1px solid var(--border);
+
+  border-radius:10px;
+
+  padding:9px;
 }
 
 .info-label{
@@ -453,39 +636,69 @@ select{
 }
 
 .info-value{
-  margin-top:2px;
   color:#fff;
-  font-size:13px;
   font-weight:900;
+  font-size:13px;
+  margin-top:2px;
 }
 
-.free{
+.fee-free{
   color:var(--green);
 }
 
-.paid{
+.fee-paid{
   color:var(--gold);
 }
 
 .details{
-  min-height:42px;
-  margin-bottom:15px;
   color:var(--muted);
+
   font-size:12px;
+
   line-height:1.7;
+
+  min-height:42px;
+
+  margin-bottom:15px;
 }
+
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+
+  padding:45px 20px;
+
+  color:var(--muted);
+
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+}
+
 
 /* MODAL */
 
 .modal{
   position:fixed;
+
   inset:0;
+
   z-index:200;
+
   display:none;
+
   align-items:center;
+
   justify-content:center;
+
   padding:15px;
+
   background:rgba(0,0,0,.72);
+
   backdrop-filter:blur(8px);
 }
 
@@ -495,20 +708,37 @@ select{
 
 .modal-box{
   width:min(600px,100%);
+
   max-height:90vh;
+
   overflow:auto;
-  padding:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #10142b,
+      #0b0e20
+    );
+
   border:1px solid var(--border);
+
   border-radius:22px;
-  background:linear-gradient(145deg,#10142b,#0b0e20);
-  box-shadow:0 25px 80px rgba(0,0,0,.55);
+
+  padding:20px;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.55);
 }
 
 .modal-head{
   display:flex;
-  align-items:flex-start;
+
   justify-content:space-between;
+
+  align-items:flex-start;
+
   gap:15px;
+
   margin-bottom:18px;
 }
 
@@ -517,97 +747,106 @@ select{
 }
 
 .modal-head p{
-  margin-top:3px;
-  color:var(--muted);
+  color:#a9b0c7;
+
   font-size:12px;
+
+  margin-top:3px;
 }
 
 .close-btn{
   width:36px;
   height:36px;
+
   border:1px solid var(--border);
-  border-radius:10px;
+
   background:rgba(255,255,255,.05);
+
   color:#fff;
+
+  border-radius:10px;
+
   font-size:22px;
+
   cursor:pointer;
 }
 
 .payment-box{
+  margin-top:8px;
+
   margin-bottom:15px;
+
   padding:15px;
-  border:1px solid rgba(255,178,28,.20);
+
   border-radius:15px;
+
   background:rgba(255,178,28,.05);
+
+  border:1px solid rgba(255,178,28,.20);
 }
 
 .payment-title{
-  margin-bottom:14px;
   color:var(--gold);
+
   font-size:14px;
+
   font-weight:900;
+
+  margin-bottom:14px;
 }
 
-/* SUCCESS */
 
-.roll-box{
-  margin:18px 0;
-  padding:18px;
-  border:1px solid rgba(47,214,138,.25);
-  border-radius:16px;
-  background:rgba(47,214,138,.07);
-  text-align:center;
-}
-
-.roll-label{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.roll-number{
-  margin-top:5px;
-  color:#7ff0b9;
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-/* BOTTOM */
+/* BOTTOM NAV */
 
 .bottom-nav{
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
+
   z-index:150;
-  border-top:1px solid var(--border);
+
   background:rgba(7,9,22,.95);
+
   backdrop-filter:blur(15px);
+
+  border-top:1px solid var(--border);
 }
 
 .bottom-inner{
   width:min(650px,100%);
+
   margin:auto;
+
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+
+  grid-template-columns:
+    repeat(5,1fr);
 }
 
 .bottom-link{
-  padding:8px 3px;
-  color:#8991aa;
   text-align:center;
+
+  padding:8px 3px;
+
+  color:#8991aa;
+
   font-size:10px;
 }
 
 .bottom-link span{
   display:block;
-  margin-bottom:2px;
+
   font-size:18px;
+
+  margin-bottom:2px;
 }
 
 .bottom-link.active{
   color:#fff;
 }
+
 
 /* MOBILE */
 
@@ -649,11 +888,18 @@ select{
   .section-heading h2{
     font-size:16px;
   }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- HEADER -->
 
 <header class="header">
 
@@ -662,20 +908,34 @@ select{
     <a href="index.html" class="brand">
 
       <div class="logo-box">
+
         <img
           src="file_0000000031b8821193be8a110779a350.png"
           alt="জ্ঞানতরঙ্গ">
+
       </div>
 
       <div>
-        <div class="brand-text">জ্ঞানতরঙ্গ</div>
-        <div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+
+        <div class="brand-text">
+          জ্ঞানতরঙ্গ
+        </div>
+
+        <div class="brand-sub">
+          শিখি · জানি · এগিয়ে যাই
+        </div>
+
       </div>
 
     </a>
 
-    <a href="index.html" class="back-btn">
+
+    <a
+      href="index.html"
+      class="back-btn">
+
       ← হোম
+
     </a>
 
   </div>
@@ -683,25 +943,36 @@ select{
 </header>
 
 
+
 <main class="container">
+
 
   <div class="page-title">
 
-    <h1>কুইজে রেজিস্ট্রেশন</h1>
+    <h1>
+      কুইজে রেজিস্ট্রেশন
+    </h1>
 
     <p>
-      আপনার Student Account থেকে পছন্দের কুইজে রেজিস্ট্রেশন করুন
+      Student Account তৈরি করুন এবং পছন্দের কুইজে রেজিস্ট্রেশন করুন
     </p>
 
   </div>
 
 
-  <div id="message" class="message"></div>
+  <div
+    id="message"
+    class="message">
+  </div>
+
 
 
   <!-- AUTH -->
 
-  <section id="authSection" class="auth-card">
+  <section
+    id="authSection"
+    class="auth-card">
+
 
     <div class="tabs">
 
@@ -713,6 +984,7 @@ select{
         🔐 লগইন
 
       </button>
+
 
       <button
         id="signupTab"
@@ -726,6 +998,7 @@ select{
     </div>
 
 
+
     <!-- LOGIN -->
 
     <div id="loginForm">
@@ -734,9 +1007,12 @@ select{
         Student Account-এ লগইন করুন
       </div>
 
+
       <div class="field">
 
-        <label>ইমেইল</label>
+        <label>
+          ইমেইল *
+        </label>
 
         <input
           id="loginEmail"
@@ -748,12 +1024,14 @@ select{
 
       <div class="field">
 
-        <label>পাসওয়ার্ড</label>
+        <label>
+          পাসওয়ার্ড *
+        </label>
 
         <input
           id="loginPassword"
           type="password"
-          placeholder="আপনার পাসওয়ার্ড লিখুন">
+          placeholder="পাসওয়ার্ড লিখুন">
 
       </div>
 
@@ -770,46 +1048,184 @@ select{
     </div>
 
 
+
     <!-- SIGNUP -->
 
-    <div id="signupForm" class="hidden">
+    <div
+      id="signupForm"
+      class="hidden">
+
 
       <div class="form-title">
-        নতুন Student Account
+        নতুন Student Account তৈরি করুন
       </div>
+
 
       <div class="field">
 
-        <label>ইমেইল</label>
+        <label>
+          পূর্ণ নাম *
+        </label>
+
+        <input
+          id="signupName"
+          type="text"
+          placeholder="আপনার পূর্ণ নাম">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          মোবাইল নম্বর *
+        </label>
+
+        <input
+          id="signupMobile"
+          type="tel"
+          placeholder="01XXXXXXXXX">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ইমেইল *
+        </label>
 
         <input
           id="signupEmail"
           type="email"
-          placeholder="আপনার ইমেইল লিখুন">
+          placeholder="example@gmail.com">
 
       </div>
 
 
       <div class="field">
 
-        <label>পাসওয়ার্ড</label>
+        <label>
+          প্রতিষ্ঠান
+        </label>
 
         <input
-          id="signupPassword"
-          type="password"
-          placeholder="কমপক্ষে ৬ অক্ষর">
+          id="signupInstitution"
+          type="text"
+          placeholder="স্কুল / কলেজ / মাদ্রাসা">
+
+      </div>
+
+
+      <div class="two-col">
+
+        <div class="field">
+
+          <label>
+            শ্রেণি
+          </label>
+
+          <input
+            id="signupClass"
+            type="text"
+            placeholder="যেমন: দশম">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            জেলা
+          </label>
+
+          <input
+            id="signupDistrict"
+            type="text"
+            placeholder="জেলার নাম">
+
+        </div>
 
       </div>
 
 
       <div class="field">
 
-        <label>পাসওয়ার্ড আবার লিখুন</label>
+        <label>
+          বিভাগ
+        </label>
 
-        <input
-          id="signupConfirm"
-          type="password"
-          placeholder="পাসওয়ার্ড নিশ্চিত করুন">
+        <select id="signupDivision">
+
+          <option value="">
+            বিভাগ নির্বাচন করুন
+          </option>
+
+          <option value="ঢাকা">
+            ঢাকা
+          </option>
+
+          <option value="চট্টগ্রাম">
+            চট্টগ্রাম
+          </option>
+
+          <option value="রাজশাহী">
+            রাজশাহী
+          </option>
+
+          <option value="খুলনা">
+            খুলনা
+          </option>
+
+          <option value="বরিশাল">
+            বরিশাল
+          </option>
+
+          <option value="সিলেট">
+            সিলেট
+          </option>
+
+          <option value="রংপুর">
+            রংপুর
+          </option>
+
+          <option value="ময়মনসিংহ">
+            ময়মনসিংহ
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="two-col">
+
+        <div class="field">
+
+          <label>
+            পাসওয়ার্ড *
+          </label>
+
+          <input
+            id="signupPassword"
+            type="password"
+            placeholder="কমপক্ষে ৬ অক্ষর">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            পাসওয়ার্ড নিশ্চিত করুন *
+          </label>
+
+          <input
+            id="signupConfirm"
+            type="password"
+            placeholder="আবার লিখুন">
+
+        </div>
 
       </div>
 
@@ -819,7 +1235,7 @@ select{
         class="primary-btn"
         onclick="signupStudent()">
 
-        📝 অ্যাকাউন্ট তৈরি করুন
+        🚀 অ্যাকাউন্ট তৈরি করুন
 
       </button>
 
@@ -828,74 +1244,107 @@ select{
   </section>
 
 
-  <!-- STUDENT PROFILE -->
+
+  <!-- USER SECTION -->
 
   <section
-    id="profileSection"
-    class="profile-card hidden">
+    id="userSection"
+    class="hidden">
 
-    <div class="profile-head">
 
-      <div class="avatar">
-        👤
+    <div class="profile-card">
+
+      <div class="profile-head">
+
+        <div class="avatar">
+          👤
+        </div>
+
+        <div>
+
+          <h2>
+            আপনার Student Profile
+          </h2>
+
+          <p>
+            এই তথ্য আপনার কুইজ রেজিস্ট্রেশনে ব্যবহার হবে
+          </p>
+
+        </div>
+
       </div>
 
-      <div>
 
-        <h2 id="studentName">
-          শিক্ষার্থী
-        </h2>
-
-        <p>
-          আপনার Student Account
-        </p>
-
+      <div
+        id="userInfo"
+        class="user-info">
       </div>
 
     </div>
 
 
-    <div id="studentInfo" class="user-info">
-      তথ্য লোড হচ্ছে...
-    </div>
-
-  </section>
-
-
-  <!-- QUIZ -->
-
-  <section id="quizSection" class="hidden">
 
     <div class="section-heading">
 
       <h2>
-        📝 রেজিস্ট্রেশনের জন্য কুইজ
+        📚 রেজিস্ট্রেশনের জন্য কুইজ
       </h2>
 
       <span>
-        Registration Open
+        রেজিস্ট্রেশন খোলা
       </span>
 
     </div>
+
 
 
     <div
       id="quizLoading"
       class="loading">
 
-      কুইজ লোড হচ্ছে...
+      ⏳ কুইজ লোড হচ্ছে...
 
     </div>
 
 
+
     <div
       id="quizGrid"
-      class="quiz-grid">
+      class="quiz-grid hidden">
+    </div>
+
+
+
+    <div
+      id="emptyQuiz"
+      class="empty hidden">
+
+      <div
+        style="font-size:42px;margin-bottom:10px;">
+
+        📭
+
+      </div>
+
+      <div
+        style="font-weight:800;color:#fff;margin-bottom:6px;">
+
+        বর্তমানে কোনো কুইজের রেজিস্ট্রেশন খোলা নেই
+
+      </div>
+
+      <div>
+
+        নতুন কুইজের রেজিস্ট্রেশন চালু হলে এখানে দেখা যাবে।
+
+      </div>
+
     </div>
 
   </section>
 
 </main>
+
 
 
 <!-- REGISTRATION MODAL -->
@@ -904,21 +1353,24 @@ select{
   id="registrationModal"
   class="modal">
 
+
   <div class="modal-box">
+
 
     <div class="modal-head">
 
       <div>
 
-        <h2 id="modalQuizTitle">
-          কুইজে রেজিস্ট্রেশন
+        <h2>
+          📝 কুইজ রেজিস্ট্রেশন
         </h2>
 
-        <p>
-          রেজিস্ট্রেশন তথ্য যাচাই করুন
+        <p id="modalSubtitle">
+          কুইজ
         </p>
 
       </div>
+
 
       <button
         class="close-btn"
@@ -931,15 +1383,65 @@ select{
     </div>
 
 
+
     <div
-      id="modalProfileInfo"
-      class="user-info">
+      id="registrationMessage"
+      class="message">
     </div>
 
+
+
+    <div class="field">
+
+      <label>
+        নাম
+      </label>
+
+      <input
+        id="regName"
+        type="text"
+        readonly>
+
+    </div>
+
+
+
+    <div class="field">
+
+      <label>
+        মোবাইল
+      </label>
+
+      <input
+        id="regMobile"
+        type="text"
+        readonly>
+
+    </div>
+
+
+
+    <div class="field">
+
+      <label>
+        প্রতিষ্ঠান
+      </label>
+
+      <input
+        id="regInstitution"
+        type="text"
+        readonly>
+
+    </div>
+
+
+
+    <!-- PAYMENT -->
 
     <div
       id="paymentBox"
       class="payment-box hidden">
+
 
       <div class="payment-title">
         💳 পেমেন্ট তথ্য
@@ -948,20 +1450,14 @@ select{
 
       <div class="field">
 
-        <label>পেমেন্ট মাধ্যম</label>
+        <label>
+          পেমেন্ট পদ্ধতি *
+        </label>
 
         <select id="paymentMethod">
 
           <option value="">
             নির্বাচন করুন
-          </option>
-
-          <option value="bKash">
-            bKash
-          </option>
-
-          <option value="Nagad">
-            Nagad
           </option>
 
         </select>
@@ -971,11 +1467,13 @@ select{
 
       <div class="field">
 
-        <label>যে নম্বর থেকে টাকা পাঠিয়েছেন</label>
+        <label>
+          যে নম্বর থেকে টাকা পাঠিয়েছেন *
+        </label>
 
         <input
           id="paymentNumber"
-          type="text"
+          type="tel"
           placeholder="01XXXXXXXXX">
 
       </div>
@@ -983,28 +1481,33 @@ select{
 
       <div class="field">
 
-        <label>Transaction ID</label>
+        <label>
+          Transaction ID *
+        </label>
 
         <input
           id="transactionId"
           type="text"
-          placeholder="Transaction ID লিখুন">
+          placeholder="Transaction ID">
 
       </div>
 
 
       <div class="field">
 
-        <label>Payment Screenshot URL (ঐচ্ছিক)</label>
+        <label>
+          পেমেন্ট Screenshot URL
+        </label>
 
         <input
           id="paymentScreenshot"
           type="text"
-          placeholder="প্রয়োজন হলে Image URL দিন">
+          placeholder="ঐচ্ছিক">
 
       </div>
 
     </div>
+
 
 
     <button
@@ -1016,74 +1519,12 @@ select{
 
     </button>
 
-  </div>
-
-</div>
-
-
-<!-- SUCCESS MODAL -->
-
-<div
-  id="successModal"
-  class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <div>
-
-        <h2>
-          🎉 রেজিস্ট্রেশন সফল
-        </h2>
-
-        <p>
-          আপনার রেজিস্ট্রেশন গ্রহণ করা হয়েছে
-        </p>
-
-      </div>
-
-      <button
-        class="close-btn"
-        onclick="closeSuccessModal()">
-
-        ×
-
-      </button>
-
-    </div>
-
-
-    <div class="roll-box">
-
-      <div class="roll-label">
-        আপনার Quiz Roll Number
-      </div>
-
-      <div
-        id="successRoll"
-        class="roll-number">
-      </div>
-
-    </div>
-
-
-    <div class="user-info">
-
-      ⏳ আপনার রেজিস্ট্রেশন এখন
-      <strong>Pending</strong> অবস্থায় আছে।<br>
-
-      Admin অনুমোদনের পর এই Roll Number
-      ব্যবহার করে পরীক্ষায় অংশ নিতে পারবেন।
-
-    </div>
-
 
     <button
-      class="primary-btn"
-      onclick="closeSuccessModal()">
+      class="secondary-btn"
+      onclick="closeRegistrationModal()">
 
-      ঠিক আছে
+      বাতিল
 
     </button>
 
@@ -1092,35 +1533,76 @@ select{
 </div>
 
 
+
 <!-- BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
   <div class="bottom-inner">
 
-    <a href="index.html" class="bottom-link">
-      <span>🏠</span>
+
+    <a
+      href="index.html"
+      class="bottom-link">
+
+      <span>
+        🏠
+      </span>
+
       হোম
+
     </a>
 
-    <a href="quiz.html" class="bottom-link">
-      <span>🚀</span>
+
+    <a
+      href="quiz.html"
+      class="bottom-link">
+
+      <span>
+        🚀
+      </span>
+
       কুইজ
+
     </a>
 
-    <a href="category.html" class="bottom-link">
-      <span>📚</span>
+
+    <a
+      href="category.html"
+      class="bottom-link">
+
+      <span>
+        📚
+      </span>
+
       ক্যাটাগরি
+
     </a>
 
-    <a href="result.html" class="bottom-link">
-      <span>🏆</span>
+
+    <a
+      href="result.html"
+      class="bottom-link">
+
+      <span>
+        🏆
+      </span>
+
       ফলাফল
+
     </a>
 
-    <a href="profile.html" class="bottom-link">
-      <span>👤</span>
+
+    <a
+      href="profile.html"
+      class="bottom-link">
+
+      <span>
+        👤
+      </span>
+
       প্রোফাইল
+
     </a>
 
   </div>
@@ -1128,46 +1610,63 @@ select{
 </nav>
 
 
+
+<!-- FIREBASE -->
+
 <script type="module">
 
-import { auth, db } from "./firebase-config.js";
+import {
+  auth,
+  db
+} from "./firebase-config.js";
+
 
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 import {
   collection,
   query,
   where,
   getDocs,
-  getDoc,
   doc,
-  addDoc,
+  getDoc,
+  setDoc,
   serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
 
 let currentUser = null;
+
 let currentProfile = null;
+
 let quizzes = [];
+
 let selectedQuiz = null;
+
 
 
 /* =========================
    MESSAGE
 ========================= */
 
-function showMessage(text,type="info"){
+function showMessage(
+  text,
+  type = "info"
+){
 
   const box =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
 
-  box.textContent = text;
+  box.textContent =
+    text;
 
   box.className =
     "message show " + type;
@@ -1175,65 +1674,130 @@ function showMessage(text,type="info"){
 }
 
 
+function showRegistrationMessage(
+  text,
+  type = "error"
+){
+
+  const box =
+    document.getElementById(
+      "registrationMessage"
+    );
+
+  box.textContent =
+    text;
+
+  box.className =
+    "message show " + type;
+
+}
+
+
+
 /* =========================
    AUTH TABS
 ========================= */
 
-window.showAuthTab = function(tab){
+window.showAuthTab =
+function(tab){
 
-  const login =
-    document.getElementById("loginForm");
+  const loginForm =
+    document.getElementById(
+      "loginForm"
+    );
 
-  const signup =
-    document.getElementById("signupForm");
+  const signupForm =
+    document.getElementById(
+      "signupForm"
+    );
 
   const loginTab =
-    document.getElementById("loginTab");
+    document.getElementById(
+      "loginTab"
+    );
 
   const signupTab =
-    document.getElementById("signupTab");
+    document.getElementById(
+      "signupTab"
+    );
 
 
-  if(tab === "login"){
+  if(
+    tab === "login"
+  ){
 
-    login.classList.remove("hidden");
-    signup.classList.add("hidden");
+    loginForm.classList.remove(
+      "hidden"
+    );
 
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
+    signupForm.classList.add(
+      "hidden"
+    );
+
+    loginTab.classList.add(
+      "active"
+    );
+
+    signupTab.classList.remove(
+      "active"
+    );
 
   }else{
 
-    login.classList.add("hidden");
-    signup.classList.remove("hidden");
+    loginForm.classList.add(
+      "hidden"
+    );
 
-    loginTab.classList.remove("active");
-    signupTab.classList.add("active");
+    signupForm.classList.remove(
+      "hidden"
+    );
+
+    loginTab.classList.remove(
+      "active"
+    );
+
+    signupTab.classList.add(
+      "active"
+    );
 
   }
 
 };
 
 
+
 /* =========================
    LOGIN
 ========================= */
 
-window.loginStudent = async function(){
+window.loginStudent =
+async function(){
+
+  const button =
+    document.getElementById(
+      "loginBtn"
+    );
+
 
   const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
+    document.getElementById(
+      "loginEmail"
+    )
+    .value
+    .trim();
+
 
   const password =
-    document
-      .getElementById("loginPassword")
-      .value;
+    document.getElementById(
+      "loginPassword"
+    )
+    .value;
 
 
-  if(!email || !password){
+  if(
+    !email ||
+    !password
+  ){
 
     showMessage(
       "⚠️ ইমেইল ও পাসওয়ার্ড দিন।",
@@ -1241,94 +1805,168 @@ window.loginStudent = async function(){
     );
 
     return;
+
   }
 
 
-  const button =
-    document.getElementById("loginBtn");
+  button.disabled =
+    true;
 
-  button.disabled = true;
-  button.textContent = "⏳ লগইন হচ্ছে...";
+  button.textContent =
+    "⏳ লগইন হচ্ছে...";
 
 
   try{
 
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const result =
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    currentUser =
+      result.user;
+
+
+    await loadStudentData();
+
 
     showMessage(
-      "✅ লগইন সফল হয়েছে।",
+      "✅ সফলভাবে লগইন হয়েছে।",
       "success"
     );
+
 
   }catch(error){
 
     console.error(error);
 
+
     showMessage(
-      "❌ লগইন করা যায়নি। ইমেইল বা পাসওয়ার্ড যাচাই করুন।",
+      "❌ লগইন করা যায়নি। ইমেইল ও পাসওয়ার্ড পরীক্ষা করুন।",
       "error"
     );
 
+
   }finally{
 
-    button.disabled = false;
-    button.textContent = "🔐 লগইন করুন";
+    button.disabled =
+      false;
+
+    button.textContent =
+      "🔐 লগইন করুন";
 
   }
 
 };
 
 
+
 /* =========================
-   SIGNUP
+   SIGN UP
 ========================= */
 
-window.signupStudent = async function(){
+window.signupStudent =
+async function(){
+
+  const button =
+    document.getElementById(
+      "signupBtn"
+    );
+
+
+  const fullName =
+    document.getElementById(
+      "signupName"
+    )
+    .value
+    .trim();
+
+
+  const mobile =
+    document.getElementById(
+      "signupMobile"
+    )
+    .value
+    .trim();
+
 
   const email =
-    document
-      .getElementById("signupEmail")
-      .value
-      .trim();
+    document.getElementById(
+      "signupEmail"
+    )
+    .value
+    .trim();
+
+
+  const institution =
+    document.getElementById(
+      "signupInstitution"
+    )
+    .value
+    .trim();
+
+
+  const studentClass =
+    document.getElementById(
+      "signupClass"
+    )
+    .value
+    .trim();
+
+
+  const district =
+    document.getElementById(
+      "signupDistrict"
+    )
+    .value
+    .trim();
+
+
+  const division =
+    document.getElementById(
+      "signupDivision"
+    )
+    .value;
+
 
   const password =
-    document
-      .getElementById("signupPassword")
-      .value;
-
-  const confirm =
-    document
-      .getElementById("signupConfirm")
-      .value;
+    document.getElementById(
+      "signupPassword"
+    )
+    .value;
 
 
-  if(!email || !password || !confirm){
+  const confirmPassword =
+    document.getElementById(
+      "signupConfirm"
+    )
+    .value;
+
+
+  if(
+    !fullName ||
+    !mobile ||
+    !email ||
+    !password ||
+    !confirmPassword
+  ){
 
     showMessage(
-      "⚠️ সব তথ্য পূরণ করুন।",
+      "⚠️ নাম, মোবাইল, ইমেইল ও পাসওয়ার্ড পূরণ করুন।",
       "error"
     );
 
     return;
+
   }
 
 
-  if(password !== confirm){
-
-    showMessage(
-      "⚠️ দুইটি পাসওয়ার্ড একই নয়।",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if(password.length < 6){
+  if(
+    password.length < 6
+  ){
 
     showMessage(
       "⚠️ পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।",
@@ -1336,58 +1974,174 @@ window.signupStudent = async function(){
     );
 
     return;
+
   }
 
 
-  const button =
-    document.getElementById("signupBtn");
+  if(
+    password !==
+    confirmPassword
+  ){
 
-  button.disabled = true;
-  button.textContent = "⏳ অ্যাকাউন্ট তৈরি হচ্ছে...";
+    showMessage(
+      "⚠️ দুইটি পাসওয়ার্ড মিলছে না।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ অ্যাকাউন্ট তৈরি হচ্ছে...";
 
 
   try{
 
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
+    const result =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+    const user =
+      result.user;
+
+
+    const studentId =
+      "GT-STU-" +
+      Date.now()
+        .toString()
+        .slice(-6);
+
+
+    await setDoc(
+      doc(
+        db,
+        "profiles",
+        user.uid
+      ),
+      {
+
+        full_name:
+          fullName,
+
+        mobile:
+          mobile,
+
+        email:
+          email,
+
+        institution:
+          institution,
+
+        class:
+          studentClass,
+
+        district:
+          district,
+
+        division:
+          division,
+
+        student_id:
+          studentId,
+
+        role:
+          "student",
+
+        is_active:
+          true,
+
+        created_at:
+          serverTimestamp(),
+
+        updated_at:
+          serverTimestamp()
+
+      }
     );
+
+
+    currentUser =
+      user;
+
+
+    await loadStudentData();
 
 
     showMessage(
-      "🎉 Account তৈরি হয়েছে। এখন Profile থেকে আপনার তথ্য পূরণ করুন।",
+      "🎉 আপনার Student Account সফলভাবে তৈরি হয়েছে।",
       "success"
     );
+
 
   }catch(error){
 
     console.error(error);
 
+
     let message =
-      "❌ Account তৈরি করা যায়নি।";
+      "❌ অ্যাকাউন্ট তৈরি করা যায়নি।";
 
 
-    if(error.code === "auth/email-already-in-use"){
+    if(
+      error.code ===
+      "auth/email-already-in-use"
+    ){
 
       message =
-        "⚠️ এই ইমেইল দিয়ে আগে থেকেই Account আছে।";
+        "❌ এই ইমেইল দিয়ে ইতিমধ্যে অ্যাকাউন্ট আছে।";
 
     }
+
+
+    if(
+      error.code ===
+      "auth/invalid-email"
+    ){
+
+      message =
+        "❌ ইমেইল ঠিকানা সঠিক নয়।";
+
+    }
+
+
+    if(
+      error.code ===
+      "auth/weak-password"
+    ){
+
+      message =
+        "❌ পাসওয়ার্ড আরও শক্তিশালী দিন।";
+
+    }
+
 
     showMessage(
       message,
       "error"
     );
 
+
   }finally{
 
-    button.disabled = false;
-    button.textContent = "📝 অ্যাকাউন্ট তৈরি করুন";
+    button.disabled =
+      false;
+
+    button.textContent =
+      "🚀 অ্যাকাউন্ট তৈরি করুন";
 
   }
 
 };
+
 
 
 /* =========================
@@ -1396,128 +2150,236 @@ window.signupStudent = async function(){
 
 onAuthStateChanged(
   auth,
-  async (user)=>{
+  async(user)=>{
 
-    currentUser = user;
+    if(user){
 
-    if(!user){
+      currentUser =
+        user;
+
+      await loadStudentData();
+
+    }else{
+
+      currentUser =
+        null;
+
+      currentProfile =
+        null;
+
 
       document
-        .getElementById("authSection")
-        .classList.remove("hidden");
+        .getElementById(
+          "authSection"
+        )
+        .classList
+        .remove(
+          "hidden"
+        );
+
 
       document
-        .getElementById("profileSection")
-        .classList.add("hidden");
+        .getElementById(
+          "userSection"
+        )
+        .classList
+        .add(
+          "hidden"
+        );
 
-      document
-        .getElementById("quizSection")
-        .classList.add("hidden");
-
-      return;
     }
-
-
-    await loadStudentData();
 
   }
 );
 
 
+
 /* =========================
-   STUDENT PROFILE
+   LOAD PROFILE
 ========================= */
 
 async function loadStudentData(){
 
+  if(
+    !currentUser
+  ){
+
+    return;
+
+  }
+
+
   try{
 
-    const profileRef =
-      doc(
-        db,
-        "profiles",
-        currentUser.uid
+    const profileSnap =
+      await getDoc(
+        doc(
+          db,
+          "profiles",
+          currentUser.uid
+        )
       );
 
 
-    const snapshot =
-      await getDoc(profileRef);
-
-
-    if(!snapshot.exists()){
+    if(
+      !profileSnap.exists()
+    ){
 
       showMessage(
-        "⚠️ আপনার Student Profile পাওয়া যায়নি। আগে Profile তৈরি করুন।",
+        "⚠️ আপনার Student Profile পাওয়া যায়নি। আগে প্রোফাইল সম্পূর্ণ করুন।",
         "error"
       );
 
       return;
+
     }
 
 
     currentProfile =
-      snapshot.data();
+      profileSnap.data();
 
 
-    document
-      .getElementById("authSection")
-      .classList.add("hidden");
+    if(
+      currentProfile.role !==
+      "student"
+    ){
+
+      showMessage(
+        "❌ এই অ্যাকাউন্টটি Student Account নয়।",
+        "error"
+      );
+
+      return;
+
+    }
 
 
-    document
-      .getElementById("profileSection")
-      .classList.remove("hidden");
+    if(
+      currentProfile.is_active ===
+      false
+    ){
+
+      showMessage(
+        "❌ আপনার Student Account বর্তমানে নিষ্ক্রিয়।",
+        "error"
+      );
+
+      return;
+
+    }
 
 
-    document
-      .getElementById("quizSection")
-      .classList.remove("hidden");
-
-
-    document
-      .getElementById("studentName")
-      .textContent =
-      currentProfile.full_name ||
-      "শিক্ষার্থী";
-
-
-    document
-      .getElementById("studentInfo")
-      .innerHTML =
-
-      "<strong>Student ID:</strong> " +
-      (currentProfile.student_id || "নির্ধারিত হয়নি") +
-
-      "<br><strong>মোবাইল:</strong> " +
-      (currentProfile.mobile || "—") +
-
-      "<br><strong>প্রতিষ্ঠান:</strong> " +
-      (currentProfile.institution || "—") +
-
-      "<br><strong>শ্রেণি:</strong> " +
-      (currentProfile.class || "—") +
-
-      "<br><strong>জেলা:</strong> " +
-      (currentProfile.district || "—") +
-
-      "<br><strong>বিভাগ:</strong> " +
-      (currentProfile.division || "—");
+    showUserSection();
 
 
     await loadQuizzes();
+
 
   }catch(error){
 
     console.error(error);
 
+
     showMessage(
-      "❌ Student Profile লোড করতে সমস্যা হয়েছে।",
+      "❌ Student Profile লোড করা যায়নি।",
       "error"
     );
 
   }
 
 }
+
+
+
+/* =========================
+   SHOW USER
+========================= */
+
+function showUserSection(){
+
+  document
+    .getElementById(
+      "authSection"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "userSection"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
+
+
+  const userInfo =
+    document.getElementById(
+      "userInfo"
+    );
+
+
+  userInfo.innerHTML = `
+
+    <strong>নাম:</strong>
+    ${escapeHtml(
+      currentProfile.full_name || ""
+    )}
+    <br>
+
+    <strong>Student ID:</strong>
+    ${escapeHtml(
+      currentProfile.student_id || ""
+    )}
+    <br>
+
+    <strong>মোবাইল:</strong>
+    ${escapeHtml(
+      currentProfile.mobile || ""
+    )}
+    <br>
+
+    <strong>ইমেইল:</strong>
+    ${escapeHtml(
+      currentProfile.email || ""
+    )}
+    <br>
+
+    <strong>প্রতিষ্ঠান:</strong>
+    ${escapeHtml(
+      currentProfile.institution ||
+      "দেওয়া হয়নি"
+    )}
+    <br>
+
+    <strong>শ্রেণি:</strong>
+    ${escapeHtml(
+      currentProfile.class ||
+      "দেওয়া হয়নি"
+    )}
+    <br>
+
+    <strong>জেলা:</strong>
+    ${escapeHtml(
+      currentProfile.district ||
+      "দেওয়া হয়নি"
+    )}
+    <br>
+
+    <strong>বিভাগ:</strong>
+    ${escapeHtml(
+      currentProfile.division ||
+      "দেওয়া হয়নি"
+    )}
+
+  `;
+
+}
+
 
 
 /* =========================
@@ -1527,25 +2389,50 @@ async function loadStudentData(){
 async function loadQuizzes(){
 
   const loading =
-    document.getElementById("quizLoading");
+    document.getElementById(
+      "quizLoading"
+    );
+
 
   const grid =
-    document.getElementById("quizGrid");
+    document.getElementById(
+      "quizGrid"
+    );
 
 
-  loading.style.display = "block";
-  grid.innerHTML = "";
+  const empty =
+    document.getElementById(
+      "emptyQuiz"
+    );
+
+
+  quizzes = [];
+
+
+  loading.classList.remove(
+    "hidden"
+  );
+
+
+  grid.classList.add(
+    "hidden"
+  );
+
+
+  empty.classList.add(
+    "hidden"
+  );
 
 
   try{
 
-    const quizzesRef =
-      collection(db,"quizzes");
-
-
     const q =
       query(
-        quizzesRef,
+        collection(
+          db,
+          "quizzes"
+        ),
+
         where(
           "registration_open",
           "==",
@@ -1558,33 +2445,425 @@ async function loadQuizzes(){
       await getDocs(q);
 
 
-    quizzes = [];
+    snapshot.forEach(
+      (item)=>{
+
+        quizzes.push({
+
+          id:
+            item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
 
 
-    snapshot.forEach(item=>{
-
-      quizzes.push({
-        id:item.id,
-        ...item.data()
-      });
-
-    });
+    loading.classList.add(
+      "hidden"
+    );
 
 
-    loading.style.display = "none";
+    if(
+      quizzes.length ===
+      0
+    ){
 
-
-    if(quizzes.length === 0){
-
-      grid.innerHTML =
-        '<div class="loading">এই মুহূর্তে কোনো কুইজের রেজিস্ট্রেশন খোলা নেই।</div>';
+      empty.classList.remove(
+        "hidden"
+      );
 
       return;
+
     }
 
 
-    quizzes.forEach(
-      quiz => renderQuiz(quiz)
+    renderQuizzes();
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    loading.classList.add(
+      "hidden"
+    );
+
+
+    empty.classList.remove(
+      "hidden"
+    );
+
+
+    showMessage(
+      "❌ কুইজ লোড করা যায়নি।",
+      "error"
+    );
+
+  }
+
+}
+
+
+
+/* =========================
+   RENDER QUIZZES
+========================= */
+
+function renderQuizzes(){
+
+  const grid =
+    document.getElementById(
+      "quizGrid"
+    );
+
+
+  grid.innerHTML =
+    "";
+
+
+  quizzes.forEach(
+    (quiz)=>{
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "quiz-card";
+
+
+      const image =
+        quiz.image_url
+
+        ? `
+
+          <img
+            src="${escapeAttribute(
+              quiz.image_url
+            )}"
+            alt="কুইজ">
+
+        `
+
+        : `
+
+          <div class="quiz-image-placeholder">
+            📚
+          </div>
+
+        `;
+
+
+      const fee =
+        Number(
+          quiz.fee || 0
+        );
+
+
+      const feeText =
+        fee > 0
+        ? "৳ " + fee
+        : "ফ্রি";
+
+
+      const feeClass =
+        fee > 0
+        ? "fee-paid"
+        : "fee-free";
+
+
+      card.innerHTML = `
+
+        <div class="quiz-image">
+
+          ${image}
+
+        </div>
+
+
+        <div class="quiz-body">
+
+
+          <div class="quiz-title">
+
+            ${escapeHtml(
+              quiz.title ||
+              quiz.quiz_name ||
+              "কুইজ"
+            )}
+
+          </div>
+
+
+          <div class="category">
+
+            ${escapeHtml(
+              quiz.category ||
+              quiz.category_name ||
+              "সাধারণ"
+            )}
+
+          </div>
+
+
+          <div class="quiz-info">
+
+
+            <div class="info-item">
+
+              <div class="info-label">
+                ফি
+              </div>
+
+              <div
+                class="info-value ${feeClass}">
+
+                ${feeText}
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <div class="info-label">
+                প্রশ্ন
+              </div>
+
+              <div class="info-value">
+
+                ${Number(
+                  quiz.total_questions ||
+                  quiz.question_count ||
+                  0
+                )}
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <div class="info-label">
+                সময়
+              </div>
+
+              <div class="info-value">
+
+                ${Number(
+                  quiz.duration_minutes ||
+                  20
+                )}
+
+                মিনিট
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <div class="info-label">
+                অংশগ্রহণ
+              </div>
+
+              <div class="info-value">
+
+                ${Number(
+                  quiz.participants_count ||
+                  quiz.participants ||
+                  0
+                )}
+
+                জন
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="details">
+
+            ${escapeHtml(
+              quiz.description ||
+              "এই কুইজে অংশ নিতে রেজিস্ট্রেশন করুন।"
+            )}
+
+          </div>
+
+
+          <button
+            class="primary-btn"
+            onclick="openRegistration('${escapeAttribute(
+              quiz.id
+            )}')">
+
+            📝 রেজিস্ট্রেশন করুন
+
+          </button>
+
+
+        </div>
+
+      `;
+
+
+      grid.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  grid.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+
+/* =========================
+   OPEN REGISTRATION
+========================= */
+
+window.openRegistration =
+async function(quizId){
+  selectedQuiz = quizzes.find(quiz => quiz.id === quizId);
+  if(!selectedQuiz){ showMessage("❌ কুইজ পাওয়া যায়নি।", "error"); return; }
+  if(!currentUser || !currentProfile){ showMessage("⚠️ আগে লগইন করুন।", "error"); return; }
+
+  const now = Date.now();
+  const toMillis = (value) => {
+    if(!value) return NaN;
+    if(typeof value === "object" && typeof value.toDate === "function") return value.toDate().getTime();
+    if(typeof value === "object" && typeof value.toMillis === "function") return value.toMillis();
+    const ms = new Date(value).getTime();
+    return Number.isFinite(ms) ? ms : NaN;
+  };
+  const regStart = toMillis(selectedQuiz.registration_start ?? selectedQuiz.registrationStart ?? selectedQuiz.reg_start);
+  const regEnd = toMillis(selectedQuiz.registration_end ?? selectedQuiz.registrationEnd ?? selectedQuiz.reg_end);
+
+  if(Number.isFinite(regStart) && now < regStart){
+    showMessage("⏳ এই কুইজের রেজিস্ট্রেশন এখনো শুরু হয়নি। নির্ধারিত সময়ে আবার চেষ্টা করুন।", "error");
+    return;
+  }
+  if(Number.isFinite(regEnd) && now >= regEnd){
+    showMessage("⛔ এই কুইজের রেজিস্ট্রেশন সময় শেষ হয়ে গেছে।", "error");
+    return;
+  }
+  if(selectedQuiz.registration_open === false || selectedQuiz.is_active === false){
+    showMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error");
+    return;
+  }
+  if(selectedQuiz.status && String(selectedQuiz.status).toLowerCase() !== "published"){
+    showMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error");
+    return;
+  }
+
+  /* একই Student + একই Quiz = একই Firestore document */
+  const registrationId = currentUser.uid + "_" + selectedQuiz.id;
+  const existingDoc = await getDoc(doc(db, "quiz_registrations", registrationId));
+  if(existingDoc.exists()){
+    showMessage("⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন। একই কুইজে দ্বিতীয়বার রেজিস্ট্রেশন করা যাবে না।", "error");
+    return;
+  }
+
+  document.getElementById("registrationModal").classList.add("show");
+  document.getElementById("registrationMessage").className = "message";
+  document.getElementById("registrationMessage").textContent = "";
+  document.getElementById("modalSubtitle").textContent = selectedQuiz.title || selectedQuiz.quiz_name || "কুইজ";
+  document.getElementById("regName").value = currentProfile.full_name || "";
+  document.getElementById("regMobile").value = currentProfile.mobile || "";
+  document.getElementById("regInstitution").value = currentProfile.institution || "";
+
+  const fee = Number(selectedQuiz.fee ?? selectedQuiz.registration_fee ?? 0);
+  const paymentBox = document.getElementById("paymentBox");
+  if(fee > 0){ paymentBox.classList.remove("hidden"); await loadPaymentMethods(); }
+  else { paymentBox.classList.add("hidden"); }
+};
+
+
+/* =========================
+   PAYMENT METHODS
+========================= */
+
+async function loadPaymentMethods(){
+
+  const select =
+    document.getElementById(
+      "paymentMethod"
+    );
+
+
+  select.innerHTML = `
+
+    <option value="">
+      নির্বাচন করুন
+    </option>
+
+  `;
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "payment_methods"
+        )
+      );
+
+
+    snapshot.forEach(
+      item => {
+
+        const data =
+          item.data();
+
+
+        if(
+          data.is_active !==
+          false
+        ){
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+
+          option.value =
+            item.id;
+
+
+          option.textContent =
+            data.name ||
+            data.method_name ||
+            item.id;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+
+      }
     );
 
 
@@ -1592,255 +2871,16 @@ async function loadQuizzes(){
 
     console.error(error);
 
-    loading.style.display = "none";
 
-    grid.innerHTML =
-      '<div class="loading">❌ কুইজ লোড করা যায়নি।</div>';
-
-  }
-
-}
-
-
-/* =========================
-   RENDER QUIZ
-========================= */
-
-function renderQuiz(quiz){
-
-  const grid =
-    document.getElementById("quizGrid");
-
-
-  const card =
-    document.createElement("div");
-
-  card.className = "quiz-card";
-
-
-  const image =
-    quiz.image_url
-      ? `
-        <img
-          src="${escapeHtml(quiz.image_url)}"
-          alt="কুইজ">
-      `
-      :
-      `
-        <div class="quiz-placeholder">
-          🧠
-        </div>
-      `;
-
-
-  const fee =
-    Number(quiz.fee || 0);
-
-
-  const feeText =
-    fee === 0
-      ? "ফ্রি"
-      : "৳ " + fee;
-
-
-  const feeClass =
-    fee === 0
-      ? "free"
-      : "paid";
-
-
-  const category =
-    quiz.category_name ||
-    "সাধারণ কুইজ";
-
-
-  card.innerHTML = `
-
-    <div class="quiz-image">
-      ${image}
-    </div>
-
-    <div class="quiz-body">
-
-      <div class="quiz-title">
-        ${escapeHtml(
-          quiz.title ||
-          quiz.quiz_name ||
-          "কুইজ"
-        )}
-      </div>
-
-      <div class="category">
-        📚 ${escapeHtml(category)}
-      </div>
-
-      <div class="quiz-info">
-
-        <div class="info-item">
-
-          <div class="info-label">
-            প্রশ্ন
-          </div>
-
-          <div class="info-value">
-            ${quiz.total_questions || 0} টি
-          </div>
-
-        </div>
-
-
-        <div class="info-item">
-
-          <div class="info-label">
-            সময়
-          </div>
-
-          <div class="info-value">
-            ${quiz.duration_minutes || 0} মিনিট
-          </div>
-
-        </div>
-
-
-        <div class="info-item">
-
-          <div class="info-label">
-            রেজিস্ট্রেশন ফি
-          </div>
-
-          <div class="info-value ${feeClass}">
-            ${feeText}
-          </div>
-
-        </div>
-
-
-        <div class="info-item">
-
-          <div class="info-label">
-            মোট নম্বর
-          </div>
-
-          <div class="info-value">
-            ${quiz.total_marks || 0}
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="details">
-
-        ${escapeHtml(
-          quiz.description ||
-          quiz.instructions ||
-          "এই কুইজে অংশ নিতে আগে রেজিস্ট্রেশন সম্পন্ন করুন।"
-        )}
-
-      </div>
-
-
-      <button
-        class="primary-btn"
-        onclick="openRegistrationModal('${quiz.id}')">
-
-        📝 রেজিস্ট্রেশন করুন
-
-      </button>
-
-    </div>
-
-  `;
-
-
-  grid.appendChild(card);
-
-}
-
-
-/* =========================
-   OPEN MODAL
-========================= */
-
-window.openRegistrationModal =
-function(quizId){
-
-  selectedQuiz =
-    quizzes.find(
-      quiz => quiz.id === quizId
-    );
-
-
-  if(!selectedQuiz){
-
-    showMessage(
-      "❌ কুইজ পাওয়া যায়নি।",
+    showRegistrationMessage(
+      "❌ পেমেন্ট পদ্ধতি লোড করা যায়নি।",
       "error"
     );
 
-    return;
   }
 
+}
 
-  document
-    .getElementById("modalQuizTitle")
-    .textContent =
-    selectedQuiz.title ||
-    selectedQuiz.quiz_name ||
-    "কুইজে রেজিস্ট্রেশন";
-
-
-  document
-    .getElementById("modalProfileInfo")
-    .innerHTML =
-
-    "<strong>নাম:</strong> " +
-    (currentProfile.full_name || "—") +
-
-    "<br><strong>Student ID:</strong> " +
-    (currentProfile.student_id || "—") +
-
-    "<br><strong>মোবাইল:</strong> " +
-    (currentProfile.mobile || "—") +
-
-    "<br><strong>প্রতিষ্ঠান:</strong> " +
-    (currentProfile.institution || "—") +
-
-    "<br><strong>শ্রেণি:</strong> " +
-    (currentProfile.class || "—") +
-
-    "<br><strong>জেলা:</strong> " +
-    (currentProfile.district || "—") +
-
-    "<br><strong>বিভাগ:</strong> " +
-    (currentProfile.division || "—");
-
-
-  const fee =
-    Number(selectedQuiz.fee || 0);
-
-
-  const paymentBox =
-    document.getElementById("paymentBox");
-
-
-  if(fee > 0){
-
-    paymentBox.classList.remove("hidden");
-
-  }else{
-
-    paymentBox.classList.add("hidden");
-
-  }
-
-
-  document
-    .getElementById("registrationModal")
-    .classList.add("show");
-
-};
 
 
 /* =========================
@@ -1850,83 +2890,189 @@ function(quizId){
 window.confirmRegistration =
 async function(){
 
-  if(!currentUser){
+  if(
+    !currentUser ||
+    !currentProfile
+  ){
 
-    showMessage(
-      "⚠️ আগে Student Account-এ লগইন করুন।",
-      "error"
-    );
-
-    closeRegistrationModal();
-
-    return;
-  }
-
-
-  if(!currentProfile){
-
-    showMessage(
-      "⚠️ Student Profile পাওয়া যায়নি।",
+    showRegistrationMessage(
+      "⚠️ আগে লগইন করুন।",
       "error"
     );
 
     return;
+
   }
 
 
-  if(!selectedQuiz){
+  if(
+    !selectedQuiz
+  ){
 
-    showMessage(
-      "⚠️ কোনো কুইজ নির্বাচন করা হয়নি।",
+    showRegistrationMessage(
+      "❌ কোনো কুইজ নির্বাচন করা হয়নি।",
       "error"
     );
 
     return;
+
   }
 
+
+  /* Final re-check from Firestore immediately before registration. */
+  const latestQuizSnap = await getDoc(doc(db, "quizzes", selectedQuiz.id));
+  if(!latestQuizSnap.exists()){
+    showRegistrationMessage("❌ কুইজটি আর পাওয়া যাচ্ছে না।", "error");
+    return;
+  }
+  selectedQuiz = { id: latestQuizSnap.id, ...latestQuizSnap.data() };
+
+  const now = Date.now();
+  const toMillis = (value) => {
+    if(!value) return NaN;
+    if(typeof value === "object" && typeof value.toDate === "function") return value.toDate().getTime();
+    if(typeof value === "object" && typeof value.toMillis === "function") return value.toMillis();
+    const ms = new Date(value).getTime();
+    return Number.isFinite(ms) ? ms : NaN;
+  };
+  const regStart = toMillis(selectedQuiz.registration_start ?? selectedQuiz.registrationStart ?? selectedQuiz.reg_start);
+  const regEnd = toMillis(selectedQuiz.registration_end ?? selectedQuiz.registrationEnd ?? selectedQuiz.reg_end);
+  if(Number.isFinite(regStart) && now < regStart){ showRegistrationMessage("⏳ এই কুইজের রেজিস্ট্রেশন এখনো শুরু হয়নি।", "error"); return; }
+  if(Number.isFinite(regEnd) && now >= regEnd){ showRegistrationMessage("⛔ এই কুইজের রেজিস্ট্রেশন সময় শেষ হয়ে গেছে।", "error"); return; }
+  if(selectedQuiz.registration_open === false || selectedQuiz.is_active === false){ showRegistrationMessage("⛔ এই কুইজের রেজিস্ট্রেশন বর্তমানে বন্ধ।", "error"); return; }
+  if(selectedQuiz.status && String(selectedQuiz.status).toLowerCase() !== "published"){ showRegistrationMessage("⛔ এই কুইজটি বর্তমানে প্রকাশিত নয়।", "error"); return; }
+
+  /* একই Student + একই Quiz-এর registration document আবার পরীক্ষা। */
+  const registrationId = currentUser.uid + "_" + selectedQuiz.id;
+  const existingRegistration = await getDoc(doc(db, "quiz_registrations", registrationId));
+  if(existingRegistration.exists()){
+    showRegistrationMessage("⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন। একই কুইজে দ্বিতীয়বার করা যাবে না।", "error");
+    return;
+  }
 
   const button =
-    document.getElementById("confirmBtn");
+    document.getElementById(
+      "confirmBtn"
+    );
 
 
-  button.disabled = true;
+  const fee = Number(selectedQuiz.fee ?? selectedQuiz.registration_fee ?? 0);
+
+
+  button.disabled =
+    true;
+
+
   button.textContent =
     "⏳ রেজিস্ট্রেশন হচ্ছে...";
 
 
   try{
 
-    const fee =
-      Number(selectedQuiz.fee || 0);
+
+    /*
+      ======================================
+      গুরুত্বপূর্ণ:
+
+      আগে এখানে পুরো quiz-এর
+      registrations collection পড়ে
+      Roll Number গণনা করা হতো।
+
+      Firestore Rules অনুযায়ী Student
+      অন্য Student-এর registration পড়তে
+      পারে না।
+
+      এখন আর সেই কাজ হচ্ছে না।
+
+      Student + Quiz-এর জন্য একটি
+      নির্দিষ্ট document ব্যবহার করছি।
+      ======================================
+    */
 
 
-    let paymentData = null;
+    const registrationId =
+
+      currentUser.uid +
+      "_" +
+      selectedQuiz.id;
+
+
+    const registrationRef =
+
+      doc(
+        db,
+        "quiz_registrations",
+        registrationId
+      );
+
+
+    /*
+      শুধু নিজের registration check।
+    */
+
+    const existingDoc =
+
+      await getDoc(
+        registrationRef
+      );
+
+
+    if(
+      existingDoc.exists()
+    ){
+
+      showRegistrationMessage(
+        "⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন।",
+        "error"
+      );
+
+      return;
+
+    }
+
 
 
     /* PAYMENT */
 
-    if(fee > 0){
+    let paymentData =
+      null;
+
+
+    if(
+      fee > 0
+    ){
 
       const paymentMethod =
         document
-          .getElementById("paymentMethod")
+          .getElementById(
+            "paymentMethod"
+          )
           .value;
+
 
       const paymentNumber =
         document
-          .getElementById("paymentNumber")
+          .getElementById(
+            "paymentNumber"
+          )
           .value
           .trim();
+
 
       const transactionId =
         document
-          .getElementById("transactionId")
+          .getElementById(
+            "transactionId"
+          )
           .value
           .trim();
 
+
       const paymentScreenshot =
         document
-          .getElementById("paymentScreenshot")
+          .getElementById(
+            "paymentScreenshot"
+          )
           .value
           .trim();
 
@@ -1937,12 +3083,13 @@ async function(){
         !transactionId
       ){
 
-        showMessage(
-          "⚠️ পেমেন্টের সব প্রয়োজনীয় তথ্য দিন।",
+        showRegistrationMessage(
+          "⚠️ পেমেন্টের প্রয়োজনীয় তথ্য পূরণ করুন।",
           "error"
         );
 
         return;
+
       }
 
 
@@ -1965,30 +3112,32 @@ async function(){
     }
 
 
-    /* ROLL NUMBER */
+
+    /*
+      Roll Number
+
+      অন্য কোনো registration পড়তে হবে না।
+    */
 
     const rollNumber =
       generateQuizRoll();
 
 
-    /* SAVE */
 
-    const registrationsRef =
-      collection(
-        db,
-        "quiz_registrations"
-      );
+    /*
+      Registration তৈরি।
+    */
 
-
-    await addDoc(
-      registrationsRef,
+    await setDoc(
+      registrationRef,
       {
 
         student_uid:
           currentUser.uid,
 
         student_id:
-          currentProfile.student_id || "",
+          currentProfile.student_id ||
+          "",
 
         quiz_id:
           selectedQuiz.id,
@@ -2002,22 +3151,28 @@ async function(){
           rollNumber,
 
         full_name:
-          currentProfile.full_name || "",
+          currentProfile.full_name ||
+          "",
 
         mobile:
-          currentProfile.mobile || "",
+          currentProfile.mobile ||
+          "",
 
         institution:
-          currentProfile.institution || "",
+          currentProfile.institution ||
+          "",
 
         class:
-          currentProfile.class || "",
+          currentProfile.class ||
+          "",
 
         district:
-          currentProfile.district || "",
+          currentProfile.district ||
+          "",
 
         division:
-          currentProfile.division || "",
+          currentProfile.division ||
+          "",
 
         fee:
           fee,
@@ -2038,18 +3193,26 @@ async function(){
     );
 
 
-    closeRegistrationModal();
+
+    showRegistrationMessage(
+
+      "🎉 রেজিস্ট্রেশন সফল হয়েছে!\n\n" +
+
+      "আপনার Quiz Roll Number:\n" +
+
+      rollNumber +
+
+      "\n\n" +
+
+      "Admin অনুমোদনের পর এই Roll Number দিয়ে কুইজে অংশ নিতে পারবেন।",
+
+      "success"
+
+    );
 
 
-    document
-      .getElementById("successRoll")
-      .textContent =
-      rollNumber;
-
-
-    document
-      .getElementById("successModal")
-      .classList.add("show");
+    button.textContent =
+      "✅ রেজিস্ট্রেশন সম্পন্ন";
 
 
   }catch(error){
@@ -2060,21 +3223,48 @@ async function(){
     );
 
 
-    showMessage(
-      "❌ রেজিস্ট্রেশন করা যায়নি। আবার চেষ্টা করুন।",
+    showRegistrationMessage(
+
+      "❌ রেজিস্ট্রেশন করা যায়নি।\n\n" +
+
+      "Code: " +
+
+      (
+        error.code ||
+        "unknown"
+      ) +
+
+      "\n\nMessage: " +
+
+      (
+        error.message ||
+        "unknown"
+      ),
+
       "error"
+
     );
+
 
   }finally{
 
-    button.disabled = false;
+    button.disabled =
+      false;
 
-    button.textContent =
-      "✅ রেজিস্ট্রেশন নিশ্চিত করুন";
+    if(
+      button.textContent !==
+      "✅ রেজিস্ট্রেশন সম্পন্ন"
+    ){
+
+      button.textContent =
+        "✅ রেজিস্ট্রেশন নিশ্চিত করুন";
+
+    }
 
   }
 
 };
+
 
 
 /* =========================
@@ -2084,14 +3274,15 @@ async function(){
 function generateQuizRoll(){
 
   /*
-    গুরুত্বপূর্ণ:
-    এখানে Firestore থেকে
+    এখন আর Firestore থেকে
     অন্য Student-এর registration
     পড়া হচ্ছে না।
 
-    তাই permission-denied
-    সমস্যা হবে না।
+    উদাহরণ:
+
+    GT-26-58342173
   */
+
 
   const timePart =
     Date.now()
@@ -2107,12 +3298,15 @@ function generateQuizRoll(){
 
 
   return (
+
     "GT-26-" +
     timePart +
     randomPart
+
   );
 
 }
+
 
 
 /* =========================
@@ -2123,20 +3317,20 @@ window.closeRegistrationModal =
 function(){
 
   document
-    .getElementById("registrationModal")
-    .classList.remove("show");
+    .getElementById(
+      "registrationModal"
+    )
+    .classList
+    .remove(
+      "show"
+    );
+
+
+  selectedQuiz =
+    null;
 
 };
 
-
-window.closeSuccessModal =
-function(){
-
-  document
-    .getElementById("successModal")
-    .classList.remove("show");
-
-};
 
 
 /* =========================
@@ -2145,16 +3339,74 @@ function(){
 
 function escapeHtml(value){
 
-  return String(value || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+
+/* =========================
+   ESCAPE ATTRIBUTE
+========================= */
+
+function escapeAttribute(value){
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    );
 
 }
 
 </script>
+
 
 </body>
 </html>
