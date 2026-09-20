@@ -1464,6 +1464,20 @@ select{
 
       </div>
 
+      <div class="field">
+
+        <label>
+          যে নম্বরে টাকা পাঠাবেন
+        </label>
+
+        <input
+          id="paymentReceiverNumber"
+          type="text"
+          readonly
+          placeholder="পেমেন্ট পদ্ধতি নির্বাচন করুন">
+
+      </div>
+
 
       <div class="field">
 
@@ -1648,6 +1662,7 @@ let currentProfile = null;
 let quizzes = [];
 
 let selectedQuiz = null;
+let selectedPaymentMethod = null;
 
 
 
@@ -2562,7 +2577,10 @@ function renderQuizzes(){
 
       const fee =
         Number(
-          quiz.fee || 0
+          quiz.fee ??
+          quiz.registration_fee ??
+          quiz.price ??
+          0
         );
 
 
@@ -2790,7 +2808,12 @@ async function(quizId){
   document.getElementById("regMobile").value = currentProfile.mobile || "";
   document.getElementById("regInstitution").value = currentProfile.institution || "";
 
-  const fee = Number(selectedQuiz.fee ?? selectedQuiz.registration_fee ?? 0);
+  const fee = Number(
+    selectedQuiz.fee ??
+    selectedQuiz.registration_fee ??
+    selectedQuiz.price ??
+    0
+  );
   const paymentBox = document.getElementById("paymentBox");
   if(fee > 0){ paymentBox.classList.remove("hidden"); await loadPaymentMethods(); }
   else { paymentBox.classList.add("hidden"); }
@@ -2804,83 +2827,127 @@ async function(quizId){
 async function loadPaymentMethods(){
 
   const select =
-    document.getElementById(
-      "paymentMethod"
-    );
+    document.getElementById("paymentMethod");
 
+  const receiver =
+    document.getElementById("paymentReceiverNumber");
+
+  selectedPaymentMethod = null;
 
   select.innerHTML = `
-
-    <option value="">
-      নির্বাচন করুন
-    </option>
-
+    <option value="">নির্বাচন করুন</option>
   `;
 
+  if(receiver){
+    receiver.value = "";
+    receiver.placeholder = "পেমেন্ট পদ্ধতি নির্বাচন করুন";
+  }
 
   try{
 
     const snapshot =
       await getDocs(
-        collection(
-          db,
-          "payment_methods"
-        )
+        collection(db, "payment_methods")
       );
 
+    let activeCount = 0;
 
-    snapshot.forEach(
-      item => {
+    snapshot.forEach(item => {
 
-        const data =
-          item.data();
+      const data = item.data();
 
+      if(data.is_active === false) return;
 
-        if(
-          data.is_active !==
-          false
-        ){
+      const methodName =
+        data.name ||
+        data.method_name ||
+        data.type ||
+        item.id;
 
-          const option =
-            document.createElement(
-              "option"
-            );
+      const receiverNumber =
+        data.number ||
+        data.phone ||
+        data.account_number ||
+        data.payment_number ||
+        "";
 
+      const option =
+        document.createElement("option");
 
-          option.value =
-            item.id;
+      option.value = item.id;
+      option.textContent =
+        receiverNumber
+          ? `${methodName} — ${receiverNumber}`
+          : methodName;
 
+      option.dataset.name = methodName;
+      option.dataset.number = receiverNumber;
 
-          option.textContent =
-            data.name ||
-            data.method_name ||
-            item.id;
+      select.appendChild(option);
+      activeCount++;
 
+    });
 
-          select.appendChild(
-            option
-          );
+    select.onchange = function(){
 
+      const option =
+        select.options[select.selectedIndex];
+
+      if(!option || !option.value){
+
+        selectedPaymentMethod = null;
+
+        if(receiver){
+          receiver.value = "";
+          receiver.placeholder =
+            "পেমেন্ট পদ্ধতি নির্বাচন করুন";
         }
 
+        return;
       }
-    );
 
+      const methodName =
+        option.dataset.name ||
+        option.textContent ||
+        "";
+
+      const receiverNumber =
+        option.dataset.number ||
+        "";
+
+      selectedPaymentMethod = {
+        id: option.value,
+        name: methodName,
+        receiver_number: receiverNumber
+      };
+
+      if(receiver){
+        receiver.value =
+          receiverNumber ||
+          "Admin এখনো এই পেমেন্ট নম্বর সেট করেনি।";
+      }
+
+    };
+
+    if(activeCount === 0){
+      showRegistrationMessage(
+        "⚠️ কোনো Active পেমেন্ট নম্বর পাওয়া যায়নি। Admin Panel থেকে পেমেন্ট নম্বর Active করুন।",
+        "error"
+      );
+    }
 
   }catch(error){
 
-    console.error(error);
-
+    console.error("PAYMENT METHOD ERROR:", error);
 
     showRegistrationMessage(
-      "❌ পেমেন্ট পদ্ধতি লোড করা যায়নি।",
+      "❌ পেমেন্ট পদ্ধতি ও নম্বর লোড করা যায়নি।",
       "error"
     );
 
   }
 
 }
-
 
 
 /* =========================
@@ -3093,10 +3160,43 @@ async function(){
       }
 
 
+      const selectedOption =
+        document.getElementById("paymentMethod")
+          .options[
+            document.getElementById("paymentMethod").selectedIndex
+          ];
+
+      const methodName =
+        selectedOption?.dataset?.name ||
+        selectedOption?.textContent ||
+        paymentMethod;
+
+      const receiverNumber =
+        selectedOption?.dataset?.number ||
+        document.getElementById("paymentReceiverNumber")?.value?.trim() ||
+        "";
+
+      if(!receiverNumber){
+
+        showRegistrationMessage(
+          "⚠️ Admin-এর সেট করা পেমেন্ট নম্বর পাওয়া যায়নি।",
+          "error"
+        );
+
+        return;
+
+      }
+
       paymentData = {
 
         method_id:
           paymentMethod,
+
+        method_name:
+          methodName,
+
+        receiver_number:
+          receiverNumber,
 
         sender_number:
           paymentNumber,
@@ -3328,6 +3428,17 @@ function(){
 
   selectedQuiz =
     null;
+
+  selectedPaymentMethod =
+    null;
+
+  const receiver =
+    document.getElementById("paymentReceiverNumber");
+
+  if(receiver){
+    receiver.value = "";
+    receiver.placeholder = "পেমেন্ট পদ্ধতি নির্বাচন করুন";
+  }
 
 };
 
