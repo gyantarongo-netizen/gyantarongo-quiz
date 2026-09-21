@@ -924,69 +924,9 @@
       scrollbar-color:var(--purple) #080a1b;
     }
   </style>
-
-<style id="reg-premium">
-.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;vertical-align:-.2em}
-.btn-ic{display:inline-flex;align-items:center;justify-content:center;gap:7px}
-.btn-ic .ic{width:15px;height:15px}
-#page-registration .stat-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#e2d4ff;background:linear-gradient(135deg,rgba(139,61,255,.3),rgba(236,63,167,.16));border:1px solid rgba(139,61,255,.4)}
-#page-registration .stat-icon .ic{width:19px;height:19px}
-#page-registration .stat-label{margin-top:2px}
-.toolbar{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
-#page-registration .toolbar input,#page-registration .toolbar select{flex:1 1 170px;min-width:0}
-#registrationSearch{flex:1 1 100%!important}
-
-.reg-grid{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:900px){.reg-grid{grid-template-columns:1fr 1fr}}
-.reg-grid .empty{grid-column:1/-1}
-.reg-card{display:flex;flex-direction:column;gap:9px;padding:16px;border-radius:20px;background:linear-gradient(145deg,#12162f,#0c1024);border:1px solid rgba(139,61,255,.2);box-shadow:0 14px 40px rgba(0,0,0,.28);transition:border-color .25s,box-shadow .25s}
-.reg-card:hover{border-color:rgba(236,63,167,.4);box-shadow:0 18px 48px rgba(0,0,0,.36),0 0 30px rgba(236,63,167,.09)}
-.reg-card.approved{border-color:rgba(47,214,138,.28)}
-.reg-card.rejected{border-color:rgba(255,84,112,.28);opacity:.86}
-.reg-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.reg-roll{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:#e2d4ff;padding:6px 11px;border-radius:11px;background:rgba(139,61,255,.14);border:1px solid rgba(139,61,255,.3)}
-.reg-roll .ic{color:#ec6fbf;width:16px;height:16px}
-.reg-card .status{font-size:11px;padding:6px 11px}
-.reg-name{font-size:17px;font-weight:800;line-height:1.4}
-.reg-sub{display:flex;flex-wrap:wrap;gap:6px 14px;color:#b9bfda;font-size:12px}
-.reg-sub span{display:inline-flex;align-items:center;gap:6px}
-.reg-sub .ic,.reg-date .ic{width:14px;height:14px;color:#b78bff}
-.reg-quiz{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:#d8c5ff}
-.reg-quiz .ic{color:#ec6fbf}
-.reg-date{display:flex;align-items:center;gap:7px;color:#8f96b3;font-size:11px}
-
-.reg-pay{padding:12px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);font-size:12px}
-.reg-pay.free{color:#8de9bd;background:rgba(47,214,138,.07);border-color:rgba(47,214,138,.2)}
-.reg-pay.missing{color:#ffb4c0;background:rgba(255,84,112,.08);border-color:rgba(255,84,112,.3)}
-.reg-pay.paid{background:rgba(255,178,28,.06);border-color:rgba(255,178,28,.22)}
-.reg-pay.paid.approved{background:rgba(47,214,138,.07);border-color:rgba(47,214,138,.25)}
-.reg-pay-head{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;margin-bottom:6px}
-.reg-pay-head b{margin-left:auto;font-size:16px;color:#ffb21c}
-.reg-pay.free .reg-pay-head,.reg-pay.missing .reg-pay-head{margin-bottom:0}
-.reg-pay.missing .reg-pay-head b{color:#ff9aaa}
-.reg-pay-row{display:flex;align-items:center;gap:8px;padding:4px 0;color:#aeb5d6}
-.reg-pay-row strong{margin-left:auto;color:#fff;font-size:12.5px;text-align:right;word-break:break-all}
-.reg-pay-row strong.trx{letter-spacing:.4px}
-.reg-pay-row .mini-btn{margin-left:0}
-.mini-btn{width:28px;height:28px;flex:0 0 28px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#d8c5ff;background:rgba(139,61,255,.14);border:1px solid rgba(139,61,255,.3)}
-.mini-btn:hover{background:rgba(139,61,255,.28)}
-.mini-btn .ic{width:14px;height:14px}
-.reg-shot{display:inline-flex;align-items:center;gap:7px;margin-top:6px;color:#ff9fd5;font-weight:700;font-size:12px;text-decoration:none}
-.dup-badge{display:flex;align-items:center;gap:7px;margin-top:8px;padding:8px 10px;border-radius:11px;font-size:11.5px;font-weight:700;color:#ffb4c0;background:rgba(255,84,112,.1);border:1px solid rgba(255,84,112,.3)}
-.reg-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.reg-actions .btn{flex:1 1 auto;min-width:110px;padding:11px 14px;font-size:12.5px}
-
-.det-group{margin-bottom:14px;padding:13px;border-radius:15px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07)}
-.det-title{display:flex;align-items:center;gap:8px;color:#b78bff;font-weight:800;font-size:13px;margin-bottom:8px}
-.det-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:12.5px;color:#aeb5d6;border-bottom:1px dashed rgba(255,255,255,.06)}
-.det-row:last-child{border-bottom:0}
-.det-row strong{color:#fff;text-align:right;word-break:break-word}
-</style>
 </head>
 
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16a3 3 0 0 1 6 0M14 10h4M14 14h3"/></symbol><symbol id="ic-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol><symbol id="ic-cap" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5M22 9v6"/></symbol><symbol id="ic-building" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h2a2 2 0 0 1 2 2v10M2 21h20M8 7h4M8 11h4M8 15h4"/></symbol><symbol id="ic-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol><symbol id="ic-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol><symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="ic-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol><symbol id="ic-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol><symbol id="ic-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="ic-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol><symbol id="ic-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/></symbol><symbol id="ic-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol><symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="ic-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13a1 1 0 0 1 1 1v3"/><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3"/><path d="M21 10v5h-5a2.5 2.5 0 0 1 0-5z"/></symbol><symbol id="ic-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="ic-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol><symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 12h6M9 16h4"/></symbol><symbol id="ic-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol><symbol id="ic-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol><symbol id="ic-map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></symbol><symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol></svg>
-
 
 <!-- =========================
      LOGIN
@@ -1018,7 +958,7 @@
       <input
         id="loginEmail"
         type="email"
-        placeholder="এডমিন ইমেইল লিখুন"
+        placeholder="admin@example.com"
         autocomplete="email"
       >
     </div>
@@ -1039,7 +979,7 @@
       style="width:100%;padding:13px;"
       onclick="adminLogin()"
     >
-      🔐 এডমিন লগইন
+      🔐 Admin Login
     </button>
 
   </div>
@@ -1396,7 +1336,6 @@
           শিক্ষার্থীদের কুইজ রেজিস্ট্রেশন অনুমোদন বা বাতিল করুন
         </div>
       </div>
-      <div class="stats" id="regStats"></div>
 
       <div class="card">
 
@@ -1404,36 +1343,50 @@
 
           <input
             id="registrationSearch"
-            placeholder="রোল / নাম / Student ID / মোবাইল / TrxID খুঁজুন"
+            placeholder="রোল / নাম / কুইজ খুঁজুন"
             oninput="renderRegistrations()"
           >
 
-          <select id="registrationStatus" onchange="renderRegistrations()">
+          <select
+            id="registrationStatus"
+            onchange="renderRegistrations()"
+          >
             <option value="">সব Status</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
           </select>
 
-          <select id="registrationQuiz" onchange="renderRegistrations()">
-            <option value="">সব কুইজ</option>
-          </select>
-
-          <select id="registrationPayment" onchange="renderRegistrations()">
-            <option value="">সব পেমেন্ট</option>
-            <option value="paid">পেইড কুইজ</option>
-            <option value="free">ফ্রি কুইজ</option>
-            <option value="missing">পেমেন্ট তথ্য নেই</option>
-            <option value="dup">একই TrxID একাধিক</option>
-          </select>
-
-          <button class="btn btn-secondary btn-ic" onclick="loadRegistrations()">
-            <svg class="ic " aria-hidden="true"><use href="#ic-refresh"></use></svg><span>Refresh</span>
+          <button
+            class="btn btn-secondary"
+            onclick="loadRegistrations()"
+          >
+            🔄 Refresh
           </button>
 
         </div>
 
-        <div id="registrationList" class="reg-grid"></div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>রোল</th>
+                <th>শিক্ষার্থী</th>
+                <th>কুইজ</th>
+                <th>অবস্থা</th>
+                <th>তারিখ</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="registrationTable"></tbody>
+
+          </table>
+
+        </div>
 
       </div>
 
@@ -1582,6 +1535,28 @@
 
         </div>
 
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <div class="page-head" style="margin-bottom:12px;">
+          <div>
+            <div class="page-title">💳 শিক্ষার্থীদের পেমেন্ট</div>
+            <div class="page-desc">রেজিস্ট্রেশনের সময় শিক্ষার্থী যে পেমেন্ট তথ্য দিয়েছে, এখানে সম্পূর্ণ দেখা ও যাচাই করুন।</div>
+          </div>
+          <button class="btn btn-secondary" onclick="loadStudentPayments()">🔄 রিফ্রেশ</button>
+        </div>
+        <div class="toolbar" style="margin-bottom:12px;">
+          <input id="paymentSearch" placeholder="Roll / নাম / Transaction ID / মোবাইল খুঁজুন" oninput="renderStudentPayments()" style="flex:1;min-width:240px;">
+          <select id="paymentStatusFilter" onchange="renderStudentPayments()" style="min-width:170px;">
+            <option value="">সব পেমেন্ট</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table style="min-width:1250px;">
+            <thead><tr><th>Quiz Roll</th><th>শিক্ষার্থী</th><th>কুইজ</th><th>পদ্ধতি</th><th>Receiver</th><th>Sender</th><th>Transaction ID</th><th>Screenshot</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="studentPaymentTable"><tr><td colspan="10" class="empty">পেমেন্ট তথ্য লোড হচ্ছে...</td></tr></tbody>
+          </table>
+        </div>
       </div>
 
     </section>
@@ -2464,7 +2439,7 @@
       $("loginBtn").disabled = false;
 
       $("loginBtn").textContent =
-        "🔐 এডমিন লগইন";
+        "🔐 Admin Login";
 
     }
 
@@ -2976,58 +2951,6 @@
      REGISTRATIONS
   ========================================================= */
 
-    const RIC = (n, c = "") =>
-    `<svg class="ic ${c}" aria-hidden="true"><use href="#ic-${n}"></use></svg>`;
-
-  function regMoney(value){
-    return "৳ " + toBnNumber(Number(value || 0).toLocaleString("en-US"));
-  }
-
-  function safeHref(value){
-    const v = String(value || "").trim();
-    return /^https?:\/\//i.test(v) ? v : "";
-  }
-
-  /* একটি registration record থেকে দেখানোর তথ্য */
-  function regInfo(r){
-    const payment = r.payment && typeof r.payment === "object" ? r.payment : null;
-    const amount = Number(r.fee ?? r.amount ?? payment?.amount ?? 0) || 0;
-    const status = String(r.status || "pending").toLowerCase();
-    let kind = "free";
-    if(amount > 0){
-      kind = payment ? "paid" : "missing";
-    }
-    return {
-      status, amount, payment, kind,
-      trx: String(payment?.transaction_id || "").trim(),
-      name: r.full_name || r.student_name || "",
-      studentId: r.student_id || "",
-      mobile: r.mobile || "",
-      className: r.class || r.class_name || "",
-      institution: r.institution || "",
-      district: r.district || "",
-      division: r.division || "",
-      quizName: getQuizTitle(r.quiz_id) || r.quiz_name || r.quiz_title || "",
-      roll: r.roll_number || r.quiz_roll_number || ""
-    };
-  }
-
-  /* একই Transaction ID কতবার এসেছে */
-  function trxCounts(){
-    const map = new Map();
-    registrations.forEach(r => {
-      const t = regInfo(r).trx.toLowerCase();
-      if(t) map.set(t, (map.get(t) || 0) + 1);
-    });
-    return map;
-  }
-
-  const REG_STATUS_LABEL = {
-    pending:"অপেক্ষমাণ",
-    approved:"অনুমোদিত",
-    rejected:"বাতিল"
-  };
-
   window.loadRegistrations = async function(){
 
     try{
@@ -3037,11 +2960,13 @@
           collection(db,"quiz_registrations")
         );
 
+
       registrations =
         snap.docs.map(d => ({
           id:d.id,
           ...d.data()
         }));
+
 
       renderRegistrations();
 
@@ -3049,268 +2974,174 @@
 
       console.error(error);
 
-      $("registrationList").innerHTML =
-        `<div class="empty">রেজিস্ট্রেশন লোড করা যায়নি। Firebase Rules ও ইন্টারনেট পরীক্ষা করুন।</div>`;
+      $("registrationTable").innerHTML =
+        `<tr>
+          <td colspan="6">
+            রেজিস্ট্রেশন লোড করা যায়নি।
+          </td>
+        </tr>`;
 
     }
 
   };
 
-  function renderRegStats(){
-
-    let pending = 0, approved = 0, rejected = 0;
-    let pendingAmount = 0, approvedAmount = 0;
-
-    registrations.forEach(r => {
-      const i = regInfo(r);
-      if(i.status === "approved"){ approved++; approvedAmount += i.amount; }
-      else if(i.status === "rejected"){ rejected++; }
-      else { pending++; pendingAmount += i.amount; }
-    });
-
-    const box = (icon, num, label) =>
-      `<div class="stat"><div class="stat-icon">${RIC(icon)}</div><div class="stat-num">${num}</div><div class="stat-label">${label}</div></div>`;
-
-    $("regStats").innerHTML =
-      box("layers", toBnNumber(registrations.length), "মোট রেজিস্ট্রেশন") +
-      box("clock", toBnNumber(pending), "অপেক্ষমাণ · " + regMoney(pendingAmount)) +
-      box("check", toBnNumber(approved), "অনুমোদিত · " + regMoney(approvedAmount)) +
-      box("x", toBnNumber(rejected), "বাতিল");
-
-  }
-
-  function fillRegQuizFilter(){
-
-    const select = $("registrationQuiz");
-    const current = select.value;
-    const seen = new Map();
-
-    registrations.forEach(r => {
-      if(!r.quiz_id) return;
-      if(!seen.has(r.quiz_id)){
-        seen.set(r.quiz_id, regInfo(r).quizName || "কুইজ");
-      }
-    });
-
-    select.innerHTML =
-      `<option value="">সব কুইজ</option>` +
-      [...seen.entries()].map(([id, name]) =>
-        `<option value="${escapeHtml(id)}">${escapeHtml(name)}</option>`
-      ).join("");
-
-    select.value = seen.has(current) ? current : "";
-
-  }
 
   window.renderRegistrations = function(){
 
-    renderRegStats();
-    fillRegQuizFilter();
+    const search =
+      (
+        $("registrationSearch")?.value ||
+        ""
+      ).trim().toLowerCase();
 
-    const search = ($("registrationSearch")?.value || "").trim().toLowerCase();
-    const statusFilter = ($("registrationStatus")?.value || "").toLowerCase();
-    const quizFilter = $("registrationQuiz")?.value || "";
-    const payFilter = $("registrationPayment")?.value || "";
-    const counts = trxCounts();
 
-    const rows = registrations
-      .map(r => ({ r, i: regInfo(r) }))
-      .filter(({ r, i }) => {
+    const status =
+      (
+        $("registrationStatus")?.value ||
+        ""
+      ).toLowerCase();
 
-        const dup = i.trx && (counts.get(i.trx.toLowerCase()) || 0) > 1;
 
-        const text = [
-          i.roll, i.name, i.studentId, i.mobile, i.institution, i.quizName,
-          i.trx, i.payment?.sender_number, i.payment?.method_name
-        ].join(" ").toLowerCase();
+    const filtered =
+      registrations.filter(r => {
 
-        if(search && !text.includes(search)) return false;
-        if(statusFilter && i.status !== statusFilter) return false;
-        if(quizFilter && r.quiz_id !== quizFilter) return false;
-        if(payFilter === "paid" && i.amount <= 0) return false;
-        if(payFilter === "free" && i.amount > 0) return false;
-        if(payFilter === "missing" && i.kind !== "missing") return false;
-        if(payFilter === "dup" && !dup) return false;
+        const text =
+          `
+          ${r.roll_number || ""}
+          ${r.quiz_roll_number || ""}
+          ${r.student_name || ""}
+          ${r.full_name || ""}
+          ${r.quiz_title || ""}
+          `.toLowerCase();
 
-        return true;
 
-      })
-      .sort((a, b) => {
-        const pa = a.i.status === "pending" ? 0 : 1;
-        const pb = b.i.status === "pending" ? 0 : 1;
-        if(pa !== pb) return pa - pb;
-        return (timestampToMs(b.r.created_at) || 0) - (timestampToMs(a.r.created_at) || 0);
+        const rowStatus =
+          String(
+            r.status || ""
+          ).toLowerCase();
+
+
+        return (
+          (!search || text.includes(search)) &&
+          (!status || rowStatus === status)
+        );
+
       });
 
-    if(!rows.length){
-      $("registrationList").innerHTML =
-        `<div class="empty">কোনো রেজিস্ট্রেশন পাওয়া যায়নি।</div>`;
+
+    if(!filtered.length){
+
+      $("registrationTable").innerHTML =
+        `<tr>
+          <td colspan="6">
+            কোনো রেজিস্ট্রেশন পাওয়া যায়নি।
+          </td>
+        </tr>`;
+
       return;
     }
 
-    $("registrationList").innerHTML = rows.map(({ r, i }) => {
 
-      const dupCount = i.trx ? (counts.get(i.trx.toLowerCase()) || 0) : 0;
+    $("registrationTable").innerHTML =
+      filtered.map(r => {
 
-      let badge = "status-gold";
-      if(i.status === "approved") badge = "status-green";
-      if(i.status === "rejected") badge = "status-red";
+        const rowStatus =
+          String(
+            r.status || "pending"
+          ).toLowerCase();
 
-      let payHtml = "";
 
-      if(i.kind === "free"){
-        payHtml = `
-          <div class="reg-pay free">
-            <div class="reg-pay-head">${RIC("card")}<span>ফ্রি কুইজ — পেমেন্ট লাগেনি</span></div>
-          </div>`;
-      }else if(i.kind === "missing"){
-        payHtml = `
-          <div class="reg-pay missing">
-            <div class="reg-pay-head">${RIC("alert")}<span>পেইড কুইজ, কিন্তু পেমেন্ট তথ্য নেই</span><b>${regMoney(i.amount)}</b></div>
-          </div>`;
-      }else{
-        const p = i.payment;
-        const shot = safeHref(p.screenshot_url);
-        payHtml = `
-          <div class="reg-pay paid ${i.status}">
-            <div class="reg-pay-head">${RIC("card")}<span>${escapeHtml(p.method_name || "পেমেন্ট")}</span><b>${regMoney(i.amount)}</b></div>
-            <div class="reg-pay-row"><span>প্রেরক নম্বর</span><strong>${escapeHtml(p.sender_number || "—")}</strong></div>
-            <div class="reg-pay-row"><span>প্রাপক নম্বর</span><strong>${escapeHtml(p.receiver_number || "—")}</strong></div>
-            <div class="reg-pay-row"><span>Transaction ID</span><strong class="trx">${escapeHtml(p.transaction_id || "—")}</strong>${p.transaction_id ? `<button class="mini-btn" title="কপি" data-copy="${escapeHtml(p.transaction_id)}" onclick="copyRegText(this)">${RIC("copy")}</button>` : ""}</div>
-            ${shot ? `<a class="reg-shot" href="${escapeHtml(shot)}" target="_blank" rel="noopener">${RIC("eye")}স্ক্রিনশট দেখুন</a>` : ""}
-            ${dupCount > 1 ? `<div class="dup-badge">${RIC("alert")}এই Transaction ID ${toBnNumber(dupCount)}টি রেজিস্ট্রেশনে আছে</div>` : ""}
-          </div>`;
-      }
+        let badge =
+          "status-gold";
 
-      const actions = i.status === "pending"
-        ? `
-          <button class="btn btn-green btn-ic" onclick="updateRegistration('${r.id}','approved')">${RIC("check")}<span>অনুমোদন</span></button>
-          <button class="btn btn-red btn-ic" onclick="updateRegistration('${r.id}','rejected')">${RIC("x")}<span>বাতিল</span></button>`
-        : "";
 
-      return `
-        <article class="reg-card ${i.status}">
+        if(rowStatus === "approved"){
+          badge = "status-green";
+        }
 
-          <div class="reg-top">
-            <div class="reg-roll">${RIC("id")}<span>${escapeHtml(i.roll || "—")}</span></div>
-            <span class="status ${badge}">${REG_STATUS_LABEL[i.status] || escapeHtml(i.status)}</span>
-          </div>
+        if(rowStatus === "rejected"){
+          badge = "status-red";
+        }
 
-          <div class="reg-name">${escapeHtml(i.name || "—")}</div>
 
-          <div class="reg-sub">
-            ${i.studentId ? `<span>${RIC("user")}${escapeHtml(i.studentId)}</span>` : ""}
-            ${i.mobile ? `<span>${RIC("phone")}${escapeHtml(i.mobile)}</span>` : ""}
-          </div>
-          <div class="reg-sub">
-            ${i.className ? `<span>${RIC("cap")}${escapeHtml(i.className)}</span>` : ""}
-            ${i.institution ? `<span>${RIC("building")}${escapeHtml(i.institution)}</span>` : ""}
-          </div>
+        return `
+          <tr>
 
-          <div class="reg-quiz">${RIC("book")}<span>${escapeHtml(i.quizName || "—")}</span></div>
+            <td>
+              ${escapeHtml(
+                r.roll_number ||
+                r.quiz_roll_number ||
+                "—"
+              )}
+            </td>
 
-          ${payHtml}
+            <td>
+              ${escapeHtml(
+                r.student_name ||
+                r.full_name ||
+                "—"
+              )}
+            </td>
 
-          <div class="reg-date">${RIC("clock")}${formatDateTime(r.created_at)}</div>
+            <td>
+              ${escapeHtml(
+                getQuizTitle(r.quiz_id) ||
+                r.quiz_title ||
+                "—"
+              )}
+            </td>
 
-          <div class="reg-actions">
-            <button class="btn btn-secondary btn-ic" onclick="showRegistrationDetails('${r.id}')">${RIC("list")}<span>বিস্তারিত</span></button>
-            ${actions}
-          </div>
+            <td>
+              <span class="status ${badge}">
+                ${escapeHtml(rowStatus)}
+              </span>
+            </td>
 
-        </article>`;
+            <td>
+              ${formatDateTime(
+                r.created_at
+              )}
+            </td>
 
-    }).join("");
+            <td>
 
-  };
+              ${
+                rowStatus === "pending"
+                ? `
+                  <button
+                    class="btn btn-green"
+                    onclick="updateRegistration('${r.id}','approved')"
+                  >
+                    ✓
+                  </button>
 
-  window.copyRegText = async function(button){
-    try{
-      await navigator.clipboard.writeText(button.dataset.copy || "");
-      toast("কপি হয়েছে।");
-    }catch(error){
-      toast("কপি করা যায়নি।");
-    }
-  };
+                  <button
+                    class="btn btn-red"
+                    onclick="updateRegistration('${r.id}','rejected')"
+                  >
+                    ✕
+                  </button>
+                `
+                :
+                `
+                  <span style="color:var(--muted);font-size:10px;">
+                    সম্পন্ন
+                  </span>
+                `
+              }
 
-  window.showRegistrationDetails = function(id){
+            </td>
 
-    const r = registrations.find(item => item.id === id);
-    if(!r) return;
+          </tr>
+        `;
 
-    const i = regInfo(r);
-    const p = i.payment;
-    const shot = p ? safeHref(p.screenshot_url) : "";
-
-    const row = (k, v) =>
-      `<div class="det-row"><span>${k}</span><strong>${escapeHtml(v || "—")}</strong></div>`;
-
-    openModal(
-      "রেজিস্ট্রেশন বিস্তারিত",
-      `
-      <div class="det-group">
-        <div class="det-title">${RIC("user")}শিক্ষার্থী</div>
-        ${row("নাম", i.name)}
-        ${row("Student ID", i.studentId)}
-        ${row("মোবাইল", i.mobile)}
-        ${row("শ্রেণি", i.className)}
-        ${row("প্রতিষ্ঠান", i.institution)}
-        ${row("জেলা", i.district)}
-        ${row("বিভাগ", i.division)}
-      </div>
-
-      <div class="det-group">
-        <div class="det-title">${RIC("book")}কুইজ</div>
-        ${row("কুইজ", i.quizName)}
-        ${row("Roll Number", i.roll)}
-        ${row("Status", REG_STATUS_LABEL[i.status] || i.status)}
-        ${row("রেজিস্ট্রেশনের সময়", formatDateTime(r.created_at))}
-        ${r.reviewed_at ? row("যাচাইয়ের সময়", formatDateTime(r.reviewed_at)) : ""}
-      </div>
-
-      <div class="det-group">
-        <div class="det-title">${RIC("card")}পেমেন্ট</div>
-        ${row("পরিমাণ", i.amount > 0 ? regMoney(i.amount) : "ফ্রি")}
-        ${p ? `
-          ${row("পদ্ধতি", p.method_name)}
-          ${row("প্রেরক নম্বর", p.sender_number)}
-          ${row("প্রাপক নম্বর", p.receiver_number)}
-          ${row("Transaction ID", p.transaction_id)}
-        ` : ""}
-        ${shot ? `<a class="reg-shot" href="${escapeHtml(shot)}" target="_blank" rel="noopener">${RIC("eye")}স্ক্রিনশট দেখুন</a>` : ""}
-      </div>
-      `
-    );
+      }).join("");
 
   };
+
 
   window.updateRegistration =
     async function(id,status){
-
-      const r = registrations.find(item => item.id === id);
-      const i = r ? regInfo(r) : null;
-      const counts = trxCounts();
-
-      let message =
-        (i?.name || "শিক্ষার্থী") + " — " + (i?.quizName || "কুইজ") + "\n";
-
-      if(i && i.amount > 0){
-        message += "পেমেন্ট: " + regMoney(i.amount) + "\n";
-        message += "Transaction ID: " + (i.trx || "নেই") + "\n";
-        if(i.kind === "missing"){
-          message += "\nসতর্কতা: পেমেন্ট তথ্য জমা দেওয়া হয়নি।\n";
-        }
-        if(i.trx && (counts.get(i.trx.toLowerCase()) || 0) > 1){
-          message += "\nসতর্কতা: এই Transaction ID একাধিক রেজিস্ট্রেশনে আছে।\n";
-        }
-      }
-
-      message +=
-        "\nআপনি কি এই রেজিস্ট্রেশন " +
-        (status === "approved" ? "অনুমোদন" : "বাতিল") +
-        " করতে চান?";
-
-      if(!confirm(message)) return;
 
       try{
 
@@ -3329,13 +3160,13 @@
           }
         );
 
-        closeModal();
 
         toast(
           status === "approved"
-            ? "রেজিস্ট্রেশন অনুমোদন করা হয়েছে।"
-            : "রেজিস্ট্রেশন বাতিল করা হয়েছে।"
+            ? "রেজিস্ট্রেশন অনুমোদন করা হয়েছে।"
+            : "রেজিস্ট্রেশন বাতিল করা হয়েছে।"
         );
+
 
         await loadRegistrations();
         await loadDashboard();
@@ -3345,7 +3176,7 @@
         console.error(error);
 
         toast(
-          "রেজিস্ট্রেশন আপডেট করা যায়নি।"
+          "রেজিস্ট্রেশন আপডেট করা যায়নি।"
         );
 
       }
@@ -3353,10 +3184,47 @@
     };
 
 
-
   /* =========================================================
      PAYMENT
   ========================================================= */
+
+  /* STUDENT PAYMENT VERIFICATION */
+  let studentPayments = [];
+
+  window.loadStudentPayments = async function(){
+    try{
+      const snap = await getDocs(collection(db,"quiz_registrations"));
+      studentPayments = snap.docs.map(d => ({id:d.id,...d.data()})).filter(r => r.payment && typeof r.payment === "object");
+      renderStudentPayments();
+    }catch(error){
+      console.error(error);
+      if($("studentPaymentTable")) $("studentPaymentTable").innerHTML = '<tr><td colspan="10" class="empty">পেমেন্ট তথ্য লোড করা যায়নি।</td></tr>';
+    }
+  };
+
+  window.renderStudentPayments = function(){
+    const q = String($("paymentSearch")?.value || "").trim().toLowerCase();
+    const st = String($("paymentStatusFilter")?.value || "").toLowerCase();
+    const rows = studentPayments.filter(r => {
+      const p = r.payment || {};
+      const rowStatus = String(r.status || "pending").toLowerCase();
+      const text = [r.roll_number,r.full_name,r.student_name,r.mobile,r.quiz_name,r.quiz_title,p.method_name,p.method_id,p.receiver_number,p.receiver,p.sender_number,p.transaction_id].join(" ").toLowerCase();
+      return (!q || text.includes(q)) && (!st || rowStatus === st);
+    });
+    if(!$("studentPaymentTable")) return;
+    if(!rows.length){
+      $("studentPaymentTable").innerHTML = '<tr><td colspan="10" class="empty">কোনো পেমেন্ট তথ্য পাওয়া যায়নি।</td></tr>';
+      return;
+    }
+    const statusLabel = v => v === "approved" ? "অনুমোদিত" : v === "rejected" ? "বাতিল" : "অপেক্ষমাণ";
+    const statusClass = v => v === "approved" ? "status-green" : v === "rejected" ? "status-red" : "status-gold";
+    $("studentPaymentTable").innerHTML = rows.map(r => {
+      const p = r.payment || {};
+      const rs = String(r.status || "pending").toLowerCase();
+      const screenshot = p.screenshot_url || p.screenshot || "";
+      return `<tr><td>${escapeHtml(r.roll_number || "—")}</td><td>${escapeHtml(r.full_name || r.student_name || "—")}<br><small>${escapeHtml(r.mobile || "")}</small></td><td>${escapeHtml(r.quiz_name || r.quiz_title || getQuizTitle(r.quiz_id) || "—")}</td><td>${escapeHtml(p.method_name || p.method_id || "—")}</td><td>${escapeHtml(p.receiver_number || p.receiver || p.number || "—")}</td><td>${escapeHtml(p.sender_number || "—")}</td><td>${escapeHtml(p.transaction_id || "—")}</td><td>${screenshot ? `<a href="${escapeHtml(screenshot)}" target="_blank" rel="noopener" class="btn btn-secondary">🖼️ দেখুন</a>` : "—"}</td><td><span class="status ${statusClass(rs)}">${statusLabel(rs)}</span></td><td>${rs === "pending" ? `<button class="btn btn-green" onclick="updateRegistration('${r.id}','approved')">✓</button> <button class="btn btn-red" onclick="updateRegistration('${r.id}','rejected')">✕</button>` : `<span style="color:var(--muted);font-size:10px;">সম্পন্ন</span>`}</td></tr>`;
+    }).join("");
+  };
 
   async function loadPayments(){
 
@@ -3487,6 +3355,9 @@
       }
 
     };
+
+
+  loadStudentPayments();
 
 
   /* =========================================================
