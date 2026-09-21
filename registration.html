@@ -1764,6 +1764,17 @@ function setBtn(btn, icon, text, state){
   if(state){ btn.dataset.state = state; } else { delete btn.dataset.state; }
 }
 
+
+/* একই Student + একই Quiz আগে রেজিস্ট্রেশন করেছে কিনা।
+   Firestore Rules-এ resource.data ব্যবহার হয়, তাই না-থাকা ডকুমেন্ট সরাসরি getDoc করলে
+   permission-denied আসে। তাই নিজের রেজিস্ট্রেশনগুলো query করে যাচাই করা হয়। */
+async function hasRegistration(registrationId){
+  const snap = await getDocs(
+    query(collection(db, "quiz_registrations"), where("student_uid", "==", currentUser.uid))
+  );
+  return snap.docs.some((d) => d.id === registrationId);
+}
+
 function showMessage(
   text,
   type = "info"
@@ -1778,6 +1789,7 @@ function showMessage(
 
   box.className =
     "message show " + type;
+  box.scrollIntoView({ behavior: "smooth", block: "center" });
 
 }
 
@@ -2534,6 +2546,18 @@ async function loadQuizzes(){
 
     renderQuizzes();
 
+    /* category.html থেকে আসা লিংক (registration.html?quiz=ID) — সংশ্লিষ্ট কুইজের ফর্ম নিজে থেকে খুলবে */
+    const wantedQuiz = new URLSearchParams(location.search).get("quiz");
+    if(wantedQuiz && !window.__deepLinkDone){
+      window.__deepLinkDone = true;
+      try{
+        await window.openRegistration(wantedQuiz);
+      }catch(deepLinkError){
+        console.error(deepLinkError);
+      }
+    }
+
+
 
   }catch(error){
 
@@ -2832,6 +2856,7 @@ function renderQuizzes(){
 
 window.openRegistration =
 async function(quizId){
+ try{
   selectedQuiz = quizzes.find(quiz => quiz.id === quizId);
   if(!selectedQuiz){ showMessage("❌ কুইজ পাওয়া যায়নি।", "error"); return; }
   if(!currentUser || !currentProfile){ showMessage("⚠️ আগে লগইন করুন।", "error"); return; }
@@ -2867,8 +2892,7 @@ async function(quizId){
 
   /* একই Student + একই Quiz = একই Firestore document */
   const registrationId = currentUser.uid + "_" + selectedQuiz.id;
-  const existingDoc = await getDoc(doc(db, "quiz_registrations", registrationId));
-  if(existingDoc.exists()){
+  if(await hasRegistration(registrationId)){
     showMessage("⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন। একই কুইজে দ্বিতীয়বার রেজিস্ট্রেশন করা যাবে না।", "error");
     return;
   }
@@ -2894,6 +2918,10 @@ async function(quizId){
   const paymentBox = document.getElementById("paymentBox");
   if(fee > 0){ paymentBox.classList.remove("hidden"); await loadPaymentMethods(); }
   else { paymentBox.classList.add("hidden"); }
+ }catch(error){
+    console.error("openRegistration error:", error);
+    showMessage("❌ রেজিস্ট্রেশন ফর্ম খোলা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।", "error");
+  }
 };
 
 
@@ -3089,8 +3117,7 @@ async function(){
 
   /* একই Student + একই Quiz-এর registration document আবার পরীক্ষা। */
   const registrationId = currentUser.uid + "_" + selectedQuiz.id;
-  const existingRegistration = await getDoc(doc(db, "quiz_registrations", registrationId));
-  if(existingRegistration.exists()){
+  if(await hasRegistration(registrationId)){
     showRegistrationMessage("⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন। একই কুইজে দ্বিতীয়বার করা যাবে না।", "error");
     return;
   }
@@ -3154,24 +3181,12 @@ async function(){
       শুধু নিজের registration check।
     */
 
-    const existingDoc =
-
-      await getDoc(
-        registrationRef
-      );
-
-
-    if(
-      existingDoc.exists()
-    ){
-
+    if(await hasRegistration(registrationId)){
       showRegistrationMessage(
         "⚠️ আপনি এই কুইজে ইতিমধ্যে রেজিস্ট্রেশন করেছেন।",
         "error"
       );
-
       return;
-
     }
 
 
