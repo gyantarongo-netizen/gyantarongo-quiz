@@ -1,684 +1,638 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ক্যাটাগরি | জ্ঞানতরঙ্গ</title>
 
-  <title>কুইজের তথ্য | জ্ঞানতরঙ্গ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-    body{
-      font-family:
-        "Noto Sans Bengali",
-        "Hind Siliguri",
-        Arial,
-        sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(124,58,237,.18), transparent 35%),
-        #060817;
-      color:#fff;
-      min-height:100vh;
-    }
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --card2:#151a35;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --text:#f5f7ff;
+  --muted:#a9b0c7;
+  --border:rgba(255,255,255,.09);
+  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+}
 
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
+body{
+  font-family:"Noto Sans Bengali","Hind Siliguri",Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(139,61,255,.20),transparent 38%),
+    radial-gradient(circle at top right,rgba(236,63,167,.12),transparent 34%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:96px;
+  overflow-x:hidden;
+}
 
-    .container{
-      width:min(1120px, 92%);
-      margin:auto;
-    }
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;color:inherit}
+.hidden{display:none !important}
 
-    /* HEADER */
-    header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      background:rgba(6,8,23,.88);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
+/* ---------- icons ---------- */
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;vertical-align:-.2em}
+.ic-spin{animation:icspin .9s linear infinite}
+@keyframes icspin{to{transform:rotate(360deg)}}
 
-    .header-inner{
-      min-height:72px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-    }
+.container{width:min(100% - 28px,1180px);margin-inline:auto}
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:11px;
-      font-weight:800;
-      font-size:19px;
-    }
+/* ---------- header ---------- */
+.header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(6,8,23,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(139,61,255,.18);
+}
+.header-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo-box{width:46px;height:46px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-box img{width:100%;height:100%;object-fit:contain}
+.brand-text{font-size:20px;font-weight:800}
+.brand-sub{color:var(--muted);font-size:11px;margin-top:1px}
+.back-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 14px;border-radius:12px;
+  background:rgba(124,58,237,.12);border:1px solid rgba(139,61,255,.28);
+  color:#d8c5ff;font-size:13px;font-weight:800;
+}
 
-    .logo-box{
-      width:48px;
-      height:48px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      background:#10142b;
-      border:1px solid rgba(255,255,255,.08);
-    }
+/* ---------- hero ---------- */
+.hero{padding:34px 0 8px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;
+  color:#ff9fd5;background:rgba(236,63,167,.09);border:1px solid rgba(236,63,167,.28);
+  font-size:13px;font-weight:800;margin-bottom:16px;
+}
+.hero h1{font-size:clamp(28px,6vw,44px);line-height:1.3;font-weight:800}
+.hero h1 span{color:#ff63bc}
+.hero p{max-width:640px;margin-top:12px;color:var(--muted);line-height:1.8;font-size:15px}
 
-    .logo-box img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-    }
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin-top:24px;padding:14px;border-radius:20px;
+  background:linear-gradient(145deg,rgba(21,26,53,.92),rgba(13,16,36,.92));
+  border:1px solid rgba(139,61,255,.22);
+  box-shadow:0 16px 45px rgba(0,0,0,.3),0 0 40px rgba(139,61,255,.08);
+}
+.stat{display:flex;align-items:center;gap:10px;min-width:0}
+.stat-ic{
+  width:42px;height:42px;flex:0 0 42px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  color:#e2d4ff;background:linear-gradient(135deg,rgba(139,61,255,.3),rgba(236,63,167,.16));
+  border:1px solid rgba(139,61,255,.4);
+}
+.stat-ic .ic{width:21px;height:21px}
+.stat-num{font-size:22px;font-weight:800;line-height:1.1}
+.stat-label{color:var(--muted);font-size:12px;margin-top:2px}
 
-    .back-btn{
-      padding:10px 15px;
-      border-radius:12px;
-      background:#10142b;
-      border:1px solid rgba(255,255,255,.08);
-      color:#d9dcf2;
-      font-size:14px;
-    }
+/* ---------- states ---------- */
+.gate,.loading,.error-box,.empty{
+  margin-top:26px;padding:34px 20px;text-align:center;border-radius:22px;
+  background:linear-gradient(145deg,rgba(16,20,43,.97),rgba(11,14,31,.97));
+  border:1px solid rgba(139,61,255,.22);
+  box-shadow:0 18px 50px rgba(0,0,0,.35);
+}
+.gate .big,.empty .big{
+  width:64px;height:64px;margin:0 auto 14px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+  color:#e2d4ff;background:linear-gradient(135deg,rgba(139,61,255,.3),rgba(236,63,167,.16));
+  border:1px solid rgba(139,61,255,.4);box-shadow:0 0 30px rgba(139,61,255,.3);
+}
+.gate .big .ic,.empty .big .ic{width:30px;height:30px}
+.gate h2,.empty h3{font-size:19px;margin-bottom:8px}
+.gate p,.empty p{color:var(--muted);font-size:14px;line-height:1.8;max-width:460px;margin:0 auto}
+.gate-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.loading{color:var(--muted)}
+.loading .ic{width:22px;height:22px;color:#b78bff;margin-right:8px}
+.error-box{color:#ff9cac;border-color:rgba(255,70,100,.3)}
 
-    /* HERO */
-    .hero{
-      padding:55px 0 35px;
-      text-align:center;
-    }
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:48px;padding:0 20px;border-radius:14px;border:0;cursor:pointer;
+  font-size:15px;font-weight:800;color:#fff;transition:transform .2s,box-shadow .2s;
+}
+.btn-primary{background:var(--gradient);box-shadow:0 10px 32px rgba(236,63,167,.28),inset 0 1px 0 rgba(255,255,255,.22)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 40px rgba(236,63,167,.4),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14)}
+.btn-ghost:hover{border-color:rgba(139,61,255,.5)}
+.btn-disabled{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted);cursor:not-allowed}
 
-    .hero-badge{
-      display:inline-block;
-      padding:8px 14px;
-      border-radius:30px;
-      background:rgba(124,58,237,.12);
-      border:1px solid rgba(139,61,255,.25);
-      color:#c8b5ff;
-      font-size:13px;
-      margin-bottom:17px;
-    }
+/* ---------- section headings ---------- */
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:30px 0 14px}
+.section-head h2{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800}
+.section-head h2 .badge{
+  width:38px;height:38px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  color:#e2d4ff;background:linear-gradient(135deg,rgba(139,61,255,.3),rgba(236,63,167,.16));
+  border:1px solid rgba(139,61,255,.4);box-shadow:0 0 20px rgba(139,61,255,.25);
+}
+.section-head h2 .badge .ic{width:19px;height:19px}
+.clear-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:800;
+}
+.clear-btn:hover{color:#fff;border-color:rgba(139,61,255,.45)}
 
-    .hero h1{
-      font-size:clamp(30px,5vw,48px);
-      line-height:1.2;
-      margin-bottom:14px;
-      background:linear-gradient(90deg,#fff,#c7b5ff,#ff8fd0);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
+/* ---------- category groups ---------- */
+.group{margin-bottom:22px}
+.group-head{display:flex;align-items:center;gap:10px;margin-bottom:11px;color:#d8c5ff;font-weight:800;font-size:15px}
+.group-head .ic{width:19px;height:19px;color:#ec6fbf}
+.group-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(139,61,255,.35),transparent)}
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.cat-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;cursor:pointer;
+  padding:15px;border-radius:18px;min-height:112px;
+  background:linear-gradient(145deg,#151831,#0d1024);
+  border:1px solid rgba(168,85,247,.2);
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.cat-card:hover{transform:translateY(-3px);border-color:rgba(236,63,167,.45);box-shadow:0 16px 40px rgba(0,0,0,.4),0 0 34px rgba(236,63,167,.14)}
+.cat-card[aria-pressed="true"]{
+  border-color:rgba(236,63,167,.7);
+  background:linear-gradient(145deg,rgba(139,61,255,.28),rgba(236,63,167,.14));
+  box-shadow:0 0 0 1px rgba(236,63,167,.4),0 16px 44px rgba(0,0,0,.4),0 0 40px rgba(236,63,167,.22);
+}
+.cat-ic{
+  width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  color:#d8c5ff;background:rgba(139,61,255,.16);border:1px solid rgba(139,61,255,.32);
+}
+.cat-ic .ic{width:20px;height:20px}
+.cat-card[aria-pressed="true"] .cat-ic{color:#fff;background:var(--gradient);border-color:transparent;box-shadow:0 0 22px rgba(236,63,167,.5)}
+.cat-name{font-weight:800;font-size:14.5px;line-height:1.45}
+.cat-count{color:var(--muted);font-size:12px;margin-top:auto}
 
-    .hero p{
-      max-width:680px;
-      margin:auto;
-      color:#9da3c4;
-      font-size:15px;
-      line-height:1.8;
-    }
+/* ---------- quiz cards ---------- */
+.quiz-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.quiz-card{
+  display:flex;flex-direction:column;overflow:hidden;border-radius:22px;
+  background:linear-gradient(145deg,var(--card),var(--card2));
+  border:1px solid rgba(139,61,255,.22);
+  box-shadow:0 18px 50px rgba(0,0,0,.36),0 0 40px rgba(139,61,255,.07),inset 0 1px 0 rgba(255,255,255,.05);
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.quiz-card:hover{transform:translateY(-4px);border-color:rgba(236,63,167,.45);box-shadow:0 22px 55px rgba(0,0,0,.45),0 0 46px rgba(236,63,167,.15)}
+.quiz-image{position:relative;height:150px;background:linear-gradient(135deg,rgba(139,61,255,.24),rgba(236,63,167,.16));overflow:hidden}
+.quiz-image img{width:100%;height:100%;object-fit:cover;display:block}
+.quiz-image .ph{height:100%;display:flex;align-items:center;justify-content:center;color:#b78bff}
+.quiz-image .ph .ic{width:54px;height:54px;stroke-width:1.4}
+.chip{
+  position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:7px;
+  padding:6px 11px;border-radius:999px;font-size:11.5px;font-weight:800;
+  background:rgba(6,8,23,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.14);
+}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.chip.open{color:#72f2b5}
+.chip.upcoming{color:#ffd86a}
+.chip.closed{color:#ff9baa}
+.chip.ended{color:#aeb3c9}
+.chip.ended::before{background:#5b607a;box-shadow:none}
+.chip.unpublished{color:#e6e8f5}
 
-    /* QUIZ GRID */
-    .quiz-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:22px;
-      padding:15px 0 70px;
-    }
+.quiz-body{padding:18px;display:flex;flex-direction:column;gap:12px;flex:1}
+.quiz-cat{color:#b78bff;font-size:12.5px;font-weight:800}
+.quiz-title{font-size:19px;font-weight:800;line-height:1.45}
+.quiz-desc{color:var(--muted);font-size:13.5px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.info{padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);min-width:0}
+.info-k{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11.5px}
+.info-k .ic{width:14px;height:14px;color:#b78bff}
+.info-v{margin-top:4px;font-size:13.5px;font-weight:800;line-height:1.4;word-break:break-word}
+.info-v.paid{color:var(--gold)}
+.info-v.free{color:var(--green)}
+.prize{
+  display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border-radius:13px;font-size:13px;line-height:1.6;
+  color:#ffe1a1;background:rgba(255,178,28,.08);border:1px solid rgba(255,178,28,.22);
+}
+.prize .ic{width:18px;height:18px;margin-top:2px;color:var(--gold)}
+.quiz-body .btn{margin-top:auto;width:100%}
 
-    .quiz-card{
-      background:
-        linear-gradient(180deg,rgba(20,24,51,.96),rgba(13,17,39,.96));
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:0 15px 45px rgba(0,0,0,.22);
-      transition:.3s ease;
-    }
+/* ---------- notice ---------- */
+.notice{
+  margin-top:30px;padding:20px;border-radius:20px;display:flex;gap:14px;align-items:flex-start;
+  background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(236,63,167,.09));
+  border:1px solid rgba(236,63,167,.22);
+}
+.notice .ic{width:24px;height:24px;color:#ffb21c;margin-top:2px}
+.notice h3{font-size:16px;margin-bottom:6px}
+.notice p{color:#d1d3e0;font-size:13.5px;line-height:1.85}
 
-    .quiz-card:hover{
-      transform:translateY(-6px);
-      border-color:rgba(139,61,255,.35);
-      box-shadow:0 18px 55px rgba(124,58,237,.13);
-    }
+/* ---------- mobile nav ---------- */
+.mobile-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;height:72px;
+  display:grid;grid-template-columns:repeat(5,1fr);align-items:center;
+  background:rgba(8,10,25,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(139,61,255,.2);
+}
+.mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:#8991aa;font-size:10.5px;transition:color .2s}
+.mobile-nav a .ic{width:22px;height:22px;stroke-width:1.7}
+.mobile-nav a:hover,.mobile-nav a.active{color:#ff8dcc}
+.mobile-nav a.active .ic{filter:drop-shadow(0 0 8px rgba(236,63,167,.75))}
 
-    .quiz-image{
-      height:190px;
-      position:relative;
-      overflow:hidden;
-      background:
-        linear-gradient(135deg,#171c42,#31146b);
-    }
-
-    .quiz-image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .image-placeholder{
-      width:100%;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:58px;
-      background:
-        radial-gradient(circle at 30% 30%,rgba(139,61,255,.35),transparent 45%),
-        linear-gradient(135deg,#11152d,#24114c);
-    }
-
-    .status{
-      position:absolute;
-      top:14px;
-      left:14px;
-      padding:7px 11px;
-      border-radius:20px;
-      font-size:12px;
-      font-weight:700;
-      background:rgba(34,197,94,.14);
-      color:#6ee7a0;
-      border:1px solid rgba(34,197,94,.25);
-    }
-
-    .card-body{
-      padding:20px;
-    }
-
-    .category-name{
-      color:#a88cff;
-      font-size:13px;
-      margin-bottom:8px;
-    }
-
-    .card-body h2{
-      font-size:20px;
-      margin-bottom:10px;
-      line-height:1.4;
-    }
-
-    .description{
-      color:#969dbd;
-      font-size:13px;
-      line-height:1.7;
-      margin-bottom:18px;
-      min-height:45px;
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:18px;
-    }
-
-    .info{
-      background:#0b0f25;
-      border:1px solid rgba(255,255,255,.05);
-      border-radius:12px;
-      padding:10px;
-    }
-
-    .info span{
-      display:block;
-      color:#777f9f;
-      font-size:11px;
-      margin-bottom:4px;
-    }
-
-    .info strong{
-      font-size:13px;
-      color:#e9ebf8;
-    }
-
-    .prize{
-      padding:13px 14px;
-      border-radius:13px;
-      margin-bottom:17px;
-      background:rgba(245,158,11,.08);
-      border:1px solid rgba(245,158,11,.16);
-      color:#ffd477;
-      font-size:13px;
-    }
-
-    .register-btn{
-      width:100%;
-      display:block;
-      text-align:center;
-      padding:13px 15px;
-      border-radius:13px;
-      background:linear-gradient(135deg,#7c3aed,#ec4899);
-      color:#fff;
-      font-weight:800;
-      font-size:14px;
-      transition:.25s;
-    }
-
-    .register-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 28px rgba(139,61,255,.25);
-    }
-
-    /* NOTE */
-    .notice{
-      margin-bottom:80px;
-      padding:22px;
-      border-radius:20px;
-      background:#0d1128;
-      border:1px solid rgba(255,255,255,.07);
-      text-align:center;
-    }
-
-    .notice h3{
-      margin-bottom:8px;
-      font-size:18px;
-    }
-
-    .notice p{
-      color:#8e95b5;
-      font-size:13px;
-      line-height:1.8;
-    }
-
-    /* MOBILE NAV */
-    .mobile-nav{
-      display:none;
-    }
-
-    @media(max-width:850px){
-      .quiz-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:600px){
-
-      .header-inner{
-        min-height:64px;
-      }
-
-      .brand{
-        font-size:16px;
-      }
-
-      .logo-box{
-        width:43px;
-        height:43px;
-        border-radius:12px;
-      }
-
-      .back-btn{
-        padding:8px 11px;
-        font-size:12px;
-      }
-
-      .hero{
-        padding:38px 0 25px;
-      }
-
-      .hero h1{
-        font-size:30px;
-      }
-
-      .hero p{
-        font-size:13px;
-      }
-
-      .quiz-grid{
-        grid-template-columns:1fr;
-        gap:18px;
-        padding-bottom:45px;
-      }
-
-      .quiz-image{
-        height:185px;
-      }
-
-      .mobile-nav{
-        position:fixed;
-        left:0;
-        right:0;
-        bottom:0;
-        z-index:200;
-        height:67px;
-        display:flex;
-        align-items:center;
-        justify-content:space-around;
-        background:rgba(8,11,28,.96);
-        backdrop-filter:blur(16px);
-        border-top:1px solid rgba(255,255,255,.08);
-      }
-
-      .mobile-nav a{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        gap:4px;
-        color:#777f9f;
-        font-size:10px;
-      }
-
-      .mobile-nav a span{
-        font-size:20px;
-      }
-
-      .mobile-nav a.active{
-        color:#b999ff;
-      }
-
-      .notice{
-        margin-bottom:100px;
-      }
-    }
-  </style>
+/* ---------- larger screens ---------- */
+@media(min-width:720px){
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .quiz-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1000px){
+  body{padding-bottom:40px}
+  .cat-grid{grid-template-columns:repeat(4,1fr)}
+  .quiz-grid{grid-template-columns:repeat(3,1fr)}
+  .mobile-nav{display:none}
+  .stat-num{font-size:26px}
+}
+@media(max-width:460px){
+  .stats{grid-template-columns:1fr;gap:12px}
+  .brand-sub{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .ic-spin{animation:none}
+  .cat-card,.quiz-card,.btn{transition:none}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container header-inner">
+<header class="header">
+  <div class="container header-inner">
 
-      <a href="index.html" class="brand">
-        <div class="logo-box">
-          <img
-            src="file_0000000031b8821193be8a110779a350.png"
-            alt="জ্ঞানতরঙ্গ লোগো">
-        </div>
-
-        <span>জ্ঞানতরঙ্গ</span>
-      </a>
-
-      <a href="index.html" class="back-btn">
-        ← হোমে ফিরে যান
-      </a>
-
-    </div>
-  </header>
-
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-
-      <div class="hero-badge">
-        📚 কুইজের বিস্তারিত তথ্য
+    <a href="index.html" class="brand">
+      <div class="logo-box">
+        <img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ লোগো">
       </div>
+      <div>
+        <div class="brand-text">জ্ঞানতরঙ্গ</div>
+        <div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+      </div>
+    </a>
 
-      <h1>কোন কুইজে অংশ নেবেন?</h1>
+    <a href="index.html" class="back-btn">
+      <span data-ic="arrow-left"></span>হোম
+    </a>
 
-      <p>
-        আপনার পছন্দের কুইজ সম্পর্কে বিস্তারিত তথ্য দেখুন।
-        কুইজের সময়, রেজিস্ট্রেশন শেষ হওয়ার তারিখ,
-        ফি, পুরস্কারসহ সব তথ্য এখানে পাওয়া যাবে।
-      </p>
+  </div>
+</header>
 
+
+<section class="hero">
+  <div class="container">
+
+    <div class="hero-badge"><span data-ic="grid"></span>কুইজ ক্যাটাগরি</div>
+
+    <h1>কোন বিষয়ে <span>কুইজ দেবেন?</span></h1>
+
+    <p>
+      পছন্দের ক্যাটাগরি বেছে নিন, শুধু সেই বিষয়ের কুইজগুলো দেখুন।
+      ফি, রেজিস্ট্রেশনের সময় ও পরীক্ষার তারিখসহ সব তথ্য এখানেই পাবেন।
+    </p>
+
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="stat-ic"><span data-ic="layers"></span></div>
+        <div>
+          <div class="stat-num" id="statCats">—</div>
+          <div class="stat-label">ক্যাটাগরি</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-ic"><span data-ic="book"></span></div>
+        <div>
+          <div class="stat-num" id="statQuizzes">—</div>
+          <div class="stat-label">মোট কুইজ</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-ic"><span data-ic="clipboard"></span></div>
+        <div>
+          <div class="stat-num" id="statOpen">—</div>
+          <div class="stat-label">রেজিস্ট্রেশন চলছে</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<main class="container">
+
+  <!-- লগইন প্রয়োজন -->
+  <section id="gate" class="gate hidden">
+    <div class="big"><span data-ic="lock"></span></div>
+    <h2>ক্যাটাগরি ও কুইজ দেখতে লগইন করুন</h2>
+    <p>Student Account দিয়ে লগইন করলে সব ক্যাটাগরি ও কুইজের বিস্তারিত তথ্য দেখতে পারবেন। অ্যাকাউন্ট না থাকলে এক মিনিটেই তৈরি করে নিন।</p>
+    <div class="gate-actions">
+      <a class="btn btn-primary" href="registration.html"><span data-ic="login"></span>লগইন করুন</a>
+      <a class="btn btn-ghost" href="registration.html"><span data-ic="user-plus"></span>নতুন অ্যাকাউন্ট</a>
     </div>
   </section>
 
-
-  <!-- QUIZ LIST -->
-  <main class="container">
-
-    <div class="quiz-grid">
-
-
-      <!-- QUIZ 1 -->
-      <article class="quiz-card">
-
-        <div class="quiz-image">
-
-          <div class="image-placeholder">
-            🧠
-          </div>
-
-          <div class="status">
-            🟢 রেজিস্ট্রেশন চলছে
-          </div>
-
-        </div>
-
-        <div class="card-body">
-
-          <div class="category-name">
-            সাধারণ জ্ঞান
-          </div>
-
-          <h2>
-            বাংলাদেশ ও বিশ্ব সাধারণ জ্ঞান কুইজ
-          </h2>
-
-          <p class="description">
-            বাংলাদেশ ও বিশ্বের গুরুত্বপূর্ণ বিষয়ের উপর
-            মজার ও জ্ঞানমূলক কুইজ।
-          </p>
-
-          <div class="info-grid">
-
-            <div class="info">
-              <span>📅 পরীক্ষা</span>
-              <strong>২৫ অক্টোবর ২০২৬</strong>
-            </div>
-
-            <div class="info">
-              <span>⏳ রেজিস্ট্রেশন</span>
-              <strong>২০ অক্টোবর পর্যন্ত</strong>
-            </div>
-
-            <div class="info">
-              <span>❓ প্রশ্ন</span>
-              <strong>৫০টি</strong>
-            </div>
-
-            <div class="info">
-              <span>💰 ফি</span>
-              <strong>৳১০০</strong>
-            </div>
-
-          </div>
-
-          <div class="prize">
-            🏆 পুরস্কার: ১ম — ৳৫,০০০ | ২য় — ৳৩,০০০ | ৩য় — ৳২,০০০
-          </div>
-
-          <a href="registration.html" class="register-btn">
-            📝 কুইজে রেজিস্ট্রেশন করুন
-          </a>
-
-        </div>
-
-      </article>
-
-
-      <!-- QUIZ 2 -->
-      <article class="quiz-card">
-
-        <div class="quiz-image">
-
-          <div class="image-placeholder">
-            📖
-          </div>
-
-          <div class="status">
-            🟢 রেজিস্ট্রেশন চলছে
-          </div>
-
-        </div>
-
-        <div class="card-body">
-
-          <div class="category-name">
-            বাংলা
-          </div>
-
-          <h2>
-            বাংলা ভাষা ও সাহিত্য কুইজ
-          </h2>
-
-          <p class="description">
-            বাংলা ভাষা, সাহিত্য, কবিতা ও বিখ্যাত লেখকদের
-            নিয়ে বিশেষ আয়োজন।
-          </p>
-
-          <div class="info-grid">
-
-            <div class="info">
-              <span>📅 পরীক্ষা</span>
-              <strong>৩০ অক্টোবর ২০২৬</strong>
-            </div>
-
-            <div class="info">
-              <span>⏳ রেজিস্ট্রেশন</span>
-              <strong>২৭ অক্টোবর পর্যন্ত</strong>
-            </div>
-
-            <div class="info">
-              <span>❓ প্রশ্ন</span>
-              <strong>৪০টি</strong>
-            </div>
-
-            <div class="info">
-              <span>💰 ফি</span>
-              <strong>ফ্রি</strong>
-            </div>
-
-          </div>
-
-          <div class="prize">
-            🏆 পুরস্কার: সেরা ১০ জনের জন্য বিশেষ সম্মাননা
-          </div>
-
-          <a href="registration.html" class="register-btn">
-            📝 কুইজে রেজিস্ট্রেশন করুন
-          </a>
-
-        </div>
-
-      </article>
-
-
-      <!-- QUIZ 3 -->
-      <article class="quiz-card">
-
-        <div class="quiz-image">
-
-          <div class="image-placeholder">
-            🔬
-          </div>
-
-          <div class="status">
-            🟡 শীঘ্রই শুরু
-          </div>
-
-        </div>
-
-        <div class="card-body">
-
-          <div class="category-name">
-            বিজ্ঞান
-          </div>
-
-          <h2>
-            বিজ্ঞান ও প্রযুক্তি কুইজ
-          </h2>
-
-          <p class="description">
-            বিজ্ঞান ও আধুনিক প্রযুক্তির গুরুত্বপূর্ণ
-            বিষয় নিয়ে প্রতিযোগিতামূলক কুইজ।
-          </p>
-
-          <div class="info-grid">
-
-            <div class="info">
-              <span>📅 পরীক্ষা</span>
-              <strong>৫ নভেম্বর ২০২৬</strong>
-            </div>
-
-            <div class="info">
-              <span>⏳ রেজিস্ট্রেশন</span>
-              <strong>১ নভেম্বর পর্যন্ত</strong>
-            </div>
-
-            <div class="info">
-              <span>❓ প্রশ্ন</span>
-              <strong>৫০টি</strong>
-            </div>
-
-            <div class="info">
-              <span>💰 ফি</span>
-              <strong>৳৫০</strong>
-            </div>
-
-          </div>
-
-          <div class="prize">
-            🏆 পুরস্কার: বিজয়ীদের জন্য আকর্ষণীয় পুরস্কার
-          </div>
-
-          <a href="registration.html" class="register-btn">
-            📝 কুইজে রেজিস্ট্রেশন করুন
-          </a>
-
-        </div>
-
-      </article>
-
-
+  <div id="loading" class="loading"><span data-ic="loader" data-cls="ic-spin"></span>তথ্য লোড হচ্ছে...</div>
+
+  <div id="errorBox" class="error-box hidden">
+    <p id="errorText">তথ্য লোড করা যায়নি।</p>
+    <div class="gate-actions"><button class="btn btn-ghost" id="retryBtn" type="button">আবার চেষ্টা করুন</button></div>
+  </div>
+
+  <!-- ক্যাটাগরি -->
+  <section id="catSection" class="hidden">
+    <div class="section-head">
+      <h2><span class="badge"><span data-ic="grid"></span></span>ক্যাটাগরি বেছে নিন</h2>
     </div>
+    <div id="catGroups"></div>
+  </section>
 
+  <!-- কুইজ -->
+  <section id="quizSection" class="hidden">
+    <div class="section-head">
+      <h2><span class="badge"><span data-ic="book"></span></span><span id="quizHeading">সব কুইজ</span></h2>
+      <button class="clear-btn hidden" id="clearBtn" type="button"><span data-ic="x"></span>সব দেখুন</button>
+    </div>
+    <div id="quizGrid" class="quiz-grid"></div>
+    <div id="quizEmpty" class="empty hidden">
+      <div class="big"><span data-ic="inbox"></span></div>
+      <h3>এই ক্যাটাগরিতে এখনো কোনো কুইজ নেই</h3>
+      <p>নতুন কুইজ যোগ হলে এখানে দেখতে পাবেন। অন্য ক্যাটাগরিও দেখতে পারেন।</p>
+    </div>
+  </section>
 
-    <!-- NOTICE -->
-    <div class="notice">
-
-      <h3>💡 অংশগ্রহণের আগে তথ্য দেখে নিন</h3>
-
+  <div class="notice">
+    <span data-ic="sparkles"></span>
+    <div>
+      <h3>অংশগ্রহণের আগে তথ্য দেখে নিন</h3>
       <p>
-        প্রতিটি কুইজের রেজিস্ট্রেশন সময়, ফি এবং পরীক্ষার
-        তারিখ ভালোভাবে দেখে রেজিস্ট্রেশন করুন।
-        রেজিস্ট্রেশন সম্পন্ন হলে আপনাকে একটি ইউনিক
-        Roll Number দেওয়া হবে। সেই Roll Number ব্যবহার
-        করেই পরবর্তীতে পরীক্ষায় অংশগ্রহণ ও ফলাফল দেখা যাবে।
+        প্রতিটি কুইজের রেজিস্ট্রেশন সময়, ফি এবং পরীক্ষার তারিখ ভালোভাবে দেখে রেজিস্ট্রেশন করুন।
+        রেজিস্ট্রেশন সম্পন্ন হলে আপনাকে একটি ইউনিক Roll Number দেওয়া হবে।
+        সেই Roll Number ব্যবহার করেই পরবর্তীতে পরীক্ষায় অংশগ্রহণ ও ফলাফল দেখা যাবে।
       </p>
-
     </div>
+  </div>
 
-  </main>
+</main>
 
 
-  <!-- MOBILE NAV -->
-  <nav class="mobile-nav">
+<nav class="mobile-nav">
+  <a href="index.html"><span data-ic="home"></span>হোম</a>
+  <a href="quiz.html"><span data-ic="target"></span>কুইজ</a>
+  <a href="category.html" class="active"><span data-ic="grid"></span>ক্যাটাগরি</a>
+  <a href="result.html"><span data-ic="trophy"></span>ফলাফল</a>
+  <a href="profile.html"><span data-ic="user"></span>প্রোফাইল</a>
+</nav>
 
-    <a href="index.html">
-      <span>🏠</span>
-      হোম
-    </a>
 
-    <a href="quiz.html">
-      <span>🚀</span>
-      কুইজ শুরু
-    </a>
+<script type="module">
+import { auth, db } from "./firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {
+  ICON, injectSprite, escapeHtml, safeUrl, stripLeadingEmoji,
+  getFee, getRegistrationState, bn, formatDate, formatDateTime
+} from "./gt-shared.js";
 
-    <a href="category.html" class="active">
-      <span>📚</span>
-      ক্যাটাগরি
-    </a>
+injectSprite();
 
-    <a href="result.html">
-      <span>🏆</span>
-      ফলাফল
-    </a>
+const $ = (id) => document.getElementById(id);
 
-    <a href="#">
-      <span>👤</span>
-      প্রোফাইল
-    </a>
+/* <span data-ic="name"> → আইকন */
+function paintIcons(root = document){
+  root.querySelectorAll("[data-ic]").forEach((el) => {
+    el.outerHTML = ICON(el.dataset.ic, el.dataset.cls || "");
+  });
+}
+paintIcons();
 
-  </nav>
+let categories = [];
+let quizzes = [];
+let selected = "all";
+
+/* ---------- helpers ---------- */
+const GROUP_ICON = { 1:"moon", 2:"flag", 3:"globe", 4:"cap", 5:"trophy" };
+
+function isListed(quiz){
+  const status = String(quiz.status || "published").toLowerCase();
+  return status === "published" || status === "closed";
+}
+
+const norm = (v) => String(v ?? "").trim().toLowerCase();
+
+function belongs(quiz, category){
+  if(quiz.category_id) return quiz.category_id === category.id;
+  return norm(quiz.category_name || quiz.category) === norm(category.name);
+}
+
+function listedQuizzes(){
+  return quizzes.filter(isListed);
+}
+
+function quizzesOf(category){
+  return listedQuizzes().filter((q) => belongs(q, category));
+}
+
+function show(id, on){ $(id).classList.toggle("hidden", !on); }
+
+function showOnly(which){
+  show("gate", which === "gate");
+  show("loading", which === "loading");
+  show("errorBox", which === "error");
+  show("catSection", which === "data");
+  show("quizSection", which === "data");
+}
+
+/* ---------- render: stats ---------- */
+function renderStats(){
+  const listed = listedQuizzes();
+  $("statCats").textContent = bn(categories.length);
+  $("statQuizzes").textContent = bn(listed.length);
+  $("statOpen").textContent = bn(listed.filter((q) => getRegistrationState(q).state === "open").length);
+}
+
+/* ---------- render: categories ---------- */
+function renderCategories(){
+  const groups = new Map();
+
+  categories.forEach((cat) => {
+    const order = Number(cat.group_order ?? 99);
+    const name = stripLeadingEmoji(cat.group_name) || "অন্যান্য";
+    const key = order + "|" + name;
+    if(!groups.has(key)) groups.set(key, { order, name, items: [] });
+    groups.get(key).items.push(cat);
+  });
+
+  const list = [...groups.values()].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name, "bn"));
+
+  const allCard = `
+    <div class="group">
+      <div class="cat-grid">
+        <button class="cat-card" type="button" data-cat="all" aria-pressed="${selected === "all"}">
+          <span class="cat-ic">${ICON("layers")}</span>
+          <span class="cat-name">সব কুইজ</span>
+          <span class="cat-count">${bn(listedQuizzes().length)}টি কুইজ</span>
+        </button>
+      </div>
+    </div>`;
+
+  const html = list.map((group) => {
+    const icon = GROUP_ICON[group.order] || "grid";
+    const cards = group.items
+      .sort((a, b) => Number(a.sort_order ?? 0) - Number(b.sort_order ?? 0) || String(a.name).localeCompare(String(b.name), "bn"))
+      .map((cat) => `
+        <button class="cat-card" type="button" data-cat="${escapeHtml(cat.id)}" aria-pressed="${selected === cat.id}">
+          <span class="cat-ic">${ICON(icon)}</span>
+          <span class="cat-name">${escapeHtml(cat.name || "ক্যাটাগরি")}</span>
+          <span class="cat-count">${bn(quizzesOf(cat).length)}টি কুইজ</span>
+        </button>`).join("");
+    return `
+      <div class="group">
+        <div class="group-head">${ICON(icon)}${escapeHtml(group.name)}</div>
+        <div class="cat-grid">${cards}</div>
+      </div>`;
+  }).join("");
+
+  $("catGroups").innerHTML = allCard + html;
+}
+
+/* ---------- render: quizzes ---------- */
+const STATE_ORDER = { open:0, upcoming:1, ended:2, closed:3, unpublished:4 };
+
+function quizCard(quiz){
+  const reg = getRegistrationState(quiz);
+  const fee = getFee(quiz);
+  const image = safeUrl(quiz.image_url);
+  const examDate = formatDateTime(quiz.start_at);
+  const regEnd = formatDate(quiz.registration_end);
+  const questions = Number(quiz.question_count || quiz.total_questions || 0);
+  const minutes = Number(quiz.duration_minutes || 0);
+  const desc = String(quiz.description || "").trim() || "এই কুইজে অংশ নিতে রেজিস্ট্রেশন করুন।";
+  const prize = String(quiz.prize || "").trim();
+
+  const button = reg.canRegister
+    ? `<a class="btn btn-primary" href="registration.html?quiz=${encodeURIComponent(quiz.id)}">${ICON("clipboard")}রেজিস্ট্রেশন করুন</a>`
+    : `<span class="btn btn-disabled">${ICON("lock")}${escapeHtml(reg.label)}</span>`;
+
+  return `
+    <article class="quiz-card">
+      <div class="quiz-image">
+        ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : `<div class="ph">${ICON("book")}</div>`}
+        <span class="chip ${reg.state}">${escapeHtml(reg.label)}</span>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-cat">${escapeHtml(quiz.category_name || quiz.category || "সাধারণ")}</div>
+        <h3 class="quiz-title">${escapeHtml(quiz.title || quiz.quiz_name || "কুইজ")}</h3>
+        <p class="quiz-desc">${escapeHtml(desc)}</p>
+        <div class="info-grid">
+          <div class="info"><div class="info-k">${ICON("calendar")}পরীক্ষা</div><div class="info-v">${escapeHtml(examDate || "শীঘ্রই জানানো হবে")}</div></div>
+          <div class="info"><div class="info-k">${ICON("hourglass")}রেজিস্ট্রেশন শেষ</div><div class="info-v">${escapeHtml(regEnd || "—")}</div></div>
+          <div class="info"><div class="info-k">${ICON("help")}প্রশ্ন</div><div class="info-v">${questions ? bn(questions) + "টি" : "—"}</div></div>
+          <div class="info"><div class="info-k">${ICON("wallet")}ফি</div><div class="info-v ${fee > 0 ? "paid" : "free"}">${fee > 0 ? "৳ " + bn(fee) : "ফ্রি"}</div></div>
+          ${minutes ? `<div class="info"><div class="info-k">${ICON("clock")}সময়</div><div class="info-v">${bn(minutes)} মিনিট</div></div>` : ""}
+        </div>
+        ${prize ? `<div class="prize">${ICON("trophy")}<span>পুরস্কার: ${escapeHtml(prize)}</span></div>` : ""}
+        ${button}
+      </div>
+    </article>`;
+}
+
+function renderQuizzes(){
+  const category = categories.find((c) => c.id === selected);
+  let list = listedQuizzes();
+
+  if(selected !== "all" && category){
+    list = list.filter((q) => belongs(q, category));
+  }
+
+  list.sort((a, b) =>
+    (STATE_ORDER[getRegistrationState(a).state] ?? 9) - (STATE_ORDER[getRegistrationState(b).state] ?? 9) ||
+    String(a.title || "").localeCompare(String(b.title || ""), "bn"));
+
+  $("quizHeading").textContent = category && selected !== "all"
+    ? stripLeadingEmoji(category.name) + " — " + bn(list.length) + "টি কুইজ"
+    : "সব কুইজ — " + bn(list.length) + "টি";
+
+  show("clearBtn", selected !== "all");
+  $("quizGrid").innerHTML = list.map(quizCard).join("");
+  show("quizGrid", list.length > 0);
+  show("quizEmpty", list.length === 0);
+}
+
+function renderAll(){
+  renderStats();
+  renderCategories();
+  renderQuizzes();
+}
+
+/* ---------- selection ---------- */
+function select(id, userClick){
+  selected = id;
+
+  const url = new URL(location.href);
+  if(id === "all"){ url.searchParams.delete("cat"); } else { url.searchParams.set("cat", id); }
+  history.replaceState(null, "", url);
+
+  renderCategories();
+  renderQuizzes();
+
+  if(userClick){
+    $("quizSection").scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+}
+
+$("catGroups").addEventListener("click", (event) => {
+  const btn = event.target.closest("[data-cat]");
+  if(btn) select(btn.dataset.cat, true);
+});
+
+$("clearBtn").addEventListener("click", () => select("all", false));
+
+/* ---------- load ---------- */
+async function load(){
+  showOnly("loading");
+
+  try{
+    const [catSnap, quizSnap] = await Promise.all([
+      getDocs(collection(db, "quiz_categories")),
+      getDocs(collection(db, "quizzes"))
+    ]);
+
+    categories = [];
+    catSnap.forEach((d) => {
+      const data = d.data();
+      if(data.is_active !== false) categories.push({ id: d.id, ...data });
+    });
+
+    quizzes = [];
+    quizSnap.forEach((d) => quizzes.push({ id: d.id, ...d.data() }));
+
+    const wanted = new URLSearchParams(location.search).get("cat");
+    selected = wanted && categories.some((c) => c.id === wanted) ? wanted : "all";
+
+    renderAll();
+    showOnly("data");
+
+  }catch(error){
+    console.error("Category load error:", error);
+    $("errorText").textContent = "তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।";
+    showOnly("error");
+  }
+}
+
+$("retryBtn").addEventListener("click", load);
+
+onAuthStateChanged(auth, (user) => {
+  if(user){ load(); } else { showOnly("gate"); }
+});
+</script>
 
 </body>
-  </html>
+</html>
