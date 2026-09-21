@@ -668,6 +668,16 @@
   let attemptId = null;
 
   let submitted = false;
+  let examStarted = false;
+
+  function shuffleArray(items) {
+    const arr = [...items];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
   let selectedQuestionCount = 0;
   let selectedRandomQuestions = false;
@@ -805,12 +815,12 @@
   function setupAntiCheat() {
     if (antiCheatSettings.trackTab) {
       document.addEventListener("visibilitychange", () => {
-        if (document.hidden && !examSection.classList.contains("hidden") && !submitted) {
+        if (examStarted && document.hidden && !examSection.classList.contains("hidden") && !submitted) {
           recordAntiCheatWarning("অন্য ট্যাব/অ্যাপ বা পেজে চলে যাওয়া শনাক্ত হয়েছে।", "tab_hidden");
         }
       });
       window.addEventListener("blur", () => {
-        if (!examSection.classList.contains("hidden") && !submitted) {
+        if (examStarted && !examSection.classList.contains("hidden") && !submitted) {
           recordAntiCheatWarning("পরীক্ষার পেজ থেকে ফোকাস সরে গেছে।", "window_blur");
         }
       });
@@ -818,7 +828,7 @@
     if (antiCheatSettings.trackCopy) {
       ["copy", "cut", "paste", "contextmenu"].forEach(eventName => {
         document.addEventListener(eventName, event => {
-          if (!examSection.classList.contains("hidden") && !submitted) {
+          if (examStarted && !examSection.classList.contains("hidden") && !submitted) {
             event.preventDefault();
             recordAntiCheatWarning(
               eventName === "contextmenu" ? "রাইট-ক্লিক/Context Menu ব্যবহার করার চেষ্টা শনাক্ত হয়েছে।" : eventName.toUpperCase() + " Activity শনাক্ত হয়েছে।",
@@ -1188,15 +1198,6 @@ enterBtn.addEventListener("click", async () => {
         quizData.random_questions === true ||
         String(quizData.random_questions).toLowerCase() === "true";
 
-      const shuffleArray = (items) => {
-        const arr = [...items];
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      };
-
       questions.sort((a, b) =>
         Number(a.question_number ?? a.order ?? a.serial ?? 999999) -
         Number(b.question_number ?? b.order ?? b.serial ?? 999999)
@@ -1351,6 +1352,8 @@ enterBtn.addEventListener("click", async () => {
 
     try {
 
+      examStarted = false;
+
       if (!activeAttemptRef || !activeQuizId || !activeRollNumber) {
         throw new Error("পরীক্ষার তথ্য পাওয়া যায়নি। আবার Quiz Roll Number দিয়ে প্রবেশ করুন।");
       }
@@ -1484,6 +1487,7 @@ enterBtn.addEventListener("click", async () => {
       renderQuestion();
 
       startTimer();
+      examStarted = true;
 
       await requestFullscreenIfNeeded();
 
@@ -1952,6 +1956,7 @@ enterBtn.addEventListener("click", async () => {
 
 
     submitted = true;
+    examStarted = false;
 
 
     clearInterval(
