@@ -181,6 +181,41 @@
       background: rgba(255,77,109,.1);
     }
 
+    .question-timer {
+      min-width: 120px;
+      text-align: center;
+      padding: 10px 13px;
+      border-radius: 13px;
+      background: rgba(139,61,255,.10);
+      border: 1px solid rgba(139,61,255,.32);
+      color: #c7a8ff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .question-timer.warning {
+      color: #ffb21c;
+      border-color: rgba(255,178,28,.4);
+      background: rgba(255,178,28,.1);
+    }
+
+    .question-timer.danger {
+      color: #ff4d6d;
+      border-color: rgba(255,77,109,.4);
+      background: rgba(255,77,109,.1);
+    }
+
+    .anti-cheat-status {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,178,28,.20);
+      background: rgba(255,178,28,.06);
+      border-radius: 10px;
+      color: #d9c9a0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
     /* PROGRESS */
 
     .progress-area {
@@ -421,10 +456,18 @@
         </div>
       </div>
 
-      <div
-        id="timer"
-        class="timer">
-        05:00
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center;">
+        <div
+          id="questionTimer"
+          class="question-timer">
+          প্রশ্ন: ৩০s
+        </div>
+
+        <div
+          id="timer"
+          class="timer">
+          05:00
+        </div>
       </div>
 
     </div>
@@ -469,6 +512,12 @@
       💡 <b>জ্ঞানতরঙ্গ টিপস:</b>
       উত্তর দেওয়ার আগে প্রশ্নটি ভালোভাবে পড়ে নিন।
       একবার উত্তর নির্বাচন করলে তা পরিবর্তন করা যাবে না।
+    </div>
+
+    <div
+      id="antiCheatStatus"
+      class="anti-cheat-status">
+      🛡️ পরীক্ষা চলাকালে অন্য ট্যাব/অ্যাপ বা পেজে চলে গেলে সতর্কতা রেকর্ড হতে পারে। কপি-পেস্ট ও রাইট-ক্লিক বন্ধ থাকবে।
     </div>
 
 
@@ -554,7 +603,13 @@
 
   let timerInterval = null;
 
+  let questionTimerInterval = null;
+
   let remainingSeconds = 0;
+
+  let questionRemainingSeconds = 30;
+
+  let antiCheatWarnings = 0;
 
   let attemptId = null;
 
@@ -595,6 +650,12 @@
   const timer =
     document.getElementById("timer");
 
+  const questionTimer =
+    document.getElementById("questionTimer");
+
+  const antiCheatStatus =
+    document.getElementById("antiCheatStatus");
+
   const progressText =
     document.getElementById("progressText");
 
@@ -618,6 +679,62 @@
 
   const homeBtn =
     document.getElementById("homeBtn");
+
+
+  /* =========================
+     ANTI-CHEAT / AI DETERRENCE
+  ========================= */
+
+  function recordAntiCheatWarning(reason) {
+
+    if (!examSection || examSection.classList.contains("hidden") || submitted) {
+      return;
+    }
+
+    antiCheatWarnings++;
+
+    antiCheatStatus.textContent =
+      "⚠️ সতর্কতা " +
+      antiCheatWarnings +
+      ": " +
+      reason +
+      " পরীক্ষার সময় চালু থাকবে।";
+
+    antiCheatStatus.style.borderColor =
+      "rgba(255,77,109,.35)";
+
+    antiCheatStatus.style.color =
+      "#ffb8c4";
+
+    if (attemptId) {
+      updateDoc(
+        doc(db, "attempts", attemptId),
+        {
+          anti_cheat_warnings: antiCheatWarnings,
+          last_anti_cheat_warning: reason
+        }
+      ).catch(() => {});
+    }
+
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      recordAntiCheatWarning("অন্য ট্যাব/অ্যাপ বা পেজে চলে যাওয়া শনাক্ত হয়েছে।");
+    }
+  });
+
+  window.addEventListener("blur", () => {
+    recordAntiCheatWarning("পরীক্ষার পেজ থেকে ফোকাস সরে গেছে।");
+  });
+
+  ["copy", "cut", "paste", "contextmenu"].forEach((eventName) => {
+    document.addEventListener(eventName, (event) => {
+      if (!examSection.classList.contains("hidden") && !submitted) {
+        event.preventDefault();
+      }
+    });
+  });
 
 
   /* =========================
@@ -1025,6 +1142,17 @@
       remainingSeconds =
         durationMinutes * 60;
 
+      antiCheatWarnings = 0;
+
+      antiCheatStatus.textContent =
+        "🛡️ নিরাপত্তা মোড সক্রিয়: অন্য ট্যাব/অ্যাপ বা পেজে গেলে সতর্কতা রেকর্ড হবে।";
+
+      antiCheatStatus.style.borderColor =
+        "rgba(255,178,28,.20)";
+
+      antiCheatStatus.style.color =
+        "#d9c9a0";
+
 
       answers =
         new Array(
@@ -1294,6 +1422,8 @@
     nextBtn.disabled =
       !selectedAnswer;
 
+    startQuestionTimer(question);
+
 
     if (
       currentIndex ===
@@ -1455,6 +1585,8 @@
       }
 
 
+      clearInterval(questionTimerInterval);
+
       currentIndex++;
 
       renderQuestion();
@@ -1466,6 +1598,78 @@
   /* =========================
      TIMER
   ========================= */
+
+  function getQuestionTime(question) {
+
+    const value = Number(
+      question?.question_time_seconds ??
+      question?.question_time ??
+      30
+    );
+
+    if (!Number.isFinite(value) || value < 5) {
+      return 30;
+    }
+
+    return Math.min(600, Math.floor(value));
+
+  }
+
+  function startQuestionTimer(question) {
+
+    clearInterval(questionTimerInterval);
+
+    questionRemainingSeconds =
+      getQuestionTime(question);
+
+    updateQuestionTimer();
+
+    questionTimerInterval =
+      setInterval(() => {
+
+        questionRemainingSeconds--;
+
+        updateQuestionTimer();
+
+        if (questionRemainingSeconds <= 0) {
+
+          clearInterval(questionTimerInterval);
+
+          if (currentIndex >= questions.length - 1) {
+            submitExam();
+          } else {
+            if (!selectedAnswer) {
+              answers[currentIndex] = null;
+            }
+            currentIndex++;
+            renderQuestion();
+          }
+
+        }
+
+      }, 1000);
+
+  }
+
+  function updateQuestionTimer() {
+
+    questionTimer.textContent =
+      "প্রশ্ন: " +
+      String(Math.max(0, questionRemainingSeconds)).padStart(2, "0") +
+      "s";
+
+    questionTimer.classList.remove(
+      "warning",
+      "danger"
+    );
+
+    if (questionRemainingSeconds <= 10) {
+      questionTimer.classList.add("danger");
+    } else if (questionRemainingSeconds <= 15) {
+      questionTimer.classList.add("warning");
+    }
+
+  }
 
   function startTimer() {
 
@@ -1492,6 +1696,10 @@
 
             clearInterval(
               timerInterval
+            );
+
+            clearInterval(
+              questionTimerInterval
             );
 
             submitExam();
@@ -1576,6 +1784,10 @@
 
     clearInterval(
       timerInterval
+    );
+
+    clearInterval(
+      questionTimerInterval
     );
 
 
