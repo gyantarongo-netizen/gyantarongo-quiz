@@ -672,6 +672,10 @@
   let selectedQuestionCount = 0;
   let selectedRandomQuestions = false;
 
+  let activeQuizId = null;
+  let activeRollNumber = "";
+  let activeAttemptRef = null;
+
 
   /* =========================
      ELEMENTS
@@ -920,6 +924,8 @@ enterBtn.addEventListener("click", async () => {
     const rollNumber =
       rollInput.value.trim();
 
+    activeRollNumber = rollNumber;
+
     if (!rollNumber) {
 
       loginMessage.textContent =
@@ -999,6 +1005,8 @@ enterBtn.addEventListener("click", async () => {
 
       const quizId =
         registration.quiz_id;
+
+      activeQuizId = quizId;
 
 
       if (!quizId) {
@@ -1221,6 +1229,8 @@ enterBtn.addEventListener("click", async () => {
           attemptId
         );
 
+      activeAttemptRef = existingAttemptRef;
+
 
       const existingAttempt =
         await getDoc(existingAttemptRef);
@@ -1341,6 +1351,10 @@ enterBtn.addEventListener("click", async () => {
 
     try {
 
+      if (!activeAttemptRef || !activeQuizId || !activeRollNumber) {
+        throw new Error("পরীক্ষার তথ্য পাওয়া যায়নি। আবার Quiz Roll Number দিয়ে প্রবেশ করুন।");
+      }
+
       /* =========================
          CREATE ATTEMPT
       ========================= */
@@ -1373,20 +1387,20 @@ enterBtn.addEventListener("click", async () => {
 
 
       await setDoc(
-        existingAttemptRef,
+        activeAttemptRef,
         {
 
           student_uid:
             currentUser.uid,
 
           quiz_id:
-            quizId,
+            activeQuizId,
 
           registration_id:
             registration.id,
 
           roll_number:
-            rollNumber,
+            activeRollNumber,
 
           status:
             "started",
@@ -1460,7 +1474,7 @@ enterBtn.addEventListener("click", async () => {
 
       studentRoll.textContent =
         "Quiz Roll Number: " +
-        rollNumber;
+        activeRollNumber;
 
 
       currentIndex = 0;
