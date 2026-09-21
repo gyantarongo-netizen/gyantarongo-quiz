@@ -873,44 +873,65 @@
         "⏳ প্রশ্ন লোড হচ্ছে...";
 
 
-      const questionsRef =
-        collection(db, "exam_questions");
+      /*
+         IMPORTANT:
+         Admin question-management বর্তমানে প্রশ্ন save করে
+         "questions" collection-এ। পুরোনো exam code শুধু
+         "exam_questions" খুঁজছিল—এটাই প্রশ্ন না পাওয়ার মূল কারণ।
 
+         প্রথমে exam_questions চেষ্টা করা হবে। সেখানে না থাকলে
+         একই quiz_id-এর questions collection থেকে প্রশ্ন নেওয়া হবে।
+         UI/design-এর কোনো অংশ পরিবর্তন করা হয়নি।
+      */
 
-      const questionQuery =
-        query(
-          questionsRef,
-          where(
-            "quiz_id",
-            "==",
-            quizId
-          )
+      let questionSnapshot = null;
+
+      try {
+        const examQuestionsRef =
+          collection(db, "exam_questions");
+
+        const examQuestionQuery =
+          query(
+            examQuestionsRef,
+            where("quiz_id", "==", quizId)
+          );
+
+        questionSnapshot =
+          await getDocs(examQuestionQuery);
+      } catch (examQuestionError) {
+        console.warn(
+          "exam_questions load failed; trying questions:",
+          examQuestionError
         );
-
-
-      const questionSnapshot =
-        await getDocs(questionQuery);
-
-
-      if (questionSnapshot.empty) {
-
-        throw new Error(
-          "এই কুইজের কোনো প্রশ্ন পাওয়া যায়নি।"
-        );
-
       }
 
+      if (!questionSnapshot || questionSnapshot.empty) {
+        const questionsRef =
+          collection(db, "questions");
+
+        const questionQuery =
+          query(
+            questionsRef,
+            where("quiz_id", "==", quizId)
+          );
+
+        questionSnapshot =
+          await getDocs(questionQuery);
+      }
+
+      if (questionSnapshot.empty) {
+        throw new Error(
+          "এই কুইজের কোনো প্রশ্ন পাওয়া যায়নি। Admin Question Management-এ এই Quiz-এর প্রশ্ন আছে কি না যাচাই করুন।"
+        );
+      }
 
       questions = [];
 
-
       questionSnapshot.forEach((item) => {
-
         questions.push({
           id: item.id,
           ...item.data()
         });
-
       });
 
 
