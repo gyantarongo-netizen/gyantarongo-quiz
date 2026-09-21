@@ -122,14 +122,88 @@ async function searchAnswers(){
 
     const quizzesMap=new Map();
     const questionsMap=new Map();
+
     for(const a of attempts){
       if(!quizzesMap.has(a.quiz_id)){
-        const qs=await getDoc(doc(db,"quizzes",a.quiz_id));
-        quizzesMap.set(a.quiz_id,qs.exists()?{id:qs.id,...qs.data()}:{id:a.quiz_id});
+        const quizSnap=await getDoc(doc(db,"quizzes",a.quiz_id));
+        quizzesMap.set(
+          a.quiz_id,
+          quizSnap.exists()
+            ? {id:quizSnap.id,...quizSnap.data()}
+            : {id:a.quiz_id}
+        );
       }
-      const qSnap=await getDocs(query(collection(db,"exam_questions"),where("quiz_id","==",a.quiz_id)));
-      const qs=[];qSnap.forEach(d=>qs.push({id:d.id,...d.data()}));
-      qs.sort((x,y)=>Number(x.question_number??x.order??x.serial??999999)-Number(y.question_number??y.order??y.serial??999999));
+
+      // Exam যে collection থেকে প্রশ্ন নিয়েছে, Answer Review-ও
+      // প্রথমে সেই collection-এর প্রশ্ন খুঁজবে।
+      let qs=[];
+
+      try{
+        const examSnap=await getDocs(
+          query(
+            collection(db,"exam_questions"),
+            where("quiz_id","==",a.quiz_id)
+          )
+        );
+        examSnap.forEach(d=>qs.push({id:d.id,...d.data()}));
+      }catch(error){
+        console.warn(
+          "exam_questions load failed; trying questions:",
+          error
+        );
+      }
+
+      // exam_questions-এ না থাকলে questions collection থেকে নেবে।
+      if(!qs.length){
+        const questionSnap=await getDocs(
+          query(
+            collection(db,"questions"),
+            where("quiz_id","==",a.quiz_id)
+          )
+        );
+        questionSnap.forEach(d=>qs.push({id:d.id,...d.data()}));
+      }
+
+      // Attempt-এ যে question_order / selected_question_ids রাখা হয়েছে,
+      // সেটি থাকলে ঠিক পরীক্ষায় দেখানো ক্রমেই প্রশ্ন সাজানো হবে।
+      const savedOrder =
+        Array.isArray(a.question_order) && a.question_order.length
+          ? a.question_order
+          : (
+              Array.isArray(a.selected_question_ids)
+                ? a.selected_question_ids
+                : []
+            );
+
+      if(savedOrder.length){
+        const byId=new Map(qs.map(q=>[q.id,q]));
+        const ordered=savedOrder
+          .map(id=>byId.get(id))
+          .filter(Boolean);
+
+        // কোনো কারণে কিছু প্রশ্ন order-এ না থাকলে সেগুলোও হারাবে না।
+        const used=new Set(ordered.map(q=>q.id));
+        const remaining=qs.filter(q=>!used.has(q.id));
+
+        qs=[...ordered,...remaining];
+      }else{
+        qs.sort(
+          (x,y)=>
+            Number(
+              x.question_number ??
+              x.order ??
+              x.serial ??
+              999999
+            ) -
+            Number(
+              y.question_number ??
+              y.order ??
+              y.serial ??
+              999999
+            )
+        );
+      }
+
       questionsMap.set(a.quiz_id,qs);
     }
 
