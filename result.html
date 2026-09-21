@@ -282,7 +282,7 @@ footer{
 
     <div class="logo-box">
       <img
-        src="file_0000000031b8821193be8a110779a350.png"
+        src="gyantarongo-logo-transparent-1.png"
         alt="জ্ঞানতরঙ্গ">
     </div>
 
@@ -535,10 +535,14 @@ footer{
 
 
       // প্রাপ্ত নম্বর
+      const obtainedMarks = Number(
+        resultData.obtained_marks ?? resultData.score ?? 0
+      );
+      const totalMarks = Number(
+        resultData.total_marks ?? 0
+      );
       document.getElementById("score").textContent =
-        (resultData.obtained_marks ?? 0) +
-        " / " +
-        (resultData.total_marks ?? 0);
+        obtainedMarks + " / " + totalMarks;
 
 
       // সঠিক
@@ -562,13 +566,16 @@ footer{
 
 
       // Percentage
+      const percentage =
+        resultData.percentage ??
+        (totalMarks > 0 ? ((obtainedMarks / totalMarks) * 100).toFixed(2) : 0);
       document.getElementById("percent").textContent =
-        (resultData.percentage ?? 0) + "%";
+        percentage + "%";
 
 
       // সময়
       const totalSeconds =
-        Number(resultData.time_taken_seconds ?? 0);
+        Number(resultData.total_time_seconds ?? resultData.time_taken_seconds ?? 0);
 
 
       const minutes =
@@ -591,7 +598,7 @@ footer{
 
       const allResultsQuery = query(
         resultsRef,
-        where("quiz_name", "==", resultData.quiz_name),
+        where("quiz_id", "==", resultData.quiz_id),
         where("published", "==", true)
       );
 
@@ -613,10 +620,10 @@ footer{
           uid: data.student_uid,
 
           marks:
-            Number(data.obtained_marks ?? 0),
+            Number(data.obtained_marks ?? data.score ?? 0),
 
           time:
-            Number(data.time_taken_seconds ?? 0)
+            Number(data.total_time_seconds ?? data.time_taken_seconds ?? 0)
 
         });
 
