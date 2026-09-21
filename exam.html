@@ -369,7 +369,17 @@
         padding: 18px;
       }
     }
-  </style>
+  
+
+    .rules-logo{display:flex;justify-content:center;margin-bottom:10px}
+    .rules-logo img{width:72px;height:72px;object-fit:contain;border-radius:18px}
+    .rules-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+    .rules-summary .rule-stat{padding:12px;border:1px solid rgba(139,61,255,.22);background:rgba(139,61,255,.07);border-radius:14px}
+    .rule-stat strong{display:block;color:#fff;font-size:18px;margin-bottom:3px}
+    .rule-stat span{color:#b8b8c9;font-size:12px}
+    .rules-content{text-align:left;line-height:1.75;color:#dedeee;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);border-radius:16px;padding:16px;margin-bottom:14px;white-space:pre-wrap}
+    .rules-content ul{margin:0;padding-left:20px}
+</style>
 </head>
 
 <body>
@@ -383,7 +393,7 @@
     <div class="brand">
 
       <img
-        src="file_0000000031b8821193be8a110779a350.png"
+        src="gyantarongo-logo-transparent-1.png"
         alt="জ্ঞানতরঙ্গ">
 
       <div class="brand-text">
@@ -431,6 +441,40 @@
       id="loginMessage"
       class="message">
     </div>
+
+  </section>
+
+
+  <!-- EXAM RULES -->
+
+  <section
+    id="rulesSection"
+    class="login-box hidden">
+
+    <div class="rules-logo">
+      <img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ">
+    </div>
+
+    <h2>📋 পরীক্ষার নিয়ম ও নির্দেশনা</h2>
+
+    <p>
+      পরীক্ষা শুরু করার আগে নিচের নিয়মগুলো ভালোভাবে পড়ুন।
+      নিয়ম পড়ার সময় পরীক্ষার সময় গণনা হবে না।
+    </p>
+
+    <div id="rulesSummary" class="rules-summary"></div>
+
+    <div id="rulesContent" class="rules-content"></div>
+
+    <div id="rulesAntiCheat" class="anti-cheat-status" style="margin-top:14px;">
+      🛡️ নিরাপত্তা নির্দেশনা
+    </div>
+
+    <button id="startExamBtn" class="primary-btn" type="button">
+      আমি নিয়মগুলো পড়েছি — পরীক্ষা শুরু করুন
+    </button>
+
+    <div id="rulesMessage" class="message"></div>
 
   </section>
 
@@ -580,7 +624,8 @@
     getDocs,
     setDoc,
     updateDoc,
-    serverTimestamp
+    serverTimestamp,
+    arrayUnion
   } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
@@ -611,9 +656,21 @@
 
   let antiCheatWarnings = 0;
 
+  let antiCheatEvents = [];
+
+  let antiCheatSettings = {
+    trackTab: true,
+    trackCopy: true,
+    requireFullscreen: false,
+    warningLimit: 5
+  };
+
   let attemptId = null;
 
   let submitted = false;
+
+  let selectedQuestionCount = 0;
+  let selectedRandomQuestions = false;
 
 
   /* =========================
@@ -625,6 +682,24 @@
 
   const examSection =
     document.getElementById("examSection");
+
+  const rulesSection =
+    document.getElementById("rulesSection");
+
+  const rulesSummary =
+    document.getElementById("rulesSummary");
+
+  const rulesContent =
+    document.getElementById("rulesContent");
+
+  const rulesAntiCheat =
+    document.getElementById("rulesAntiCheat");
+
+  const startExamBtn =
+    document.getElementById("startExamBtn");
+
+  const rulesMessage =
+    document.getElementById("rulesMessage");
 
   const finishSection =
     document.getElementById("finishSection");
@@ -685,57 +760,85 @@
      ANTI-CHEAT / AI DETERRENCE
   ========================= */
 
-  function recordAntiCheatWarning(reason) {
-
-    if (!examSection || examSection.classList.contains("hidden") || submitted) {
-      return;
-    }
-
-    antiCheatWarnings++;
-
-    antiCheatStatus.textContent =
-      "⚠️ সতর্কতা " +
-      antiCheatWarnings +
-      ": " +
-      reason +
-      " পরীক্ষার সময় চালু থাকবে।";
-
-    antiCheatStatus.style.borderColor =
-      "rgba(255,77,109,.35)";
-
-    antiCheatStatus.style.color =
-      "#ffb8c4";
-
-    if (attemptId) {
-      updateDoc(
-        doc(db, "attempts", attemptId),
-        {
-          anti_cheat_warnings: antiCheatWarnings,
-          last_anti_cheat_warning: reason
-        }
-      ).catch(() => {});
-    }
-
+  function getAntiCheatSettings() {
+    const raw = quizData?.anti_cheat || {};
+    return {
+      trackTab: raw.track_tab !== false && String(raw.track_tab).toLowerCase() !== "false",
+      trackCopy: raw.track_copy !== false && String(raw.track_copy).toLowerCase() !== "false",
+      requireFullscreen: raw.require_fullscreen === true || String(raw.require_fullscreen).toLowerCase() === "true",
+      warningLimit: Math.max(1, Number(raw.warning_limit || 5))
+    };
   }
 
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      recordAntiCheatWarning("অন্য ট্যাব/অ্যাপ বা পেজে চলে যাওয়া শনাক্ত হয়েছে।");
+  async function logAntiCheatEvent(type, reason) {
+    if (!attemptId || submitted) return;
+    const event = { type, reason, at: new Date().toISOString() };
+    antiCheatEvents.push(event);
+    try {
+      await updateDoc(doc(db, "attempts", attemptId), {
+        anti_cheat_events: arrayUnion(event),
+        anti_cheat_warnings: antiCheatWarnings,
+        last_anti_cheat_warning: reason,
+        anti_cheat_risk_score: Math.min(100, antiCheatWarnings * 10)
+      });
+    } catch (error) {
+      console.warn("Anti-cheat log failed:", error);
     }
-  });
+  }
 
-  window.addEventListener("blur", () => {
-    recordAntiCheatWarning("পরীক্ষার পেজ থেকে ফোকাস সরে গেছে।");
-  });
+  function recordAntiCheatWarning(reason, type = "warning") {
+    if (!examSection || examSection.classList.contains("hidden") || submitted) return;
+    antiCheatWarnings++;
+    antiCheatStatus.textContent = "⚠️ সতর্কতা " + antiCheatWarnings + ": " + reason + " পরীক্ষার সময় চালু থাকবে।";
+    antiCheatStatus.style.borderColor = "rgba(255,77,109,.35)";
+    antiCheatStatus.style.color = "#ffb8c4";
+    logAntiCheatEvent(type, reason);
+    if (antiCheatWarnings >= antiCheatSettings.warningLimit) {
+      antiCheatStatus.textContent = "🚨 সতর্কতা সীমা অতিক্রম করেছে (" + antiCheatWarnings + ")। Activity Admin Review-এর জন্য রেকর্ড হয়েছে।";
+    }
+  }
 
-  ["copy", "cut", "paste", "contextmenu"].forEach((eventName) => {
-    document.addEventListener(eventName, (event) => {
-      if (!examSection.classList.contains("hidden") && !submitted) {
-        event.preventDefault();
+  function setupAntiCheat() {
+    if (antiCheatSettings.trackTab) {
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && !examSection.classList.contains("hidden") && !submitted) {
+          recordAntiCheatWarning("অন্য ট্যাব/অ্যাপ বা পেজে চলে যাওয়া শনাক্ত হয়েছে।", "tab_hidden");
+        }
+      });
+      window.addEventListener("blur", () => {
+        if (!examSection.classList.contains("hidden") && !submitted) {
+          recordAntiCheatWarning("পরীক্ষার পেজ থেকে ফোকাস সরে গেছে।", "window_blur");
+        }
+      });
+    }
+    if (antiCheatSettings.trackCopy) {
+      ["copy", "cut", "paste", "contextmenu"].forEach(eventName => {
+        document.addEventListener(eventName, event => {
+          if (!examSection.classList.contains("hidden") && !submitted) {
+            event.preventDefault();
+            recordAntiCheatWarning(
+              eventName === "contextmenu" ? "রাইট-ক্লিক/Context Menu ব্যবহার করার চেষ্টা শনাক্ত হয়েছে।" : eventName.toUpperCase() + " Activity শনাক্ত হয়েছে।",
+              eventName
+            );
+          }
+        });
+      });
+    }
+  }
+
+  async function requestFullscreenIfNeeded() {
+    if (!antiCheatSettings.requireFullscreen) return;
+    try {
+      if (document.fullscreenEnabled && document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
       }
-    });
-  });
+    } catch (error) {
+      console.warn("Fullscreen request failed:", error);
+      recordAntiCheatWarning("Fullscreen চালু করা যায়নি; Browser অনুমতি না দিলে পরীক্ষা চলবে।", "fullscreen_failed");
+    }
+  }
 
+  setupAntiCheat();
 
   /* =========================
      AUTH CHECK
@@ -794,7 +897,16 @@
      ENTER EXAM
   ========================= */
 
-  enterBtn.addEventListener("click", async () => {
+    function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+enterBtn.addEventListener("click", async () => {
 
     if (!currentUser) {
 
@@ -931,6 +1043,7 @@
         ...quizSnapshot.data()
       };
 
+      antiCheatSettings = getAntiCheatSettings();
 
       /* =========================
          CHECK QUIZ TIME
@@ -1051,32 +1164,44 @@
         });
       });
 
+      const configuredQuestionCount = Number(
+        quizData.question_count ??
+        quizData.total_questions ??
+        quizData.questions_count ??
+        0
+      );
 
-      /* =========================
-         SORT QUESTIONS
-      ========================= */
+      const questionCount =
+        Number.isFinite(configuredQuestionCount) && configuredQuestionCount > 0
+          ? Math.floor(configuredQuestionCount)
+          : questions.length;
 
-      questions.sort((a, b) => {
+      const randomQuestions =
+        quizData.random_questions === true ||
+        String(quizData.random_questions).toLowerCase() === "true";
 
-        const aOrder =
-          Number(
-            a.question_number ??
-            a.order ??
-            a.serial ??
-            999999
-          );
+      const shuffleArray = (items) => {
+        const arr = [...items];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
 
-        const bOrder =
-          Number(
-            b.question_number ??
-            b.order ??
-            b.serial ??
-            999999
-          );
+      questions.sort((a, b) =>
+        Number(a.question_number ?? a.order ?? a.serial ?? 999999) -
+        Number(b.question_number ?? b.order ?? b.serial ?? 999999)
+      );
 
-        return aOrder - bOrder;
+      if (randomQuestions) questions = shuffleArray(questions);
 
-      });
+      // Question Bank-এ 7টি থাকলেও Quiz-এ question_count=6 হলে 6টিই যাবে।
+      questions = questions.slice(0, Math.min(questionCount, questions.length));
+
+      if (!questions.length) {
+        throw new Error("এই কুইজের জন্য কোনো প্রশ্ন নির্বাচন করা যায়নি।");
+      }
 
 
       /* =========================
@@ -1128,6 +1253,93 @@
 
       }
 
+
+      selectedRandomQuestions = randomQuestions;
+
+      /* =========================
+         RULES BEFORE EXAM
+      ========================= */
+
+      selectedQuestionCount = questions.length;
+
+      const durationMinutesForRules =
+        Number(quizData.duration_minutes ?? 5);
+
+      const firstQuestionSeconds =
+        getQuestionTime(questions[0]);
+
+      rulesSummary.innerHTML = `
+        <div class="rule-stat"><strong>${selectedQuestionCount}</strong><span>মোট প্রশ্ন</span></div>
+        <div class="rule-stat"><strong>${durationMinutesForRules} মিনিট</strong><span>মোট পরীক্ষা সময়</span></div>
+        <div class="rule-stat"><strong>${firstQuestionSeconds} সেকেন্ড</strong><span>প্রশ্নভিত্তিক সময়</span></div>
+        <div class="rule-stat"><strong>${selectedRandomQuestions ? "হ্যাঁ" : "না"}</strong><span>র‍্যান্ডম প্রশ্ন</span></div>
+      `;
+
+      const configuredRules =
+        quizData.exam_rules ??
+        quizData.rules ??
+        quizData.exam_rule ??
+        quizData.instructions ??
+        quizData.exam_instructions ??
+        "";
+
+      const defaultRules = [
+        "প্রতিটি প্রশ্নের উত্তর নির্বাচন করার পর তা পরিবর্তন করা যাবে না।",
+        "প্রতিটি প্রশ্নের নির্ধারিত সময় শেষ হলে পরবর্তী প্রশ্নে চলে যাবে।",
+        "মোট পরীক্ষার সময় শেষ হলে পরীক্ষা স্বয়ংক্রিয়ভাবে জমা হবে।",
+        "এই নিয়ম পড়ার সময় পরীক্ষার সময় গণনা হবে না।",
+        "ট্যাব/অ্যাপ পরিবর্তন, কপি/কাট/পেস্ট বা রাইট-ক্লিক Activity নিরাপত্তার জন্য রেকর্ড হতে পারে।",
+        "পরীক্ষার সময় অননুমোদিত সাহায্য বা উপকরণ ব্যবহার করা যাবে না।",
+        "বারবার Refresh বা Back ব্যবহার না করে একই পরীক্ষার পেজে থাকুন।"
+      ];
+
+      const ruleLines = String(configuredRules).trim()
+        ? String(configuredRules).split(/\r?\n|[•▪●]/).map(x => x.trim()).filter(Boolean)
+        : defaultRules;
+
+      rulesContent.innerHTML =
+        "<ul>" +
+        ruleLines.map(rule => "<li>" + escapeHtml(rule) + "</li>").join("") +
+        "</ul>";
+
+      rulesAntiCheat.textContent =
+        (antiCheatSettings.trackTab || antiCheatSettings.trackCopy)
+          ? "🛡️ নিরাপত্তা মোড সক্রিয়: পরীক্ষার সময় Tab/App পরিবর্তন ও Copy/Paste ধরনের Activity রেকর্ড হতে পারে।"
+          : "🛡️ এই কুইজে অতিরিক্ত Activity Tracking বন্ধ আছে।";
+
+      loginSection.classList.add("hidden");
+      finishSection.classList.add("hidden");
+      rulesSection.classList.remove("hidden");
+      loginMessage.textContent = "";
+
+      return;
+
+    } catch (error) {
+
+      console.error(error);
+
+      loginMessage.textContent =
+        "❌ " +
+        (
+          error.message ||
+          "পরীক্ষায় প্রবেশ করতে সমস্যা হয়েছে।"
+        );
+
+    } finally {
+
+      enterBtn.disabled = false;
+
+    }
+
+  });
+
+
+  startExamBtn.addEventListener("click", async () => {
+
+    startExamBtn.disabled = true;
+    rulesMessage.textContent = "⏳ পরীক্ষা শুরু হচ্ছে...";
+
+    try {
 
       /* =========================
          CREATE ATTEMPT
@@ -1188,6 +1400,16 @@
           total_questions:
             questions.length,
 
+          configured_question_count:
+            selectedQuestionCount,
+
+          random_questions:
+            selectedRandomQuestions,
+
+          random_options:
+            quizData.random_options === true ||
+            String(quizData.random_options).toLowerCase() === "true",
+
           selected_question_ids:
             questions.map(q => q.id),
 
@@ -1195,7 +1417,19 @@
             questions.map(q => q.id),
 
           answers:
-            answers
+            answers,
+
+          anti_cheat_warnings:
+            0,
+
+          anti_cheat_risk_score:
+            0,
+
+          anti_cheat_events:
+            [],
+
+          anti_cheat_settings:
+            antiCheatSettings
 
         }
       );
@@ -1237,21 +1471,17 @@
 
       startTimer();
 
+      await requestFullscreenIfNeeded();
+
 
     } catch (error) {
 
       console.error(error);
 
-      loginMessage.textContent =
-        "❌ " +
-        (
-          error.message ||
-          "পরীক্ষায় প্রবেশ করতে সমস্যা হয়েছে।"
-        );
+      rulesMessage.textContent =
+        "❌ " + (error.message || "পরীক্ষা শুরু করতে সমস্যা হয়েছে।");
 
-    } finally {
-
-      enterBtn.disabled = false;
+      startExamBtn.disabled = false;
 
     }
 
@@ -1316,106 +1546,34 @@
 
 
     const optionList = [
+      { key: "A", text: question.option_a ?? question.a ?? "" },
+      { key: "B", text: question.option_b ?? question.b ?? "" },
+      { key: "C", text: question.option_c ?? question.c ?? "" },
+      { key: "D", text: question.option_d ?? question.d ?? "" }
+    ].filter(option => String(option.text).trim() !== "");
 
-      {
-        key: "A",
-        text:
-          question.option_a ??
-          question.a ??
-          ""
-      },
+    const randomOptions =
+      quizData?.random_options === true ||
+      String(quizData?.random_options).toLowerCase() === "true";
 
-      {
-        key: "B",
-        text:
-          question.option_b ??
-          question.b ??
-          ""
-      },
+    const displayOptions = randomOptions ? shuffleArray(optionList) : optionList;
 
-      {
-        key: "C",
-        text:
-          question.option_c ??
-          question.c ??
-          ""
-      },
+    displayOptions.forEach((option, displayIndex) => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.type = "button";
 
-      {
-        key: "D",
-        text:
-          question.option_d ??
-          question.d ??
-          ""
+      const displayKey = String.fromCharCode(65 + displayIndex);
+      button.textContent = displayKey + ". " + option.text;
+
+      if (selectedAnswer === option.key) {
+        button.classList.add("selected", "locked");
       }
 
-    ];
+      if (selectedAnswer) button.disabled = true;
 
-
-    optionList.forEach((option) => {
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-
-      button.className =
-        "option";
-
-
-      button.type =
-        "button";
-
-
-      button.textContent =
-        option.key +
-        ". " +
-        option.text;
-
-
-      if (
-        selectedAnswer ===
-        option.key
-      ) {
-
-        button.classList.add(
-          "selected"
-        );
-
-        button.classList.add(
-          "locked"
-        );
-
-      }
-
-
-      if (
-        selectedAnswer
-      ) {
-
-        button.disabled =
-          true;
-
-      }
-
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          selectAnswer(
-            option.key
-          );
-
-        }
-      );
-
-
-      optionsBox.appendChild(
-        button
-      );
-
+      button.addEventListener("click", () => selectAnswer(option.key));
+      optionsBox.appendChild(button);
     });
 
 
@@ -1842,7 +2000,19 @@
             Math.max(
               0,
               timeTaken
-            )
+            ),
+
+          anti_cheat_warnings:
+            antiCheatWarnings,
+
+          anti_cheat_risk_score:
+            Math.min(
+              100,
+              antiCheatWarnings * 10
+            ),
+
+          anti_cheat_events:
+            antiCheatEvents
 
         }
       );
