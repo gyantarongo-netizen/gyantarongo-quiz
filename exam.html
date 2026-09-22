@@ -1433,6 +1433,11 @@ enterBtn.addEventListener("click", async () => {
           question_order:
             questions.map(q => q.id),
 
+          /*
+            answers-এ Question Bank-এর original A/B/C/D key রাখা হচ্ছে।
+            এটি grading-এর জন্য প্রয়োজন। Student UI-তে random display
+            letter আলাদা ভাবে দেখানো হয়।
+          */
           answers:
             answers,
 
@@ -1579,23 +1584,80 @@ enterBtn.addEventListener("click", async () => {
       quizData?.random_options === true ||
       String(quizData?.random_options).toLowerCase() === "true";
 
-    const displayOptions = randomOptions ? shuffleArray(optionList) : optionList;
+    const displayOptions = randomOptions
+      ? shuffleArray(optionList)
+      : optionList;
+
+    /*
+      IMPORTANT:
+      option.key = Question Bank-এর original A/B/C/D.
+      displayKey = পরীক্ষায় বর্তমানে যে A/B/C/D position দেখা যাচ্ছে।
+
+      Student-facing selection কখনো option.key দিয়ে mark করা যাবে না।
+      কারণ random হলে Question Bank-এর আসল letter প্রকাশ হয়ে যাবে।
+    */
+
+    let selectedDisplayKey = null;
+
+    if (selectedAnswer) {
+      const selectedDisplayIndex =
+        displayOptions.findIndex(
+          option => option.key === selectedAnswer
+        );
+
+      if (selectedDisplayIndex >= 0) {
+        selectedDisplayKey =
+          String.fromCharCode(65 + selectedDisplayIndex);
+      }
+    }
 
     displayOptions.forEach((option, displayIndex) => {
       const button = document.createElement("button");
       button.className = "option";
       button.type = "button";
 
-      const displayKey = String.fromCharCode(65 + displayIndex);
-      button.textContent = displayKey + ". " + option.text;
+      const displayKey =
+        String.fromCharCode(65 + displayIndex);
 
-      if (selectedAnswer === option.key) {
-        button.classList.add("selected", "locked");
+      /*
+        data-display-key = student যে letter দেখছে
+        data-original-key = Question Bank-এর আসল key
+      */
+      button.dataset.displayKey = displayKey;
+      button.dataset.originalKey = option.key;
+
+      button.textContent =
+        displayKey + ". " + option.text;
+
+      /*
+        Previously selected answer থাকলে শুধু displayed position
+        blue হবে — Question Bank-এর original letter নয়।
+      */
+      if (
+        selectedDisplayKey === displayKey
+      ) {
+        button.classList.add(
+          "selected",
+          "locked"
+        );
       }
 
-      if (selectedAnswer) button.disabled = true;
+      if (selectedAnswer) {
+        button.disabled = true;
+      }
 
-      button.addEventListener("click", () => selectAnswer(option.key));
+      /*
+        Click করলে original key হিসাবের জন্য যাবে,
+        কিন্তু blue mark হবে displayKey অনুযায়ী।
+      */
+      button.addEventListener(
+        "click",
+        () => selectAnswer(
+          option.key,
+          displayKey
+        )
+      );
+
       optionsBox.appendChild(button);
     });
 
@@ -1628,7 +1690,10 @@ enterBtn.addEventListener("click", async () => {
      SELECT ANSWER
   ========================= */
 
-  function selectAnswer(answer) {
+  function selectAnswer(
+    originalAnswer,
+    displayKey
+  ) {
 
     if (
       selectedAnswer
@@ -1638,13 +1703,19 @@ enterBtn.addEventListener("click", async () => {
 
     }
 
+    /*
+      originalAnswer = Question Bank-এর আসল A/B/C/D।
+      displayKey = পরীক্ষায় student যে A/B/C/D-তে tap করেছে।
+
+      Firebase/Result calculation-এর জন্য originalAnswer রাখা হবে।
+      কিন্তু UI-তে শুধু displayKey blue হবে।
+    */
 
     selectedAnswer =
-      answer;
-
+      originalAnswer;
 
     answers[currentIndex] =
-      answer;
+      originalAnswer;
 
 
     const buttons =
@@ -1661,12 +1732,9 @@ enterBtn.addEventListener("click", async () => {
         "locked"
       );
 
-
       if (
-        button.textContent
-          .startsWith(
-            answer + "."
-          )
+        button.dataset.displayKey ===
+        displayKey
       ) {
 
         button.classList.add(
