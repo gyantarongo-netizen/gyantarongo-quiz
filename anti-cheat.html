@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>জ্ঞানতরঙ্গ | Anti-Cheat রিপোর্ট</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Noto Sans Bengali",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left,#21104d 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#3b0d38 0%,transparent 35%),
+        #060817;
+      color:#fff;min-height:100vh
+    }
+    .container{width:min(1100px,94%);margin:auto;padding:20px 0 50px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:42px;height:42px;object-fit:contain;border-radius:10px}
+    .brand h1{font-size:20px}.brand p{font-size:11px;color:#aaa;margin-top:2px}
+    .logout-btn,.back-btn{
+      border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
+      color:#fff;padding:9px 13px;border-radius:10px;cursor:pointer;text-decoration:none
+    }
+    .page-head{margin:10px 0 18px}
+    .page-title{font-size:25px;font-weight:900}
+    .page-desc{color:#aeb4c9;font-size:13px;line-height:1.7;margin-top:5px}
+    .card{
+      background:rgba(16,20,43,.92);border:1px solid rgba(139,61,255,.25);
+      border-radius:20px;padding:18px;box-shadow:0 15px 45px rgba(0,0,0,.28);margin-bottom:16px
+    }
+    .toolbar{display:grid;grid-template-columns:1.3fr 1fr auto auto;gap:10px;align-items:end}
+    .field label{display:block;color:#b9bdd0;font-size:12px;margin-bottom:7px}
+    .input,.select{
+      width:100%;padding:12px;border-radius:11px;border:1px solid rgba(255,255,255,.12);
+      background:#080b1d;color:#fff;outline:none;font-size:14px
+    }
+    .input:focus,.select:focus{border-color:#8b3dff;box-shadow:0 0 0 3px rgba(139,61,255,.12)}
+    .btn{
+      border:none;border-radius:11px;padding:12px 15px;color:#fff;font-weight:800;cursor:pointer;
+      background:linear-gradient(135deg,#8b3dff,#ec3fa7)
+    }
+    .btn.secondary{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+    .btn.green{background:linear-gradient(135deg,#1e9c68,#2fd68a);color:#06140d}
+    .message{margin-top:12px;color:#ffcc66;line-height:1.6;font-size:13px}
+    .stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .stat{padding:14px;border-radius:15px;background:rgba(139,61,255,.07);border:1px solid rgba(139,61,255,.2)}
+    .stat strong{display:block;font-size:22px;margin-bottom:4px}.stat span{color:#aeb4c9;font-size:12px}
+    .summary-head{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
+    .student-name{font-size:19px;font-weight:900}.muted{color:#aeb4c9;font-size:12px;line-height:1.7}
+    .risk{font-size:18px;font-weight:900;padding:9px 14px;border-radius:12px;background:rgba(255,77,109,.10);border:1px solid rgba(255,77,109,.25);color:#ff9bad}
+    .table-wrap{overflow-x:auto;margin-top:14px}
+    table{width:100%;border-collapse:collapse;min-width:780px}
+    th,td{padding:11px 9px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;font-size:13px;vertical-align:top}
+    th{color:#b8b8c9;font-weight:800;background:rgba(255,255,255,.025)}
+    td{color:#eee}
+    .pill{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}
+    .pill.red{background:rgba(255,77,109,.12);color:#ff9bad}
+    .pill.orange{background:rgba(255,178,28,.12);color:#ffd27a}
+    .pill.green{background:rgba(47,214,138,.12);color:#75e9ad}
+    .empty{text-align:center;padding:28px;color:#aeb4c9}
+    .attempt-card{cursor:pointer;transition:.2s}
+    .attempt-card:hover{border-color:rgba(139,61,255,.55);transform:translateY(-1px)}
+    .attempt-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:10px}
+    .mini{padding:10px;border-radius:11px;background:rgba(255,255,255,.035)}
+    .mini span{display:block;color:#8f96ad;font-size:11px}.mini strong{display:block;margin-top:3px;font-size:14px}
+    .hidden{display:none!important}
+    @media(max-width:800px){
+      .toolbar{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .attempt-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      .container{width:92%;padding-top:14px}
+      .toolbar{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr}
+      .page-title{font-size:21px}
+      .card{padding:14px}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <div class="brand">
+      <img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ">
+      <div>
+        <h1>জ্ঞানতরঙ্গ</h1>
+        <p>শিখি · জানি · এগিয়ে যাই</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="back-btn" href="admin.html">← Admin Panel</a>
+      <button id="logoutBtn" class="logout-btn">লগআউট</button>
+    </div>
+  </div>
+
+  <div class="page-head">
+    <div class="page-title">🛡️ Anti-Cheat রিপোর্ট</div>
+    <div class="page-desc">
+      পরীক্ষার সময় রেকর্ড হওয়া Tab/App পরিবর্তন, Copy, Cut, Paste, Context Menu এবং Focus পরিবর্তনের Activity এখানে দেখা যাবে।
+    </div>
+  </div>
+
+  <div id="accessCard" class="card">
+    <div id="accessMessage" class="message">⏳ Admin অনুমতি যাচাই করা হচ্ছে...</div>
+  </div>
+
+  <div id="mainArea" class="hidden">
+    <div class="card">
+      <div class="toolbar">
+        <div class="field">
+          <label>কুইজ</label>
+          <select id="quizSelect" class="select">
+            <option value="">সব কুইজ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>রোল / Student ID / নাম</label>
+          <input id="searchInput" class="input" placeholder="যেমন: GT-26-42867519">
+        </div>
+        <button id="searchBtn" class="btn">🔎 Search</button>
+        <button id="refreshBtn" class="btn secondary">🔄 Refresh</button>
+      </div>
+      <div id="message" class="message"></div>
+    </div>
+
+    <div id="statsCard" class="card hidden">
+      <div class="stats">
+        <div class="stat"><strong id="statAttempts">0</strong><span>Attempt</span></div>
+        <div class="stat"><strong id="statWarnings">0</strong><span>মোট Warning</span></div>
+        <div class="stat"><strong id="statTab">0</strong><span>Tab/App</span></div>
+        <div class="stat"><strong id="statCopy">0</strong><span>Copy/Cut/Paste</span></div>
+        <div class="stat"><strong id="statFocus">0</strong><span>Focus/Other</span></div>
+      </div>
+    </div>
+
+    <div id="attemptList"></div>
+
+    <div id="detailCard" class="card hidden">
+      <div class="summary-head">
+        <div>
+          <div id="detailStudent" class="student-name"></div>
+          <div id="detailMeta" class="muted"></div>
+        </div>
+        <div id="detailRisk" class="risk">Risk 0/100</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>সময়</th>
+              <th>Activity</th>
+              <th>ঘটনা</th>
+            </tr>
+          </thead>
+          <tbody id="eventTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { auth, db } from "./firebase-config.js";
+  import {
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+  const $ = id => document.getElementById(id);
+
+  let currentUser = null;
+  let allAttempts = [];
+  let quizzes = [];
+  let selectedAttempt = null;
+
+  function safe(v){ return v == null ? "" : String(v); }
+
+  function formatDate(value){
+    if(!value) return "—";
+    try{
+      if(value?.toDate) return value.toDate().toLocaleString("bn-BD",{dateStyle:"medium",timeStyle:"medium"});
+      const d = new Date(value);
+      if(Number.isNaN(d.getTime())) return safe(value);
+      return d.toLocaleString("bn-BD",{dateStyle:"medium",timeStyle:"medium"});
+    }catch(e){ return safe(value); }
+  }
+
+  function getEventTypeLabel(type){
+    const map = {
+      tab_hidden:"Tab/App পরিবর্তন",
+      window_blur:"Focus পরিবর্তন",
+      copy:"Copy",
+      cut:"Cut",
+      paste:"Paste",
+      contextmenu:"Context Menu",
+      fullscreen_failed:"Fullscreen সমস্যা"
+    };
+    return map[type] || safe(type || "Warning");
+  }
+
+  function classify(type){
+    if(type === "tab_hidden") return "red";
+    if(["copy","cut","paste","contextmenu"].includes(type)) return "orange";
+    return "green";
+  }
+
+  function getEvents(attempt){
+    return Array.isArray(attempt?.anti_cheat_events) ? attempt.anti_cheat_events : [];
+  }
+
+  function getWarningCount(attempt){
+    const n = Number(attempt?.anti_cheat_warnings);
+    return Number.isFinite(n) ? n : getEvents(attempt).length;
+  }
+
+  function getRisk(attempt){
+    const n = Number(attempt?.anti_cheat_risk_score);
+    if(Number.isFinite(n)) return Math.min(100,Math.max(0,n));
+    return Math.min(100,getWarningCount(attempt)*10);
+  }
+
+  function eventCounts(attempt){
+    const events = getEvents(attempt);
+    let tab=0, copy=0, focus=0;
+    events.forEach(e=>{
+      if(e.type === "tab_hidden") tab++;
+      else if(["copy","cut","paste","contextmenu"].includes(e.type)) copy++;
+      else focus++;
+    });
+    return {tab,copy,focus};
+  }
+
+  async function isAdmin(user){
+    if(!user) return false;
+    const snap = await getDoc(doc(db,"profiles",user.uid));
+    if(!snap.exists()) return false;
+    const p = snap.data();
+    return p.role === "admin" && p.is_active === true;
+  }
+
+  async function loadQuizzes(){
+    const snap = await getDocs(collection(db,"quizzes"));
+    quizzes = [];
+    snap.forEach(d=>quizzes.push({id:d.id,...d.data()}));
+    quizzes.sort((a,b)=>safe(a.title || a.quiz_name).localeCompare(safe(b.title || b.quiz_name),"bn"));
+    $("quizSelect").innerHTML = '<option value="">সব কুইজ</option>' +
+      quizzes.map(q=>`<option value="${q.id}">${escapeHtml(q.title || q.quiz_name || q.id)}</option>`).join("");
+  }
+
+  function escapeHtml(value){
+    return safe(value)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  async function loadAttempts(){
+    $("message").textContent = "⏳ Anti-Cheat রিপোর্ট লোড হচ্ছে...";
+    try{
+      let snap;
+      try{
+        snap = await getDocs(query(collection(db,"attempts"),orderBy("started_at","desc")));
+      }catch(e){
+        snap = await getDocs(collection(db,"attempts"));
+      }
+
+      allAttempts = [];
+      snap.forEach(d=>{
+        const data = d.data();
+        const events = getEvents(data);
+        if(events.length || Number(data.anti_cheat_warnings || 0) > 0){
+          allAttempts.push({id:d.id,...data});
+        }
+      });
+
+      allAttempts.sort((a,b)=>{
+        const av = a.started_at?.toDate ? a.started_at.toDate().getTime() : new Date(a.started_at || 0).getTime();
+        const bv = b.started_at?.toDate ? b.started_at.toDate().getTime() : new Date(b.started_at || 0).getTime();
+        return bv-av;
+      });
+
+      $("message").textContent = allAttempts.length
+        ? `✅ ${allAttempts.length}টি Anti-Cheat Attempt পাওয়া গেছে।`
+        : "ℹ️ এখনো কোনো Anti-Cheat Activity রেকর্ড পাওয়া যায়নি।";
+
+      render();
+    }catch(error){
+      console.error(error);
+      $("message").textContent = "❌ রিপোর্ট লোড করতে সমস্যা হয়েছে: " + (error.message || "");
+    }
+  }
+
+  function filteredAttempts(){
+    const quizId = $("quizSelect").value;
+    const term = $("searchInput").value.trim().toLowerCase();
+
+    return allAttempts.filter(a=>{
+      if(quizId && a.quiz_id !== quizId) return false;
+      if(!term) return true;
+      const hay = [
+        a.roll_number,a.student_id,a.student_name,a.name,a.student_uid,a.quiz_name,a.id
+      ].map(s=>safe(s).toLowerCase()).join(" ");
+      return hay.includes(term);
+    });
+  }
+
+  function renderStats(items){
+    let warnings=0,tab=0,copy=0,focus=0;
+    items.forEach(a=>{
+      warnings += getWarningCount(a);
+      const c=eventCounts(a);
+      tab += c.tab; copy += c.copy; focus += c.focus;
+    });
+    $("statAttempts").textContent=items.length;
+    $("statWarnings").textContent=warnings;
+    $("statTab").textContent=tab;
+    $("statCopy").textContent=copy;
+    $("statFocus").textContent=focus;
+    $("statsCard").classList.toggle("hidden",items.length===0);
+  }
+
+  function render(){
+    const items=filteredAttempts();
+    renderStats(items);
+
+    if(!items.length){
+      $("attemptList").innerHTML='<div class="card empty">এই অনুসন্ধানে কোনো Anti-Cheat রিপোর্ট পাওয়া যায়নি।</div>';
+      $("detailCard").classList.add("hidden");
+      return;
+    }
+
+    $("attemptList").innerHTML=items.map((a,i)=>{
+      const c=eventCounts(a);
+      const quiz = quizzes.find(q=>q.id===a.quiz_id);
+      const quizName = a.quiz_name || quiz?.title || quiz?.quiz_name || a.quiz_id || "কুইজ";
+      return `
+        <div class="card attempt-card" data-index="${i}">
+          <div class="attempt-grid">
+            <div class="mini"><span>শিক্ষার্থী</span><strong>${escapeHtml(a.student_name || a.name || a.student_uid || "—")}</strong><div class="muted">Roll: ${escapeHtml(a.roll_number || "—")}</div></div>
+            <div class="mini"><span>কুইজ</span><strong>${escapeHtml(quizName)}</strong><div class="muted">${formatDate(a.started_at)}</div></div>
+            <div class="mini"><span>Warning / Risk</span><strong>${getWarningCount(a)} / ${getRisk(a)}</strong><div class="muted">Score</div></div>
+            <div class="mini"><span>Activity</span><strong>Tab ${c.tab} · Copy ${c.copy}</strong><div class="muted">Other ${c.focus}</div></div>
+          </div>
+        </div>`;
+    }).join("");
+
+    $("attemptList").querySelectorAll(".attempt-card").forEach(card=>{
+      card.addEventListener("click",()=>{
+        const item=items[Number(card.dataset.index)];
+        showDetail(item);
+      });
+    });
+  }
+
+  function showDetail(attempt){
+    selectedAttempt=attempt;
+    const quiz=quizzes.find(q=>q.id===attempt.quiz_id);
+    const quizName=attempt.quiz_name || quiz?.title || quiz?.quiz_name || attempt.quiz_id || "কুইজ";
+    $("detailStudent").textContent = attempt.student_name || attempt.name || "শিক্ষার্থী";
+    $("detailMeta").textContent =
+      `Roll: ${attempt.roll_number || "—"} · Student ID: ${attempt.student_id || "—"} · কুইজ: ${quizName} · শুরু: ${formatDate(attempt.started_at)} · Submit: ${formatDate(attempt.submitted_at)}`;
+    $("detailRisk").textContent=`Risk ${getRisk(attempt)}/100`;
+
+    const events=[...getEvents(attempt)].sort((a,b)=>new Date(a.at||0)-new Date(b.at||0));
+    $("eventTable").innerHTML=events.length
+      ? events.map(e=>`
+        <tr>
+          <td>${formatDate(e.at)}</td>
+          <td><span class="pill ${classify(e.type)}">${escapeHtml(getEventTypeLabel(e.type))}</span></td>
+          <td>${escapeHtml(e.reason || "Activity রেকর্ড হয়েছে।")}</td>
+        </tr>`).join("")
+      : '<tr><td colspan="3" class="empty">কোনো বিস্তারিত event পাওয়া যায়নি।</td></tr>';
+
+    $("detailCard").classList.remove("hidden");
+    $("detailCard").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  $("searchBtn").addEventListener("click",render);
+  $("refreshBtn").addEventListener("click",loadAttempts);
+  $("quizSelect").addEventListener("change",render);
+  $("searchInput").addEventListener("keydown",e=>{
+    if(e.key==="Enter") render();
+  });
+
+  $("logoutBtn").addEventListener("click",async()=>{
+    await signOut(auth);
+    location.href="profile.html";
+  });
+
+  onAuthStateChanged(auth,async user=>{
+    currentUser=user;
+    if(!user){
+      $("accessMessage").textContent="⚠️ আগে Admin অ্যাকাউন্টে লগইন করুন।";
+      return;
+    }
+    try{
+      const ok=await isAdmin(user);
+      if(!ok){
+        $("accessMessage").textContent="⛔ এই পেজটি শুধু Admin-এর জন্য।";
+        return;
+      }
+      $("accessCard").classList.add("hidden");
+      $("mainArea").classList.remove("hidden");
+      await loadQuizzes();
+      await loadAttempts();
+    }catch(error){
+      console.error(error);
+      $("accessMessage").textContent="❌ Admin যাচাই করতে সমস্যা হয়েছে: "+(error.message||"");
+    }
+  });
+</script>
+</body>
+</html>
