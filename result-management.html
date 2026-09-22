@@ -677,66 +677,113 @@ async function finalizeAll(){
 /* ---------- publish / hide ---------- */
 async function setAllPublished(value){
   const quizId = $("quizSelect").value;
-  if(!quizId || !rows.length){ toast("আগে একটি কুইজ নির্বাচন করুন যেখানে ফলাফল আছে।"); return; }
 
-  let message = value ? "এই কুইজের সব Result প্রকাশ করবেন?" : "এই কুইজের সব Result গোপন করবেন?";
+  if(!quizId || !rows.length){
+    toast("আগে একটি কুইজ নির্বাচন করুন যেখানে ফলাফল আছে।");
+    return;
+  }
+
+  let message = value
+    ? "এই কুইজের সব Result প্রকাশ করবেন?"
+    : "এই কুইজের সব Result গোপন করবেন?";
+
   if(value && unresolvedTotal > 0){
-    message = `সতর্কতা: ${bn(unresolvedTotal)}টি উত্তরের সঠিক উত্তর অজানা, ফলাফল ভুল হতে পারে।\n\n` + message;
+    message =
+      `সতর্কতা: ${bn(unresolvedTotal)}টি উত্তরের সঠিক উত্তর অজানা, ফলাফল ভুল হতে পারে।\n\n` +
+      message;
   }
+
   if(value && incomplete.length){
-    message = `মনে রাখুন: ${bn(incomplete.length)}টি অসম্পূর্ণ পরীক্ষা এই ফলাফলে নেই।\n\n` + message;
+    message =
+      `মনে রাখুন: ${bn(incomplete.length)}টি অসম্পূর্ণ পরীক্ষা এই ফলাফলে নেই।\n\n` +
+      message;
   }
+
   if(!confirm(message)) return;
 
   try{
-    const quizName = selectedQuiz?.title || selectedQuiz?.quiz_name || "";
+    const quizName =
+      selectedQuiz?.title ||
+      selectedQuiz?.quiz_name ||
+      selectedQuiz?.name ||
+      "";
+
     for(let i = 0; i < rows.length; i++){
       const r = rows[i];
-      await setDoc(doc(db, "results", r.id), {
-        attempt_id: r.id,
-        quiz_id: quizId,
-        quiz_name: quizName,
-        student_uid: r.student_uid || null,
-        student_name: r.student_name || "",
-        roll_number: r.roll_number || "",
-        student_id: r.student_id || null,
-        rank: i + 1,
-        correct: Number(r.correct || 0),
-        wrong: Number(r.wrong || 0),
-        unanswered: Number(r.unanswered || 0),
-        score: Number(r.score || 0),
-        total_marks: Number(r.total_marks || 0),
-        negative_mark: Number(r.negative_mark || 0),
-        percentage: Number(r.percentage || 0),
-        total_time_seconds: Number(r.total_time_seconds || 0),
-        time_taken_seconds: Number(r.total_time_seconds || 0),
-        submitted_at: r.submitted_at || null,
-        published: value,
-        ...(value ? { published_at: serverTimestamp() } : {}),
-        updated_at: serverTimestamp(),
-        updated_by: currentUser.uid
-      }, { merge: true });
+
+      await setDoc(
+        doc(db, "results", r.id),
+        {
+          attempt_id: r.id,
+          quiz_id: quizId,
+          quiz_name: quizName,
+
+          student_uid: r.student_uid || null,
+          student_name: r.student_name || "",
+          roll_number: r.roll_number || "",
+          student_id: r.student_id || null,
+
+          rank: i + 1,
+
+          correct: Number(r.correct || 0),
+          wrong: Number(r.wrong || 0),
+          unanswered: Number(r.unanswered || 0),
+
+          score: Number(r.score || 0),
+
+          // Student Result page-এর জন্য প্রাপ্ত নম্বর
+          obtained_marks: Number(r.score || 0),
+
+          total_marks: Number(r.total_marks || 0),
+          negative_mark: Number(r.negative_mark || 0),
+          percentage: Number(r.percentage || 0),
+
+          total_time_seconds:
+            Number(
+              r.total_time_seconds ??
+              r.time_taken_seconds ??
+              0
+            ),
+
+          time_taken_seconds:
+            Number(
+              r.time_taken_seconds ??
+              r.total_time_seconds ??
+              0
+            ),
+
+          submitted_at: r.submitted_at || null,
+
+          published: value,
+
+          ...(value
+            ? {
+                published_at: serverTimestamp()
+              }
+            : {}),
+
+          updated_at: serverTimestamp(),
+          updated_by: currentUser.uid
+        },
+        {
+          merge: true
+        }
+      );
     }
-    toast(value ? "এই কুইজের সব Result প্রকাশ হয়েছে।" : "এই কুইজের সব Result গোপন করা হয়েছে।");
+
+    toast(
+      value
+        ? "এই কুইজের সব Result প্রকাশ হয়েছে।"
+        : "এই কুইজের সব Result গোপন করা হয়েছে।"
+    );
+
     await loadResults();
+
   }catch(error){
     console.error(error);
     showError("Result প্রকাশ/গোপন করা যায়নি।");
   }
 }
-
-/* ---------- events ---------- */
-$("quizSelect").addEventListener("change", loadResults);
-$("searchInput").addEventListener("input", () => render());
-$("refreshBtn").addEventListener("click", loadResults);
-$("publishBtn").addEventListener("click", () => setAllPublished(true));
-$("hideBtn").addEventListener("click", () => setAllPublished(false));
-$("backBtn").addEventListener("click", () => { location.href = "admin.html"; });
-$("finalizeAllBtn").addEventListener("click", finalizeAll);
-$("incompleteArea").addEventListener("click", (event) => {
-  const btn = event.target.closest("[data-finalize]");
-  if(btn) finalizeOne(btn.dataset.finalize);
-});
 </script>
 
 </body>
