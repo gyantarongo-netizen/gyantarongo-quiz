@@ -1566,86 +1566,62 @@
 
     <section id="page-result" class="page">
 
-      <div class="page-head">
-        <div class="page-title">রেজাল্ট ব্যবস্থাপনা</div>
-        <div class="page-desc">
-          একটি কুইজ নির্বাচন করলে সেই কুইজের সব ফলাফল একসাথে দেখা যাবে
-        </div>
-      </div>
+  <div class="page-head">
+    <div class="page-title">রেজাল্ট শিট</div>
+    <div class="page-desc">
+      শিক্ষার্থীদের ফলাফল হিসাব, র‍্যাংক এবং প্রকাশ করার জন্য Result Sheet
+    </div>
+  </div>
 
+  <div class="card">
 
-      <div class="card">
+    <div class="toolbar" style="margin-bottom:15px;">
 
-        <div class="toolbar">
+      <button
+        class="btn btn-green"
+        type="button"
+        onclick="window.location.href='result-sheet.html'"
+      >
+        📊 রেজাল্ট শিট খুলুন
+      </button>
 
-          <select
-            id="resultQuizSelect"
-            onchange="loadResults()"
-          >
-            <option value="">কুইজ নির্বাচন করুন</option>
-          </select>
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="window.open('result-sheet.html','_blank')"
+      >
+        ↗ নতুন ট্যাবে খুলুন
+      </button>
 
-          <button
-            class="btn btn-green"
-            onclick="publishAllResults()"
-          >
-            ✓ সব Result Publish
-          </button>
+    </div>
 
-          <button
-            class="btn btn-red"
-            onclick="unpublishAllResults()"
-          >
-            ✕ সব Hide
-          </button>
+    <div
+      style="
+        width:100%;
+        overflow:hidden;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.08);
+        background:#080b18;
+      "
+    >
 
-          <button
-            class="btn btn-secondary"
-            onclick="loadResults()"
-          >
-            🔄 Refresh
-          </button>
+      <iframe
+        src="result-sheet.html"
+        title="জ্ঞানতরঙ্গ রেজাল্ট শিট"
+        style="
+          width:100%;
+          min-height:850px;
+          border:0;
+          display:block;
+          background:#080b18;
+        "
+      ></iframe>
 
-          <button
-            class="btn btn-secondary"
-            onclick="openAnswerReview()"
-          >
-            🔎 রোল দিয়ে উত্তর দেখুন
-          </button>
+    </div>
 
-        </div>
+  </div>
 
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Roll</th>
-                <th>নাম</th>
-                <th>Score</th>
-                <th>সঠিক</th>
-                <th>ভুল</th>
-                <th>বাদ</th>
-                <th>সময়</th>
-                <th>Submit</th>
-                <th>Publish</th>
-                <th>অ্যাকশন</th>
-              </tr>
-            </thead>
-
-            <tbody id="resultTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
+</section>
 
     <!-- LIBRARY -->
 
