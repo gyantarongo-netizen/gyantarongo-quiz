@@ -359,10 +359,38 @@ function buildQuestionLookup(bank, exam){
 }
 
 function isCorrect(selected, q){
-  const c = correctOf(q);
-  if(letter(c) === selected) return true;
-  const optionText = q["option_" + selected.toLowerCase()] ?? q[selected.toLowerCase()];
-  return optionText !== undefined && norm(optionText) !== "" && norm(optionText) === norm(c);
+  const c = norm(correctOf(q));
+
+  if(!c) return false;
+
+  const selectedLetter = letter(selected);
+
+  // Correct answer যদি A/B/C/D হয়
+  // অথবা "C. ঢ" / "A. ঢছঙ" এভাবে থাকে
+  const match = c.match(/^([ABCD])(?:\s*[\.\)\-:]\s*|\s+)/i);
+
+  if(match && match[1].toUpperCase() === selectedLetter){
+    return true;
+  }
+
+  if(letter(c) === selectedLetter){
+    return true;
+  }
+
+  // Correct answer যদি সরাসরি option-এর সম্পূর্ণ text হয়
+  const optionText =
+    q?.["option_" + selectedLetter.toLowerCase()] ??
+    q?.[selectedLetter.toLowerCase()] ??
+    "";
+
+  if(
+    norm(optionText) &&
+    norm(optionText).toLowerCase() === c.toLowerCase()
+  ){
+    return true;
+  }
+
+  return false;
 }
 
 function calculate(a, lookup, quiz){
