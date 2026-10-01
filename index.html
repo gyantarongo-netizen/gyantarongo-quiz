@@ -6,459 +6,315 @@
 
 <title>জ্ঞানতরঙ্গ | শিখি · জানি · এগিয়ে যাই</title>
 
+
 <style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-:root{
-  --bg:#060817;
-  --card:#10142b;
-  --card2:#151a35;
-  --purple:#8b3dff;
-  --pink:#ec3fa7;
-  --green:#2fd68a;
-  --gold:#ffb21c;
-  --text:#f5f5fb;
-  --muted:#a9adc4;
-  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
-}
-
-body{
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(124,58,237,.20),
-      transparent 38%
-    ),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-.app{
-  max-width:1400px;
-  margin:auto;
-  padding:0 22px 100px;
-}
-
-/* HEADER */
-
-header{
-  min-height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo-box{
-  width:50px;
-  height:50px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-.logo-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
-}
-
-.brand-text h1{
-  font-size:23px;
-  font-weight:800;
-}
-
-.brand-text p{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:2px;
-}
-
-.desktop-nav{
-  display:flex;
-  gap:7px;
-}
-
-.nav-link{
-  color:var(--muted);
-  text-decoration:none;
-  padding:10px 13px;
-  border-radius:11px;
-  transition:.25s;
-}
-
-.nav-link:hover,
-.nav-link.active{
-  color:white;
-  background:rgba(236,63,167,.12);
-  border:1px solid rgba(236,63,167,.30);
-}
-
-.profile{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:6px 10px;
-  border-radius:13px;
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.avatar{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--gradient);
-}
-
-/* HERO */
-
+/* Premium hero illustration */
 .hero{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
   gap:24px;
-  padding:35px 0 25px;
+  padding:30px 0;
 }
-
 .hero-left{
+  min-width:0;
+}
+.hero-art{
   position:relative;
-  padding:36px;
-  border-radius:26px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(23,20,55,.97),
-      rgba(10,12,30,.97)
-    );
-  border:1px solid rgba(139,61,255,.25);
-  overflow:hidden;
-}
-
-.hero-left:before{
-  content:"";
-  position:absolute;
-  width:300px;
-  height:300px;
-  background:rgba(150,50,255,.16);
-  filter:blur(80px);
-  top:-150px;
-  right:-80px;
-}
-
-.welcome-badge{
-  position:relative;
-  display:inline-block;
-  padding:8px 14px;
-  border-radius:30px;
-  color:#ff8dcc;
-  background:rgba(236,63,167,.08);
-  border:1px solid rgba(236,63,167,.25);
-  margin-bottom:20px;
-}
-
-.hero h2{
-  position:relative;
-  font-size:44px;
-  line-height:1.35;
-}
-
-.hero h2 span{
-  color:#ff63bc;
-}
-
-.hero-description{
-  position:relative;
-  max-width:650px;
-  margin-top:18px;
-  line-height:1.8;
-  color:var(--muted);
-  font-size:16px;
-}
-
-.hero-message{
-  position:relative;
-  margin-top:20px;
-  padding-left:14px;
-  border-left:3px solid var(--gold);
-  color:#e5e1ef;
-  line-height:1.7;
-}
-
-.hero-buttons{
-  position:relative;
+  min-width:0;
   display:flex;
-  gap:12px;
-  margin-top:26px;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border-radius:24px;
+  background:radial-gradient(
+    ellipse at 50% 55%,
+    rgba(137,40,255,.24),
+    rgba(7,8,28,.05) 68%
+  );
 }
-
-.btn{
-  border:none;
-  padding:14px 21px;
-  border-radius:13px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-  text-decoration:none;
+.hero-art svg{
+  width:100%;
+  height:auto;
+  display:block;
+  filter:drop-shadow(0 0 18px rgba(180,50,255,.24));
+}
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:24px;
+}
+.hero-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:7px;
-}
-
-.btn-primary{
-  background:var(--gradient);
-  color:white;
-  box-shadow:0 10px 30px rgba(236,63,167,.20);
-}
-
-.btn-secondary{
-  background:transparent;
-  color:white;
-  border:1px solid rgba(255,255,255,.15);
-}
-.hero-buttons{
-  display:flex !important;
-  flex-wrap:wrap;
-  gap:14px;
-  margin-top:24px;
-}
-
-.hero-btn{
-  display:flex !important;
-  align-items:center;
-  justify-content:center;
-  min-height:58px;
-  padding:15px 24px;
-  border-radius:16px;
-  text-decoration:none !important;
-  font-size:18px;
+  gap:9px;
+  padding:14px 18px;
+  min-height:54px;
+  border-radius:13px;
+  text-decoration:none;
+  color:#fff;
   font-weight:700;
-  color:#fff !important;
-  box-sizing:border-box;
+  border:1px solid rgba(211,120,255,.35);
+  transition:transform .2s,box-shadow .2s;
 }
-
+.hero-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 22px rgba(226,53,220,.25);
+}
 .hero-btn.primary{
-  background:linear-gradient(135deg,#7c3aed,#ec4899) !important;
+  background:linear-gradient(120deg,#792cff,#e52eaa);
+  box-shadow:0 5px 22px rgba(199,45,220,.24);
 }
-
 .hero-btn.secondary{
-  background:#151a36 !important;
+  background:linear-gradient(135deg,#171331,#10152e);
 }
-
+.hero-btn svg{
+  width:21px;
+  height:21px;
+  flex-shrink:0;
+}
+.today-card{
+  margin-bottom:25px;
+}
 @media(max-width:700px){
+  .hero{
+    grid-template-columns:1fr;
+    gap:12px;
+    padding-top:22px;
+  }
+  .hero-left{
+    padding:24px 18px;
+  }
+  .hero-art{
+    width:100%;
+    max-width:440px;
+    margin:0 auto;
+  }
+  .hero-art svg{
+    max-height:320px;
+  }
   .hero-buttons{
     flex-direction:column;
-    gap:12px;
   }
-
   .hero-btn{
     width:100%;
-    min-height:58px;
+    min-height:52px;
   }
-  }
+}
 </style>
-</head>
 
-<body>
+<section class="hero">
+  <div class="hero-left">
+    <div class="welcome-badge">
+      ✨ জ্ঞানের যাত্রায় স্বাগতম!
+    </div>
 
-<div class="app">
+    <h2>
+      শিখুন প্রতিদিন,<br>
+      <span>নিজেকে গড়ুন নতুনভাবে</span>
+    </h2>
 
-<header>
+    <p class="hero-description">
+      জ্ঞানতরঙ্গ একটি আধুনিক শিক্ষামূলক কুইজ প্ল্যাটফর্ম।
+      এখানে আপনি শিখতে পারবেন, নিজের জ্ঞান যাচাই করতে পারবেন
+      এবং প্রতিদিন নিজেকে আরও এক ধাপ এগিয়ে নিতে পারবেন।
+    </p>
 
-<div class="brand">
+    <p class="hero-message">
+      💡 আজকের একটি প্রশ্ন হতে পারে আগামীকালের
+      একটি সাফল্যের শুরু।
+    </p>
 
-<div class="logo-box">
-<img
-src="gyantarongo-logo-transparent-1.png"
-alt="জ্ঞানতরঙ্গ লোগো">
-</div>
+    <div class="hero-buttons">
+      <a href="quiz.html" class="hero-btn primary">
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M4 16.5 15.5 5a3 3 0 0 1 4 4L8 20.5 3 21z"/>
+          <path d="m12 8 4 4M4 16.5l3.5 3.5"/>
+          <path d="M19 3v3M17.5 4.5h3"/>
+        </svg>
+        কুইজ শুরু করুন
+      </a>
 
-<div class="brand-text">
-<h1>জ্ঞানতরঙ্গ</h1>
-<p>শিখি · জানি · এগিয়ে যাই</p>
-</div>
+      <a href="category.html" class="hero-btn secondary">
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z"/>
+          <path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20"/>
+          <path d="M9 7h7M9 10h7"/>
+        </svg>
+        ক্যাটাগরি দেখুন
+      </a>
 
-</div>
+      <a href="registration.html" class="hero-btn secondary">
+        <svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <rect x="4" y="3" width="16" height="18" rx="2"/>
+          <path d="M8 8h8M8 12h5M8 16h4"/>
+          <path d="m15 15 2 2 4-5"/>
+        </svg>
+        কুইজে রেজিস্ট্রেশন করুন
+      </a>
+    </div>
+  </div>
 
-<nav class="desktop-nav">
+  <!-- টেবিল লাইট ও বইয়ের ইলাস্ট্রেশন -->
+  <div class="hero-art">
+    <svg viewBox="0 0 520 440"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="বেগুনি টেবিল লাইট, বই, পেন্সিল ও গাছ">
 
-<a href="index.html" class="nav-link active">🏠 হোম</a>
-<a href="quiz.html" class="nav-link">📝 কুইজ</a>
-<a href="category.html" class="nav-link">📚 ক্যাটাগরি</a>
-<a href="result.html" class="nav-link">🏆 ফলাফল</a>
+      <defs>
+        <linearGradient id="lampShade" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fa72ff"/>
+          <stop offset=".48" stop-color="#9128f5"/>
+          <stop offset="1" stop-color="#35106e"/>
+        </linearGradient>
+        <linearGradient id="bookCover" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#c83dff"/>
+          <stop offset="1" stop-color="#421080"/>
+        </linearGradient>
+        <linearGradient id="pages" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#fff1ff"/>
+          <stop offset="1" stop-color="#d5b4ff"/>
+        </linearGradient>
+        <linearGradient id="lightGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#fff8ff" stop-opacity=".8"/>
+          <stop offset="1" stop-color="#ff50e5" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
+      </defs>
 
-</nav>
+      <!-- পেছনের আলোকচ্ছটা -->
+      <ellipse cx="275" cy="340" rx="210" ry="65"
+        fill="#8c27ff" opacity=".18" filter="url(#softGlow)"/>
+      <circle cx="110" cy="110" r="3" fill="#ff82e8"/>
+      <circle cx="410" cy="90" r="3" fill="#dba0ff"/>
+      <path d="M425 130v14m-7-7h14" stroke="#fa70e9" stroke-width="2"/>
+      <path d="M90 175v12m-6-6h12" stroke="#ba83ff" stroke-width="2"/>
 
-<a href="profile.html" class="profile" style="text-decoration:none;color:inherit;">
-<div class="avatar">👤</div>
-<span>প্রোফাইল</span>
-</a>
+      <!-- টেবিল -->
+      <path d="M44 366 Q265 337 478 366 L455 390 Q260 416 64 390Z"
+        fill="#16082e" stroke="#8d31e8" stroke-width="2"/>
+      <path d="M65 367 Q270 348 457 367"
+        fill="none" stroke="#e74cff" stroke-width="2" opacity=".75"/>
 
-  </header><style>
+      <!-- গাছ -->
+      <path d="M90 347 82 290M89 326 65 304M88 315 111 292"
+        fill="none" stroke="#42d9ad" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="67" cy="299" rx="18" ry="9"
+        transform="rotate(30 67 299)" fill="#24bb91"/>
+      <ellipse cx="110" cy="290" rx="19" ry="9"
+        transform="rotate(-42 110 290)" fill="#54efb8"/>
+      <ellipse cx="81" cy="281" rx="18" ry="10"
+        transform="rotate(65 81 281)" fill="#218b8a"/>
+      <path d="M67 348h43l-7 29H74Z"
+        fill="url(#bookCover)" stroke="#dd71ff" stroke-width="1.5"/>
+      <ellipse cx="88" cy="348" rx="22" ry="5" fill="#ef9bff"/>
 
-.today-card{
-  padding:26px;
-  border-radius:24px;
-  background:linear-gradient(180deg,#12152e,#0c1024);
-  border:1px solid rgba(139,61,255,.25);
-}
+      <!-- বইয়ের স্তূপ -->
+      <path d="M125 331 341 318 393 336 177 353Z"
+        fill="#180b3a" stroke="#bc57ff" stroke-width="2"/>
+      <path d="M125 331 177 353 177 367 125 345Z"
+        fill="#6820b4" stroke="#c15aff" stroke-width="1.5"/>
+      <path d="M177 353 393 336 393 351 177 367Z"
+        fill="url(#pages)" stroke="#d88aff" stroke-width="1.5"/>
+      <path d="M133 316 344 304 390 321 177 341Z"
+        fill="url(#bookCover)" stroke="#ee8cff" stroke-width="2"/>
+      <path d="M177 341 390 321 390 336 177 353Z"
+        fill="#f7dfff" stroke="#d59bff" stroke-width="1.5"/>
+      <path d="M132 302 338 288 384 304 177 326Z"
+        fill="#251050" stroke="#c458ff" stroke-width="2"/>
+      <path d="M177 326 384 304 384 318 177 341Z"
+        fill="url(#pages)" stroke="#d59bff" stroke-width="1.5"/>
+      <path d="M151 288 330 276 371 290 192 308Z"
+        fill="#7423b7" stroke="#ef83ff" stroke-width="2"/>
+      <path d="M192 308 371 290 371 302 192 320Z"
+        fill="#f9e8ff" stroke="#c785ff" stroke-width="1.5"/>
 
-.section-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-}
+      <!-- টেবিল লাইটের বেস -->
+      <ellipse cx="362" cy="354" rx="68" ry="13"
+        fill="#200943" stroke="#a84aff" stroke-width="2"/>
+      <ellipse cx="362" cy="350" rx="53" ry="8"
+        fill="#7020b5" stroke="#d76bff" stroke-width="1.5"/>
 
-.section-top h3{
-  font-size:22px;
-}
+      <!-- লাইটের স্ট্যান্ড ও বাহু -->
+      <path d="M363 346 387 266 421 215"
+        fill="none" stroke="#48118c" stroke-width="18" stroke-linecap="round"/>
+      <path d="M363 346 387 266 421 215"
+        fill="none" stroke="#cf65ff" stroke-width="5" stroke-linecap="round"/>
+      <path d="M421 215 395 176"
+        fill="none" stroke="#57169d" stroke-width="18" stroke-linecap="round"/>
+      <path d="M421 215 395 176"
+        fill="none" stroke="#dc78ff" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="387" cy="266" r="10"
+        fill="#8d31e8" stroke="#f5a2ff" stroke-width="3"/>
+      <circle cx="421" cy="215" r="10"
+        fill="#8d31e8" stroke="#f5a2ff" stroke-width="3"/>
 
-.view-all{
-  color:#ff63bc;
-  text-decoration:none;
-  font-size:14px;
-}
+      <!-- লাইটের শেড -->
+      <path d="M348 145 Q369 128 397 145 L432 194
+        Q435 203 425 208 L387 220 Q378 222 374 213Z"
+        fill="url(#lampShade)" stroke="#ed9aff" stroke-width="2.5"/>
+      <path d="M348 145 Q370 160 387 220"
+        fill="none" stroke="#ffb8ff" stroke-width="2" opacity=".7"/>
+      <ellipse cx="406" cy="203" rx="25" ry="8"
+        transform="rotate(-17 406 203)" fill="#fff3ff"/>
+      <ellipse cx="406" cy="209" rx="26" ry="7"
+        transform="rotate(-17 406 209)" fill="#f65cff" opacity=".55"/>
+      <path d="M386 218 350 286 413 275 414 220Z"
+        fill="url(#lightGlow)" opacity=".7"/>
 
-.quiz-mini{
-  padding:20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
-}
+      <!-- পেন্সিলের কাপ -->
+      <path d="M407 292 469 292 461 350 Q439 360 416 350Z"
+        fill="url(#bookCover)" stroke="#e17aff" stroke-width="2"/>
+      <ellipse cx="438" cy="292" rx="31" ry="8"
+        fill="#300b57" stroke="#f09aff" stroke-width="2"/>
+      <path d="M418 291 414 242 421 235 428 291Z"
+        fill="#ff72ce" stroke="#ffb5f0" stroke-width="1"/>
+      <path d="M432 291 435 225 443 220 445 291Z"
+        fill="#ffd56e" stroke="#fff0a6" stroke-width="1"/>
+      <path d="M449 291 462 246 470 242 458 293Z"
+        fill="#66f2d4" stroke="#adfff0" stroke-width="1"/>
+      <path d="M414 242 421 235 428 291"
+        fill="none" stroke="#fff0ff" stroke-width="1"/>
+    </svg>
+  </div>
+</section>
 
-.quiz-icon{
-  width:54px;
-  height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:17px;
-  background:var(--gradient);
-  font-size:24px;
-  margin-bottom:14px;
-}
-
-.quiz-mini h4{
-  font-size:20px;
-}
-
-.quiz-info{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin:14px 0;
-}
-
-.quiz-info span{
-  padding:7px 10px;
-  border-radius:9px;
-  background:rgba(255,255,255,.05);
-  color:var(--muted);
-  font-size:13px;
-}
-
-.join-btn{
-  width:100%;
-  margin-top:15px;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-size:15px;
-  font-weight:700;
-  background:var(--gradient);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-bottom:38px;
-}
-
-.stat-card{
-  padding:22px;
-  border-radius:19px;
-  background:linear-gradient(145deg,var(--card2),var(--card));
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.stat-icon{
-  font-size:27px;
-  margin-bottom:10px;
-}
-
-.stat-number{
-  font-size:28px;
-  font-weight:800;
-}
-
-.stat-title{
-  color:var(--muted);
-  margin-top:4px;
-  font-size:14px;
-}
-
-/* CATEGORY */
-
-.categories{
-  margin-top:20px;
-}
-
-.category-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:15px;
-}
-
-.category-card{
-  padding:23px 14px;
-  text-align:center;
-  border-radius:19px;
-  background:linear-gradient(145deg,#151831,#0d1024);
-  border:1px solid rgba(168,85,247,.20);
-  cursor:pointer;
-}
-
-.category-icon{
-  font-size:36px;
-  margin-bottom:13px;
-}
-
-.category-card h4{
-  font-size:16px;
-  line-height:1.5;
-}
-
-.category-card p{
-  color:var(--muted);
-  margin-top:7px;
-  font-size:13px;
-}
-
-</style>
+<!-- আগের আজকের কুইজ কার্ড, একই তথ্য ও লিংক -->
+<section class="today-card">
+  <div class="section-top">
+    <h3>আজকের কুইজ</h3>
+    <a href="quiz.html" class="view-all">সব দেখুন →</a>
+  </div>
+  <div class="quiz-mini">
+    <div class="quiz-icon">📖</div>
+    <h4>বাংলাদেশ বিষয়াবলি</h4>
+    <div class="quiz-info">
+      <span>❓ ২০ প্রশ্ন</span>
+      <span>⏱ ২০ মিনিট</span>
+    </div>
+    <p style="color:var(--muted);line-height:1.7">
+      নিজের জ্ঞান যাচাই করুন এবং নতুন কিছু শেখার সুযোগ নিন।
+    </p>
+    <a href="quiz.html" class="join-btn"
+      style="display:flex;align-items:center;justify-content:center;text-decoration:none;box-sizing:border-box">
+      এখনই অংশগ্রহণ করুন
+    </a>
+  </div>
+</section>
 
 
 <!-- TODAY QUIZ -->
