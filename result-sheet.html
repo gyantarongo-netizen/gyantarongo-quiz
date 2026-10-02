@@ -5,76 +5,2660 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>জ্ঞানতরঙ্গ | বিষয়ভিত্তিক রেজাল্ট</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#060817;--card:#10142b;--purple:#8b3dff;--pink:#ec3fa7;--green:#2fd68a;--gold:#ffb21c;--red:#ff5470;--text:#fff;--muted:#aeb5d6;--border:rgba(255,255,255,.09)}
-*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;font-family:"Noto Sans Bengali",sans-serif;color:var(--text);background:radial-gradient(circle at 5% 0%,rgba(139,61,255,.18),transparent 28%),radial-gradient(circle at 95% 5%,rgba(236,63,167,.12),transparent 25%),linear-gradient(135deg,var(--bg),#0a0d20)}
-button,input,select{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:rgba(6,8,23,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:10px}.brand img{width:44px;height:44px;object-fit:contain}.brand-name{font-weight:800;font-size:17px}.brand-sub{font-size:10px;color:var(--muted)}.admin{font-size:11px;padding:8px 11px;border:1px solid var(--border);border-radius:12px;background:#ffffff08}
-.wrap{width:min(1500px,100%);margin:auto;padding:22px 15px 45px}.head{margin-bottom:18px}.head h1{font-size:27px}.head p{color:var(--muted);font-size:12px;margin-top:5px}.card{background:#10142be8;border:1px solid var(--border);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:0 20px 60px #00000055}
-.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center}select,input{color:#fff;background:#0a0e24;border:1px solid var(--border);border-radius:12px;padding:11px 12px;outline:none}select{min-width:300px;flex:1}input{min-width:220px;flex:1}.btn{border:0;border-radius:12px;padding:11px 15px;font-size:11px;font-weight:800;color:#fff}.primary{background:linear-gradient(135deg,var(--purple),var(--pink))}.green{background:linear-gradient(135deg,#46e8a2,#20c97f);color:#05130d}.red{background:linear-gradient(135deg,#ff5570,#c91f4d)}.secondary{background:#ffffff0d;border:1px solid var(--border)}.subject{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:16px;border-radius:17px;background:linear-gradient(135deg,#8b3dff1f,#ec3fa70d);border:1px solid #8b3dff33;margin-top:15px}.subject-title{font-size:18px;font-weight:800}.subject-meta{font-size:10px;color:var(--muted);margin-top:3px}.pill{display:inline-flex;padding:6px 9px;border-radius:999px;font-size:9px;font-weight:800}.published{color:#75efb8;background:#2fd68a1a}.hidden{color:#ffd574;background:#ffb21c1a}.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;margin-top:15px}table{width:100%;min-width:1000px;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:1px solid var(--border);font-size:11px;white-space:nowrap;text-align:left}th{background:#ffffff09;color:#dce0f5}.rank,.score{font-weight:800}.empty{text-align:center;padding:40px 15px;color:var(--muted);font-size:12px}.note{font-size:11px;line-height:1.8;color:#c9cee5;background:#35d9ff0d;border:1px solid #35d9ff20;padding:12px;border-radius:14px}.error{color:#ff9aaa;background:#ff547012;border:1px solid #ff547029;padding:12px;border-radius:14px;font-size:11px;margin-top:12px}.toast{position:fixed;right:16px;bottom:16px;z-index:50;padding:12px 15px;border-radius:13px;background:#151a36;border:1px solid var(--border);font-size:11px;transform:translateY(120px);opacity:0;transition:.25s}.toast.show{transform:translateY(0);opacity:1}
 
-.top-three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}.podium{position:relative;overflow:hidden;border-radius:22px;padding:18px;text-align:center;border:1px solid var(--border);background:linear-gradient(145deg,#151a35,#0c1025);min-height:180px}.podium:before{content:"";position:absolute;inset:-40px auto auto 50%;width:150px;height:150px;transform:translateX(-50%);border-radius:50%;background:#ffffff08;filter:blur(3px)}.podium .medal{position:relative;font-size:34px;margin-bottom:7px}.podium .p-rank{position:relative;font-size:12px;font-weight:800}.podium .p-name{position:relative;font-size:17px;font-weight:800;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.podium .p-roll{position:relative;color:var(--muted);font-size:10px;margin-top:3px}.podium .p-score{position:relative;font-size:23px;font-weight:900;margin-top:10px}.podium .p-meta{position:relative;color:var(--muted);font-size:10px;margin-top:4px}.podium.first{border-color:#ffb21c88;background:linear-gradient(145deg,#ffb21c24,#151a35)}.podium.second{border-color:#c9d3df77;background:linear-gradient(145deg,#c9d3df18,#151a35)}.podium.third{border-color:#9f6b4380;background:linear-gradient(145deg,#9f6b4318,#151a35)}
-.answer-detail{margin-top:16px;padding:18px;border-radius:20px;background:#080c20;border:1px solid var(--border)}.answer-detail-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.answer-detail h3{font-size:17px}.answer-list{display:grid;gap:10px;margin-top:14px}.answer-item{padding:14px;border-radius:16px;border:1px solid var(--border);background:#ffffff06}.answer-item .q-title{font-weight:800;font-size:12px;line-height:1.7}.answer-item .answer-line{font-size:11px;line-height:1.8;margin-top:7px}.ok{color:#6ff0b5}.bad{color:#ff8498}.skip{color:#ffd574}.download-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-@media(max-width:800px){.top-three{grid-template-columns:1fr}.podium{min-height:150px}}
-@media(max-width:650px){.admin{display:none}.wrap{padding:15px 10px 35px}.head h1{font-size:22px}.card{padding:14px}input,select{min-width:100%;width:100%}.toolbar .btn{width:100%}}
+<style>
+:root{
+  --bg:#060817;
+  --card:#10142b;
+  --purple:#8b3dff;
+  --pink:#ec3fa7;
+  --green:#2fd68a;
+  --gold:#ffb21c;
+  --red:#ff5470;
+  --text:#fff;
+  --muted:#aeb5d6;
+  --border:rgba(255,255,255,.09)
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+body{
+  min-height:100vh;
+  font-family:"Noto Sans Bengali",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 5% 0%,rgba(139,61,255,.18),transparent 28%),
+    radial-gradient(circle at 95% 5%,rgba(236,63,167,.12),transparent 25%),
+    linear-gradient(135deg,var(--bg),#0a0d20)
+}
+
+button,input,select{
+  font:inherit
+}
+
+button{
+  cursor:pointer
+}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:11px 16px;
+  background:rgba(6,8,23,.9);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border)
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.brand img{
+  width:44px;
+  height:44px;
+  object-fit:contain
+}
+
+.brand-name{
+  font-weight:800;
+  font-size:17px
+}
+
+.brand-sub{
+  font-size:10px;
+  color:var(--muted)
+}
+
+.admin{
+  font-size:11px;
+  padding:8px 11px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#ffffff08
+}
+
+.wrap{
+  width:min(1500px,100%);
+  margin:auto;
+  padding:22px 15px 45px
+}
+
+.head{
+  margin-bottom:18px
+}
+
+.head h1{
+  font-size:27px
+}
+
+.head p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px
+}
+
+.card{
+  background:#10142be8;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 20px 60px #00000055
+}
+
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  align-items:center
+}
+
+select,input{
+  color:#fff;
+  background:#0a0e24;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:11px 12px;
+  outline:none
+}
+
+select{
+  min-width:300px;
+  flex:1
+}
+
+input{
+  min-width:220px;
+  flex:1
+}
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  font-size:11px;
+  font-weight:800;
+  color:#fff
+}
+
+.primary{
+  background:linear-gradient(135deg,var(--purple),var(--pink))
+}
+
+.green{
+  background:linear-gradient(135deg,#46e8a2,#20c97f);
+  color:#05130d
+}
+
+.red{
+  background:linear-gradient(135deg,#ff5570,#c91f4d)
+}
+
+.secondary{
+  background:#ffffff0d;
+  border:1px solid var(--border)
+}
+
+.subject{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  padding:16px;
+  border-radius:17px;
+  background:linear-gradient(135deg,#8b3dff1f,#ec3fa70d);
+  border:1px solid #8b3dff33;
+  margin-top:15px
+}
+
+.subject-title{
+  font-size:18px;
+  font-weight:800
+}
+
+.subject-meta{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px
+}
+
+.pill{
+  display:inline-flex;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:9px;
+  font-weight:800
+}
+
+.published{
+  color:#75efb8;
+  background:#2fd68a1a
+}
+
+.hidden{
+  color:#ffd574;
+  background:#ffb21c1a
+}
+
+.table-wrap{
+  overflow:auto;
+  border:1px solid var(--border);
+  border-radius:16px;
+  margin-top:15px
+}
+
+table{
+  width:100%;
+  min-width:1000px;
+  border-collapse:collapse
+}
+
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid var(--border);
+  font-size:11px;
+  white-space:nowrap;
+  text-align:left
+}
+
+th{
+  background:#ffffff09;
+  color:#dce0f5
+}
+
+.rank,.score{
+  font-weight:800
+}
+
+.empty{
+  text-align:center;
+  padding:40px 15px;
+  color:var(--muted);
+  font-size:12px
+}
+
+.note{
+  font-size:11px;
+  line-height:1.8;
+  color:#c9cee5;
+  background:#35d9ff0d;
+  border:1px solid #35d9ff20;
+  padding:12px;
+  border-radius:14px
+}
+
+.error{
+  color:#ff9aaa;
+  background:#ff547012;
+  border:1px solid #ff547029;
+  padding:12px;
+  border-radius:14px;
+  font-size:11px;
+  margin-top:12px
+}
+
+.toast{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:50;
+  padding:12px 15px;
+  border-radius:13px;
+  background:#151a36;
+  border:1px solid var(--border);
+  font-size:11px;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.25s
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1
+}
+
+.top-three{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:16px 0
+}
+
+.podium{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  padding:18px;
+  text-align:center;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,#151a35,#0c1025);
+  min-height:180px
+}
+
+.podium:before{
+  content:"";
+  position:absolute;
+  inset:-40px auto auto 50%;
+  width:150px;
+  height:150px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:#ffffff08;
+  filter:blur(3px)
+}
+
+.podium .medal{
+  position:relative;
+  font-size:34px;
+  margin-bottom:7px
+}
+
+.podium .p-rank{
+  position:relative;
+  font-size:12px;
+  font-weight:800
+}
+
+.podium .p-name{
+  position:relative;
+  font-size:17px;
+  font-weight:800;
+  margin-top:6px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.podium .p-roll{
+  position:relative;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px
+}
+
+.podium .p-score{
+  position:relative;
+  font-size:23px;
+  font-weight:900;
+  margin-top:10px
+}
+
+.podium .p-meta{
+  position:relative;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px
+}
+
+.podium.first{
+  border-color:#ffb21c88;
+  background:linear-gradient(145deg,#ffb21c24,#151a35)
+}
+
+.podium.second{
+  border-color:#c9d3df77;
+  background:linear-gradient(145deg,#c9d3df18,#151a35)
+}
+
+.podium.third{
+  border-color:#9f6b4380;
+  background:linear-gradient(145deg,#9f6b4318,#151a35)
+}
+
+.answer-detail{
+  margin-top:16px;
+  padding:18px;
+  border-radius:20px;
+  background:#080c20;
+  border:1px solid var(--border)
+}
+
+.answer-detail-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap
+}
+
+.answer-detail h3{
+  font-size:17px
+}
+
+.answer-list{
+  display:grid;
+  gap:10px;
+  margin-top:14px
+}
+
+.answer-item{
+  padding:14px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:#ffffff06
+}
+
+.answer-item .q-title{
+  font-weight:800;
+  font-size:12px;
+  line-height:1.7
+}
+
+.answer-item .answer-line{
+  font-size:11px;
+  line-height:1.8;
+  margin-top:7px
+}
+
+.ok{
+  color:#6ff0b5
+}
+
+.bad{
+  color:#ff8498
+}
+
+.skip{
+  color:#ffd574
+}
+
+.download-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:12px
+}
+
+@media(max-width:800px){
+  .top-three{
+    grid-template-columns:1fr
+  }
+
+  .podium{
+    min-height:150px
+  }
+}
+
+@media(max-width:650px){
+  .admin{
+    display:none
+  }
+
+  .wrap{
+    padding:15px 10px 35px
+  }
+
+  .head h1{
+    font-size:22px
+  }
+
+  .card{
+    padding:14px
+  }
+
+  input,select{
+    min-width:100%;
+    width:100%
+  }
+
+  .toolbar .btn{
+    width:100%
+  }
+}
 </style>
 </head>
+
 <body>
-<header class="top"><div class="brand"><img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ"><div><div class="brand-name">জ্ঞানতরঙ্গ</div><div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div></div></div><div id="adminName" class="admin">Admin যাচাই হচ্ছে...</div></header>
+
+<header class="top">
+  <div class="brand">
+    <img src="gyantarongo-logo-transparent-1.png" alt="জ্ঞানতরঙ্গ">
+    <div>
+      <div class="brand-name">জ্ঞানতরঙ্গ</div>
+      <div class="brand-sub">শিখি · জানি · এগিয়ে যাই</div>
+    </div>
+  </div>
+
+  <div id="adminName" class="admin">
+    Admin যাচাই হচ্ছে...
+  </div>
+</header>
+
 <main class="wrap">
-<div class="head"><h1>🏆 বিষয়ভিত্তিক রেজাল্ট শিট</h1><p>একবারে একটি বিষয়/কুইজের সব পরীক্ষার্থীর ফলাফল আলাদা সিটে থাকবে।</p></div>
-<section class="card">
-<div class="toolbar">
-<select id="quizSelect"><option value="">বিষয় / কুইজ নির্বাচন করুন</option></select>
-<input id="searchInput" type="search" placeholder="রোল বা শিক্ষার্থীর নাম খুঁজুন">
-<button class="btn secondary" id="refreshBtn">🔄 রিফ্রেশ</button>
-<button class="btn green" id="publishBtn">✓ সব প্রকাশ</button>
-<button class="btn red" id="hideBtn">✕ সব গোপন</button>
-<button class="btn primary" id="downloadBtn">⬇️ রেজাল্ট শিট ডাউনলোড</button><button class="btn secondary" id="backBtn">← Admin Panel</button>
+
+<div class="head">
+  <h1>🏆 বিষয়ভিত্তিক রেজাল্ট শিট</h1>
+  <p>একবারে একটি বিষয়/কুইজের সব পরীক্ষার্থীর ফলাফল আলাদা সিটে থাকবে।</p>
 </div>
-<div id="subjectBox" class="subject" style="display:none"></div><div id="topThree" class="top-three" style="display:none"></div><div id="answerDetail"></div><div id="message"></div><div id="tableArea"><div class="empty">একটি বিষয়/কুইজ নির্বাচন করুন।</div></div>
+
+<section class="card">
+
+<div class="toolbar">
+
+<select id="quizSelect">
+  <option value="">বিষয় / কুইজ নির্বাচন করুন</option>
+</select>
+
+<input
+  id="searchInput"
+  type="search"
+  placeholder="রোল বা শিক্ষার্থীর নাম খুঁজুন"
+>
+
+<button class="btn secondary" id="refreshBtn">
+  🔄 রিফ্রেশ
+</button>
+
+<button class="btn green" id="publishBtn">
+  ✓ সব প্রকাশ
+</button>
+
+<button class="btn red" id="hideBtn">
+  ✕ সব গোপন
+</button>
+
+<button class="btn primary" id="downloadBtn">
+  ⬇️ রেজাল্ট শিট ডাউনলোড
+</button>
+
+<button class="btn secondary" id="backBtn">
+  ← Admin Panel
+</button>
+
+</div>
+
+<div id="subjectBox" class="subject" style="display:none"></div>
+
+<div id="topThree" class="top-three" style="display:none"></div>
+
+<div id="answerDetail"></div>
+
+<div id="message"></div>
+
+<div id="tableArea">
+  <div class="empty">
+    একটি বিষয়/কুইজ নির্বাচন করুন।
+  </div>
+</div>
+
 </section>
-<div class="note">ℹ️ শুধুমাত্র নির্বাচিত <b>quiz_id</b>-এর submitted attempt এই সিটে থাকবে। অন্য বিষয়ের ফলাফল মিশবে না। Rank: Score বেশি → সময় কম → আগে জমা।</div>
-</main><div id="toast" class="toast"></div>
+
+<div class="note">
+  ℹ️ শুধুমাত্র নির্বাচিত <b>quiz_id</b>-এর submitted attempt এই সিটে থাকবে।
+  অন্য বিষয়ের ফলাফল মিশবে না।
+  Rank: Score বেশি → সময় কম → আগে জমা।
+</div>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
 <script type="module">
+
 import{auth,db}from"./firebase-config.js";
-import{onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import{collection,doc,getDoc,getDocs,query,where,setDoc,updateDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-let currentUser=null,quizzes=[],rows=[];const $=id=>document.getElementById(id);
 
-onAuthStateChanged(auth,async user=>{if(!user){location.href="admin.html";return}try{const s=await getDoc(doc(db,"profiles",user.uid));if(!s.exists()||s.data().role!=="admin"||s.data().is_active!==true){await signOut(auth);location.href="admin.html";return}currentUser=user;$("adminName").textContent=s.data().full_name||user.email||"Admin";await loadQuizzes()}catch(e){console.error(e);showError("Admin অনুমতি যাচাই করা যায়নি।")}});
+import{
+  onAuthStateChanged,
+  signOut
+}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-async function loadQuizzes(){try{const s=await getDocs(collection(db,"quizzes"));quizzes=s.docs.map(d=>({id:d.id,...d.data()}));$("quizSelect").innerHTML='<option value="">বিষয় / কুইজ নির্বাচন করুন</option>'+quizzes.map(q=>`<option value="${esc(q.id)}">${esc(q.title||q.quiz_name||q.name||q.id)}</option>`).join("")}catch(e){console.error(e);showError("কুইজের তালিকা লোড করা যায়নি।")}}
+import{
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  setDoc,
+  updateDoc,
+  serverTimestamp
+}from"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-$("quizSelect").addEventListener("change",loadResults);$("searchInput").addEventListener("input",render);$("refreshBtn").addEventListener("click",loadResults);$("publishBtn").addEventListener("click",()=>setAllPublished(true));$("hideBtn").addEventListener("click",()=>setAllPublished(false));$("backBtn").addEventListener("click",()=>location.href="admin.html");$("downloadBtn").addEventListener("click",downloadCSV);
 
-function norm(v){return String(v??"").trim()}
-function letter(v){return norm(v).toUpperCase().replace(/[^ABCD]/g,"").slice(0,1)}
-function correctLetter(v){const x=norm(v);if(!x)return"";const m=x.match(/^([ABCD])(?:\s*[.)\-:]|\s)/i);return m?m[1].toUpperCase():letter(x)}
-function questionText(q){return norm(q?.question_text??q?.question??"").replace(/\s+/g," ").toLowerCase()}
-function correctOf(q){return q?.correct_answer??q?.correct_option??q?.answer??q?.correctAnswer??q?.right_answer??null}
-function hasCorrect(q){return !!q&&norm(correctOf(q))!==""}
-function isCorrect(selected,q){const s=letter(selected),c=correctLetter(correctOf(q));if(!s||!c)return false;if(s===c)return true;const opt=norm(q?.[`option_${s.toLowerCase()}`]??q?.[s.toLowerCase()]??"");return !!opt&&opt.toLowerCase()===norm(correctOf(q)).toLowerCase()}
+let currentUser=null;
+let quizzes=[];
+let rows=[];
 
-function buildLookup(bank,exam){const byId=new Map(),byText=new Map();[...bank,...exam].forEach(q=>{const x={...q};if(x.id)byId.set(x.id,x);const t=questionText(x);if(t&&!byText.has(t))byText.set(t,x)});bank.forEach(q=>{const t=questionText(q);if(t)byText.set(t,{...byText.get(t),...q})});return{id:id=>byId.get(id)||null,text:t=>byText.get(t)||null}}
+const $=id=>document.getElementById(id);
 
-function getQuestionIds(a){if(Array.isArray(a.question_order)&&a.question_order.length)return a.question_order;if(Array.isArray(a.selected_question_ids)&&a.selected_question_ids.length)return a.selected_question_ids;return[]}
 
-function calculate(a,lookup,quiz,allQuestions){const answers=Array.isArray(a.answers)?a.answers:[];const ids=getQuestionIds(a);let correct=0,wrong=0,unanswered=0,unresolved=0,gained=0,negative=0,total=0;const details=[];const count=Math.max(ids.length,answers.length);for(let i=0;i<count;i++){let q=ids[i]?lookup.id(ids[i]):null;if(!q&&allQuestions[i])q=allQuestions[i];const marks=Number(q?.marks??1);const m=Number.isFinite(marks)&&marks>=0?marks:1;total+=m;let selected=letter(answers[i]);const originalSelected=selected;const map=a.option_maps&&ids[i]?a.option_maps[ids[i]]:null;if(Array.isArray(map)){const idx="ABCD".indexOf(selected);if(idx>=0&&map[idx])selected=letter(map[idx])}const correctAns=correctLetter(correctOf(q));let status="unresolved";if(!selected){unanswered++;status="unanswered"}else if(!q||!hasCorrect(q)){unresolved++;status="unresolved"}else if(isCorrect(selected,q)){correct++;gained+=m;status="correct"}else{wrong++;const n=Number(q?.negative_mark??quiz?.negative_marking??quiz?.negative_mark??0);negative+=Number.isFinite(n)&&n>0?n:0;status="wrong"}details.push({number:i+1,id:ids[i]||q?.id||"",question:q?.question_text??q?.question??"প্রশ্ন পাওয়া যায়নি",selected:selected||"",correct:correctAns||"",status,marks:m,options:{A:q?.option_a??q?.a??"",B:q?.option_b??q?.b??"",C:q?.option_c??q?.c??"",D:q?.option_d??q?.d??""}})}const totalMarks=round(total||Number(quiz?.total_marks||0));const score=round(gained-negative);const time=Number(a.time_taken_seconds??a.total_time_seconds??0)||0;return{correct,wrong,unanswered,unresolved,score,total_marks:totalMarks,obtained_marks:score,negative_mark:round(negative),percentage:totalMarks>0?round(score/totalMarks*100):0,total_time_seconds:Math.max(0,time),time_taken_seconds:Math.max(0,time),details}}
-function round(n){return Math.round((Number(n)||0)*100)/100}
-function compare(a,b){const s=Number(b.score||0)-Number(a.score||0);if(s)return s;const ta=Number(a.total_time_seconds??a.time_taken_seconds??999999999),tb=Number(b.total_time_seconds??b.time_taken_seconds??999999999);if(ta!==tb)return ta-tb;return(toMs(a.submitted_at)||9e15)-(toMs(b.submitted_at)||9e15)}
+/* =========================
+   AUTH
+========================= */
 
-async function loadResults(){const quizId=$("quizSelect").value;if(!quizId){$("subjectBox").style.display="none";$("tableArea").innerHTML='<div class="empty">একটি বিষয়/কুইজ নির্বাচন করুন।</div>';rows=[];return}$("tableArea").innerHTML='<div class="empty">⏳ ফলাফল নতুন করে হিসাব করা হচ্ছে...</div>';clearMessage();try{const qz=quizzes.find(q=>q.id===quizId)||{id:quizId};const [a,rs,rg,qs,eq]=await Promise.all([getDocs(query(collection(db,"attempts"),where("quiz_id","==",quizId))),getDocs(query(collection(db,"results"),where("quiz_id","==",quizId))),getDocs(query(collection(db,"quiz_registrations"),where("quiz_id","==",quizId))),getDocs(query(collection(db,"questions"),where("quiz_id","==",quizId))),getDocs(query(collection(db,"exam_questions"),where("quiz_id","==",quizId)))]);const rm=new Map(rs.docs.map(d=>[d.id,{id:d.id,...d.data()}]));const byStudent=new Map(),byRoll=new Map();rg.forEach(d=>{const x={id:d.id,...d.data()};if(x.student_uid)byStudent.set(x.student_uid,x);if(x.roll_number)byRoll.set(x.roll_number,x)});const bank=qs.docs.map(d=>({id:d.id,...d.data()}));const exam=eq.docs.map(d=>({id:d.id,...d.data()}));const allQuestions=[...bank,...exam];const lookup=buildLookup(bank,exam);rows=[];let unresolvedTotal=0;for(const d of a.docs){const x={id:d.id,...d.data()};if(String(x.status||"").toLowerCase()!=="submitted")continue;const r=byStudent.get(x.student_uid)||byRoll.get(x.roll_number)||{};const calc=calculate(x,lookup,qz,allQuestions);unresolvedTotal+=calc.unresolved;rows.push({...x,...calc,roll_number:x.roll_number||r.roll_number||"",student_name:x.student_name||x.full_name||r.full_name||r.student_name||"",student_id:x.student_id||r.student_id||"",published:rm.get(x.id)?.published===true,quiz_name:qz.title||qz.quiz_name||qz.name||""})}rows.sort(compare);$("subjectBox").style.display="flex";$("subjectBox").innerHTML=`<div><div class="subject-title">${esc(qz.title||qz.quiz_name||qz.name||"বিষয়")}</div><div class="subject-meta">নতুন হিসাব • ${bn(rows.length)} জন submitted • ${unresolvedTotal?`⚠️ ${bn(unresolvedTotal)}টি উত্তর যাচাই করা যায়নি`:"সব উত্তর যাচাই হয়েছে"}</div></div><span class="pill published">ফলাফল সিট</span>`;render()}catch(e){console.error(e);rows=[];$("tableArea").innerHTML='<div class="empty">ফলাফল লোড করা যায়নি।</div>';showError("Result হিসাব করতে সমস্যা হয়েছে। Firebase Rules ও প্রশ্নের ডেটা পরীক্ষা করুন।")}}
+onAuthStateChanged(auth,async user=>{
 
-function render(){if(!rows.length){$("topThree").style.display="none";$("answerDetail").innerHTML="";$("tableArea").innerHTML='<div class="empty">এই বিষয়ের কোনো submitted result পাওয়া যায়নি।</div>';return}const s=$("searchInput").value.trim().toLowerCase(),d=rows.filter(x=>!s||`${x.roll_number} ${x.student_name} ${x.student_id}`.toLowerCase().includes(s));renderTopThree(rows);if(!d.length){$("tableArea").innerHTML='<div class="empty">কোনো ফলাফল পাওয়া যায়নি।</div>';return}$("tableArea").innerHTML=`<div class="table-wrap"><table><thead><tr><th>স্থান</th><th>Quiz Roll</th><th>শিক্ষার্থীর নাম</th><th>Student ID</th><th>Score</th><th>সঠিক</th><th>ভুল</th><th>উত্তরহীন</th><th>Negative</th><th>মোট নম্বর</th><th>মোট সময়</th><th>জমা</th><th>অবস্থা</th><th>উত্তর</th></tr></thead><tbody>${d.map(r=>{const rank=rows.findIndex(x=>x.id===r.id)+1;return `<tr><td class="rank">${rank<=3?['🥇','🥈','🥉'][rank-1]:`#${bn(rank)}`}</td><td>${esc(r.roll_number||"—")}</td><td>${esc(r.student_name||"—")}</td><td>${esc(r.student_id||"—")}</td><td class="score">${score(r.score)}</td><td>${bn(r.correct)}</td><td>${bn(r.wrong)}</td><td>${bn(r.unanswered)}</td><td>${score(r.negative_mark)}</td><td>${score(r.total_marks)}</td><td>${duration(r.total_time_seconds)}</td><td>${date(r.submitted_at)}</td><td><span class="pill ${r.published?"published":"hidden"}">${r.published?"প্রকাশিত":"গোপন"}</span></td><td><button class="btn primary" type="button" onclick="window.showStudentAnswers('${String(r.id).replace(/'/g,"\\'")}')">🔎 উত্তর দেখুন</button></td></tr>`}).join("")}</tbody></table></div>`}function renderTopThree(all){const el=$("topThree");const top=all.slice(0,3);if(!top.length){el.style.display="none";return}el.style.display="grid";el.innerHTML=top.map((r,i)=>{const cls=['first','second','third'][i],medal=['🥇','🥈','🥉'][i],label=['১ম স্থান','২য় স্থান','৩য় স্থান'][i];return `<div class="podium ${cls}"><div class="medal">${medal}</div><div class="p-rank">${label}</div><div class="p-name">${esc(r.student_name||"নাম নেই")}</div><div class="p-roll">${esc(r.roll_number||"—")}</div><div class="p-score">${score(r.score)} / ${score(r.total_marks)}</div><div class="p-meta">সঠিক ${bn(r.correct)} · ভুল ${bn(r.wrong)} · সময় ${duration(r.total_time_seconds)}</div></div>`}).join("")}window.showStudentAnswers=function(id){const r=rows.find(x=>x.id===id);if(!r)return;const details=Array.isArray(r.details)?r.details:[];$("answerDetail").innerHTML=`<div class="answer-detail"><div class="answer-detail-head"><div><h3>🔎 ${esc(r.student_name||"শিক্ষার্থীর উত্তরপত্র")}</h3><div class="subject-meta">Roll: ${esc(r.roll_number||"—")} · Student ID: ${esc(r.student_id||"—")}</div></div><button class="btn secondary" type="button" onclick="document.getElementById('answerDetail').innerHTML=''">✕ বন্ধ</button></div><div class="answer-list">${details.map(x=>{const st=x.status==='correct'?'<span class="ok">✓ সঠিক</span>':x.status==='wrong'?'<span class="bad">✕ ভুল</span>':x.status==='unanswered'?'<span class="skip">— উত্তর নেই</span>':'<span class="skip">⚠ যাচাই করা যায়নি</span>';const sel=x.selected?`${x.selected}. ${x.options?.[x.selected]||''}`:'উত্তর দেয়নি';const cor=x.correct?`${x.correct}. ${x.options?.[x.correct]||''}`:'—';return `<div class="answer-item"><div class="q-title">${bn(x.number)}. ${esc(x.question)}</div><div class="answer-line">শিক্ষার্থীর উত্তর: <b>${esc(sel)}</b></div><div class="answer-line">সঠিক উত্তর: <b>${esc(cor)}</b></div><div class="answer-line">${st}</div></div>`}).join("")}</div><div class="download-row"><button class="btn green" type="button" onclick="downloadStudentAnswers('${String(r.id).replace(/'/g,"\\'")}')">⬇️ এই শিক্ষার্থীর উত্তর ডাউনলোড</button></div></div>`;$("answerDetail").scrollIntoView({behavior:'smooth',block:'start'})};window.downloadStudentAnswers=function(id){const r=rows.find(x=>x.id===id);if(!r)return;const lines=[['জ্ঞানতরঙ্গ — শিক্ষার্থীর উত্তরপত্র'],['নাম',r.student_name],['Roll',r.roll_number],['Student ID',r.student_id],[],['নং','প্রশ্ন','শিক্ষার্থীর উত্তর','সঠিক উত্তর','ফলাফল']];(r.details||[]).forEach(x=>lines.push([x.number,x.question,x.selected?`${x.selected}. ${x.options?.[x.selected]||''}`:'উত্তর নেই',x.correct?`${x.correct}. ${x.options?.[x.correct]||''}`:'—',x.status==='correct'?'সঠিক':x.status==='wrong'?'ভুল':x.status==='unanswered'?'উত্তর নেই':'যাচাই করা যায়নি']));downloadCsvData(lines,`answer-${r.roll_number||r.id}.csv`)};
-async function setAllPublished(value){const quizId=$("quizSelect").value;if(!quizId||!rows.length){toast("আগে একটি বিষয়/কুইজ নির্বাচন করুন।");return}if(!confirm(value?"এই বিষয়ের সব Result নতুন হিসাবসহ প্রকাশ করবেন?":"এই বিষয়ের সব Result গোপন করবেন?"))return;try{for(let i=0;i<rows.length;i++){const r=rows[i];const data={attempt_id:r.id,quiz_id:quizId,quiz_name:r.quiz_name||"",student_uid:r.student_uid||null,student_name:r.student_name||"",roll_number:r.roll_number||"",student_id:r.student_id||null,rank:i+1,correct:Number(r.correct||0),wrong:Number(r.wrong||0),unanswered:Number(r.unanswered||0),score:Number(r.score||0),obtained_marks:Number(r.obtained_marks??r.score??0),total_marks:Number(r.total_marks||0),negative_mark:Number(r.negative_mark||0),percentage:Number(r.percentage||0),total_time_seconds:Number(r.total_time_seconds||0),time_taken_seconds:Number(r.time_taken_seconds??r.total_time_seconds??0),submitted_at:r.submitted_at||null,published:value,...(value?{published_at:serverTimestamp()}:{}),updated_at:serverTimestamp(),updated_by:currentUser.uid};await setDoc(doc(db,"results",r.id),data,{merge:true});await updateDoc(doc(db,"attempts",r.id),{correct:data.correct,wrong:data.wrong,unanswered:data.unanswered,score:data.score,obtained_marks:data.obtained_marks,total_marks:data.total_marks,negative_mark:data.negative_mark,percentage:data.percentage,total_time_seconds:data.total_time_seconds,time_taken_seconds:data.time_taken_seconds,calculated_by:currentUser.uid,calculated_at:serverTimestamp()})}toast(value?"নতুন হিসাবসহ সব Result প্রকাশ হয়েছে।":"সব Result গোপন করা হয়েছে।");await loadResults()}catch(e){console.error(e);showError("Result প্রকাশ করতে সমস্যা হয়েছে: "+(e?.message||"Unknown error"))}}
+  if(!user){
+    location.href="admin.html";
+    return;
+  }
 
-function downloadCSV(){if(!rows.length){toast("আগে একটি কুইজ নির্বাচন করুন।");return}const qz=quizzes.find(q=>q.id===$("quizSelect").value)||{};const lines=[['জ্ঞানতরঙ্গ — রেজাল্ট শিট'],['কুইজ',qz.title||qz.quiz_name||qz.name||''],[],['Rank','Roll','নাম','Student ID','Score','সঠিক','ভুল','উত্তরহীন','Negative','মোট নম্বর','সময়','Publish']];rows.forEach((r,i)=>lines.push([i+1,r.roll_number,r.student_name,r.student_id,r.score,r.correct,r.wrong,r.unanswered,r.negative_mark,r.total_marks,duration(r.total_time_seconds),r.published?'প্রকাশিত':'গোপন']));downloadCsvData(lines,`result-sheet-${qz.id||'quiz'}.csv`)}function downloadCsvData(lines,file){const csv='\uFEFF'+lines.map(row=>row.map(v=>{const x=String(v??'').replace(/"/g,'""');return `"${x}"`}).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function toMs(v){if(!v)return null;if(typeof v==="number")return v;if(typeof v==="string"){const n=Date.parse(v);return Number.isNaN(n)?null:n}if(typeof v.toMillis==="function")return v.toMillis();if(typeof v.seconds==="number")return v.seconds*1000;return null}
-function date(v){const m=toMs(v);return m?new Intl.DateTimeFormat("bn-BD",{timeZone:"Asia/Dhaka",dateStyle:"medium",timeStyle:"short"}).format(new Date(m)):"—"}
-function duration(v){const s=Math.max(0,Math.floor(Number(v||0)));return`${bn(Math.floor(s/60))}মি ${bn(s%60)}সে`}
-function score(v){const n=Number(v||0);return bn(Number.isInteger(n)?n:n.toFixed(2))}
-function bn(v){return String(v).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d])}
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function showError(t){$("message").innerHTML=`<div class="error">${esc(t)}</div>`}function clearMessage(){$("message").innerHTML=""}let timer;function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>e.classList.remove("show"),2800)}
-</script></body></html>
+  try{
+
+    const s=
+      await getDoc(
+        doc(db,"profiles",user.uid)
+      );
+
+    if(
+      !s.exists() ||
+      s.data().role!=="admin" ||
+      s.data().is_active!==true
+    ){
+
+      await signOut(auth);
+      location.href="admin.html";
+      return;
+    }
+
+    currentUser=user;
+
+    $("adminName").textContent=
+      s.data().full_name ||
+      user.email ||
+      "Admin";
+
+    await loadQuizzes();
+
+  }catch(e){
+
+    console.error(e);
+
+    showError(
+      "Admin অনুমতি যাচাই করা যায়নি।"
+    );
+
+  }
+
+});
+
+
+/* =========================
+   QUIZZES
+========================= */
+
+async function loadQuizzes(){
+
+  try{
+
+    const s=
+      await getDocs(
+        collection(db,"quizzes")
+      );
+
+    quizzes=
+      s.docs.map(d=>({
+        id:d.id,
+        ...d.data()
+      }));
+
+    $("quizSelect").innerHTML=
+      '<option value="">বিষয় / কুইজ নির্বাচন করুন</option>'+
+      quizzes.map(q=>
+        `<option value="${esc(q.id)}">
+          ${esc(q.title||q.quiz_name||q.name||q.id)}
+        </option>`
+      ).join("");
+
+  }catch(e){
+
+    console.error(e);
+
+    showError(
+      "কুইজের তালিকা লোড করা যায়নি।"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+$("quizSelect")
+  .addEventListener(
+    "change",
+    loadResults
+  );
+
+$("searchInput")
+  .addEventListener(
+    "input",
+    render
+  );
+
+$("refreshBtn")
+  .addEventListener(
+    "click",
+    loadResults
+  );
+
+$("publishBtn")
+  .addEventListener(
+    "click",
+    ()=>setAllPublished(true)
+  );
+
+$("hideBtn")
+  .addEventListener(
+    "click",
+    ()=>setAllPublished(false)
+  );
+
+$("backBtn")
+  .addEventListener(
+    "click",
+    ()=>location.href="admin.html"
+  );
+
+$("downloadBtn")
+  .addEventListener(
+    "click",
+    downloadCSV
+  );
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function norm(v){
+  return String(v??"").trim()
+}
+
+function letter(v){
+  return norm(v)
+    .toUpperCase()
+    .replace(/[^ABCD]/g,"")
+    .slice(0,1)
+}
+
+function correctLetter(v){
+
+  const x=norm(v);
+
+  if(!x)return"";
+
+  const m=
+    x.match(
+      /^([ABCD])(?:\s*[.)\-:]|\s)/i
+    );
+
+  return m
+    ?m[1].toUpperCase()
+    :letter(x)
+}
+
+function questionText(q){
+
+  return norm(
+    q?.question_text??
+    q?.question??
+    ""
+  )
+  .replace(/\s+/g," ")
+  .toLowerCase()
+}
+
+function correctOf(q){
+
+  return q?.correct_answer??
+    q?.correct_option??
+    q?.answer??
+    q?.correctAnswer??
+    q?.right_answer??
+    null
+}
+
+function hasCorrect(q){
+
+  return !!q &&
+    norm(correctOf(q))!==""
+}
+
+function isCorrect(selected,q){
+
+  const s=letter(selected);
+
+  const c=
+    correctLetter(
+      correctOf(q)
+    );
+
+  if(!s||!c)return false;
+
+  if(s===c)return true;
+
+  const opt=
+    norm(
+      q?.[
+        `option_${s.toLowerCase()}`
+      ]??
+      q?.[
+        s.toLowerCase()
+      ]??
+      ""
+    );
+
+  return !!opt &&
+    opt.toLowerCase()===
+    norm(correctOf(q)).toLowerCase()
+}
+
+
+function buildLookup(bank,exam){
+
+  const byId=new Map();
+  const byText=new Map();
+
+  [...bank,...exam].forEach(q=>{
+
+    const x={...q};
+
+    if(x.id)
+      byId.set(x.id,x);
+
+    const t=
+      questionText(x);
+
+    if(t&&!byText.has(t))
+      byText.set(t,x);
+
+  });
+
+  bank.forEach(q=>{
+
+    const t=
+      questionText(q);
+
+    if(t)
+      byText.set(
+        t,
+        {
+          ...byText.get(t),
+          ...q
+        }
+      );
+
+  });
+
+  return{
+    id:id=>byId.get(id)||null,
+    text:t=>byText.get(t)||null
+  };
+
+}
+
+
+function getQuestionIds(a){
+
+  if(
+    Array.isArray(a.question_order) &&
+    a.question_order.length
+  )
+    return a.question_order;
+
+  if(
+    Array.isArray(a.selected_question_ids) &&
+    a.selected_question_ids.length
+  )
+    return a.selected_question_ids;
+
+  return[];
+
+}
+
+
+/* =========================
+   CALCULATE
+========================= */
+
+function calculate(
+  a,
+  lookup,
+  quiz,
+  allQuestions
+){
+
+  const answers=
+    Array.isArray(a.answers)
+      ?a.answers
+      :[];
+
+  const ids=
+    getQuestionIds(a);
+
+  let correct=0;
+  let wrong=0;
+  let unanswered=0;
+  let unresolved=0;
+  let gained=0;
+  let negative=0;
+  let total=0;
+
+  const details=[];
+
+  const count=
+    Math.max(
+      ids.length,
+      answers.length
+    );
+
+  for(let i=0;i<count;i++){
+
+    let q=
+      ids[i]
+        ?lookup.id(ids[i])
+        :null;
+
+    if(!q&&allQuestions[i])
+      q=allQuestions[i];
+
+    const marks=
+      Number(q?.marks??1);
+
+    const m=
+      Number.isFinite(marks)&&marks>=0
+        ?marks
+        :1;
+
+    total+=m;
+
+    let selected=
+      letter(answers[i]);
+
+    const originalSelected=
+      selected;
+
+    const map=
+      a.option_maps&&ids[i]
+        ?a.option_maps[ids[i]]
+        :null;
+
+    if(Array.isArray(map)){
+
+      const idx=
+        "ABCD".indexOf(selected);
+
+      if(idx>=0&&map[idx])
+        selected=
+          letter(map[idx]);
+
+    }
+
+    const correctAns=
+      correctLetter(
+        correctOf(q)
+      );
+
+    let status="unresolved";
+
+    if(!selected){
+
+      unanswered++;
+      status="unanswered";
+
+    }else if(
+      !q||
+      !hasCorrect(q)
+    ){
+
+      unresolved++;
+      status="unresolved";
+
+    }else if(
+      isCorrect(
+        selected,
+        q
+      )
+    ){
+
+      correct++;
+      gained+=m;
+      status="correct";
+
+    }else{
+
+      wrong++;
+
+      const n=
+        Number(
+          q?.negative_mark??
+          quiz?.negative_marking??
+          quiz?.negative_mark??
+          0
+        );
+
+      negative+=
+        Number.isFinite(n)&&n>0
+          ?n
+          :0;
+
+      status="wrong";
+
+    }
+
+    details.push({
+
+      number:i+1,
+
+      id:
+        ids[i]||
+        q?.id||
+        "",
+
+      question:
+        q?.question_text??
+        q?.question??
+        "প্রশ্ন পাওয়া যায়নি",
+
+      selected:
+        selected||"",
+
+      correct:
+        correctAns||"",
+
+      status,
+
+      marks:m,
+
+      options:{
+        A:q?.option_a??q?.a??"",
+        B:q?.option_b??q?.b??"",
+        C:q?.option_c??q?.c??"",
+        D:q?.option_d??q?.d??""
+      }
+
+    });
+
+  }
+
+  const totalMarks=
+    round(
+      total||
+      Number(
+        quiz?.total_marks||0
+      )
+    );
+
+  const score=
+    round(
+      gained-negative
+    );
+
+  const time=
+    Number(
+      a.time_taken_seconds??
+      a.total_time_seconds??
+      0
+    )||0;
+
+  return{
+
+    correct,
+    wrong,
+    unanswered,
+    unresolved,
+
+    score,
+
+    total_marks:
+      totalMarks,
+
+    obtained_marks:
+      score,
+
+    negative_mark:
+      round(negative),
+
+    percentage:
+      totalMarks>0
+        ?round(
+          score/
+          totalMarks*
+          100
+        )
+        :0,
+
+    total_time_seconds:
+      Math.max(0,time),
+
+    time_taken_seconds:
+      Math.max(0,time),
+
+    details
+
+  };
+
+}
+
+
+function round(n){
+
+  return Math.round(
+    (Number(n)||0)*100
+  )/100
+
+}
+
+
+function compare(a,b){
+
+  const s=
+    Number(b.score||0)-
+    Number(a.score||0);
+
+  if(s)return s;
+
+  const ta=
+    Number(
+      a.total_time_seconds??
+      a.time_taken_seconds??
+      999999999
+    );
+
+  const tb=
+    Number(
+      b.total_time_seconds??
+      b.time_taken_seconds??
+      999999999
+    );
+
+  if(ta!==tb)
+    return ta-tb;
+
+  return(
+    toMs(a.submitted_at)||9e15
+  )-
+  (
+    toMs(b.submitted_at)||9e15
+  );
+
+}
+
+
+/* =========================
+   LOAD RESULTS
+========================= */
+
+async function loadResults(){
+
+  const quizId=
+    $("quizSelect").value;
+
+  if(!quizId){
+
+    $("subjectBox").style.display="none";
+
+    $("tableArea").innerHTML=
+      '<div class="empty">একটি বিষয়/কুইজ নির্বাচন করুন।</div>';
+
+    rows=[];
+
+    return;
+  }
+
+  $("tableArea").innerHTML=
+    '<div class="empty">⏳ ফলাফল নতুন করে হিসাব করা হচ্ছে...</div>';
+
+  clearMessage();
+
+  try{
+
+    const qz=
+      quizzes.find(
+        q=>q.id===quizId
+      )||{
+        id:quizId
+      };
+
+    const[
+      a,
+      rs,
+      rg,
+      qs,
+      eq
+    ]=
+      await Promise.all([
+
+        getDocs(
+          query(
+            collection(
+              db,
+              "attempts"
+            ),
+            where(
+              "quiz_id",
+              "==",
+              quizId
+            )
+          )
+        ),
+
+        getDocs(
+          query(
+            collection(
+              db,
+              "results"
+            ),
+            where(
+              "quiz_id",
+              "==",
+              quizId
+            )
+          )
+        ),
+
+        getDocs(
+          query(
+            collection(
+              db,
+              "quiz_registrations"
+            ),
+            where(
+              "quiz_id",
+              "==",
+              quizId
+            )
+          )
+        ),
+
+        getDocs(
+          query(
+            collection(
+              db,
+              "questions"
+            ),
+            where(
+              "quiz_id",
+              "==",
+              quizId
+            )
+          )
+        ),
+
+        getDocs(
+          query(
+            collection(
+              db,
+              "exam_questions"
+            ),
+            where(
+              "quiz_id",
+              "==",
+              quizId
+            )
+          )
+        )
+
+      ]);
+
+    const rm=
+      new Map(
+        rs.docs.map(
+          d=>[
+            d.id,
+            {
+              id:d.id,
+              ...d.data()
+            }
+          ]
+        )
+      );
+
+    const byStudent=
+      new Map();
+
+    const byRoll=
+      new Map();
+
+    rg.forEach(d=>{
+
+      const x={
+        id:d.id,
+        ...d.data()
+      };
+
+      if(x.student_uid)
+        byStudent.set(
+          x.student_uid,
+          x
+        );
+
+      if(x.roll_number)
+        byRoll.set(
+          x.roll_number,
+          x
+        );
+
+    });
+
+    const bank=
+      qs.docs.map(
+        d=>({
+          id:d.id,
+          ...d.data()
+        })
+      );
+
+    const exam=
+      eq.docs.map(
+        d=>({
+          id:d.id,
+          ...d.data()
+        })
+      );
+
+    const allQuestions=[
+      ...bank,
+      ...exam
+    ];
+
+    const lookup=
+      buildLookup(
+        bank,
+        exam
+      );
+
+    rows=[];
+
+    let unresolvedTotal=0;
+
+    for(const d of a.docs){
+
+      const x={
+        id:d.id,
+        ...d.data()
+      };
+
+      if(
+        String(
+          x.status||""
+        ).toLowerCase()!=="submitted"
+      )
+        continue;
+
+      const r=
+        byStudent.get(
+          x.student_uid
+        )||
+        byRoll.get(
+          x.roll_number
+        )||
+        {};
+
+      const calc=
+        calculate(
+          x,
+          lookup,
+          qz,
+          allQuestions
+        );
+
+      unresolvedTotal+=
+        calc.unresolved;
+
+      rows.push({
+
+        ...x,
+        ...calc,
+
+        roll_number:
+          x.roll_number||
+          r.roll_number||
+          "",
+
+        student_name:
+          x.student_name||
+          x.full_name||
+          r.full_name||
+          r.student_name||
+          "",
+
+        student_id:
+          x.student_id||
+          r.student_id||
+          "",
+
+        published:
+          rm.get(x.id)?.published===true,
+
+        /* শুধু বাতিলের জন্য নতুন ফিল্ড */
+        canceled:
+          rm.get(x.id)?.canceled===true,
+
+        quiz_name:
+          qz.title||
+          qz.quiz_name||
+          qz.name||
+          ""
+
+      });
+
+    }
+
+    rows.sort(compare);
+
+    $("subjectBox").style.display="flex";
+
+    $("subjectBox").innerHTML=
+      `<div>
+        <div class="subject-title">
+          ${esc(
+            qz.title||
+            qz.quiz_name||
+            qz.name||
+            "বিষয়"
+          )}
+        </div>
+
+        <div class="subject-meta">
+          নতুন হিসাব •
+          ${bn(rows.length)}
+          জন submitted •
+          ${
+            unresolvedTotal
+              ?`⚠️ ${bn(unresolvedTotal)}টি উত্তর যাচাই করা যায়নি`
+              :"সব উত্তর যাচাই হয়েছে"
+          }
+        </div>
+      </div>
+
+      <span class="pill published">
+        ফলাফল সিট
+      </span>`;
+
+    render();
+
+  }catch(e){
+
+    console.error(e);
+
+    rows=[];
+
+    $("tableArea").innerHTML=
+      '<div class="empty">ফলাফল লোড করা যায়নি।</div>';
+
+    showError(
+      "Result হিসাব করতে সমস্যা হয়েছে। Firebase Rules ও প্রশ্নের ডেটা পরীক্ষা করুন।"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RENDER
+   ========================= */
+
+function render(){
+
+  if(!rows.length){
+
+    $("topThree").style.display="none";
+
+    $("answerDetail").innerHTML="";
+
+    $("tableArea").innerHTML=
+      '<div class="empty">এই বিষয়ের কোনো submitted result পাওয়া যায়নি।</div>';
+
+    return;
+  }
+
+  const s=
+    $("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const d=
+    rows.filter(
+      x=>
+        !s||
+        `${x.roll_number} ${x.student_name} ${x.student_id}`
+          .toLowerCase()
+          .includes(s)
+    );
+
+  renderTopThree(rows);
+
+  if(!d.length){
+
+    $("tableArea").innerHTML=
+      '<div class="empty">কোনো ফলাফল পাওয়া যায়নি।</div>';
+
+    return;
+  }
+
+  $("tableArea").innerHTML=
+  `<div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>স্থান</th>
+          <th>Quiz Roll</th>
+          <th>শিক্ষার্থীর নাম</th>
+          <th>Student ID</th>
+          <th>Score</th>
+          <th>সঠিক</th>
+          <th>ভুল</th>
+          <th>উত্তরহীন</th>
+          <th>Negative</th>
+          <th>মোট নম্বর</th>
+          <th>মোট সময়</th>
+          <th>জমা</th>
+          <th>অবস্থা</th>
+          <th>উত্তর</th>
+          <th>অ্যাকশন</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${
+          d.map(r=>{
+
+            const rank=
+              rows.findIndex(
+                x=>x.id===r.id
+              )+1;
+
+            return`
+
+              <tr>
+
+                <td class="rank">
+                  ${
+                    rank<=3
+                      ?['🥇','🥈','🥉'][rank-1]
+                      :`#${bn(rank)}`
+                  }
+                </td>
+
+                <td>
+                  ${esc(r.roll_number||"—")}
+                </td>
+
+                <td>
+                  ${esc(r.student_name||"—")}
+                </td>
+
+                <td>
+                  ${esc(r.student_id||"—")}
+                </td>
+
+                <td class="score">
+                  ${score(r.score)}
+                </td>
+
+                <td>
+                  ${bn(r.correct)}
+                </td>
+
+                <td>
+                  ${bn(r.wrong)}
+                </td>
+
+                <td>
+                  ${bn(r.unanswered)}
+                </td>
+
+                <td>
+                  ${score(r.negative_mark)}
+                </td>
+
+                <td>
+                  ${score(r.total_marks)}
+                </td>
+
+                <td>
+                  ${duration(r.total_time_seconds)}
+                </td>
+
+                <td>
+                  ${date(r.submitted_at)}
+                </td>
+
+                <td>
+
+                  <span class="pill ${
+                    r.canceled
+                      ?"hidden"
+                      :r.published
+                        ?"published"
+                        :"hidden"
+                  }">
+
+                    ${
+                      r.canceled
+                        ?"🚫 বাতিল"
+                        :r.published
+                          ?"প্রকাশিত"
+                          :"গোপন"
+                    }
+
+                  </span>
+
+                </td>
+
+                <td>
+
+                  <button
+                    class="btn primary"
+                    type="button"
+                    onclick="window.showStudentAnswers('${String(r.id).replace(/'/g,"\\'")}')"
+                  >
+                    🔎 উত্তর দেখুন
+                  </button>
+
+                </td>
+
+                <td>
+
+                  ${
+                    r.canceled
+
+                    ?
+
+                    `<span class="pill hidden">
+                      🚫 বাতিল
+                    </span>`
+
+                    :
+
+                    `<button
+                      class="btn red"
+                      type="button"
+                      onclick="window.cancelResult('${String(r.id).replace(/'/g,"\\'") }')"
+                    >
+                      🚫 বাতিল
+                    </button>`
+
+                  }
+
+                </td>
+
+              </tr>
+
+            `
+
+          }).join("")
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>`;
+
+}
+
+
+/* =========================
+   TOP THREE
+========================= */
+
+function renderTopThree(all){
+
+  const el=
+    $("topThree");
+
+  const top=
+    all.slice(0,3);
+
+  if(!top.length){
+
+    el.style.display="none";
+
+    return;
+  }
+
+  el.style.display="grid";
+
+  el.innerHTML=
+    top.map(
+      (r,i)=>{
+
+        const cls=
+          [
+            'first',
+            'second',
+            'third'
+          ][i];
+
+        const medal=
+          [
+            '🥇',
+            '🥈',
+            '🥉'
+          ][i];
+
+        const label=
+          [
+            '১ম স্থান',
+            '২য় স্থান',
+            '৩য় স্থান'
+          ][i];
+
+        return`
+
+          <div class="podium ${cls}">
+
+            <div class="medal">
+              ${medal}
+            </div>
+
+            <div class="p-rank">
+              ${label}
+            </div>
+
+            <div class="p-name">
+              ${esc(
+                r.student_name||
+                "নাম নেই"
+              )}
+            </div>
+
+            <div class="p-roll">
+              ${esc(
+                r.roll_number||
+                "—"
+              )}
+            </div>
+
+            <div class="p-score">
+              ${score(r.score)}
+              /
+              ${score(r.total_marks)}
+            </div>
+
+            <div class="p-meta">
+              সঠিক ${bn(r.correct)}
+              ·
+              ভুল ${bn(r.wrong)}
+              ·
+              সময় ${duration(r.total_time_seconds)}
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================
+   SHOW STUDENT ANSWERS
+========================= */
+
+window.showStudentAnswers=
+function(id){
+
+  const r=
+    rows.find(
+      x=>x.id===id
+    );
+
+  if(!r)return;
+
+  const details=
+    Array.isArray(r.details)
+      ?r.details
+      :[];
+
+  $("answerDetail").innerHTML=
+  `<div class="answer-detail">
+
+    <div class="answer-detail-head">
+
+      <div>
+
+        <h3>
+          🔎
+          ${esc(
+            r.student_name||
+            "শিক্ষার্থীর উত্তরপত্র"
+          )}
+        </h3>
+
+        <div class="subject-meta">
+          Roll:
+          ${esc(r.roll_number||"—")}
+          ·
+          Student ID:
+          ${esc(r.student_id||"—")}
+        </div>
+
+      </div>
+
+      <button
+        class="btn secondary"
+        type="button"
+        onclick="document.getElementById('answerDetail').innerHTML=''"
+      >
+        ✕ বন্ধ
+      </button>
+
+    </div>
+
+    <div class="answer-list">
+
+      ${
+        details.map(x=>{
+
+          const st=
+            x.status==='correct'
+              ?'<span class="ok">✓ সঠিক</span>'
+              :x.status==='wrong'
+                ?'<span class="bad">✕ ভুল</span>'
+                :x.status==='unanswered'
+                  ?'<span class="skip">— উত্তর নেই</span>'
+                  :'<span class="skip">⚠ যাচাই করা যায়নি</span>';
+
+          const sel=
+            x.selected
+              ?`${x.selected}. ${x.options?.[x.selected]||''}`
+              :'উত্তর দেয়নি';
+
+          const cor=
+            x.correct
+              ?`${x.correct}. ${x.options?.[x.correct]||''}`
+              :'—';
+
+          return`
+
+            <div class="answer-item">
+
+              <div class="q-title">
+                ${bn(x.number)}.
+                ${esc(x.question)}
+              </div>
+
+              <div class="answer-line">
+                শিক্ষার্থীর উত্তর:
+                <b>${esc(sel)}</b>
+              </div>
+
+              <div class="answer-line">
+                সঠিক উত্তর:
+                <b>${esc(cor)}</b>
+              </div>
+
+              <div class="answer-line">
+                ${st}
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("")
+      }
+
+    </div>
+
+    <div class="download-row">
+
+      <button
+        class="btn green"
+        type="button"
+        onclick="downloadStudentAnswers('${String(r.id).replace(/'/g,"\\'") }')"
+      >
+        ⬇️ এই শিক্ষার্থীর উত্তর ডাউনলোড
+      </button>
+
+    </div>
+
+  </div>`;
+
+  $("answerDetail")
+    .scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+
+};
+
+
+/* =========================
+   DOWNLOAD STUDENT ANSWERS
+========================= */
+
+window.downloadStudentAnswers=
+function(id){
+
+  const r=
+    rows.find(
+      x=>x.id===id
+    );
+
+  if(!r)return;
+
+  const lines=[
+    ['জ্ঞানতরঙ্গ — শিক্ষার্থীর উত্তরপত্র'],
+    ['নাম',r.student_name],
+    ['Roll',r.roll_number],
+    ['Student ID',r.student_id],
+    [],
+    [
+      'নং',
+      'প্রশ্ন',
+      'শিক্ষার্থীর উত্তর',
+      'সঠিক উত্তর',
+      'ফলাফল'
+    ]
+  ];
+
+  (r.details||[])
+    .forEach(x=>
+
+      lines.push([
+
+        x.number,
+
+        x.question,
+
+        x.selected
+          ?`${x.selected}. ${x.options?.[x.selected]||''}`
+          :'উত্তর নেই',
+
+        x.correct
+          ?`${x.correct}. ${x.options?.[x.correct]||''}`
+          :'—',
+
+        x.status==='correct'
+          ?'সঠিক'
+          :x.status==='wrong'
+            ?'ভুল'
+            :x.status==='unanswered'
+              ?'উত্তর নেই'
+              :'যাচাই করা যায়নি'
+
+      ])
+
+    );
+
+  downloadCsvData(
+    lines,
+    `answer-${r.roll_number||r.id}.csv`
+  );
+
+};
+
+
+/* =========================
+   CANCEL RESULT
+   শুধু নতুন ফিচার
+========================= */
+
+window.cancelResult=
+async function(id){
+
+  const r=
+    rows.find(
+      x=>x.id===id
+    );
+
+  if(!r)return;
+
+  if(r.canceled){
+
+    toast(
+      "এই ফলাফল ইতিমধ্যে বাতিল করা হয়েছে।"
+    );
+
+    return;
+  }
+
+  if(
+    !confirm(
+      `আপনি কি ${
+        r.student_name||
+        "এই শিক্ষার্থীর"
+      } ফলাফল বাতিল করতে চান?\n\nকারণ: Anti-Cheat`
+    )
+  )
+    return;
+
+  try{
+
+    /* Result document update */
+
+    await setDoc(
+
+      doc(
+        db,
+        "results",
+        id
+      ),
+
+      {
+
+        canceled:true,
+
+        cancellation_reason:
+          "Anti-Cheat",
+
+        canceled_at:
+          serverTimestamp(),
+
+        canceled_by:
+          currentUser.uid,
+
+        published:false,
+
+        updated_at:
+          serverTimestamp(),
+
+        updated_by:
+          currentUser.uid
+
+      },
+
+      {
+        merge:true
+      }
+
+    );
+
+
+    /* Attempt document update */
+
+    await updateDoc(
+
+      doc(
+        db,
+        "attempts",
+        id
+      ),
+
+      {
+
+        result_canceled:true,
+
+        result_status:
+          "canceled",
+
+        cancellation_reason:
+          "Anti-Cheat",
+
+        canceled_at:
+          serverTimestamp(),
+
+        canceled_by:
+          currentUser.uid
+
+      }
+
+    );
+
+
+    toast(
+      "ফলাফল বাতিল করা হয়েছে।"
+    );
+
+    await loadResults();
+
+  }catch(e){
+
+    console.error(e);
+
+    showError(
+      "ফলাফল বাতিল করা যায়নি: "+
+      (
+        e?.message||
+        "Unknown error"
+      )
+    );
+
+  }
+
+};
+
+
+/* =========================
+   PUBLISH / HIDE
+========================= */
+
+async function setAllPublished(value){
+
+  const quizId=
+    $("quizSelect").value;
+
+  if(
+    !quizId||
+    !rows.length
+  ){
+
+    toast(
+      "আগে একটি বিষয়/কুইজ নির্বাচন করুন।"
+    );
+
+    return;
+  }
+
+  if(
+    !confirm(
+      value
+        ?"এই বিষয়ের সব Result নতুন হিসাবসহ প্রকাশ করবেন?"
+        :"এই বিষয়ের সব Result গোপন করবেন?"
+    )
+  )
+    return;
+
+  try{
+
+    for(
+      let i=0;
+      i<rows.length;
+      i++
+    ){
+
+      const r=
+        rows[i];
+
+      /* বাতিল ফলাফল Publish হবে না */
+
+      if(r.canceled)
+        continue;
+
+      const data={
+
+        attempt_id:
+          r.id,
+
+        quiz_id:
+          quizId,
+
+        quiz_name:
+          r.quiz_name||"",
+
+        student_uid:
+          r.student_uid||null,
+
+        student_name:
+          r.student_name||"",
+
+        roll_number:
+          r.roll_number||"",
+
+        student_id:
+          r.student_id||null,
+
+        rank:
+          i+1,
+
+        correct:
+          Number(r.correct||0),
+
+        wrong:
+          Number(r.wrong||0),
+
+        unanswered:
+          Number(r.unanswered||0),
+
+        score:
+          Number(r.score||0),
+
+        obtained_marks:
+          Number(
+            r.obtained_marks??
+            r.score??
+            0
+          ),
+
+        total_marks:
+          Number(
+            r.total_marks||0
+          ),
+
+        negative_mark:
+          Number(
+            r.negative_mark||0
+          ),
+
+        percentage:
+          Number(
+            r.percentage||0
+          ),
+
+        total_time_seconds:
+          Number(
+            r.total_time_seconds||0
+          ),
+
+        time_taken_seconds:
+          Number(
+            r.time_taken_seconds??
+            r.total_time_seconds??
+            0
+          ),
+
+        submitted_at:
+          r.submitted_at||null,
+
+        published:
+          value,
+
+        ...(value
+          ?{
+            published_at:
+              serverTimestamp()
+          }
+          :{}
+        ),
+
+        updated_at:
+          serverTimestamp(),
+
+        updated_by:
+          currentUser.uid
+
+      };
+
+
+      await setDoc(
+
+        doc(
+          db,
+          "results",
+          r.id
+        ),
+
+        data,
+
+        {
+          merge:true
+        }
+
+      );
+
+
+      await updateDoc(
+
+        doc(
+          db,
+          "attempts",
+          r.id
+        ),
+
+        {
+
+          correct:
+            data.correct,
+
+          wrong:
+            data.wrong,
+
+          unanswered:
+            data.unanswered,
+
+          score:
+            data.score,
+
+          obtained_marks:
+            data.obtained_marks,
+
+          total_marks:
+            data.total_marks,
+
+          negative_mark:
+            data.negative_mark,
+
+          percentage:
+            data.percentage,
+
+          total_time_seconds:
+            data.total_time_seconds,
+
+          time_taken_seconds:
+            data.time_taken_seconds,
+
+          calculated_by:
+            currentUser.uid,
+
+          calculated_at:
+            serverTimestamp()
+
+        }
+
+      );
+
+    }
+
+    toast(
+      value
+        ?"নতুন হিসাবসহ সব Result প্রকাশ হয়েছে।"
+        :"সব Result গোপন করা হয়েছে।"
+    );
+
+    await loadResults();
+
+  }catch(e){
+
+    console.error(e);
+
+    showError(
+      "Result প্রকাশ করতে সমস্যা হয়েছে: "+
+      (
+        e?.message||
+        "Unknown error"
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================
+   CSV
+========================= */
+
+function downloadCSV(){
+
+  if(!rows.length){
+
+    toast(
+      "আগে একটি কুইজ নির্বাচন করুন।"
+    );
+
+    return;
+  }
+
+  const qz=
+    quizzes.find(
+      q=>q.id===$("quizSelect").value
+    )||{};
+
+  const lines=[
+
+    [
+      'জ্ঞানতরঙ্গ — রেজাল্ট শিট'
+    ],
+
+    [
+      'কুইজ',
+      qz.title||
+      qz.quiz_name||
+      qz.name||
+      ''
+    ],
+
+    [],
+
+    [
+      'Rank',
+      'Roll',
+      'নাম',
+      'Student ID',
+      'Score',
+      'সঠিক',
+      'ভুল',
+      'উত্তরহীন',
+      'Negative',
+      'মোট নম্বর',
+      'সময়',
+      'Publish'
+    ]
+
+  ];
+
+  rows.forEach(
+    (r,i)=>
+
+      lines.push([
+
+        i+1,
+
+        r.roll_number,
+
+        r.student_name,
+
+        r.student_id,
+
+        r.score,
+
+        r.correct,
+
+        r.wrong,
+
+        r.unanswered,
+
+        r.negative_mark,
+
+        r.total_marks,
+
+        duration(
+          r.total_time_seconds
+        ),
+
+        r.published
+          ?'প্রকাশিত'
+          :'গোপন'
+
+      ])
+
+  );
+
+  downloadCsvData(
+    lines,
+    `result-sheet-${qz.id||'quiz'}.csv`
+  );
+
+}
+
+
+function downloadCsvData(
+  lines,
+  file
+){
+
+  const csv=
+    '\uFEFF'+
+    lines.map(
+      row=>
+        row.map(
+          v=>{
+
+            const x=
+              String(
+                v??''
+              )
+              .replace(
+                /"/g,
+                '""'
+              );
+
+            return `"${x}"`;
+
+          }
+        ).join(',')
+    ).join('\r\n');
+
+  const blob=
+    new Blob(
+      [csv],
+      {
+        type:
+          'text/csv;charset=utf-8;'
+      }
+    );
+
+  const a=
+    document.createElement('a');
+
+  a.href=
+    URL.createObjectURL(blob);
+
+  a.download=
+    file;
+
+  a.click();
+
+  setTimeout(
+    ()=>{
+      URL.revokeObjectURL(
+        a.href
+      )
+    },
+    1000
+  );
+
+}
+
+
+/* =========================
+   DATE / NUMBER
+========================= */
+
+function toMs(v){
+
+  if(!v)return null;
+
+  if(typeof v==="number")
+    return v;
+
+  if(typeof v==="string"){
+
+    const n=
+      Date.parse(v);
+
+    return Number.isNaN(n)
+      ?null
+      :n;
+
+  }
+
+  if(
+    typeof v.toMillis==="function"
+  )
+    return v.toMillis();
+
+  if(
+    typeof v.seconds==="number"
+  )
+    return v.seconds*1000;
+
+  return null;
+}
+
+
+function date(v){
+
+  const m=
+    toMs(v);
+
+  return m
+    ?new Intl.DateTimeFormat(
+      "bn-BD",
+      {
+        timeZone:"Asia/Dhaka",
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    ).format(
+      new Date(m)
+    )
+    :"—";
+}
+
+
+function duration(v){
+
+  const s=
+    Math.max(
+      0,
+      Math.floor(
+        Number(v||0)
+      )
+    );
+
+  return`
+    ${bn(Math.floor(s/60))}মি
+    ${bn(s%60)}সে
+  `;
+}
+
+
+function score(v){
+
+  const n=
+    Number(v||0);
+
+  return bn(
+    Number.isInteger(n)
+      ?n
+      :n.toFixed(2)
+  );
+
+}
+
+
+function bn(v){
+
+  return String(v)
+    .replace(
+      /\d/g,
+      d=>"০১২৩৪৫৬৭৮৯"[d]
+    );
+
+}
+
+
+function esc(v){
+
+  return String(v??"")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   MESSAGE / TOAST
+========================= */
+
+function showError(t){
+
+  $("message").innerHTML=
+    `<div class="error">
+      ${esc(t)}
+    </div>`;
+
+}
+
+function clearMessage(){
+
+  $("message").innerHTML="";
+
+}
+
+let timer;
+
+function toast(t){
+
+  const e=
+    $("toast");
+
+  e.textContent=t;
+
+  e.classList.add("show");
+
+  clearTimeout(timer);
+
+  timer=
+    setTimeout(
+      ()=>{
+        e.classList.remove(
+          "show"
+        )
+      },
+      2800
+    );
+
+}
+
+</script>
+
+</body>
+</html>
