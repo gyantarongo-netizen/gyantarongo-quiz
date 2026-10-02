@@ -149,6 +149,7 @@ header{
 .hero-main{
   min-height:440px;
   position:relative;
+  isolation:isolate;
   overflow:hidden;
   border-radius:30px;
   padding:45px;
@@ -262,6 +263,35 @@ header{
 .hero-btn.secondary{
   background:rgba(255,255,255,.045);
   border:1px solid rgba(255,255,255,.09);
+}
+
+/* ================= LED DESK LAMP ================= */
+
+.lamp-illustration{
+  position:absolute;
+  z-index:1;
+  width:290px;
+  height:350px;
+  right:8px;
+  top:38px;
+  pointer-events:none;
+  filter:drop-shadow(0 0 18px rgba(211,65,255,.20));
+}
+
+.lamp-illustration svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+.lamp-glow{
+  animation:lampPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes lampPulse{
+  from{opacity:.48;}
+  to{opacity:.85;}
 }
 
 /* ================= HERO SIDE ================= */
@@ -793,6 +823,54 @@ footer strong{
     color:#ff6fba;
   }
 }
+
+/* Lamp layout adjustments */
+@media(min-width:701px){
+  .hero-main{
+    padding-right:45px;
+  }
+
+  .lamp-illustration{
+    right:8px;
+    top:38px;
+    width:290px;
+    height:350px;
+    opacity:.95;
+  }
+
+  .hero-content{
+    max-width:100%;
+  }
+
+  .hero h2,
+  .hero-description,
+  .hero-quote,
+  .hero-buttons,
+  .hero-content>.badge{
+    position:relative;
+    z-index:2;
+  }
+}
+
+@media(max-width:700px){
+  .lamp-illustration{
+    width:145px;
+    height:190px;
+    right:-8px;
+    top:5px;
+    opacity:.48;
+  }
+
+  .hero-main{
+    padding-right:19px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .lamp-glow{
+    animation:none;
+  }
+}
 </style>
 </head>
 
@@ -879,6 +957,63 @@ footer strong{
       </div>
 
     </div>
+
+    <!-- ================= LED DESK LAMP ================= -->
+    <div class="lamp-illustration" aria-hidden="true">
+      <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="lampAura">
+            <stop offset="0%" stop-color="#ff83e8" stop-opacity=".65"/>
+            <stop offset="55%" stop-color="#b44dff" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="lampMetal" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f78aff"/>
+            <stop offset="45%" stop-color="#9234dc"/>
+            <stop offset="100%" stop-color="#35105f"/>
+          </linearGradient>
+          <linearGradient id="lampShade" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a64cff"/>
+            <stop offset="55%" stop-color="#52118c"/>
+            <stop offset="100%" stop-color="#1d103d"/>
+          </linearGradient>
+          <linearGradient id="lampLight" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff5ff" stop-opacity=".75"/>
+            <stop offset="100%" stop-color="#ff75df" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <ellipse class="lamp-glow" cx="166" cy="190" rx="130" ry="145" fill="url(#lampAura)"/>
+        <path d="M139 105 L213 125 L265 286 L101 286 Z" fill="url(#lampLight)" opacity=".38"/>
+
+        <ellipse cx="193" cy="323" rx="78" ry="17" fill="#16092d"/>
+        <ellipse cx="193" cy="318" rx="69" ry="12" fill="url(#lampMetal)" stroke="#d66aff" stroke-width="1.5"/>
+        <ellipse cx="193" cy="314" rx="54" ry="7" fill="#37105c"/>
+
+        <path d="M192 312 L232 217" stroke="#170a2d" stroke-width="21" stroke-linecap="round" fill="none"/>
+        <path d="M192 312 L232 217" stroke="url(#lampMetal)" stroke-width="14" stroke-linecap="round" fill="none"/>
+        <path d="M232 217 L183 119" stroke="#18082e" stroke-width="22" stroke-linecap="round" fill="none"/>
+        <path d="M232 217 L183 119" stroke="url(#lampMetal)" stroke-width="14" stroke-linecap="round" fill="none"/>
+
+        <circle cx="232" cy="217" r="12" fill="#37105c" stroke="#d36aff" stroke-width="2"/>
+        <circle cx="232" cy="217" r="5" fill="#f18cff"/>
+        <circle cx="183" cy="119" r="11" fill="#35105c" stroke="#d36aff" stroke-width="2"/>
+
+        <g transform="rotate(-24 143 96)">
+          <path d="M103 65 Q106 45 129 45 L174 45 Q188 46 191 61 L205 112 Q206 122 195 126 L121 126 Q112 123 111 113 Z"
+                fill="url(#lampShade)" stroke="#bc65ff" stroke-width="2"/>
+          <path d="M119 55 Q146 44 171 54" stroke="#eea3ff" stroke-width="3" stroke-linecap="round" opacity=".65" fill="none"/>
+          <ellipse cx="158" cy="120" rx="44" ry="11" fill="#ffb7f3" stroke="#ffdfff" stroke-width="2"/>
+          <ellipse cx="158" cy="120" rx="34" ry="6" fill="#fff4ff"/>
+          <ellipse cx="158" cy="119" rx="20" ry="3" fill="#ffffff" opacity=".9"/>
+        </g>
+
+        <circle cx="249" cy="182" r="2" fill="#ff9be9"/>
+        <circle cx="89" cy="150" r="2" fill="#c68cff"/>
+        <path d="M247 151 l4 -8 l4 8 l-4 4 Z" fill="#f28cff" opacity=".8"/>
+      </svg>
+    </div>
+    <!-- ================= END LED DESK LAMP ================= -->
 
   </div>
 
