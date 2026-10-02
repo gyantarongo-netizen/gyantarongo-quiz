@@ -817,44 +817,6 @@ footer strong{
   }
 }
 
-
-/* ================= SINGLE HERO LAMP IMAGE ================= */
-.hero-main{ position:relative; }
-.hero-lamp{
-  position:absolute;
-  z-index:1;
-  width:min(43%, 410px);
-  max-height:94%;
-  height:auto;
-  right:2px;
-  bottom:0;
-  object-fit:contain;
-  pointer-events:none;
-}
-.hero-content{ position:relative; z-index:2; }
-@media(min-width:1051px){
-  .hero-content{ max-width:78%; }
-}
-@media(max-width:1050px){
-  .hero-lamp{
-    width:min(38%, 300px);
-    right:2px;
-    bottom:3px;
-    opacity:.88;
-  }
-}
-@media(max-width:700px){
-  .hero-main{ padding-right:19px; }
-  .hero-lamp{
-    width:132px;
-    max-height:38%;
-    right:1px;
-    top:auto;
-    bottom:4px;
-    opacity:.34;
-  }
-}
-
 </style>
 </head>
 
@@ -901,11 +863,6 @@ footer strong{
 <section class="hero">
 
   <div class="hero-main">
-
-    <img
-      src=".png"
-      alt="লাইটসহ বই ও টেবিল"
-      class="hero-lamp">
 
     <div class="hero-content">
 
