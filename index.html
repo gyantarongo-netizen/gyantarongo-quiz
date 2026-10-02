@@ -265,35 +265,6 @@ header{
   border:1px solid rgba(255,255,255,.09);
 }
 
-/* ================= LED DESK LAMP ================= */
-
-.lamp-illustration{
-  position:absolute;
-  z-index:1;
-  width:290px;
-  height:350px;
-  right:8px;
-  top:38px;
-  pointer-events:none;
-  filter:drop-shadow(0 0 18px rgba(211,65,255,.20));
-}
-
-.lamp-illustration svg{
-  display:block;
-  width:100%;
-  height:100%;
-  overflow:visible;
-}
-
-.lamp-glow{
-  animation:lampPulse 3s ease-in-out infinite alternate;
-}
-
-@keyframes lampPulse{
-  from{opacity:.48;}
-  to{opacity:.85;}
-}
-
 /* ================= HERO SIDE ================= */
 
 .hero-side{
@@ -620,11 +591,33 @@ footer strong{
   font-size:15px;
 }
 
-/* ================= MOBILE NAV ================= */
-
-.mobile-nav{
-  display:none;
+/* ================= MOBILE BOTTOM NAV ================= */
+.mobile-nav{ display:none; }
+@media(max-width:700px){
+  .mobile-nav{
+    position:fixed; left:0; right:0; bottom:0;
+    height:76px; padding:7px 5px max(7px, env(safe-area-inset-bottom));
+    display:flex; align-items:center; justify-content:space-around;
+    background:rgba(5,7,20,.97);
+    border-top:1px solid rgba(255,255,255,.09);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    z-index:9999;
+  }
+  .mobile-nav a{
+    flex:1; min-width:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:3px;
+    color:#f2f3ff; text-align:center; text-decoration:none;
+    font-size:12px; line-height:1.25;
+  }
+  .mobile-nav a svg{
+    width:27px; height:27px; display:block;
+    fill:none; stroke:currentColor; stroke-width:1.8;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  .mobile-nav a.active{ color:#ec68dc; }
+  .mobile-nav a span{ display:block; font-size:12px; }
 }
+
 
 /* ================= TABLET ================= */
 
@@ -824,91 +817,33 @@ footer strong{
   }
 }
 
-/* Lamp layout adjustments */
-@media(min-width:701px){
-  .hero-main{
-    padding-right:45px;
-  }
 
-  .lamp-illustration{
-    right:8px;
-    top:38px;
-    width:290px;
-    height:350px;
-    opacity:.95;
-  }
-
-  .hero-content{
-    max-width:100%;
-  }
-
-  .hero h2,
-  .hero-description,
-  .hero-quote,
-  .hero-buttons,
-  .hero-content>.badge{
-    position:relative;
-    z-index:2;
-  }
-}
-
-@media(max-width:700px){
-  .lamp-illustration{
-    width:145px;
-    height:190px;
-    right:-8px;
-    top:5px;
-    opacity:.48;
-  }
-
-  .hero-main{
-    padding-right:19px;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  .lamp-glow{
-    animation:none;
-  }
-}
-
-
-/* ================= HERO LAMP IMAGE ================= */
+/* ================= SINGLE HERO LAMP IMAGE ================= */
+.hero-main{ position:relative; }
 .hero-lamp{
   position:absolute;
-  width: min(42%, 390px);
-  max-height: 88%;
-  height:auto;
-  right: 12px;
-  bottom: 8px;
-  object-fit:contain;
   z-index:1;
+  width:min(34%, 330px);
+  max-height:82%;
+  height:auto;
+  right:18px;
+  bottom:12px;
+  object-fit:contain;
   pointer-events:none;
 }
-
-/* Keep hero text readable above decorative image */
-.hero-content{
-  position:relative;
-  z-index:2;
-}
-
+.hero-content{ position:relative; z-index:2; }
 @media(max-width:1050px){
-  .hero-lamp{
-    width:min(38%, 300px);
-    right:8px;
-    bottom:5px;
-    opacity:.88;
-  }
+  .hero-lamp{ width:min(32%, 290px); right:12px; bottom:10px; }
 }
-
 @media(max-width:700px){
+  .hero-main{ padding-right:19px; }
   .hero-lamp{
-    width:145px;
-    max-height:45%;
-    right:0;
+    width:120px;
+    max-height:36%;
+    right:4px;
     top:8px;
     bottom:auto;
-    opacity:.42;
+    opacity:.30;
   }
 }
 
@@ -1003,63 +938,6 @@ footer strong{
       </div>
 
     </div>
-
-    <!-- ================= LED DESK LAMP ================= -->
-    <div class="lamp-illustration" aria-hidden="true">
-      <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="lampAura">
-            <stop offset="0%" stop-color="#ff83e8" stop-opacity=".65"/>
-            <stop offset="55%" stop-color="#b44dff" stop-opacity=".22"/>
-            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="lampMetal" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#f78aff"/>
-            <stop offset="45%" stop-color="#9234dc"/>
-            <stop offset="100%" stop-color="#35105f"/>
-          </linearGradient>
-          <linearGradient id="lampShade" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#a64cff"/>
-            <stop offset="55%" stop-color="#52118c"/>
-            <stop offset="100%" stop-color="#1d103d"/>
-          </linearGradient>
-          <linearGradient id="lampLight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fff5ff" stop-opacity=".75"/>
-            <stop offset="100%" stop-color="#ff75df" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-
-        <ellipse class="lamp-glow" cx="166" cy="190" rx="130" ry="145" fill="url(#lampAura)"/>
-        <path d="M139 105 L213 125 L265 286 L101 286 Z" fill="url(#lampLight)" opacity=".38"/>
-
-        <ellipse cx="193" cy="323" rx="78" ry="17" fill="#16092d"/>
-        <ellipse cx="193" cy="318" rx="69" ry="12" fill="url(#lampMetal)" stroke="#d66aff" stroke-width="1.5"/>
-        <ellipse cx="193" cy="314" rx="54" ry="7" fill="#37105c"/>
-
-        <path d="M192 312 L232 217" stroke="#170a2d" stroke-width="21" stroke-linecap="round" fill="none"/>
-        <path d="M192 312 L232 217" stroke="url(#lampMetal)" stroke-width="14" stroke-linecap="round" fill="none"/>
-        <path d="M232 217 L183 119" stroke="#18082e" stroke-width="22" stroke-linecap="round" fill="none"/>
-        <path d="M232 217 L183 119" stroke="url(#lampMetal)" stroke-width="14" stroke-linecap="round" fill="none"/>
-
-        <circle cx="232" cy="217" r="12" fill="#37105c" stroke="#d36aff" stroke-width="2"/>
-        <circle cx="232" cy="217" r="5" fill="#f18cff"/>
-        <circle cx="183" cy="119" r="11" fill="#35105c" stroke="#d36aff" stroke-width="2"/>
-
-        <g transform="rotate(-24 143 96)">
-          <path d="M103 65 Q106 45 129 45 L174 45 Q188 46 191 61 L205 112 Q206 122 195 126 L121 126 Q112 123 111 113 Z"
-                fill="url(#lampShade)" stroke="#bc65ff" stroke-width="2"/>
-          <path d="M119 55 Q146 44 171 54" stroke="#eea3ff" stroke-width="3" stroke-linecap="round" opacity=".65" fill="none"/>
-          <ellipse cx="158" cy="120" rx="44" ry="11" fill="#ffb7f3" stroke="#ffdfff" stroke-width="2"/>
-          <ellipse cx="158" cy="120" rx="34" ry="6" fill="#fff4ff"/>
-          <ellipse cx="158" cy="119" rx="20" ry="3" fill="#ffffff" opacity=".9"/>
-        </g>
-
-        <circle cx="249" cy="182" r="2" fill="#ff9be9"/>
-        <circle cx="89" cy="150" r="2" fill="#c68cff"/>
-        <path d="M247 151 l4 -8 l4 8 l-4 4 Z" fill="#f28cff" opacity=".8"/>
-      </svg>
-    </div>
-    <!-- ================= END LED DESK LAMP ================= -->
 
   </div>
 
@@ -1328,33 +1206,27 @@ footer strong{
 
 <!-- ================= MOBILE NAV ================= -->
 
-<nav class="mobile-nav">
-
-  <a href="index.html" class="active">
-    🏠
+<nav class="mobile-nav" aria-label="মোবাইল নেভিগেশন">
+  <a href="index.html" class="active" aria-label="হোম">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
     <span>হোম</span>
   </a>
-
-  <a href="quiz.html">
-    📝
+  <a href="quiz.html" aria-label="কুইজ">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="12" r="8"/><circle cx="11" cy="12" r="4"/><path d="m14 9 6-6m-2 0h2v2"/></svg>
     <span>কুইজ</span>
   </a>
-
-  <a href="category.html">
-    📚
+  <a href="category.html" aria-label="ক্যাটাগরি">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>ক্যাটাগরি</span>
   </a>
-
-  <a href="result.html">
-    🏆
-    <span>ফলাফল</span>
+  <a href="result.html" aria-label="র‍্যাঙ্কিং">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8m-4-4v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H3v2a5 5 0 0 0 5 5M17 6h4v2a5 5 0 0 1-5 5"/></svg>
+    <span>র‍্যাঙ্কিং</span>
   </a>
-
-  <a href="profile.html">
-    👤
+  <a href="profile.html" aria-label="প্রোফাইল">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
     <span>প্রোফাইল</span>
   </a>
-
 </nav>
 
 </body>
