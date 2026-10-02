@@ -2,12 +2,11 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>জ্ঞানতরঙ্গ | শিখি · জানি · এগিয়ে যাই</title>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -15,756 +14,591 @@
 }
 
 :root{
-  --bg:#060817;
-  --card:#10142b;
-  --card2:#151a35;
-  --purple:#8b3dff;
-  --pink:#ec3fa7;
-  --green:#2fd68a;
-  --gold:#ffb21c;
-  --text:#f5f5fb;
-  --muted:#a9adc4;
-  --gradient:linear-gradient(135deg,#7c3aed,#ec4899);
+  --bg:#050714;
+  --panel:#0d1022;
+  --panel2:#11152b;
+  --purple:#8b5cf6;
+  --pink:#ec4899;
+  --cyan:#35d9c5;
+  --gold:#ffbd38;
+  --text:#f8f7ff;
+  --muted:#a7abc2;
+  --line:rgba(255,255,255,.08);
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-  font-family:"Noto Sans Bengali",Arial,sans-serif;
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(124,58,237,.20),
-      transparent 38%
-    ),
-    var(--bg);
+  font-family:"Noto Sans Bengali","Segoe UI",Arial,sans-serif;
   color:var(--text);
+  background:
+    radial-gradient(circle at 15% 5%,rgba(124,58,237,.20),transparent 28%),
+    radial-gradient(circle at 85% 15%,rgba(236,72,153,.13),transparent 25%),
+    var(--bg);
   min-height:100vh;
   overflow-x:hidden;
 }
 
-.app{
-  max-width:1400px;
-  margin:auto;
-  padding:0 22px 100px;
+a{
+  color:inherit;
 }
 
-/* HEADER */
+.app{
+  max-width:1380px;
+  margin:auto;
+  padding:0 22px 110px;
+}
+
+/* ================= HEADER ================= */
 
 header{
-  min-height:78px;
+  height:82px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid var(--line);
+  position:relative;
+  z-index:10;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .logo-box{
-  width:50px;
-  height:50px;
+  width:54px;
+  height:54px;
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
 }
 
 .logo-box img{
   width:100%;
   height:100%;
   object-fit:contain;
-  display:block;
 }
 
 .brand-text h1{
   font-size:23px;
-  font-weight:800;
+  font-weight:900;
+  letter-spacing:-.5px;
 }
 
 .brand-text p{
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
   margin-top:2px;
 }
 
 .desktop-nav{
   display:flex;
-  gap:7px;
+  gap:5px;
 }
 
 .nav-link{
-  color:var(--muted);
   text-decoration:none;
-  padding:10px 13px;
-  border-radius:11px;
+  color:var(--muted);
+  padding:10px 14px;
+  border:1px solid transparent;
+  border-radius:12px;
   transition:.25s;
 }
 
 .nav-link:hover,
 .nav-link.active{
-  color:white;
-  background:rgba(236,63,167,.12);
-  border:1px solid rgba(236,63,167,.30);
+  color:#fff;
+  background:rgba(139,92,246,.11);
+  border-color:rgba(139,92,246,.24);
 }
 
 .profile{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:6px 10px;
-  border-radius:13px;
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.08);
+  gap:9px;
+  padding:7px 12px 7px 7px;
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  text-decoration:none;
 }
 
 .avatar{
-  width:35px;
-  height:35px;
-  border-radius:50%;
+  width:38px;
+  height:38px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:var(--gradient);
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:24px;
-  padding:35px 0 25px;
+  grid-template-columns:1.25fr .75fr;
+  gap:22px;
+  padding:30px 0 22px;
 }
 
-.hero-left{
+.hero-main{
+  min-height:440px;
   position:relative;
-  padding:36px;
-  border-radius:26px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(23,20,55,.97),
-      rgba(10,12,30,.97)
-    );
-  border:1px solid rgba(139,61,255,.25);
   overflow:hidden;
+  border-radius:30px;
+  padding:45px;
+  background:
+    linear-gradient(135deg,
+      rgba(23,20,52,.98),
+      rgba(8,10,25,.98));
+  border:1px solid rgba(139,92,246,.25);
 }
 
-.hero-left:before{
+.hero-main:before{
   content:"";
   position:absolute;
-  width:300px;
-  height:300px;
-  background:rgba(150,50,255,.16);
+  width:330px;
+  height:330px;
+  right:-110px;
+  top:-130px;
+  border-radius:50%;
+  background:rgba(139,92,246,.22);
   filter:blur(80px);
-  top:-150px;
-  right:-80px;
 }
 
-.welcome-badge{
+.hero-main:after{
+  content:"";
+  position:absolute;
+  width:250px;
+  height:250px;
+  left:-130px;
+  bottom:-150px;
+  border-radius:50%;
+  background:rgba(236,72,153,.13);
+  filter:blur(70px);
+}
+
+.hero-content{
   position:relative;
-  display:inline-block;
+  z-index:2;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
   padding:8px 14px;
   border-radius:30px;
-  color:#ff8dcc;
-  background:rgba(236,63,167,.08);
-  border:1px solid rgba(236,63,167,.25);
-  margin-bottom:20px;
+  color:#ff9bd0;
+  background:rgba(236,72,153,.09);
+  border:1px solid rgba(236,72,153,.23);
+  font-size:13px;
+  margin-bottom:22px;
 }
 
 .hero h2{
-  position:relative;
-  font-size:44px;
-  line-height:1.35;
+  font-size:50px;
+  line-height:1.25;
+  letter-spacing:-1.2px;
 }
 
 .hero h2 span{
-  color:#ff63bc;
+  background:linear-gradient(90deg,#b98cff,#ff71bd);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .hero-description{
-  position:relative;
   max-width:650px;
-  margin-top:18px;
-  line-height:1.8;
+  margin-top:20px;
   color:var(--muted);
   font-size:16px;
+  line-height:1.9;
 }
 
-.hero-message{
-  position:relative;
+.hero-quote{
   margin-top:20px;
-  padding-left:14px;
+  padding:13px 17px;
   border-left:3px solid var(--gold);
-  color:#e5e1ef;
-  line-height:1.7;
+  color:#dddcec;
+  background:rgba(255,255,255,.025);
+  border-radius:0 12px 12px 0;
 }
 
 .hero-buttons{
-  position:relative;
   display:flex;
-  gap:12px;
-  margin-top:26px;
-}
-
-.btn{
-  border:none;
-  padding:14px 21px;
-  border-radius:13px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-}
-
-.btn-primary{
-  background:var(--gradient);
-  color:white;
-  box-shadow:0 10px 30px rgba(236,63,167,.20);
-}
-
-.btn-secondary{
-  background:transparent;
-  color:white;
-  border:1px solid rgba(255,255,255,.15);
-}
-.hero-buttons{
-  display:flex !important;
   flex-wrap:wrap;
-  gap:14px;
-  margin-top:24px;
+  gap:12px;
+  margin-top:28px;
 }
 
 .hero-btn{
-  display:flex !important;
+  min-height:52px;
+  padding:13px 20px;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-height:58px;
-  padding:15px 24px;
-  border-radius:16px;
-  text-decoration:none !important;
-  font-size:18px;
-  font-weight:700;
-  color:#fff !important;
-  box-sizing:border-box;
+  gap:8px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:800;
+  transition:.25s;
+}
+
+.hero-btn:hover{
+  transform:translateY(-2px);
 }
 
 .hero-btn.primary{
-  background:linear-gradient(135deg,#7c3aed,#ec4899) !important;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  box-shadow:0 12px 35px rgba(236,72,153,.18);
 }
 
 .hero-btn.secondary{
-  background:#151a36 !important;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.09);
 }
 
-@media(max-width:700px){
-  .hero-buttons{
-    flex-direction:column;
-    gap:12px;
-  }
+/* ================= HERO SIDE ================= */
 
-  .hero-btn{
-    width:100%;
-    min-height:58px;
-  }
-  }
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<header>
-
-<div class="brand">
-
-<div class="logo-box">
-<img
-src="gyantarongo-logo-transparent-1.png"
-alt="জ্ঞানতরঙ্গ লোগো">
-</div>
-
-<div class="brand-text">
-<h1>জ্ঞানতরঙ্গ</h1>
-<p>শিখি · জানি · এগিয়ে যাই</p>
-</div>
-
-</div>
-
-<nav class="desktop-nav">
-
-<a href="index.html" class="nav-link active">🏠 হোম</a>
-<a href="quiz.html" class="nav-link">📝 কুইজ</a>
-<a href="category.html" class="nav-link">📚 ক্যাটাগরি</a>
-<a href="result.html" class="nav-link">🏆 ফলাফল</a>
-
-</nav>
-
-<a href="profile.html" class="profile" style="text-decoration:none;color:inherit;">
-<div class="avatar">👤</div>
-<span>প্রোফাইল</span>
-</a>
-
-  </header><style>
-
-.today-card{
-  padding:26px;
-  border-radius:24px;
-  background:linear-gradient(180deg,#12152e,#0c1024);
-  border:1px solid rgba(139,61,255,.25);
-}
-
-.section-top{
+.hero-side{
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
+  flex-direction:column;
+  gap:15px;
 }
 
-.section-top h3{
-  font-size:22px;
+.feature-card{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  padding:26px;
+  border-radius:25px;
+  background:
+    linear-gradient(145deg,#13172f,#090c1d);
+  border:1px solid var(--line);
 }
 
-.view-all{
-  color:#ff63bc;
-  text-decoration:none;
-  font-size:14px;
+.feature-card:before{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:150px;
+  right:-70px;
+  top:-70px;
+  background:rgba(53,217,197,.12);
+  filter:blur(45px);
 }
 
-.quiz-mini{
-  padding:20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.quiz-icon{
-  width:54px;
-  height:54px;
+.feature-icon{
+  width:62px;
+  height:62px;
+  border-radius:19px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:17px;
-  background:var(--gradient);
-  font-size:24px;
-  margin-bottom:14px;
+  font-size:29px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  margin-bottom:18px;
 }
 
-.quiz-mini h4{
-  font-size:20px;
+.feature-card h3{
+  font-size:23px;
+  margin-bottom:8px;
+}
+
+.feature-card p{
+  color:var(--muted);
+  line-height:1.75;
+  font-size:14px;
+}
+
+.feature-btn{
+  display:inline-flex;
+  margin-top:18px;
+  padding:11px 15px;
+  border-radius:11px;
+  background:rgba(255,255,255,.055);
+  border:1px solid var(--line);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+}
+
+/* ================= SECTION ================= */
+
+.section{
+  margin-top:32px;
+}
+
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:16px;
+}
+
+.section-head h3{
+  font-size:24px;
+}
+
+.section-head p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.view-all{
+  color:#ff75bd;
+  text-decoration:none;
+  font-size:13px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  position:relative;
+  overflow:hidden;
+  padding:22px;
+  border-radius:21px;
+  background:linear-gradient(145deg,#12162e,#0b0e20);
+  border:1px solid var(--line);
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:13px;
+}
+
+.stat-number{
+  font-size:27px;
+  font-weight:900;
+}
+
+.stat-title{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz-card{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:20px;
+  padding:23px;
+  border-radius:23px;
+  background:
+    linear-gradient(135deg,
+      rgba(124,58,237,.13),
+      rgba(255,255,255,.025));
+  border:1px solid rgba(139,92,246,.23);
+}
+
+.quiz-icon{
+  width:70px;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:21px;
+  font-size:32px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+.quiz-card h4{
+  font-size:21px;
+}
+
+.quiz-card p{
+  color:var(--muted);
+  margin-top:5px;
+  font-size:13px;
 }
 
 .quiz-info{
   display:flex;
   flex-wrap:wrap;
-  gap:8px;
-  margin:14px 0;
+  gap:7px;
+  margin-top:12px;
 }
 
 .quiz-info span{
-  padding:7px 10px;
-  border-radius:9px;
-  background:rgba(255,255,255,.05);
-  color:var(--muted);
-  font-size:13px;
+  padding:6px 9px;
+  border-radius:8px;
+  background:rgba(255,255,255,.055);
+  color:#bfc2d5;
+  font-size:12px;
 }
 
-.join-btn{
-  width:100%;
-  margin-top:15px;
-  padding:14px;
-  border:none;
+.quiz-action{
+  padding:13px 17px;
   border-radius:12px;
-  color:white;
-  font-size:15px;
-  font-weight:700;
-  background:var(--gradient);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-bottom:38px;
-}
-
-.stat-card{
-  padding:22px;
-  border-radius:19px;
-  background:linear-gradient(145deg,var(--card2),var(--card));
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.stat-icon{
-  font-size:27px;
-  margin-bottom:10px;
-}
-
-.stat-number{
-  font-size:28px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  text-decoration:none;
+  font-size:13px;
   font-weight:800;
 }
 
-.stat-title{
-  color:var(--muted);
-  margin-top:4px;
-  font-size:14px;
-}
-
-/* CATEGORY */
-
-.categories{
-  margin-top:20px;
-}
+/* ================= CATEGORY ================= */
 
 .category-grid{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:15px;
+  gap:13px;
 }
 
-.category-card{
-  padding:23px 14px;
+.category{
+  padding:22px 14px;
   text-align:center;
-  border-radius:19px;
-  background:linear-gradient(145deg,#151831,#0d1024);
-  border:1px solid rgba(168,85,247,.20);
-  cursor:pointer;
+  border-radius:20px;
+  background:linear-gradient(145deg,#141830,#0b0e20);
+  border:1px solid var(--line);
+  text-decoration:none;
+  transition:.25s;
+}
+
+.category:hover{
+  transform:translateY(-4px);
+  border-color:rgba(139,92,246,.35);
+  background:linear-gradient(145deg,#191d3b,#0d1025);
 }
 
 .category-icon{
-  font-size:36px;
-  margin-bottom:13px;
+  width:56px;
+  height:56px;
+  margin:0 auto 13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:17px;
+  background:rgba(139,92,246,.11);
+  font-size:28px;
 }
 
-.category-card h4{
-  font-size:16px;
+.category h4{
+  font-size:15px;
   line-height:1.5;
 }
 
-.category-card p{
+.category p{
   color:var(--muted);
-  margin-top:7px;
-  font-size:13px;
+  font-size:11px;
+  margin-top:6px;
 }
 
-</style>
-
-
-<!-- TODAY QUIZ -->
-
-<section class="hero">
-
-<div class="hero-left">
-
-<div class="welcome-badge">
-✨ জ্ঞানের যাত্রায় স্বাগতম!
-</div>
-
-<h2>
-শিখুন প্রতিদিন,
-<br>
-<span>নিজেকে গড়ুন নতুনভাবে</span>
-</h2>
-
-<p class="hero-description">
-জ্ঞানতরঙ্গ একটি আধুনিক শিক্ষামূলক কুইজ প্ল্যাটফর্ম।
-এখানে আপনি শিখতে পারবেন, নিজের জ্ঞান যাচাই করতে পারবেন
-এবং প্রতিদিন নিজেকে আরও এক ধাপ এগিয়ে নিতে পারবেন।
-</p>
-
-<p class="hero-message">
-💡 আজকের একটি প্রশ্ন হতে পারে আগামীকালের
-একটি সাফল্যের শুরু।
-</p>
-
-<div class="hero-buttons">
-
-  <a href="quiz.html" class="hero-btn primary">
-    🚀 কুইজ শুরু করুন
-  </a>
-
-  <a href="category.html" class="hero-btn secondary">
-    📚 ক্যাটাগরি দেখুন
-  </a>
-
-  <a href="registration.html" class="hero-btn secondary">
-    📝 কুইজে রেজিস্ট্রেশন করুন
-  </a>
-
-</div>
-
-
-<div class="today-card">
-
-<div class="section-top">
-
-<h3>আজকের কুইজ</h3>
-
-<a href="quiz.html" class="view-all">
-সব দেখুন →
-</a>
-
-</div>
-
-<div class="quiz-mini">
-
-<div class="quiz-icon">
-📖
-</div>
-
-<h4>
-বাংলাদেশ বিষয়াবলি
-</h4>
-
-<div class="quiz-info">
-
-<span>❓ ২০ প্রশ্ন</span>
-
-<span>⏱ ২০ মিনিট</span>
-
-</div>
-
-<p style="color:var(--muted);line-height:1.7;">
-নিজের জ্ঞান যাচাই করুন এবং নতুন কিছু শেখার সুযোগ নিন।
-</p>
-
-<a href="quiz.html" class="join-btn" style="display:flex;align-items:center;justify-content:center;text-decoration:none;box-sizing:border-box;">
-এখনই অংশগ্রহণ করুন
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- STATS -->
-
-<section class="stats">
-
-<div class="stat-card">
-
-<div class="stat-icon">🎓</div>
-
-<div class="stat-number">
-১০০০+
-</div>
-
-<div class="stat-title">
-শিক্ষার্থী
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-icon">📚</div>
-
-<div class="stat-number">
-৫০+
-</div>
-
-<div class="stat-title">
-কুইজ
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-icon">📋</div>
-
-<div class="stat-number">
-৫০০০+
-</div>
-
-<div class="stat-title">
-প্রশ্ন
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-icon">🏆</div>
-
-<div class="stat-number">
-৯৫%
-</div>
-
-<div class="stat-title">
-সন্তুষ্টির হার
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CATEGORY -->
-
-<section class="categories">
-
-<div class="section-top">
-
-<h3>
-কুইজ ক্যাটাগরি
-</h3>
-
-<a href="quiz.html" class="view-all">
-সব দেখুন →
-</a>
-
-</div>
-
-
-<div class="category-grid">
-
-
-<div class="category-card">
-
-<div class="category-icon">🌍</div>
-
-<h4>
-বাংলাদেশ বিষয়াবলি
-</h4>
-
-<p>
-২৫টি কুইজ
-</p>
-
-</div>
-
-
-<div class="category-card">
-
-<div class="category-icon">🧠</div>
-
-<h4>
-সাধারণ জ্ঞান
-</h4>
-
-<p>
-৩০টি কুইজ
-</p>
-
-</div>
-
-
-<div class="category-card">
-
-<div class="category-icon">📖</div>
-
-<h4>
-ইসলাম ও নৈতিক শিক্ষা
-</h4>
-
-<p>
-২০টি কুইজ
-</p>
-
-</div>
-
-
-<div class="category-card">
-
-<div class="category-icon">🔢</div>
-
-<h4>
-গণিত
-</h4>
-
-<p>
-১৫টি কুইজ
-</p>
-
-</div>
-
-
-<div class="category-card">
-
-<div class="category-icon">🧪</div>
-
-<h4>
-বিজ্ঞান
-</h4>
-
-<p>
-১৮টি কুইজ
-</p>
-
-</div>
-
-
-</div>
-
-  
-<style>
-
-/* MOTIVATION */
-
-.motivation{
-  margin-top:34px;
-  padding:30px 22px;
-  text-align:center;
-  border-radius:23px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.22),
-      rgba(236,63,167,.12)
-    );
-  border:1px solid rgba(236,63,167,.20);
+/* ================= SERVICES ================= */
+
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
 }
 
-.motivation h3{
-  font-size:25px;
+.service{
+  padding:22px;
+  border-radius:21px;
+  background:linear-gradient(145deg,#12162e,#0b0e20);
+  border:1px solid var(--line);
+  text-decoration:none;
+  transition:.25s;
+}
+
+.service:hover{
+  transform:translateY(-3px);
+  border-color:rgba(236,72,153,.28);
+}
+
+.service-icon{
+  font-size:30px;
   margin-bottom:10px;
 }
 
-.motivation p{
-  color:#d1d3e0;
-  font-size:15px;
-  line-height:1.8;
+.service h4{
+  font-size:18px;
 }
 
+.service p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
 
-/* FOOTER */
+/* ================= CTA ================= */
+
+.cta{
+  margin-top:34px;
+  padding:35px 25px;
+  text-align:center;
+  border-radius:27px;
+  background:
+    radial-gradient(circle at 50% 0,
+      rgba(139,92,246,.22),
+      transparent 50%),
+    linear-gradient(135deg,#11142d,#0a0d1e);
+  border:1px solid rgba(139,92,246,.22);
+}
+
+.cta h3{
+  font-size:27px;
+}
+
+.cta p{
+  max-width:650px;
+  margin:9px auto 20px;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:14px;
+}
+
+.cta-btn{
+  display:inline-flex;
+  padding:13px 23px;
+  border-radius:13px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  text-decoration:none;
+  font-weight:800;
+}
+
+/* ================= FOOTER ================= */
 
 footer{
   text-align:center;
   margin-top:45px;
+  padding-top:25px;
   color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
+  font-size:12px;
+  line-height:2;
+  border-top:1px solid var(--line);
 }
 
+footer strong{
+  color:#fff;
+  font-size:15px;
+}
 
-/* MOBILE NAV */
+/* ================= MOBILE NAV ================= */
 
 .mobile-nav{
   display:none;
 }
 
+/* ================= TABLET ================= */
 
-/* TABLET */
-
-@media(max-width:1000px){
+@media(max-width:1050px){
 
   .hero{
     grid-template-columns:1fr;
@@ -773,20 +607,18 @@ footer{
   .category-grid{
     grid-template-columns:repeat(3,1fr);
   }
-
 }
 
-
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
   .app{
-    padding:0 14px 95px;
+    padding:0 13px 95px;
   }
 
   header{
-    min-height:68px;
+    height:70px;
   }
 
   .logo-box{
@@ -799,152 +631,502 @@ footer{
   }
 
   .brand-text p{
-    font-size:10px;
+    font-size:9px;
   }
 
   .desktop-nav{
     display:none;
   }
 
+  .profile{
+    padding:5px;
+  }
+
   .profile span{
     display:none;
   }
 
-  .hero{
-    padding-top:22px;
+  .avatar{
+    width:38px;
+    height:38px;
   }
 
-  .hero-left{
-    padding:27px 19px;
+  .hero{
+    padding-top:18px;
+    gap:13px;
+  }
+
+  .hero-main{
+    min-height:auto;
+    padding:28px 19px;
+    border-radius:24px;
   }
 
   .hero h2{
-    font-size:33px;
+    font-size:34px;
   }
 
   .hero-description{
-    font-size:14px;
+    font-size:13px;
+    line-height:1.8;
+  }
+
+  .hero-quote{
+    font-size:13px;
   }
 
   .hero-buttons{
-  flex-direction:column;
-  gap:12px;
-}
-
-.hero-btn{
-  width:100%;
-  min-height:54px;
-  padding:15px 18px;
-  font-size:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
+    flex-direction:column;
   }
 
-  .btn{
+  .hero-btn{
     width:100%;
+  }
+
+  .feature-card{
+    padding:21px;
+    border-radius:21px;
+  }
+
+  .feature-card h3{
+    font-size:20px;
   }
 
   .stats{
     grid-template-columns:repeat(2,1fr);
-    gap:11px;
+    gap:10px;
   }
 
-  .stat-card{
-    padding:18px;
+  .stat{
+    padding:17px;
   }
 
   .stat-number{
-    font-size:24px;
+    font-size:22px;
+  }
+
+  .section{
+    margin-top:27px;
+  }
+
+  .section-head h3{
+    font-size:20px;
+  }
+
+  .quiz-card{
+    grid-template-columns:auto 1fr;
+    gap:14px;
+    padding:18px;
+  }
+
+  .quiz-icon{
+    width:58px;
+    height:58px;
+    font-size:27px;
+  }
+
+  .quiz-card h4{
+    font-size:17px;
+  }
+
+  .quiz-action{
+    grid-column:1/-1;
+    text-align:center;
   }
 
   .category-grid{
     grid-template-columns:repeat(2,1fr);
-    gap:11px;
+    gap:10px;
   }
 
-  .category-card{
-    padding:19px 10px;
+  .category{
+    padding:18px 9px;
   }
 
-  .category-card h4{
-    font-size:14px;
+  .category-icon{
+    width:50px;
+    height:50px;
+  }
+
+  .service-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cta{
+    padding:28px 18px;
+  }
+
+  .cta h3{
+    font-size:23px;
   }
 
   .mobile-nav{
     position:fixed;
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-
     left:0;
     right:0;
     bottom:0;
-
     height:72px;
-
-    background:rgba(8,10,25,.97);
-
-    border-top:
-      1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(15px);
-
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    background:rgba(7,9,23,.96);
+    border-top:1px solid rgba(255,255,255,.09);
+    backdrop-filter:blur(18px);
     z-index:999;
   }
 
   .mobile-nav a{
-    color:var(--muted);
-    text-decoration:none;
+    min-width:50px;
     text-align:center;
-    font-size:11px;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:10px;
   }
 
   .mobile-nav a span{
     display:block;
     font-size:19px;
-    margin-top:3px;
+    margin-bottom:2px;
   }
 
   .mobile-nav a.active{
-    color:#ff63bc;
+    color:#ff6fba;
   }
-
 }
-
 </style>
+</head>
 
+<body>
 
+<div class="app">
 
-<section class="service-section" style="margin-top:28px">
-  <div class="section-top"><h3>জ্ঞানতরঙ্গ সেবা</h3><span class="view-all">সবসময় আপনার পাশে</span></div>
-  <div class="service-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-    <a href="library.html" class="service-card" style="text-decoration:none;color:inherit;padding:20px;border-radius:19px;background:linear-gradient(145deg,#151831,#0d1024);border:1px solid rgba(168,85,247,.2)"><div style="font-size:34px">📚</div><h4 style="margin:8px 0 4px">লাইব্রেরি</h4><p style="color:var(--muted);margin:0;font-size:12px">বই ও PDF পড়ুন</p></a>
-    <a href="notice.html" class="service-card" style="text-decoration:none;color:inherit;padding:20px;border-radius:19px;background:linear-gradient(145deg,#151831,#0d1024);border:1px solid rgba(168,85,247,.2)"><div style="font-size:34px">📢</div><h4 style="margin:8px 0 4px">নোটিশ</h4><p style="color:var(--muted);margin:0;font-size:12px">গুরুত্বপূর্ণ ঘোষণা</p></a>
-    <a href="complaint.html" class="service-card" style="text-decoration:none;color:inherit;padding:20px;border-radius:19px;background:linear-gradient(145deg,#151831,#0d1024);border:1px solid rgba(168,85,247,.2)"><div style="font-size:34px">💬</div><h4 style="margin:8px 0 4px">অভিযোগ / সহায়তা</h4><p style="color:var(--muted);margin:0;font-size:12px">সমস্যা জানিয়ে সহায়তা নিন</p></a>
+<!-- ================= HEADER ================= -->
+
+<header>
+
+  <div class="brand">
+
+    <div class="logo-box">
+      <img
+        src="gyantarongo-logo-transparent-1.png"
+        alt="জ্ঞানতরঙ্গ লোগো">
+    </div>
+
+    <div class="brand-text">
+      <h1>জ্ঞানতরঙ্গ</h1>
+      <p>শিখি · জানি · এগিয়ে যাই</p>
+    </div>
+
   </div>
+
+  <nav class="desktop-nav">
+    <a href="index.html" class="nav-link active">🏠 হোম</a>
+    <a href="quiz.html" class="nav-link">📝 কুইজ</a>
+    <a href="category.html" class="nav-link">📚 ক্যাটাগরি</a>
+    <a href="result.html" class="nav-link">🏆 ফলাফল</a>
+  </nav>
+
+  <a href="profile.html" class="profile">
+    <div class="avatar">👤</div>
+    <span>প্রোফাইল</span>
+  </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+  <div class="hero-main">
+
+    <div class="hero-content">
+
+      <div class="badge">
+        ✨ জ্ঞানের নতুন যাত্রায় স্বাগতম
+      </div>
+
+      <h2>
+        জ্ঞানকে শক্তিতে পরিণত করুন,
+        <br>
+        <span>নিজেকে গড়ুন প্রতিদিন</span>
+      </h2>
+
+      <p class="hero-description">
+        জ্ঞানতরঙ্গ হলো শেখা, অনুশীলন ও নিজের জ্ঞান যাচাই করার
+        একটি আধুনিক শিক্ষামূলক প্ল্যাটফর্ম। নিয়মিত কুইজে অংশ নিন,
+        নতুন কিছু জানুন এবং নিজের অগ্রগতি দেখুন।
+      </p>
+
+      <div class="hero-quote">
+        💡 আজকের শেখা জ্ঞানই আগামী দিনের সাফল্যের ভিত্তি।
+      </div>
+
+      <div class="hero-buttons">
+
+        <a href="quiz.html" class="hero-btn primary">
+          🚀 কুইজ শুরু করুন
+        </a>
+
+        <a href="category.html" class="hero-btn secondary">
+          📚 ক্যাটাগরি দেখুন
+        </a>
+
+        <a href="registration.html" class="hero-btn secondary">
+          📝 কুইজে রেজিস্ট্রেশন
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="hero-side">
+
+    <div class="feature-card">
+
+      <div class="feature-icon">🏆</div>
+
+      <h3>আজকের চ্যালেঞ্জ</h3>
+
+      <p>
+        প্রতিদিন নতুন প্রশ্নের মাধ্যমে নিজের জ্ঞান যাচাই করুন।
+        আপনার প্রস্তুতি শুরু হোক আজ থেকেই।
+      </p>
+
+      <a href="quiz.html" class="feature-btn">
+        এখনই অংশগ্রহণ করুন →
+      </a>
+
+    </div>
+
+
+    <div class="feature-card">
+
+      <div class="feature-icon">📖</div>
+
+      <h3>জ্ঞানভাণ্ডার</h3>
+
+      <p>
+        বই ও PDF পড়ুন এবং কুইজের প্রস্তুতিতে নিজের জ্ঞান
+        আরও সমৃদ্ধ করুন।
+      </p>
+
+      <a href="library.html" class="feature-btn">
+        লাইব্রেরি খুলুন →
+      </a>
+
+    </div>
+
+  </div>
+
 </section>
 
 
-<!-- MOTIVATION -->
+<!-- ================= STATS ================= -->
 
-<section class="motivation">
+<section class="section">
+
+  <div class="section-head">
+    <div>
+      <h3>জ্ঞানতরঙ্গের পরিসর</h3>
+      <p>শেখার যাত্রায় আপনার সঙ্গী</p>
+    </div>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">🎓</div>
+      <div class="stat-number">১০০০+</div>
+      <div class="stat-title">শিক্ষার্থী</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">📝</div>
+      <div class="stat-number">৫০+</div>
+      <div class="stat-title">কুইজ</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">❓</div>
+      <div class="stat-number">৫০০০+</div>
+      <div class="stat-title">প্রশ্ন</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-number">৯৫%</div>
+      <div class="stat-title">সন্তুষ্টির হার</div>
+    </div>
+
+  </div>
+
+</section>
 
 
-  </h3>
+<!-- ================= FEATURED QUIZ ================= -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h3>⭐ নির্বাচিত কুইজ</h3>
+      <p>আজই নিজের জ্ঞান যাচাই করুন</p>
+    </div>
+
+    <a href="quiz.html" class="view-all">
+      সব কুইজ →
+    </a>
+
+  </div>
+
+
+  <div class="quiz-card">
+
+    <div class="quiz-icon">🌍</div>
+
+    <div>
+
+      <h4>বাংলাদেশ বিষয়াবলি</h4>
+
+      <p>
+        বাংলাদেশের ইতিহাস, সংস্কৃতি, ভূগোল ও গুরুত্বপূর্ণ বিষয়
+      </p>
+
+      <div class="quiz-info">
+        <span>❓ ২০ প্রশ্ন</span>
+        <span>⏱ ২০ মিনিট</span>
+        <span>🏆 ফলাফল</span>
+      </div>
+
+    </div>
+
+    <a href="quiz.html" class="quiz-action">
+      অংশগ্রহণ করুন →
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CATEGORY ================= -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h3>📚 কুইজ ক্যাটাগরি</h3>
+      <p>আপনার পছন্দের বিষয় বেছে নিন</p>
+    </div>
+
+    <a href="category.html" class="view-all">
+      সব দেখুন →
+    </a>
+
+  </div>
+
+
+  <div class="category-grid">
+
+    <a href="category.html" class="category">
+      <div class="category-icon">🌍</div>
+      <h4>বাংলাদেশ বিষয়াবলি</h4>
+      <p>জ্ঞান যাচাই করুন</p>
+    </a>
+
+    <a href="category.html" class="category">
+      <div class="category-icon">🧠</div>
+      <h4>সাধারণ জ্ঞান</h4>
+      <p>নতুন কিছু জানুন</p>
+    </a>
+
+    <a href="category.html" class="category">
+      <div class="category-icon">🕌</div>
+      <h4>ইসলামিক</h4>
+      <p>জ্ঞান সমৃদ্ধ করুন</p>
+    </a>
+
+    <a href="category.html" class="category">
+      <div class="category-icon">🔢</div>
+      <h4>গণিত</h4>
+      <p>অনুশীলন করুন</p>
+    </a>
+
+    <a href="category.html" class="category">
+      <div class="category-icon">🧪</div>
+      <h4>বিজ্ঞান</h4>
+      <p>জানুন ও শিখুন</p>
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div>
+      <h3>🌟 জ্ঞানতরঙ্গ সেবা</h3>
+      <p>শেখার জন্য প্রয়োজনীয় সবকিছু এক জায়গায়</p>
+    </div>
+
+  </div>
+
+
+  <div class="service-grid">
+
+    <a href="library.html" class="service">
+      <div class="service-icon">📚</div>
+      <h4>লাইব্রেরি</h4>
+      <p>বই ও PDF পড়ুন এবং প্রস্তুতি নিন</p>
+    </a>
+
+    <a href="notice.html" class="service">
+      <div class="service-icon">📢</div>
+      <h4>নোটিশ</h4>
+      <p>গুরুত্বপূর্ণ ঘোষণা ও আপডেট দেখুন</p>
+    </a>
+
+    <a href="complaint.html" class="service">
+      <div class="service-icon">💬</div>
+      <h4>অভিযোগ / সহায়তা</h4>
+      <p>সমস্যা জানিয়ে সহায়তা নিন</p>
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+  <h3>🚀 আপনার জ্ঞানের যাত্রা শুরু হোক আজ</h3>
 
   <p>
-    জ্ঞানই আপনার সবচেয়ে বড় শক্তি।
-    আজকের একটি প্রশ্ন হতে পারে
-    আগামীকালের একটি সাফল্যের শুরু।
-    তাই শিখুন, চেষ্টা করুন এবং এগিয়ে যান।
+    একটি কুইজ, একটি নতুন প্রশ্ন, একটি নতুন শিক্ষা—
+    প্রতিদিন একটু একটু করে নিজেকে আরও সমৃদ্ধ করুন।
   </p>
+
+  <a href="quiz.html" class="cta-btn">
+    কুইজ শুরু করুন →
+  </a>
 
 </section>
 
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -960,15 +1142,14 @@ footer{
 
 </footer>
 
-
 </div>
 
 
-<!-- MOBILE NAVIGATION -->
+<!-- ================= MOBILE NAV ================= -->
 
 <nav class="mobile-nav">
 
-  <a href="#" class="active">
+  <a href="index.html" class="active">
     🏠
     <span>হোম</span>
   </a>
@@ -980,21 +1161,20 @@ footer{
 
   <a href="category.html">
     📚
-     <span>ক্যাটাগরি</span>
+    <span>ক্যাটাগরি</span>
   </a>
 
   <a href="result.html">
- 🏆
+    🏆
     <span>ফলাফল</span>
   </a>
 
-<a href="profile.html">
-  👤
-  <span>প্রোফাইল</span>
-</a>
+  <a href="profile.html">
+    👤
+    <span>প্রোফাইল</span>
+  </a>
 
 </nav>
 
-
 </body>
-  </html>
+</html>
