@@ -823,27 +823,35 @@ footer strong{
 .hero-lamp{
   position:absolute;
   z-index:1;
-  width:min(34%, 330px);
-  max-height:82%;
+  width:min(43%, 410px);
+  max-height:94%;
   height:auto;
-  right:18px;
-  bottom:12px;
+  right:2px;
+  bottom:0;
   object-fit:contain;
   pointer-events:none;
 }
 .hero-content{ position:relative; z-index:2; }
+@media(min-width:1051px){
+  .hero-content{ max-width:78%; }
+}
 @media(max-width:1050px){
-  .hero-lamp{ width:min(32%, 290px); right:12px; bottom:10px; }
+  .hero-lamp{
+    width:min(38%, 300px);
+    right:2px;
+    bottom:3px;
+    opacity:.88;
+  }
 }
 @media(max-width:700px){
   .hero-main{ padding-right:19px; }
   .hero-lamp{
-    width:120px;
-    max-height:36%;
-    right:4px;
-    top:8px;
-    bottom:auto;
-    opacity:.30;
+    width:132px;
+    max-height:38%;
+    right:1px;
+    top:auto;
+    bottom:4px;
+    opacity:.34;
   }
 }
 
@@ -982,49 +990,6 @@ footer strong{
   </div>
 
 </section>
-
-
-<!-- ================= STATS ================= -->
-
-<section class="section">
-
-  <div class="section-head">
-    <div>
-      <h3>জ্ঞানতরঙ্গের পরিসর</h3>
-      <p>শেখার যাত্রায় আপনার সঙ্গী</p>
-    </div>
-  </div>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-icon">🎓</div>
-      <div class="stat-number">১০০০+</div>
-      <div class="stat-title">শিক্ষার্থী</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">📝</div>
-      <div class="stat-number">৫০+</div>
-      <div class="stat-title">কুইজ</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">❓</div>
-      <div class="stat-number">৫০০০+</div>
-      <div class="stat-title">প্রশ্ন</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">🏆</div>
-      <div class="stat-number">৯৫%</div>
-      <div class="stat-title">সন্তুষ্টির হার</div>
-    </div>
-
-  </div>
-
-</section>
-
 
 <!-- ================= FEATURED QUIZ ================= -->
 
