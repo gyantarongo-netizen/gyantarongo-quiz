@@ -682,91 +682,53 @@ select option{
 
         </div>
 
+
         <div class="field">
 
-  <label>Registration Start</label>
+          <label>Registration Start</label>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-    <input
-      id="regStartDate"
-      type="date"
-    >
-
-    <input
-      id="regStartTime"
-      type="time"
-    >
-
-  </div>
-
-  <input id="regStart" type="hidden">
-
-</div>
-        <div class="field">
-
-  <label>Registration End</label>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-    <input
-      id="regEndDate"
-      type="date"
-    >
-
-    <input
-      id="regEndTime"
-      type="time"
-    >
-
-  </div>
-
-  <input id="regEnd" type="hidden">
+          <input
+            id="regStart"
+            type="datetime-local"
+          >
 
         </div>
+
+
         <div class="field">
 
-  <label>Exam Start</label>
+          <label>Registration End</label>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <input
+            id="regEnd"
+            type="datetime-local"
+          >
 
-    <input
-      id="examStartDate"
-      type="date"
-    >
+        </div>
 
-    <input
-      id="examStartTime"
-      type="time"
-    >
 
-  </div>
-
-  <input id="examStart" type="hidden">
-
-</div>
         <div class="field">
 
-  <label>Exam End</label>
+          <label>Exam Start</label>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <input
+            id="examStart"
+            type="datetime-local"
+          >
 
-    <input
-      id="examEndDate"
-      type="date"
-    >
+        </div>
 
-    <input
-      id="examEndTime"
-      type="time"
-    >
 
-  </div>
+        <div class="field">
 
-  <input id="examEnd" type="hidden">
+          <label>Exam End</label>
 
-</div>
-        
+          <input
+            id="examEnd"
+            type="datetime-local"
+          >
+
+        </div>
 
 
         <div class="field">
@@ -1693,149 +1655,7 @@ async function loadCategories(){
 
 }
 
-  
-/* =========================
-   CUSTOM DATE + TIME
-========================= */
 
-function syncDateTime(dateId, timeId, hiddenId){
-
-  const date = $(dateId).value;
-  const time = $(timeId).value;
-
-  if(date && time){
-    $(hiddenId).value = `${date}T${time}`;
-  }else{
-    $(hiddenId).value = "";
-  }
-
-}
-
-
-function setDateTimeField(hiddenId, dateId, timeId, value){
-
-  const localValue =
-    toLocalDateTime(value);
-
-  if(!localValue){
-
-    $(dateId).value = "";
-    $(timeId).value = "";
-    $(hiddenId).value = "";
-
-    return;
-  }
-
-  const parts =
-    localValue.split("T");
-
-  $(dateId).value =
-    parts[0] || "";
-
-  $(timeId).value =
-    parts[1] || "";
-
-  syncDateTime(
-    dateId,
-    timeId,
-    hiddenId
-  );
-
-}
-
-
-/* Registration Start */
-
-$("regStartDate").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "regStartDate",
-      "regStartTime",
-      "regStart"
-    )
-);
-
-$("regStartTime").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "regStartDate",
-      "regStartTime",
-      "regStart"
-    )
-);
-
-
-/* Registration End */
-
-$("regEndDate").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "regEndDate",
-      "regEndTime",
-      "regEnd"
-    )
-);
-
-$("regEndTime").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "regEndDate",
-      "regEndTime",
-      "regEnd"
-    )
-);
-
-
-/* Exam Start */
-
-$("examStartDate").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "examStartDate",
-      "examStartTime",
-      "examStart"
-    )
-);
-
-$("examStartTime").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "examStartDate",
-      "examStartTime",
-      "examStart"
-    )
-);
-
-
-/* Exam End */
-
-$("examEndDate").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "examEndDate",
-      "examEndTime",
-      "examEnd"
-    )
-);
-
-$("examEndTime").addEventListener(
-  "change",
-  () =>
-    syncDateTime(
-      "examEndDate",
-      "examEndTime",
-      "examEnd"
-    )
-);
-
-  
 /* =========================
    DATE HELPERS
 ========================= */
@@ -1966,21 +1786,13 @@ function resetForm(){
 
   $("fee").value = "0";
 
-$("regStart").value = "";
-$("regStartDate").value = "";
-$("regStartTime").value = "";
+  $("regStart").value = "";
 
-$("regEnd").value = "";
-$("regEndDate").value = "";
-$("regEndTime").value = "";
+  $("regEnd").value = "";
 
-$("examStart").value = "";
-$("examStartDate").value = "";
-$("examStartTime").value = "";
+  $("examStart").value = "";
 
-$("examEnd").value = "";
-$("examEndDate").value = "";
-$("examEndTime").value = "";
+  $("examEnd").value = "";
 
   $("duration").value = "20";
 
@@ -2174,33 +1986,25 @@ $("saveBtn").addEventListener(
             $("fee").value || 0
           ),
 
-        setDateTimeField(
-  "regStart",
-  "regStartDate",
-  "regStartTime",
-  quiz.registration_start
-);
+        registration_start:
+          toISO(
+            $("regStart").value
+          ),
 
-        setDateTimeField(
-  "regEnd",
-  "regEndDate",
-  "regEndTime",
-  quiz.registration_end
-);
+        registration_end:
+          toISO(
+            $("regEnd").value
+          ),
 
-        setDateTimeField(
-  "examStart",
-  "examStartDate",
-  "examStartTime",
-  quiz.start_at
-);
+        start_at:
+          toISO(
+            $("examStart").value
+          ),
 
-        setDateTimeField(
-  "examEnd",
-  "examEndDate",
-  "examEndTime",
-  quiz.end_at
-);
+        end_at:
+          toISO(
+            $("examEnd").value
+          ),
 
         duration_minutes:
           duration,
