@@ -682,58 +682,91 @@ select option{
 
         </div>
 
-<div class="field">
+        <div class="field">
 
   <label>Registration Start</label>
 
-  <input
-    id="regStart"
-    type="text"
-    placeholder="তারিখ ও সময় নির্বাচন করুন"
-    onfocus="this.type='datetime-local'"
-  >
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+    <input
+      id="regStartDate"
+      type="date"
+    >
+
+    <input
+      id="regStartTime"
+      type="time"
+    >
+
+  </div>
+
+  <input id="regStart" type="hidden">
 
 </div>
-
-
-      <div class="field">
+        <div class="field">
 
   <label>Registration End</label>
 
-  <input
-    id="regEnd"
-    type="datetime-local"
-  >
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
 
-      </div>
+    <input
+      id="regEndDate"
+      type="date"
+    >
 
+    <input
+      id="regEndTime"
+      type="time"
+    >
 
-<div class="field">
+  </div>
+
+  <input id="regEnd" type="hidden">
+
+        </div>
+        <div class="field">
 
   <label>Exam Start</label>
 
-  <input
-    id="examStart"
-    type="text"
-    placeholder="তারিখ ও সময় নির্বাচন করুন"
-    onfocus="this.type='datetime-local'"
-  >
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+    <input
+      id="examStartDate"
+      type="date"
+    >
+
+    <input
+      id="examStartTime"
+      type="time"
+    >
+
+  </div>
+
+  <input id="examStart" type="hidden">
 
 </div>
-
-
-<div class="field">
+        <div class="field">
 
   <label>Exam End</label>
 
-  <input
-    id="examEnd"
-    type="text"
-    placeholder="তারিখ ও সময় নির্বাচন করুন"
-    onfocus="this.type='datetime-local'"
-  >
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+
+    <input
+      id="examEndDate"
+      type="date"
+    >
+
+    <input
+      id="examEndTime"
+      type="time"
+    >
+
+  </div>
+
+  <input id="examEnd" type="hidden">
 
 </div>
+        
 
 
         <div class="field">
@@ -1660,7 +1693,149 @@ async function loadCategories(){
 
 }
 
+  
+/* =========================
+   CUSTOM DATE + TIME
+========================= */
 
+function syncDateTime(dateId, timeId, hiddenId){
+
+  const date = $(dateId).value;
+  const time = $(timeId).value;
+
+  if(date && time){
+    $(hiddenId).value = `${date}T${time}`;
+  }else{
+    $(hiddenId).value = "";
+  }
+
+}
+
+
+function setDateTimeField(hiddenId, dateId, timeId, value){
+
+  const localValue =
+    toLocalDateTime(value);
+
+  if(!localValue){
+
+    $(dateId).value = "";
+    $(timeId).value = "";
+    $(hiddenId).value = "";
+
+    return;
+  }
+
+  const parts =
+    localValue.split("T");
+
+  $(dateId).value =
+    parts[0] || "";
+
+  $(timeId).value =
+    parts[1] || "";
+
+  syncDateTime(
+    dateId,
+    timeId,
+    hiddenId
+  );
+
+}
+
+
+/* Registration Start */
+
+$("regStartDate").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "regStartDate",
+      "regStartTime",
+      "regStart"
+    )
+);
+
+$("regStartTime").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "regStartDate",
+      "regStartTime",
+      "regStart"
+    )
+);
+
+
+/* Registration End */
+
+$("regEndDate").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "regEndDate",
+      "regEndTime",
+      "regEnd"
+    )
+);
+
+$("regEndTime").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "regEndDate",
+      "regEndTime",
+      "regEnd"
+    )
+);
+
+
+/* Exam Start */
+
+$("examStartDate").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "examStartDate",
+      "examStartTime",
+      "examStart"
+    )
+);
+
+$("examStartTime").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "examStartDate",
+      "examStartTime",
+      "examStart"
+    )
+);
+
+
+/* Exam End */
+
+$("examEndDate").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "examEndDate",
+      "examEndTime",
+      "examEnd"
+    )
+);
+
+$("examEndTime").addEventListener(
+  "change",
+  () =>
+    syncDateTime(
+      "examEndDate",
+      "examEndTime",
+      "examEnd"
+    )
+);
+
+  
 /* =========================
    DATE HELPERS
 ========================= */
@@ -1791,13 +1966,21 @@ function resetForm(){
 
   $("fee").value = "0";
 
-  $("regStart").value = "";
+$("regStart").value = "";
+$("regStartDate").value = "";
+$("regStartTime").value = "";
 
-  $("regEnd").value = "";
+$("regEnd").value = "";
+$("regEndDate").value = "";
+$("regEndTime").value = "";
 
-  $("examStart").value = "";
+$("examStart").value = "";
+$("examStartDate").value = "";
+$("examStartTime").value = "";
 
-  $("examEnd").value = "";
+$("examEnd").value = "";
+$("examEndDate").value = "";
+$("examEndTime").value = "";
 
   $("duration").value = "20";
 
@@ -1991,25 +2174,33 @@ $("saveBtn").addEventListener(
             $("fee").value || 0
           ),
 
-        registration_start:
-          toISO(
-            $("regStart").value
-          ),
+        setDateTimeField(
+  "regStart",
+  "regStartDate",
+  "regStartTime",
+  quiz.registration_start
+);
 
-        registration_end:
-          toISO(
-            $("regEnd").value
-          ),
+        setDateTimeField(
+  "regEnd",
+  "regEndDate",
+  "regEndTime",
+  quiz.registration_end
+);
 
-        start_at:
-          toISO(
-            $("examStart").value
-          ),
+        setDateTimeField(
+  "examStart",
+  "examStartDate",
+  "examStartTime",
+  quiz.start_at
+);
 
-        end_at:
-          toISO(
-            $("examEnd").value
-          ),
+        setDateTimeField(
+  "examEnd",
+  "examEndDate",
+  "examEndTime",
+  quiz.end_at
+);
 
         duration_minutes:
           duration,
