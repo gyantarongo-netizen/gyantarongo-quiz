@@ -529,7 +529,7 @@ th{
 </button>
 
 <button class="btn primary" id="downloadBtn">
-  ⬇️ রেজাল্ট শিট ডাউনলোড
+  ⬇️ পূর্ণ রেজাল্ট শিট ডাউনলোড
 </button>
 
 <button class="btn secondary" id="backBtn">
@@ -1494,7 +1494,10 @@ function render(){
           .includes(s)
     );
 
-  renderTopThree(rows);
+  const activeRows =
+    rows.filter(x => !x.canceled);
+
+  renderTopThree(activeRows);
 
   if(!d.length){
 
@@ -1536,10 +1539,13 @@ function render(){
         ${
           d.map(r=>{
 
-            const rank=
-              rows.findIndex(
+            const activeRank =
+              activeRows.findIndex(
                 x=>x.id===r.id
               )+1;
+
+            const rank =
+              r.canceled ? null : activeRank;
 
             return`
 
@@ -1547,9 +1553,11 @@ function render(){
 
                 <td class="rank">
                   ${
-                    rank<=3
-                      ?['🥇','🥈','🥉'][rank-1]
-                      :`#${bn(rank)}`
+                    r.canceled
+                      ?'🚫 বাতিল'
+                      :rank<=3
+                        ?['🥇','🥈','🥉'][rank-1]
+                        :`#${bn(rank)}`
                   }
                 </td>
 
@@ -2385,12 +2393,14 @@ function downloadCSV(){
 
   ];
 
-  rows.forEach(
-    (r,i)=>
+  rows
+    .filter(r => !r.canceled)
+    .forEach(
+      (r,i)=>
 
-      lines.push([
+        lines.push([
 
-        i+1,
+          i+1,
 
         r.roll_number,
 
